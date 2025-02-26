@@ -6,8 +6,8 @@ public class SeedInstanceScript : MonoBehaviour
 {
     public SoulSeed seedData;  // 參考 ScriptableObject
     private int daysGrown = 0; // 已經成長的天數
-    private bool wateredToday = false;
-    private RewardLevel currentRewardLevel;
+    [SerializeField] private bool wateredToday = false;//今天澆水了沒
+    [SerializeField] private int currentRewardPoint;
     //視覺管理
     public List<Sprite> growthSprites; // 成長過程的圖像(我沒有設計防呆，請記得目前只能塞三種)
     public SpriteRenderer spriteRenderer; // 用來顯示圖片的組件
@@ -18,7 +18,7 @@ public class SeedInstanceScript : MonoBehaviour
         {
             spriteRenderer.sprite = growthSprites[0]; // 初始顯示幼苗
         }
-        currentRewardLevel = seedData.rewardLevel;//設置初始獎勵等級
+        currentRewardPoint = seedData.rewardPoint;
     }
     
     public void Grown(int days)//成長
@@ -41,6 +41,7 @@ public class SeedInstanceScript : MonoBehaviour
             spriteRenderer.sprite = growthSprites[1];
         }
     }
+    [ContextMenu("water")]
     public void Water()//澆水
     {
         wateredToday = true;
@@ -48,17 +49,15 @@ public class SeedInstanceScript : MonoBehaviour
     }
     private void CheckIsWatered()//檢查是否澆水，若沒澆則獎勵變差
     {
-        if (!wateredToday)
-        {
-            RewardChange(-1);
+        //根據澆水情況變動
+        if (wateredToday == false) { 
+            currentRewardPoint = currentRewardPoint - seedData.wateredMinus; 
         }
-    }
-    public void RewardChange(int amount)//改變獎勵等級
-    {
-        if(currentRewardLevel>0)
+        if (currentRewardPoint < seedData.rewardPointMin)
         {
-            currentRewardLevel += amount;
+            Destroy(gameObject);
         }
+        wateredToday = false;
     }
     [ContextMenu("end a day test")]
     public void EndOfDay()//一天結束
@@ -68,7 +67,7 @@ public class SeedInstanceScript : MonoBehaviour
     }
     private void Harvest()
     {
-        Debug.Log($"{seedData.seedName} 成熟了！獎勵等級: {currentRewardLevel}");
+        Debug.Log($"{seedData.seedName} 成熟了！獎勵等級: ");
         // 呼叫獎勵系統來抽選獎勵
         Destroy(gameObject);
     }

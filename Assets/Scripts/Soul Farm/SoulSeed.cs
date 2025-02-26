@@ -6,15 +6,11 @@ using UnityEngine;
 public class SoulSeed : ScriptableObject
 {
     public string seedName;  // 種子名稱
-    public int growthDays;   // 成長周期 (1/2/4/6天)
-    public RewardLevel rewardLevel;  // 初始獎勵等級
+    public int growthDays;   // 成長周期 (1/3/5/6天)
+    public int rewardPoint;  // 初始獎勵分數
+    public int rewardPointMax;
+    public int rewardPointMin;//依照種子類別分配最大最小值
+    public int wateredMinus;//沒澆水會下降此值
+    public int rewardPointGate;//區間用值
 }
 
-public enum RewardLevel
-{
-    dead,//死亡
-    Low,    // 低
-    Medium, // 中
-    High,   // 高
-    Special // 特殊
-}

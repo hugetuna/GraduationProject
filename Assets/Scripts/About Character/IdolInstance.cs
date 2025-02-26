@@ -16,6 +16,7 @@ public class IdolInstance : MonoBehaviour
     public int vigourMax;//體力最大值
     //粉絲數
     public int fans;
+    public int bondWithP;//與玩家的羈絆
     // Start is called before the first frame update
     void Start()
     {
