@@ -51,19 +51,23 @@ public class SeedInstanceScript : MonoBehaviour
     {
         //根據澆水情況變動
         if (wateredToday == false) { 
-            currentRewardPoint = currentRewardPoint - seedData.wateredMinus; 
+            currentRewardPoint = currentRewardPoint - seedData.wateredMinus;
         }
+        wateredToday = false;
+    }
+    private void CheckIsDead()
+    {
         if (currentRewardPoint < seedData.rewardPointMin)
         {
             Destroy(gameObject);
         }
-        wateredToday = false;
     }
     [ContextMenu("end a day test")]
     public void EndOfDay()//一天結束
     {
         Grown(1);
         CheckIsWatered();
+        CheckIsDead();
     }
     private void Harvest()
     {
