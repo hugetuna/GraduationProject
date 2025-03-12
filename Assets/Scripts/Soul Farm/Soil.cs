@@ -40,7 +40,7 @@ public class Soil : MonoBehaviour, IInteractable
         isPlantable = false; // 標記這塊土地已經被種植
         isPlanting = true;
     }
-    void IInteractable.Interact() // 互動行為
+    void IInteractable.Interact(int tool) // 互動行為
     {
         if(isPlanting == false && isPlantable == false)
         {

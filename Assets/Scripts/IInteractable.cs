@@ -4,5 +4,5 @@ using UnityEngine;
 
 public interface IInteractable
 {
-    void Interact(); // 互動行為
+    void Interact(int tool); // 互動行為
 }
