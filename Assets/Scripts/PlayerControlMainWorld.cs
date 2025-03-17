@@ -11,6 +11,14 @@ public class PlayerControlMainWorld : MonoBehaviour
     public bool faceDirection = false;//true面向右，false面相左
     public float moveSpeed = 1f;
 
+    //設定初始可操作角色
+    void Start()
+    {
+        if (this != FindObjectOfType<TeamManager>().teamMembers[0])
+        {
+            this.enabled = false; // 只有第一個角色預設可動
+        }
+    }
     void Update()
     {
         // 使用 moveInput 控制角色或其他行為
@@ -68,8 +76,9 @@ public class PlayerControlMainWorld : MonoBehaviour
             {
                 sphereOffset = 1;
             }
+            //生成一個互動圈
             Collider[] hits = Physics.OverlapSphere(transform.position+new Vector3(sphereOffset, interactRadius, 0), interactRadius);
-
+            //互動圈中離你最近的物件互動
             foreach (Collider hit in hits)
             {
                 IInteractable interactable = hit.GetComponent<IInteractable>();
@@ -77,6 +86,7 @@ public class PlayerControlMainWorld : MonoBehaviour
                 if (interactable != null)
                 {
                     interactable.Interact(0);
+                    animator.SetTrigger("THoe");
                     Debug.Log("與 " + hit.gameObject.name + " 互動");
                     return; // 只與最近的物件互動
                 }

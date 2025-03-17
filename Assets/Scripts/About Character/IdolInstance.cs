@@ -41,7 +41,4 @@ public class IdolInstance : MonoBehaviour
         vigour = vigourMax = basicStatus.vigour;
         fans = 0;
     }
-    
-    
-
 }
