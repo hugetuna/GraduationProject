@@ -25,14 +25,13 @@ public class PlayerControlMainWorld : MonoBehaviour
         //移動
         if (moveInput != new Vector2(0, 0))
         {
-            animator.SetBool("isWalk", true);
+            animator.SetFloat("Speed", 60f);
             this.transform.position += new Vector3(moveInput.x, 0, moveInput.y)*Time.deltaTime*moveSpeed;
         }
         else
         {
-            animator.SetBool("isWalk", false);
+            animator.SetFloat("Speed", 0);
         }
-        Vector3 scale = transform.localScale;
         //決定面向
         // 使用 Y 軸旋轉來翻轉角色
         if (!faceDirection)
@@ -85,8 +84,13 @@ public class PlayerControlMainWorld : MonoBehaviour
 
                 if (interactable != null)
                 {
-                    interactable.Interact(0);
+                    // **停止移動**
+                    moveInput = Vector2.zero;
+                    animator.SetFloat("Speed", 0);
+
+                    // **撥放動畫**
                     animator.SetTrigger("THoe");
+                    interactable.Interact(0);
                     Debug.Log("與 " + hit.gameObject.name + " 互動");
                     return; // 只與最近的物件互動
                 }

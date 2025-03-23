@@ -24,9 +24,9 @@ public class SeedInstanceScript : MonoBehaviour
     public void Grown(int days)//жик°
     {
         daysGrown += days;
-        spriteChange();
+        SpriteChange();
     }
-    private void spriteChange()
+    private void SpriteChange()
     {
         if (daysGrown == 0)
         {
