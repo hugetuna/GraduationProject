@@ -6,7 +6,7 @@ using UnityEngine.Rendering;
 public class TeamManager : MonoBehaviour
 {
     public List<PlayerControlMainWorld> teamMembers = new List<PlayerControlMainWorld>(); // 角色列表
-    private int currentLeaderIndex = 0; // 當前操縱角色索引
+    public int currentLeaderIndex = 0; // 當前操縱角色索引
     public float followDistance = 3f; // 角色之間的距離
     public float followSpeed = 5f; // 角色跟隨速度
     private bool isSwitchingLeader = false; // SwitchLeader執行時為真
