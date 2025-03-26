@@ -38,7 +38,7 @@ public class TeamManager : MonoBehaviour
     // 讓兩個角色平滑走到彼此的位置
     private IEnumerator SwapPositionSmoothly(PlayerControlMainWorld oldLeader, PlayerControlMainWorld newLeader, Vector3 oldPos, Vector3 newPos)
     {
-        float duration = 1f;
+        float duration = 0.7f;
         float elapsedTime = 0f;
         //獲取兩人的動畫
         Animator oldLeaderAnim = oldLeader.GetComponent<Animator>();
