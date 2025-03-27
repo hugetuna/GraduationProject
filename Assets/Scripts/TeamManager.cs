@@ -110,12 +110,20 @@ public class TeamManager : MonoBehaviour
                 }
                 //用目標位置與當前位置決定朝向
                 bool moveDirection = (targetPos - teamMembers[i].transform.position).x > 0;//true=向右，false=向左
+                                                                                           // **方向變更緩衝機制**
+                float directionThreshold = 0.2f; // 只有當方向變化超過這個閾值時，才會翻轉
                 if (moveDirection)
                 {
-                    teamMembers[i].transform.rotation = Quaternion.Euler(0, 180, 0); // 朝右
+                    if((targetPos - teamMembers[i].transform.position).x >= directionThreshold)
+                    {
+                        teamMembers[i].transform.rotation = Quaternion.Euler(0, 180, 0); // 朝右
+                    }
                 }else
                 {
-                    teamMembers[i].transform.rotation = Quaternion.Euler(0, 0, 0); // 朝右
+                    if ((targetPos - teamMembers[i].transform.position).x <= directionThreshold)
+                    {
+                        teamMembers[i].transform.rotation = Quaternion.Euler(0, 0, 0); // 朝左
+                    }
                 }
                 teamMembers[i].transform.position = Vector3.Lerp(teamMembers[i].transform.position, targetPos, followSpeed * Time.deltaTime);
             }
