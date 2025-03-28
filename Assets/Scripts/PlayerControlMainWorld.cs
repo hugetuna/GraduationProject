@@ -64,8 +64,6 @@ public class PlayerControlMainWorld : MonoBehaviour
     {
         if (context.performed)
         {
-            Debug.Log("¤¬°Ê");
-
             float interactRadius = 1.8f; // ¤¬°Ê½d³ò
             float sphereOffset;
             if (!faceDirection) {
