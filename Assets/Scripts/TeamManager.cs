@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
+using UnityEngine.InputSystem;
 
 public class TeamManager : MonoBehaviour
 {
@@ -10,6 +11,15 @@ public class TeamManager : MonoBehaviour
     public float followDistance = 3f; // 角色之間的距離
     public float followSpeed = 5f; // 角色跟隨速度
     private bool isSwitchingLeader = false; // SwitchLeader執行時為真
+    private void Start()
+    {
+        //封鎖隊長外的input system
+        for (int i = 0; i < teamMembers.Count; i++)
+        {
+            bool isLeader = (i == currentLeaderIndex);
+            teamMembers[i].GetComponent<PlayerInput>().enabled = isLeader;
+        }
+    }
     void Update()
     {
         HandleFollowers();
@@ -28,7 +38,12 @@ public class TeamManager : MonoBehaviour
         // 取得原隊長與新隊長的位置
         Vector3 previousLeaderPos = teamMembers[previousLeaderIndex].transform.position;
         Vector3 newLeaderPos = teamMembers[currentLeaderIndex].transform.position;
-        
+        //封鎖隊長外的input system
+        for (int i = 0; i < teamMembers.Count; i++)
+        {
+            bool isLeader = (i == currentLeaderIndex);
+            teamMembers[i].GetComponent<PlayerInput>().enabled = isLeader;
+        }
         // 啟動移動協程，讓兩個角色互換位置
         StartCoroutine(SwapPositionSmoothly(teamMembers[previousLeaderIndex], teamMembers[currentLeaderIndex], previousLeaderPos, newLeaderPos));
 

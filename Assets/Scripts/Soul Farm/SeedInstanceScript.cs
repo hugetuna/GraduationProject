@@ -5,7 +5,7 @@ using UnityEngine;
 public class SeedInstanceScript : MonoBehaviour
 {
     public SoulSeed seedData;  // 參考 ScriptableObject
-    private int daysGrown = 0; // 已經成長的天數
+    [SerializeField] private int daysGrown = 0; // 已經成長的天數
     [SerializeField] private bool wateredToday = false;//今天澆水了沒
     [SerializeField] private int currentRewardPoint;
     //視覺管理
@@ -25,6 +25,10 @@ public class SeedInstanceScript : MonoBehaviour
     {
         daysGrown += days;
         SpriteChange();
+    }
+    public int GetDaysGrown()
+    {
+        return daysGrown;
     }
     private void SpriteChange()
     {
@@ -69,9 +73,9 @@ public class SeedInstanceScript : MonoBehaviour
         CheckIsWatered();
         CheckIsDead();
     }
-    private void Harvest()
+    public void Harvest()
     {
-        Debug.Log($"{seedData.seedName} 成熟了！獎勵等級: ");
+        Debug.Log($"{seedData.seedName} 成熟了！獎勵等級: {currentRewardPoint}");
         // 呼叫獎勵系統來抽選獎勵
         Destroy(gameObject);
     }

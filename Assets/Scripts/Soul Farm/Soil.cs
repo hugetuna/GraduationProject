@@ -8,7 +8,7 @@ public class Soil : MonoBehaviour, IInteractable
     public bool isPlanting = false;//是否在種植中
     public Transform seedSpawnPoint; // 種子的生成位置
     public GameObject[] seedPrefabs; // 儲存不同種類的種子預製體
-    public GameObject seedOnThisSoil;//儲存一個被種植的種子的副本
+    public SeedInstanceScript seedOnThisSoil;//儲存一個被種植的種子的副本
     //翻土
     public void TurnTheSoil()
     {
@@ -36,20 +36,34 @@ public class Soil : MonoBehaviour, IInteractable
             return;
         }
         // 在指定位置生成種子
-        seedOnThisSoil=Instantiate(seedPrefabs[seedIndex], seedSpawnPoint.position, Quaternion.identity);
+        seedOnThisSoil=Instantiate(seedPrefabs[seedIndex], seedSpawnPoint.position, Quaternion.identity).GetComponent<SeedInstanceScript>();
         isPlantable = false; // 標記這塊土地已經被種植
         isPlanting = true;
     }
-    void IInteractable.Interact(int tool) // 互動行為
+    void IInteractable.Interact(int toolType) // 互動行為
     {
+        //TODO:追加工具反映
+        //未處於種植狀態且不可種植->翻土
         if(isPlanting == false && isPlantable == false)
         {
             TurnTheSoil();
         }
-        else if(isPlanting == false && isPlantable == true)
+        //未處於種植狀態且可種植->種植
+        else if (isPlanting == false && isPlantable == true)
         {
             PlantSeed(1);
         }
-        
+        //種植中，但成長未滿->澆水
+        else if (isPlanting == true && isPlantable == false && seedOnThisSoil.GetDaysGrown()< seedOnThisSoil.seedData.growthDays)
+        {
+            seedOnThisSoil.GetComponent<SeedInstanceScript>().Water();
+        }
+        //種植中，但成長以滿->收割
+        else if (isPlanting == true && isPlantable == false && seedOnThisSoil.GetDaysGrown() == seedOnThisSoil.seedData.growthDays)
+        {
+            seedOnThisSoil.GetComponent<SeedInstanceScript>().Harvest();
+            isPlanting = false;
+            isPlantable = false;
+        }
     } 
 }
