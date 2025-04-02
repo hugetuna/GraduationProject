@@ -43,8 +43,8 @@ public class Soil : MonoBehaviour, IInteractable
     void IInteractable.Interact(int toolType) // 互動行為
     {
         //TODO:追加工具反映
-        //未處於種植狀態且不可種植->翻土
-        if(isPlanting == false && isPlantable == false)
+        //未處於種植狀態且不可種植->翻土(使用鋤頭tool==1)
+        if(isPlanting == false && isPlantable == false && toolType==1)
         {
             TurnTheSoil();
         }
