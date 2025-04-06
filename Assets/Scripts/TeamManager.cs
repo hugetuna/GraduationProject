@@ -131,13 +131,13 @@ public class TeamManager : MonoBehaviour
                 {
                     if((targetPos - teamMembers[i].transform.position).x >= directionThreshold)
                     {
-                        teamMembers[i].transform.rotation = Quaternion.Euler(0, 180, 0); // 는쩵
+                        teamMembers[i].Bone.transform.rotation = Quaternion.Euler(-45, 180, 0); // 는쩵
                     }
                 }else
                 {
                     if ((targetPos - teamMembers[i].transform.position).x <= directionThreshold)
                     {
-                        teamMembers[i].transform.rotation = Quaternion.Euler(0, 0, 0); // 는ⅹ
+                        teamMembers[i].Bone.transform.rotation = Quaternion.Euler(45, 0, 0); // 는ⅹ
                     }
                 }
                 teamMembers[i].transform.position = Vector3.Lerp(teamMembers[i].transform.position, targetPos, followSpeed * Time.deltaTime);

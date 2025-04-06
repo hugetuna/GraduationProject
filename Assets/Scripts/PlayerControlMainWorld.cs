@@ -48,11 +48,11 @@ public class PlayerControlMainWorld : MonoBehaviour
         // 使用 Y 軸旋轉來翻轉角色
         if (!faceDirection)
         {
-            transform.rotation = Quaternion.Euler(0, 0, 0);  // 朝左
+            Bone.transform.rotation = Quaternion.Euler(45, 0, 0);  // 朝左
         }
         else
         {
-            transform.rotation = Quaternion.Euler(0, 180, 0); // 朝右
+            Bone.transform.rotation = Quaternion.Euler(-45, 180, 0); // 朝右
         }
     }
     public void SetItemOnHandIndex(int targetItem)

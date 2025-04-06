@@ -117,6 +117,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: ac92a316-41cd-4286-a478-243014e245c5
     m_ActionName: PlayerActionMain/Interact[/Keyboard/space]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 6089600551213428731}
+        m_TargetAssemblyTypeName: PlayerControlMainWorld, Assembly-CSharp
+        m_MethodName: OnSwitchItem
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: 4319c1f5-fa4b-453e-830a-161b081a7729
+    m_ActionName: PlayerActionMain/SwitchItem[/Keyboard/e]
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: PlayerActionMain
@@ -156,9 +172,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd22021e0ae0e79499782ba09882aeb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  itemOnHandIndex: 0
   animator: {fileID: 489624785013220305}
   faceDirection: 0
   moveSpeed: 5
+  Bone: {fileID: 6419236678256277454}
 --- !u!65 &8235891522978462303
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -261,15 +279,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 53dc63eacea5a754eb9e011b32315b0a, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 53dc63eacea5a754eb9e011b32315b0a, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 53dc63eacea5a754eb9e011b32315b0a, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -7552582706839291426, guid: 53dc63eacea5a754eb9e011b32315b0a, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -306,6 +324,18 @@ PrefabInstance:
     - target: {fileID: -6478612184160136044, guid: 53dc63eacea5a754eb9e011b32315b0a, type: 3}
       propertyPath: m_LocalPosition.y
       value: 1.090345
+      objectReference: {fileID: 0}
+    - target: {fileID: -6478612184160136044, guid: 53dc63eacea5a754eb9e011b32315b0a, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.6908636
+      objectReference: {fileID: 0}
+    - target: {fileID: -6478612184160136044, guid: 53dc63eacea5a754eb9e011b32315b0a, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0.72298515
+      objectReference: {fileID: 0}
+    - target: {fileID: -6478612184160136044, guid: 53dc63eacea5a754eb9e011b32315b0a, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 92.603
       objectReference: {fileID: 0}
     - target: {fileID: -5441740464491690197, guid: 53dc63eacea5a754eb9e011b32315b0a, type: 3}
       propertyPath: m_Layer
