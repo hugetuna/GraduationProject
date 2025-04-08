@@ -20,9 +20,11 @@ public class PlayerControlMainWorld : MonoBehaviour
         // 初始化工具->綁定tools字典 (請確保這些物件已經掛在角色骨架上)
         if (Bone != null)
         {
+            tools[0] = null;
             tools[1] = Bone.Find("Tool")?.gameObject;
         }
         // 初始化工具對應的動畫->綁定toolAnimations字典
+        toolAnimations[0] = null;
         toolAnimations[1] = "THoe";
         SetItemOnHandIndex(0);//重制為未持狀態
         //如果自己不是隊長就不啟動

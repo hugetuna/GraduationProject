@@ -10,7 +10,6 @@ public class DoorInteraction : MonoBehaviour, IInteractable
 
     void Start()
     {
-        
     }
 
     void Update()
@@ -19,6 +18,6 @@ public class DoorInteraction : MonoBehaviour, IInteractable
     }
 
     void IInteractable.Interact(int tool){ // 來自 IInteractable 介面
-        onDoorInteracted?.Invoke();
+        onDoorInteracted?.Invoke();   
     }
 }
