@@ -7,6 +7,7 @@ public class Soil : MonoBehaviour, IInteractable
     public bool isPlantable = false; // 是否可以種植
     public bool isPlanting = false;//是否在種植中
     public Transform seedSpawnPoint; // 種子的生成位置
+    public float yOffSet=1.5f;
     public GameObject[] seedPrefabs; // 儲存不同種類的種子預製體
     public SeedInstanceScript seedOnThisSoil;//儲存一個被種植的種子的副本
     //翻土
@@ -36,7 +37,11 @@ public class Soil : MonoBehaviour, IInteractable
             return;
         }
         // 在指定位置生成種子
-        seedOnThisSoil=Instantiate(seedPrefabs[seedIndex], seedSpawnPoint.position, Quaternion.identity).GetComponent<SeedInstanceScript>();
+        Vector3 realSpawnPoint = seedSpawnPoint.position + new Vector3(0, yOffSet, 0);
+        Quaternion rotation = Quaternion.Euler(45f, 0f, 0f);
+        seedOnThisSoil =Instantiate(seedPrefabs[seedIndex], realSpawnPoint, rotation).GetComponent<SeedInstanceScript>();
+        //改大小
+        //seedOnThisSoil.transform.localScale = seedOnThisSoil.transform.localScale * 0.5f;
         isPlantable = false; // 標記這塊土地已經被種植
         isPlanting = true;
     }
