@@ -105,7 +105,21 @@ public class TeamManager : MonoBehaviour
             {
                 //計算隊長位置與目標位置
                 Vector3 leaderPos = teamMembers[currentLeaderIndex].transform.position;
-                Vector3 targetPos = leaderPos - (leaderPos - teamMembers[i].transform.position).normalized * Mathf.Min(followDistance, (leaderPos - teamMembers[i].transform.position).magnitude);
+                Vector3 targetPos;
+                //向下輪轉一個隊員
+                if ((currentLeaderIndex + 1 + teamMembers.Count) % teamMembers.Count == i)
+                {
+                    targetPos = leaderPos - (leaderPos - teamMembers[i].transform.position).normalized * Mathf.Min(followDistance, (leaderPos - teamMembers[i].transform.position).magnitude);
+                }
+                //向下輪轉兩個隊員
+                else if ((currentLeaderIndex + 2 + teamMembers.Count) % teamMembers.Count == i)
+                {
+                    targetPos = leaderPos - (leaderPos - teamMembers[i].transform.position).normalized * Mathf.Min(followDistance+2, (leaderPos - teamMembers[i].transform.position).magnitude);
+                }
+                else
+                {
+                    targetPos = leaderPos;
+                }
                 // 計算當前距離，判斷是否移動
                 float distance = Vector3.Distance(teamMembers[i].transform.position, targetPos);
                 float speed = distance / Time.deltaTime; // 計算當前移動速度
