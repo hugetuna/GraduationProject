@@ -6,18 +6,18 @@ using UnityEngine;
 public class DoorInteraction : MonoBehaviour, IInteractable
 {
     // 定義碰到門，按下互動鍵跳出 UI 的事件
-    public static event Action onDoorInteracted;
+    public static event Action OnDoorInteracted;
 
-    void Start()
-    {
-    }
+    // void Start()
+    // {
+    // }
 
-    void Update()
-    {
+    // void Update()
+    // {
         
-    }
+    // }
 
     void IInteractable.Interact(int tool){ // 來自 IInteractable 介面
-        onDoorInteracted?.Invoke();   
+        OnDoorInteracted?.Invoke();   
     }
 }

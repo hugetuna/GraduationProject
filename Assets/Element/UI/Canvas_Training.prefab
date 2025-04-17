@@ -332,16 +332,16 @@ RectTransform:
   m_GameObject: {fileID: 5139737746453985310}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: -9}
-  m_LocalScale: {x: 0.002563891, y: 0.002563891, z: 0.002563891}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 8944254614185789003}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 1}
-  m_SizeDelta: {x: 800, y: 450.37033}
+  m_AnchorMin: {x: 0.5, y: 0.5}
+  m_AnchorMax: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: -268, y: -150}
+  m_SizeDelta: {x: 800, y: 450.37036}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &6456144745308461269
 Canvas:
@@ -352,7 +352,7 @@ Canvas:
   m_GameObject: {fileID: 5139737746453985310}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 2
+  m_RenderMode: 1
   m_Camera: {fileID: 0}
   m_PlaneDistance: 1
   m_PixelPerfect: 0
@@ -364,7 +364,7 @@ Canvas:
   m_AdditionalShaderChannelsFlag: 0
   m_UpdateRectTransformForStandalone: 0
   m_SortingLayerID: 0
-  m_SortingOrder: 999
+  m_SortingOrder: 1
   m_TargetDisplay: 0
 --- !u!114 &842633397922445635
 MonoBehaviour:
@@ -388,7 +388,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &8692039122367620982
 MonoBehaviour:
   m_ObjectHideFlags: 0
