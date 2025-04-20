@@ -1,19 +1,27 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
+using System.Collections.Generic;
 
 [CreateAssetMenu(fileName = "New Consumable", menuName = "Inventory/Consumable")]
 public class ConsumableItem : Item
 {
-    public float voTrainingBonus;
-    public float daTrainingBonus;
-    public float viTrainingBonus;
-    public int vigourHeal;
-    public float moneyBonus;
-    public int charmAmout;
+    public List<ItemEffect> effects;
+
     public override void Use()
     {
-        Debug.Log(itemName + " 被使用，回復 ");
-        // TODO: 加入邏輯
+        //todo 使玩家自己選用道具施放對象
+        IdolInstance target = FindObjectOfType<IdolInstance>();
+        ResourceManager resourceManager = FindObjectOfType<ResourceManager>();
+        if (target == null|| resourceManager==null)
+        {
+            Debug.LogError("找不到 IdolInstance或resourceManager！");
+            return;
+        }
+
+        foreach (var effect in effects)
+        {
+            effect.Apply(target, resourceManager);
+        }
+
+        Debug.Log($"{itemName} 被使用！");
     }
 }
