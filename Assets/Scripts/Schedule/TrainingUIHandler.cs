@@ -34,7 +34,7 @@ public class TrainingUIHandler : MonoBehaviour
         {
             if (!IsCursorClickUIObject() && trainingUIInstance != null) // 點擊非 UI 區域時關閉 UI
             {
-                Debug.Log("關閉訓練 UI");
+                Debug.Log("點擊訓練 UI 以外的地方以關閉介面");
                 trainingUIInstance.SetActive(false);
             }
         }

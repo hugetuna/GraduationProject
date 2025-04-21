@@ -1,24 +1,32 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.EventSystems; // UI 和物件的拖曳寫法不同
 
-public class DragToLesson : MonoBehaviour
+public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    private RectTransform rectTransform; // UI 元件在畫布上的位置
+    private Canvas canvas; // 畫布本身
 
-    Vector3 mousePosition;
-
-    private Vector3 GetMousePos(){
-        // 取得被拖曳物件的鏡頭座標
-        return Camera.main.WorldToScreenPoint(transform.position);
+    private void Awake()
+    {
+        rectTransform = GetComponent<RectTransform>(); // 取得 UI 元件在畫布上的位置
+        canvas = GetComponentInParent<Canvas>(); // 找到這個 UI 元件所在的畫布
     }
 
-    private void OnMouseDown(){
-        // 在滑鼠左鍵被點擊時取得滑鼠座標
-        mousePosition = Input.mousePosition - GetMousePos();
+    public void OnBeginDrag(PointerEventData eventData)
+    {
+        Debug.Log("開始拖曳");
     }
 
-    private void OnMouseDrag(){
-        // 滑鼠拖曳時讓物件跟著滑鼠移動
-        transform.position = Camera.main.ScreenToWorldPoint(Input.mousePosition - mousePosition);
+    public void OnDrag(PointerEventData eventData)
+    {
+        // 使用畫布的 scale 做補償，確保拖曳不會跑掉
+        rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+    }
+
+    public void OnEndDrag(PointerEventData eventData)
+    {
+        Debug.Log("結束拖曳");
     }
 }
