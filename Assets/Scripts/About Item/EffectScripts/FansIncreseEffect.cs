@@ -1,4 +1,4 @@
-using System.Collections;
+ï»¿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -9,6 +9,6 @@ public class FansIncreseEffect : ItemEffect
     public override void Apply(IdolInstance target, ResourceManager manager)
     {
         target.FansIncrease(fansIncreseAmount);
-        Debug.Log($"[¯»µ·¼W¥[] ¼W¥[ {fansIncreseAmount} ¡A²{¦b¯»µ·{target.fans}");
+        Debug.Log($"[ç²‰çµ²å¢åŠ ] å¢åŠ  {fansIncreseAmount} ï¼Œç¾åœ¨ç²‰çµ²{target.fans}");
     }
 }
