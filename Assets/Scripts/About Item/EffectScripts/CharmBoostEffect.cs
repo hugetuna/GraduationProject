@@ -9,6 +9,6 @@ public class CharmBoostEffect : ItemEffect
     public override void Apply(IdolInstance target, ResourceManager manager)
     {
         target.charmInCount = target.charm + charmBoostAmount;
-        Debug.Log($"[¾y¤O¼W¥[] ¼È®É¼W¥[ {charmBoostAmount} ÂI¡A²{¦b¬O {target.charmInCount}");
+        Debug.Log($"[é­…åŠ›å¢åŠ ] æš«æ™‚å¢åŠ  {charmBoostAmount} é»ï¼Œç¾åœ¨æ˜¯ {target.charmInCount}");
     }
 }

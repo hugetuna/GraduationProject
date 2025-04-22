@@ -631,6 +631,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 50, y: -30, z: 0}
+--- !u!4 &1372503979 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 5057598370812944448, guid: 30161aba3dbad5943be8250ad1019f45, type: 3}
+  m_PrefabInstance: {fileID: 1730069603}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1431968858
 GameObject:
   m_ObjectHideFlags: 0
@@ -807,6 +812,10 @@ PrefabInstance:
       propertyPath: m_Center.y
       value: 2.5
       objectReference: {fileID: 0}
+    - target: {fileID: 1580560777571279698, guid: 30161aba3dbad5943be8250ad1019f45, type: 3}
+      propertyPath: Bone
+      value: 
+      objectReference: {fileID: 1372503979}
     - target: {fileID: 6136025060539904582, guid: 30161aba3dbad5943be8250ad1019f45, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -994,6 +1003,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   Money: 0
+  MoneyBonus: 1
   bondAB:
     idolA: {fileID: 0}
     idolB: {fileID: 0}
