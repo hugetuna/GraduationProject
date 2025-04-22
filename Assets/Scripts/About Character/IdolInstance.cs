@@ -57,4 +57,8 @@ public class IdolInstance : MonoBehaviour
         daTrainingBonus = 1f;
         viTrainingBonus = 1f;
     }
+    public void FansIncrease(int increseAmount)
+    {
+        fans += increseAmount;
+    }
 }
