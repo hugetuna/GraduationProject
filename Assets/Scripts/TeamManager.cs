@@ -6,14 +6,14 @@ using UnityEngine.InputSystem;
 
 public class TeamManager : MonoBehaviour
 {
-    public List<PlayerControlMainWorld> teamMembers = new List<PlayerControlMainWorld>(); // ¨¤¦â¦Cªí
-    public int currentLeaderIndex = 0; // ·í«e¾ŞÁa¨¤¦â¯Á¤Ş
-    public float followDistance = 3f; // ¨¤¦â¤§¶¡ªº¶ZÂ÷
-    public float followSpeed = 5f; // ¨¤¦â¸òÀH³t«×
-    private bool isSwitchingLeader = false; // SwitchLeader°õ¦æ®É¬°¯u
+    public List<PlayerControlMainWorld> teamMembers = new List<PlayerControlMainWorld>(); // è§’è‰²åˆ—è¡¨
+    public int currentLeaderIndex = 0; // ç•¶å‰æ“ç¸±è§’è‰²ç´¢å¼•
+    public float followDistance = 3f; // è§’è‰²ä¹‹é–“çš„è·é›¢
+    public float followSpeed = 5f; // è§’è‰²è·Ÿéš¨é€Ÿåº¦
+    private bool isSwitchingLeader = false; // SwitchLeaderåŸ·è¡Œæ™‚ç‚ºçœŸ
     private void Start()
     {
-        //«ÊÂê¶¤ªø¥~ªºinput system
+        //å°é–éšŠé•·å¤–çš„input system
         for (int i = 0; i < teamMembers.Count; i++)
         {
             bool isLeader = (i == currentLeaderIndex);
@@ -25,104 +25,110 @@ public class TeamManager : MonoBehaviour
         HandleFollowers();
         UpdateSortingOrder();
     }
-    // ¨¤¦â¤Á´«(+1¬°¤U¤@­Ó-1¬°¤W¤@­Ó)
+    // è§’è‰²åˆ‡æ›(+1ç‚ºä¸‹ä¸€å€‹-1ç‚ºä¸Šä¸€å€‹)
     public void SwitchLeader(int direction)
     {
-        // ¼È®É¸T¥Î¸òÀHÅŞ¿è¡AÁ×§KÀş¶¡ÂĞ»\·s¦ì¸m
+        // æš«æ™‚ç¦ç”¨è·Ÿéš¨é‚è¼¯ï¼Œé¿å…ç¬é–“è¦†è“‹æ–°ä½ç½®
         StopAllCoroutines();
         isSwitchingLeader = true;
 
-        int previousLeaderIndex = currentLeaderIndex; // °O¦í­ì¶¤ªø¯Á¤Ş
-        currentLeaderIndex = (currentLeaderIndex + direction + teamMembers.Count) % teamMembers.Count; // §ó·s¶¤ªø¯Á¤Ş
+        int previousLeaderIndex = currentLeaderIndex; // è¨˜ä½åŸéšŠé•·ç´¢å¼•
+        currentLeaderIndex = (currentLeaderIndex + direction + teamMembers.Count) % teamMembers.Count; // æ›´æ–°éšŠé•·ç´¢å¼•
 
-        // ¨ú±o­ì¶¤ªø»P·s¶¤ªøªº¦ì¸m
+        // å–å¾—åŸéšŠé•·èˆ‡æ–°éšŠé•·çš„ä½ç½®
         Vector3 previousLeaderPos = teamMembers[previousLeaderIndex].transform.position;
         Vector3 newLeaderPos = teamMembers[currentLeaderIndex].transform.position;
-        //«ÊÂê¶¤ªø¥~ªºinput system
+        //å°é–éšŠé•·å¤–çš„input system
         for (int i = 0; i < teamMembers.Count; i++)
         {
             bool isLeader = (i == currentLeaderIndex);
             teamMembers[i].GetComponent<PlayerInput>().enabled = isLeader;
         }
-        // ±Ò°Ê²¾°Ê¨óµ{¡AÅı¨â­Ó¨¤¦â¤¬´«¦ì¸m
+        // å•Ÿå‹•ç§»å‹•å”ç¨‹ï¼Œè®“å…©å€‹è§’è‰²äº’æ›ä½ç½®
         StartCoroutine(SwapPositionSmoothly(teamMembers[previousLeaderIndex], teamMembers[currentLeaderIndex], previousLeaderPos, newLeaderPos));
 
-        Debug.Log("·í«e¥D±±¨¤¦â¡G" + teamMembers[currentLeaderIndex].gameObject.name);
+        Debug.Log("ç•¶å‰ä¸»æ§è§’è‰²ï¼š" + teamMembers[currentLeaderIndex].gameObject.name);
         
     }
-    // Åı¨â­Ó¨¤¦â¥­·Æ¨«¨ì©¼¦¹ªº¦ì¸m
+    // è®“å…©å€‹è§’è‰²å¹³æ»‘èµ°åˆ°å½¼æ­¤çš„ä½ç½®
     private IEnumerator SwapPositionSmoothly(PlayerControlMainWorld oldLeader, PlayerControlMainWorld newLeader, Vector3 oldPos, Vector3 newPos)
     {
         float duration = 0.7f;
         float elapsedTime = 0f;
-        //Àò¨ú¨â¤Hªº°Êµe
+        //ç²å–å…©äººçš„å‹•ç•«
         Animator oldLeaderAnim = oldLeader.GetComponent<Animator>();
         Animator newLeaderAnim = newLeader.GetComponent<Animator>();
 
         while (elapsedTime < duration)
         {
-            // Åı­ì¶¤ªø¤´µM¥i¥H§ó·s°Êµe
+            // è®“åŸéšŠé•·ä»ç„¶å¯ä»¥æ›´æ–°å‹•ç•«
             elapsedTime += Time.deltaTime;
             float t = elapsedTime / duration; // 0 ~ 1
 
-            // ­pºâ³t«×¡A½T«O°ÊµeÄ²µo
+            // è¨ˆç®—é€Ÿåº¦ï¼Œç¢ºä¿å‹•ç•«è§¸ç™¼
             float speed = Vector3.Distance(oldLeader.transform.position, newPos) / Time.deltaTime;
 
             if (oldLeaderAnim) oldLeaderAnim.SetFloat("Speed", speed);
             if (newLeaderAnim) newLeaderAnim.SetFloat("Speed", speed);
-            //0~1´¡´Ó´«¦ì
+            //0~1æ’æ¤æ›ä½
             oldLeader.transform.position = Vector3.Lerp(oldPos, newPos, t);
             newLeader.transform.position = Vector3.Lerp(newPos, oldPos, t);
 
             yield return null;
         }
 
-        // ½T«O³Ì«á°±¤U¨Ó
+        // ç¢ºä¿æœ€å¾Œåœä¸‹ä¾†
         oldLeader.transform.position = newPos;
         newLeader.transform.position = oldPos;
-        //°±¤î°Êµe
+        //åœæ­¢å‹•ç•«
         if (oldLeaderAnim) oldLeaderAnim.SetFloat("Speed", 0);
         if (newLeaderAnim) newLeaderAnim.SetFloat("Speed", 0);
-        // ©µ¿ğ 0.1 ¬í«á¡A½T«O·s¶¤ªø±Ò¥Î¡AÂÂ¶¤ªø¸T¥Î
+        // å»¶é² 0.1 ç§’å¾Œï¼Œç¢ºä¿æ–°éšŠé•·å•Ÿç”¨ï¼ŒèˆŠéšŠé•·ç¦ç”¨
         yield return new WaitForSeconds(0.1f);
-        oldLeader.GetComponent<PlayerControlMainWorld>().enabled = false; // ¥u¸T¥Î PlayerControlMainWorld¡A¦Ó¤£¬O¾ã­Ó GameObject
+        oldLeader.GetComponent<PlayerControlMainWorld>().enabled = false; // åªç¦ç”¨ PlayerControlMainWorldï¼Œè€Œä¸æ˜¯æ•´å€‹ GameObject
         newLeader.GetComponent<PlayerControlMainWorld>().enabled = true;
         isSwitchingLeader = false;
         StartCoroutine(ResumeFollowAfterDelay(0.1f));
     }
-    // ©µ¿ğ±Ò°Ê HandleFollowers¡A½T«O¥æ´«¥Í®Ä
+    // å»¶é²å•Ÿå‹• HandleFollowersï¼Œç¢ºä¿äº¤æ›ç”Ÿæ•ˆ
     private IEnumerator ResumeFollowAfterDelay(float delay)
     {
         yield return new WaitForSeconds(delay);
-        HandleFollowers(); // ­«·s±Ò°Ê¸òÀH
+        HandleFollowers(); // é‡æ–°å•Ÿå‹•è·Ÿéš¨
     }
-    // Åı«D¥D±±¨¤¦â¸òÀH
+    // è®“éä¸»æ§è§’è‰²è·Ÿéš¨
     void HandleFollowers()
     {
         for (int i = 0; i < teamMembers.Count; i++)
         {
             if (i != currentLeaderIndex)
             {
-                //­pºâ¶¤ªø¦ì¸m»P¥Ø¼Ğ¦ì¸m
+                //è¨ˆç®—éšŠé•·ä½ç½®èˆ‡ç›®æ¨™ä½ç½®
                 Vector3 leaderPos = teamMembers[currentLeaderIndex].transform.position;
                 Vector3 targetPos;
-                //¦V¤U½üÂà¤@­Ó¶¤­û
+                //å‘ä¸‹è¼ªè½‰ä¸€å€‹éšŠå“¡
                 if ((currentLeaderIndex + 1 + teamMembers.Count) % teamMembers.Count == i)
                 {
                     targetPos = leaderPos - (leaderPos - teamMembers[i].transform.position).normalized * Mathf.Min(followDistance, (leaderPos - teamMembers[i].transform.position).magnitude);
+
                 }
-                //¦V¤U½üÂà¨â­Ó¶¤­û
+                //å‘ä¸‹è¼ªè½‰å…©å€‹éšŠå“¡
                 else if ((currentLeaderIndex + 2 + teamMembers.Count) % teamMembers.Count == i)
                 {
-                    targetPos = leaderPos - (leaderPos - teamMembers[i].transform.position).normalized * Mathf.Min(followDistance+2, (leaderPos - teamMembers[i].transform.position).magnitude);
+                    targetPos = leaderPos - (leaderPos - teamMembers[i].transform.position).normalized * Mathf.Min(followDistance*2, (leaderPos - teamMembers[i].transform.position).magnitude);
                 }
                 else
                 {
                     targetPos = leaderPos;
                 }
-                // ­pºâ·í«e¶ZÂ÷¡A§PÂ_¬O§_²¾°Ê
+                float zOffset = 0.1f; // å¾®å°åç§»å€¼ï¼Œé¿å…å¡ä½
+                if (teamMembers[i].transform.position.z <= leaderPos.z - zOffset)
+                {
+                    targetPos.z = leaderPos.z + zOffset; // ç¨å¾®å¾€é è™•æ¨
+                }
+                // è¨ˆç®—ç•¶å‰è·é›¢ï¼Œåˆ¤æ–·æ˜¯å¦ç§»å‹•
                 float distance = Vector3.Distance(teamMembers[i].transform.position, targetPos);
-                float speed = distance / Time.deltaTime; // ­pºâ·í«e²¾°Ê³t«×
+                float speed = distance / Time.deltaTime; // è¨ˆç®—ç•¶å‰ç§»å‹•é€Ÿåº¦
 
                 Animator animator = teamMembers[i].GetComponent<Animator>();
                 if (animator != null)
@@ -137,34 +143,80 @@ public class TeamManager : MonoBehaviour
                         SyncIdleAnimation();
                     }
                 }
-                //¥Î¥Ø¼Ğ¦ì¸m»P·í«e¦ì¸m¨M©w´Â¦V
-                bool moveDirection = (targetPos - teamMembers[i].transform.position).x > 0;//true=¦V¥k¡Afalse=¦V¥ª
-                                                                                           // **¤è¦VÅÜ§ó½w½Ä¾÷¨î**
-                float directionThreshold = 0.2f; // ¥u¦³·í¤è¦VÅÜ¤Æ¶W¹L³o­ÓìH­È®É¡A¤~·|Â½Âà
+                //ç”¨ç›®æ¨™ä½ç½®èˆ‡ç•¶å‰ä½ç½®æ±ºå®šæœå‘
+                bool moveDirection = (targetPos - teamMembers[i].transform.position).x > 0;//true=å‘å³ï¼Œfalse=å‘å·¦
+                                                                                           // **æ–¹å‘è®Šæ›´ç·©è¡æ©Ÿåˆ¶**
+                float directionThreshold = 0.2f; // åªæœ‰ç•¶æ–¹å‘è®ŠåŒ–è¶…éé€™å€‹é–¾å€¼æ™‚ï¼Œæ‰æœƒç¿»è½‰
                 if (moveDirection)
                 {
                     if((targetPos - teamMembers[i].transform.position).x >= directionThreshold)
                     {
-                        teamMembers[i].Bone.transform.rotation = Quaternion.Euler(-45, 180, 0); // ´Â¥k
+                        teamMembers[i].Bone.transform.rotation = Quaternion.Euler(-45, 180, 0); // æœå³
                     }
                 }else
                 {
                     if ((targetPos - teamMembers[i].transform.position).x <= directionThreshold)
                     {
-                        teamMembers[i].Bone.transform.rotation = Quaternion.Euler(45, 0, 0); // ´Â¥ª
+                        teamMembers[i].Bone.transform.rotation = Quaternion.Euler(45, 0, 0); // æœå·¦
                     }
                 }
                 teamMembers[i].transform.position = Vector3.Lerp(teamMembers[i].transform.position, targetPos, followSpeed * Time.deltaTime);
             }
         }
     }
-    //¦P¨B¼½©ñ«İ¾÷°Êµe(¥H¶¤ªø®É¶¡¬°·Ç)
+    //å…©å€‹ä¿®æ”¹æ¸²æŸ“é€æ˜åº¦çš„å‡½å¼
+    //public void SetTransparent(PlayerControlMainWorld obj)
+    //{
+    //    var renderers = obj.GetComponentsInChildren<Renderer>();
+    //    foreach (var renderer in renderers)
+    //    {
+    //        foreach (Material mat in renderer.materials)
+    //        {
+    //            mat.SetFloat("_Mode", 2); // Fade
+    //            mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
+    //            mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
+    //            mat.SetInt("_ZWrite", 0);
+    //            mat.DisableKeyword("_ALPHATEST_ON");
+    //            mat.EnableKeyword("_ALPHABLEND_ON");
+    //            mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+    //            mat.renderQueue = 3000;
+
+    //            Color color = mat.color;
+    //            color.a = 0.3f;
+    //            mat.color = color;
+    //        }
+    //    }
+    //}
+    //public void SetOpaque(PlayerControlMainWorld obj)
+    //{
+    //    var renderers = obj.GetComponentsInChildren<Renderer>();
+    //    foreach (var renderer in renderers)
+    //    {
+    //        foreach (Material mat in renderer.materials)
+    //        {
+    //            mat.SetFloat("_Mode", 0); // Opaque
+    //            mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
+    //            mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
+    //            mat.SetInt("_ZWrite", 1);
+    //            mat.DisableKeyword("_ALPHATEST_ON");
+    //            mat.DisableKeyword("_ALPHABLEND_ON");
+    //            mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
+    //            mat.renderQueue = -1;
+
+    //            Color color = mat.color;
+    //            color.a = 1f;
+    //            mat.color = color;
+    //        }
+    //    }
+    //}
+
+    //åŒæ­¥æ’­æ”¾å¾…æ©Ÿå‹•ç•«(ä»¥éšŠé•·æ™‚é–“ç‚ºæº–)
     void SyncIdleAnimation()
     {
         if (isSwitchingLeader != true)
         {
             Animator leaderAnimator = teamMembers[currentLeaderIndex].GetComponent<Animator>();
-            float idleTime = leaderAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1; // ¨ú±o¶¤ªø Idle °Êµe¶i«×
+            float idleTime = leaderAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1; // å–å¾—éšŠé•· Idle å‹•ç•«é€²åº¦
 
             foreach (var member in teamMembers)
             {
@@ -173,12 +225,12 @@ public class TeamManager : MonoBehaviour
                 if (member != teamMembers[currentLeaderIndex] && stateInfo.tagHash == Animator.StringToHash("Idle"))
                 {
                     int IdleAnimationName = stateInfo.shortNameHash;
-                    memberAnimator.Play(IdleAnimationName, 0, idleTime); // Åı©Ò¦³¤H±q¶¤ªøªº®É¶¡ÂI¶}©l¼½©ñ
+                    memberAnimator.Play(IdleAnimationName, 0, idleTime); // è®“æ‰€æœ‰äººå¾éšŠé•·çš„æ™‚é–“é»é–‹å§‹æ’­æ”¾
                 }
             }
         }    
     }
-    //§ó´«´è¬V±Æ§Ç¤è¦¡
+    //æ›´æ›æ¸²æŸ“æ’åºæ–¹å¼
     void UpdateSortingOrder()
     {
         foreach (var member in teamMembers)
@@ -191,7 +243,7 @@ public class TeamManager : MonoBehaviour
         }
     }
     [ContextMenu("switch")]
-    // ¤Á´«¨¤¦â
+    // åˆ‡æ›è§’è‰²
     void UpdateInput()
     {
         SwitchLeader(1);

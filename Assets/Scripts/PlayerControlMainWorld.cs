@@ -2,41 +2,42 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.U2D.Animation;
 
 public class PlayerControlMainWorld : MonoBehaviour
 {
-    public int itemOnHandIndex=0;//¥Î¼Æ¦rªí¥Ü·í«e«ù¦³ªº¹D¨ã¡A0¬°µL¹D¨ã
-    public Dictionary<int, GameObject> tools = new Dictionary<int, GameObject>(); // ¤u¨ã¹ïÀ³ªí
-    public Dictionary<int, string> toolAnimations = new Dictionary<int, string>(); // ¤u¨ã¹ïÀ³°Êµe
-    // ¾Ş§@»P°Êµe
-    public Animator animator;//¸j©w¨¤¦â°Êµe
-    private Vector2 moveInput; // Àx¦s Move Action ªº¿é¤J
-    public bool faceDirection = false;//true­±¦V¥k¡Afalse­±¬Û¥ª
+
+    public int itemOnHandIndex=0;//ç”¨æ•¸å­—è¡¨ç¤ºç•¶å‰æŒæœ‰çš„é“å…·ï¼Œ0ç‚ºç„¡é“å…·
+    public SpriteResolver toolSpriteResolver; // å·¥å…·çš„ Sprite Resolver å…ƒä»¶
+    public Dictionary<int, string> tools = new Dictionary<int,string>(); // å·¥å…·å°æ‡‰Sprite Resolverçš„tagè¡¨å–®
+    public Dictionary<int, string> toolAnimations = new Dictionary<int, string>();// å·¥å…·å°æ‡‰å‹•ç•«çš„åç¨±è¡¨å–®
+    // æ“ä½œèˆ‡å‹•ç•«
+    public Animator animator;//ç¶å®šè§’è‰²å‹•ç•«
+    private Vector2 moveInput; // å„²å­˜ Move Action çš„è¼¸å…¥
+    public bool faceDirection = false;//trueé¢å‘å³ï¼Œfalseé¢ç›¸å·¦
     public float moveSpeed = 1f;
     public Transform Bone;
-    //³]©wªì©l¥i¾Ş§@¨¤¦â
+    //è¨­å®šåˆå§‹å¯æ“ä½œè§’è‰²
     void Start()
     {
-        // ªì©l¤Æ¤u¨ã->¸j©wtools¦r¨å (½Ğ½T«O³o¨Çª«¥ó¤w¸g±¾¦b¨¤¦â°©¬[¤W)
-        if (Bone != null)
-        {
-            tools[0] = null;
-            tools[1] = Bone.Find("Tool")?.gameObject;
-        }
-        // ªì©l¤Æ¤u¨ã¹ïÀ³ªº°Êµe->¸j©wtoolAnimations¦r¨å
+        //åˆå§‹åŒ–å·¥å…·å°æ‡‰çš„åœ–æ¨£tag->ç¶å®štoolAnimationså­—å…¸
+        tools[0] = "None";
+        tools[1] = "Hoe";
+        tools[2] = "WateringCan";
+        // åˆå§‹åŒ–å·¥å…·å°æ‡‰çš„å‹•ç•«->ç¶å®štoolAnimationså­—å…¸
         toolAnimations[0] = null;
         toolAnimations[1] = "THoe";
-        SetItemOnHandIndex(0);//­«¨î¬°¥¼«ùª¬ºA
-        //¦pªG¦Û¤v¤£¬O¶¤ªø´N¤£±Ò°Ê
+        SetItemOnHandIndex(0);//é‡åˆ¶ç‚ºæœªæŒç‹€æ…‹
+        //å¦‚æœè‡ªå·±ä¸æ˜¯éšŠé•·å°±ä¸å•Ÿå‹•
         if (this != FindObjectOfType<TeamManager>().teamMembers[0])
         {
-            this.enabled = false; // ¥u¦³²Ä¤@­Ó¨¤¦â¹w³]¥i°Ê
+            this.enabled = false; // åªæœ‰ç¬¬ä¸€å€‹è§’è‰²é è¨­å¯å‹•
         }
     }
     void Update()
     {
-        // ¨Ï¥Î moveInput ±±¨î¨¤¦â©Î¨ä¥L¦æ¬°
-        //²¾°Ê
+        // ä½¿ç”¨ moveInput æ§åˆ¶è§’è‰²æˆ–å…¶ä»–è¡Œç‚º
+        //ç§»å‹•
         if (moveInput != new Vector2(0, 0))
         {
             animator.SetFloat("Speed", 60f);
@@ -46,15 +47,15 @@ public class PlayerControlMainWorld : MonoBehaviour
         {
             animator.SetFloat("Speed", 0);
         }
-        //¨M©w­±¦V
-        // ¨Ï¥Î Y ¶b±ÛÂà¨ÓÂ½Âà¨¤¦â
+        //æ±ºå®šé¢å‘
+        // ä½¿ç”¨ Y è»¸æ—‹è½‰ä¾†ç¿»è½‰è§’è‰²
         if (!faceDirection)
         {
-            Bone.transform.rotation = Quaternion.Euler(45, 0, 0);  // ´Â¥ª
+            Bone.transform.rotation = Quaternion.Euler(45, 0, 0);  // æœå·¦
         }
         else
         {
-            Bone.transform.rotation = Quaternion.Euler(-45, 180, 0); // ´Â¥k
+            Bone.transform.rotation = Quaternion.Euler(-45, 180, 0); // æœå³
         }
     }
     public void SetItemOnHandIndex(int targetItem)
@@ -62,33 +63,24 @@ public class PlayerControlMainWorld : MonoBehaviour
         itemOnHandIndex = targetItem;
         UpdateToolVisibility();
     }
-    //®Ú¾ÚitemOnHandIndex½Õ¾ã¤u¨ã¥i¨£©Ê
+    //æ ¹æ“šitemOnHandIndexèª¿æ•´å·¥å…·å¯è¦‹æ€§
     private void UpdateToolVisibility()
     {
-        // ÁôÂÃ©Ò¦³¤u¨ã
-        foreach (var tool in tools.Values)
-        {
-            if (tool != null) tool.SetActive(false);
-        }
-        // Åã¥Ü·í«e¿ï¾Üªº¤u¨ã
-        if (tools.ContainsKey(itemOnHandIndex) && tools[itemOnHandIndex] != null)
-        {
-            tools[itemOnHandIndex].SetActive(true);
-        }
+        toolSpriteResolver.SetCategoryAndLabel("Tool", tools[itemOnHandIndex]);
+        Debug.Log("switch to" + tools[itemOnHandIndex]);
     }
     public void OnSwitchItem(InputAction.CallbackContext context)
     {
-        // ·í«öÁä³Q«ö¤U©ÎÄÀ©ñ®ÉÅª¨ú¿é¤J
+        // ç•¶æŒ‰éµè¢«æŒ‰ä¸‹æˆ–é‡‹æ”¾æ™‚è®€å–è¼¸å…¥
         if (context.performed)
         {
-            Debug.Log("´«¹D¨ã");
-            int newIndex=itemOnHandIndex == 0 ? 1 : 0;
-            SetItemOnHandIndex(newIndex);
+            itemOnHandIndex = (itemOnHandIndex + 1 )% 3;
+            SetItemOnHandIndex(itemOnHandIndex);
         }
     }
     public void OnMove(InputAction.CallbackContext context)
     {
-        // ·í«öÁä³Q«ö¤U©ÎÄÀ©ñ®ÉÅª¨ú¿é¤J
+        // ç•¶æŒ‰éµè¢«æŒ‰ä¸‹æˆ–é‡‹æ”¾æ™‚è®€å–è¼¸å…¥
         moveInput = context.ReadValue<Vector2>();
         if (context.ReadValue<Vector2>().x > 0)
         {
@@ -107,7 +99,7 @@ public class PlayerControlMainWorld : MonoBehaviour
     {
         if (context.performed)
         {
-            float interactRadius = 1.8f; // ¤¬°Ê½d³ò
+            float interactRadius = 1.8f; // äº’å‹•ç¯„åœ
             float sphereOffset;
             if (!faceDirection) {
                 sphereOffset = -1;
@@ -116,36 +108,36 @@ public class PlayerControlMainWorld : MonoBehaviour
             {
                 sphereOffset = 1;
             }
-            //¥Í¦¨¤@­Ó¤¬°Ê°é
+            //ç”Ÿæˆä¸€å€‹äº’å‹•åœˆ
             Collider[] hits = Physics.OverlapSphere(transform.position+new Vector3(sphereOffset, interactRadius, 0), interactRadius);
-            //¤¬°Ê°é¤¤Â÷§A³Ìªñªºª«¥ó¤¬°Ê
+            //äº’å‹•åœˆä¸­é›¢ä½ æœ€è¿‘çš„ç‰©ä»¶äº’å‹•
             foreach (Collider hit in hits)
             {
                 IInteractable interactable = hit.GetComponent<IInteractable>();
 
                 if (interactable != null)
                 {
-                    // **°±¤î²¾°Ê**
+                    // **åœæ­¢ç§»å‹•**
                     moveInput = Vector2.zero;
                     animator.SetFloat("Speed", 0);
-                    // **¼·©ñ°Êµe**
+                    // **æ’¥æ”¾å‹•ç•«**
                     if (toolAnimations.ContainsKey(itemOnHandIndex))
                     {
                         animator.SetTrigger(toolAnimations[itemOnHandIndex]);
                         interactable.Interact(itemOnHandIndex);
                     }
-                    Debug.Log("»P " + hit.gameObject.name + " ¤¬°Ê"+ toolAnimations[itemOnHandIndex]);
-                    return; // ¥u»P³Ìªñªºª«¥ó¤¬°Ê
+                    Debug.Log("èˆ‡ " + hit.gameObject.name + " äº’å‹•"+ toolAnimations[itemOnHandIndex]);
+                    return; // åªèˆ‡æœ€è¿‘çš„ç‰©ä»¶äº’å‹•
                 }
             }
 
-            Debug.Log("ªşªñ¨S¦³¥i¤¬°Êªºª«¥ó");
+            Debug.Log("é™„è¿‘æ²’æœ‰å¯äº’å‹•çš„ç‰©ä»¶");
         }
     }
-    //¥iµø¤Æ¤¬°Ê°Ï
+    //å¯è¦–åŒ–äº’å‹•å€
     void OnDrawGizmos()
     {
-        float interactRadius = 1.8f; // ¤¬°Ê½d³ò
+        float interactRadius = 1.8f; // äº’å‹•ç¯„åœ
         float sphereOffset;
         if (!faceDirection)
         {
@@ -155,9 +147,9 @@ public class PlayerControlMainWorld : MonoBehaviour
         {
             sphereOffset = 1;
         }
-        // ³]©wÃC¦â
+        // è¨­å®šé¡è‰²
         Gizmos.color = Color.green;
-        // µe¥X¤@­Ó²y¡A¥Nªí¤¬°Ê½d³ò
+        // ç•«å‡ºä¸€å€‹çƒï¼Œä»£è¡¨äº’å‹•ç¯„åœ
         Gizmos.DrawWireSphere(transform.position + new Vector3(sphereOffset, interactRadius, 0), interactRadius);
     }
 }

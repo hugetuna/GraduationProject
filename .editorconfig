@@ -1,0 +1,32 @@
+# 類似 .gitignore，要放在專案根目錄
+# 編輯器若支援（VS、VS Code、Rider...）會自動套用設定
+
+root = true
+
+# 所有檔案通用設定
+[*]
+charset = utf-8          # 強制使用 UTF-8 編碼（支援中文）
+end_of_line = lf         # 換行符為 LF（推薦跨平台使用）
+insert_final_newline = true
+trim_trailing_whitespace = true
+
+# C# 專用設定
+[*.cs]
+indent_style = space
+indent_size = 4          # 空白縮排 4 格
+charset = utf-8
+
+# YAML（像是 Unity 的 .meta、場景等）
+[*.{yaml,yml}]
+indent_style = space
+indent_size = 2
+
+# JSON 檔案
+[*.json]
+indent_style = space
+indent_size = 2
+
+# Shader 檔案
+[*.shader]
+indent_style = space
+indent_size = 4

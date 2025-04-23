@@ -9,6 +9,10 @@ public class OrderSet : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        UpdateSortingOrder();
+    }
+    public void UpdateSortingOrder()
+    {
         sortingGroup.sortingOrder = Mathf.RoundToInt(-transform.position.z * 100);
     }
 }

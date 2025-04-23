@@ -1,69 +1,73 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class Soil : MonoBehaviour, IInteractable
 {
-    public bool isPlantable = false; // ¬O§_¥i¥HºØ´Ó
-    public bool isPlanting = false;//¬O§_¦bºØ´Ó¤¤
-    public Transform seedSpawnPoint; // ºØ¤lªº¥Í¦¨¦ì¸m
+    public bool isPlantable = false; // æ˜¯å¦å¯ä»¥ç¨®æ¤
+    public bool isPlanting = false;//æ˜¯å¦åœ¨ç¨®æ¤ä¸­
+    public Transform seedSpawnPoint; // ç¨®å­çš„ç”Ÿæˆä½ç½®
     public float yOffSet=1.5f;
-    public GameObject[] seedPrefabs; // Àx¦s¤£¦PºØÃşªººØ¤l¹w»sÅé
-    public SeedInstanceScript seedOnThisSoil;//Àx¦s¤@­Ó³QºØ´ÓªººØ¤lªº°Æ¥»
-    //Â½¤g
+    public GameObject[] seedPrefabs; // å„²å­˜ä¸åŒç¨®é¡çš„ç¨®å­é è£½é«”
+    public SeedInstanceScript seedOnThisSoil;//å„²å­˜ä¸€å€‹è¢«ç¨®æ¤çš„ç¨®å­çš„å‰¯æœ¬
+    public OrderSet orderSeter;
+    //ç¿»åœŸ
     public void TurnTheSoil()
     {
         if(isPlanting == false && isPlantable == false)
         {
             isPlantable = true;
-            Debug.Log("Â½¤g!");
+            Debug.Log("ç¿»åœŸ!");
         }
         else
         {
-            Debug.Log("¦¹¦a¶ô¤wÂ½¹L¤g©Î¥¿¦bºØ´Ó");
+            Debug.Log("æ­¤åœ°å¡Šå·²ç¿»éåœŸæˆ–æ­£åœ¨ç¨®æ¤");
         }
     }
-    //ºØ¤@­ÓºØ¤l
+    //ç¨®ä¸€å€‹ç¨®å­
     public void PlantSeed(int seedIndex)
     {
         if (!isPlantable)
         {
-            Debug.Log("³o¶ô¤g¦aÁÙ¤£¯àºØ´Ó¡I");
+            Debug.Log("é€™å¡ŠåœŸåœ°é‚„ä¸èƒ½ç¨®æ¤ï¼");
             return;
         }
         if (seedIndex < 0 || seedIndex >= seedPrefabs.Length)
         {
-            Debug.Log("µL®ÄªººØ¤lºØÃş¡I");
+            Debug.Log("ç„¡æ•ˆçš„ç¨®å­ç¨®é¡ï¼");
             return;
         }
-        // ¦b«ü©w¦ì¸m¥Í¦¨ºØ¤l
+        // åœ¨æŒ‡å®šä½ç½®ç”Ÿæˆç¨®å­
         Vector3 realSpawnPoint = seedSpawnPoint.position + new Vector3(0, yOffSet, 0);
         Quaternion rotation = Quaternion.Euler(45f, 0f, 0f);
         seedOnThisSoil =Instantiate(seedPrefabs[seedIndex], realSpawnPoint, rotation).GetComponent<SeedInstanceScript>();
-        //§ï¤j¤p
+        seedOnThisSoil.transform.position += new Vector3(0, 0, 0.5f);
+        seedOnThisSoil.GetComponent<SortingGroup>().sortingOrder= Mathf.RoundToInt(-transform.position.z * 100)+10;
+        //æ”¹å¤§å°
         //seedOnThisSoil.transform.localScale = seedOnThisSoil.transform.localScale * 0.5f;
-        isPlantable = false; // ¼Ğ°O³o¶ô¤g¦a¤w¸g³QºØ´Ó
+        isPlantable = false; // æ¨™è¨˜é€™å¡ŠåœŸåœ°å·²ç¶“è¢«ç¨®æ¤
         isPlanting = true;
     }
-    void IInteractable.Interact(int toolType) // ¤¬°Ê¦æ¬°
+    void IInteractable.Interact(int toolType) // äº’å‹•è¡Œç‚º
     {
-        //TODO:°l¥[¤u¨ã¤Ï¬M
-        //¥¼³B©óºØ´Óª¬ºA¥B¤£¥iºØ´Ó->Â½¤g(¨Ï¥Î¾SÀYtool==1)
+        //TODO:è¿½åŠ å·¥å…·åæ˜ 
+        //æœªè™•æ–¼ç¨®æ¤ç‹€æ…‹ä¸”ä¸å¯ç¨®æ¤->ç¿»åœŸ(ä½¿ç”¨é‹¤é ­tool==1)
         if(isPlanting == false && isPlantable == false && toolType==1)
         {
             TurnTheSoil();
         }
-        //¥¼³B©óºØ´Óª¬ºA¥B¥iºØ´Ó->ºØ´Ó
+        //æœªè™•æ–¼ç¨®æ¤ç‹€æ…‹ä¸”å¯ç¨®æ¤->ç¨®æ¤
         else if (isPlanting == false && isPlantable == true)
         {
-            PlantSeed(1);
+            PlantSeed(1); 
         }
-        //ºØ´Ó¤¤¡A¦ı¦¨ªø¥¼º¡->¼å¤ô
+        //ç¨®æ¤ä¸­ï¼Œä½†æˆé•·æœªæ»¿->æ¾†æ°´
         else if (isPlanting == true && isPlantable == false && seedOnThisSoil.GetDaysGrown()< seedOnThisSoil.seedData.growthDays)
         {
             seedOnThisSoil.GetComponent<SeedInstanceScript>().Water();
         }
-        //ºØ´Ó¤¤¡A¦ı¦¨ªø¥Hº¡->¦¬³Î
+        //ç¨®æ¤ä¸­ï¼Œä½†æˆé•·ä»¥æ»¿->æ”¶å‰²
         else if (isPlanting == true && isPlantable == false && seedOnThisSoil.GetDaysGrown() == seedOnThisSoil.seedData.growthDays)
         {
             seedOnThisSoil.GetComponent<SeedInstanceScript>().Harvest();

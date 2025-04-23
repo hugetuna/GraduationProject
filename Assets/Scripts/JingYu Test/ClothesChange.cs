@@ -18,7 +18,8 @@ public class ClothesChange : MonoBehaviour
     void Update()
     {
         if(Input.GetKeyDown(KeyCode.Q)){
-            foreach (var resolver in FindObjectsOfType<SpriteResolver>()){
+            foreach (var resolver in spriteResolvers)
+            {
                 resolver.SetCategoryAndLabel(resolver.GetCategory(),"clo1");
             }
         }
