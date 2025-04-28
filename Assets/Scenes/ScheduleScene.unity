@@ -293,6 +293,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4782329735121765458, guid: fe7419af4a455bc498a18b5c8fb526dc, type: 3}
+      propertyPath: teamData
+      value: 
+      objectReference: {fileID: 11400000, guid: c688100d42d39cb4fa20abfeb7eaaa3d, type: 2}
+    - target: {fileID: 4782329735121765458, guid: fe7419af4a455bc498a18b5c8fb526dc, type: 3}
       propertyPath: teamMembers.Array.size
       value: 3
       objectReference: {fileID: 0}
@@ -693,12 +697,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   trainingUI: {fileID: 5139737746453985310, guid: 75fbc938001d38f439eed78413da4ccb, type: 3}
   teamManager: {fileID: 1104557379}
-  teamMembers: []
-  characterImages: []
   characterSprites:
   - {fileID: 21300000, guid: 0099ecf598c388c40b54043fdf68a403, type: 3}
   - {fileID: 21300000, guid: 30f2ce5d3c7c0e444a2738948ccb8a7a, type: 3}
   - {fileID: 21300000, guid: c82fa3f448ef1ee48b81cc25f8eb2bef, type: 3}
+  teamUIData: {fileID: 11400000, guid: dd34e70a3c0fdf04392b0bbab22440b6, type: 2}
 --- !u!4 &1545418303
 Transform:
   m_ObjectHideFlags: 0
@@ -1188,10 +1191,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas_Training
       objectReference: {fileID: 0}
-    - target: {fileID: 6456144745308461269, guid: 75fbc938001d38f439eed78413da4ccb, type: 3}
-      propertyPath: m_Camera
-      value: 
-      objectReference: {fileID: 1034393177}
+    - target: {fileID: 5139737746453985310, guid: 75fbc938001d38f439eed78413da4ccb, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8078654021755882354, guid: 75fbc938001d38f439eed78413da4ccb, type: 3}
       propertyPath: m_Pivot.x
       value: 0

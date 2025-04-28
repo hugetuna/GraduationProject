@@ -9,7 +9,7 @@ public class DropZone : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 
     public RectTransform myPos;
 
-    private void Awake()
+    private void Start()
     {
         myPos = GetComponent<RectTransform>();
     }

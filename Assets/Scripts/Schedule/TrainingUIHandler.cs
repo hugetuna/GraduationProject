@@ -10,15 +10,22 @@ public class TrainingUIHandler : MonoBehaviour
     private GameObject trainingUIInstance = null; // 記錄被生成的訓練 UI
 
     public TeamManager teamManager; // 透過 TeamManager 物件取得當前隊伍成員
-    [SerializeField] private List<PlayerControlMainWorld> teamMembers = new(); // 記錄取得的隊伍成員
-    [SerializeField] private Image[] characterImages; // 顯示在 UI 上的（角色）圖片
-    [SerializeField] private Sprite[] characterSprites; // 角色圖片來源
-    [SerializeField] private Dictionary<string, Sprite> characterSpriteDict; // 角色名稱與圖片來源的對照表
+    private List<PlayerControlMainWorld> teamMembers = new(); // 記錄取得的隊伍成員
+    private Image[] characterImages; // 顯示在 UI 上的（角色）圖片
+    public Sprite[] characterSprites; // 角色 UI 圖片來源（檔案資料夾）
+    private Dictionary<string, Sprite> characterSpriteDict; // 角色名稱與圖片來源的對照表
 
-
-
+    public TeamUIData teamUIData; // 將隊伍 UI 資料寫入 ScriptableObject
+    
     void Start()
     {
+        if(teamUIData != null){
+            teamUIData.Reset(); // 重置 ScriptableObject 的資料
+        }
+        else{
+            Debug.LogError("TrainingUIHandler讀不到TeamUIData的資料");
+        }
+        
         DoorInteraction.OnDoorInteracted += ShowTrainingUI; // 訂閱並監聽事件
 
         characterSpriteDict = new() { // 建立對照表內容
@@ -26,6 +33,7 @@ public class TrainingUIHandler : MonoBehaviour
             { "Karo", characterSprites[1] },
             { "Sirius", characterSprites[2] },
         };
+        teamUIData.characterSpriteDict = characterSpriteDict;
     }
 
     void Update()
@@ -72,6 +80,8 @@ public class TrainingUIHandler : MonoBehaviour
             {
                 characterImages[i].sprite = characterSpriteDict[memberName]; // 指派圖片來源
             }
+
+            teamUIData.teamMembers.Add(memberName);
         }
     }
 

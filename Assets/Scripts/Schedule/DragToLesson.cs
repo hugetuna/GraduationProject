@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using UnityEngine.EventSystems; // UI 和物件的拖曳寫法不同
 
@@ -12,11 +13,46 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     private CanvasGroup canvasGroup;
     private Vector3 dropOffset = new(0, -5.0f, 0);
 
-    private void Awake()
+    public TeamUIData teamUIData;  // 透過 ScriptableObject 取得當前隊伍 UI 資料
+    private List<string> teamMembers;
+    private List<string> teamTrainees;
+    private UnityEngine.UI.Image image;
+    private string myName;
+
+    private void Start()
     {
-        rectTransform = GetComponent<RectTransform>(); // 取得自己的位置
+        rectTransform = GetComponent<RectTransform>(); // 取得角色 UI 自己的位置
         canvas = GetComponentInParent<Canvas>(); // 取得自己所在的畫布
         canvasGroup = GetComponent<CanvasGroup>(); // 取得 CanvasGroup，方便後面使用
+
+        teamMembers = teamUIData.teamMembers;
+        teamTrainees = teamUIData.teamTrainees;
+        image = GetComponent<UnityEngine.UI.Image>();
+        myName = image.sprite.name; // 取得該角色的來源圖片名稱（不含副檔名）
+    }
+
+    private void Update()
+    {
+        // 判斷該角色 UI 目前在 Member 區還是 Trainee 區
+        if (lastDropZone != null)
+        {
+            if (lastDropZone.gameObject.name.Contains("m"))
+            {
+                if(!teamMembers.Contains(myName))
+                {
+                    teamMembers.Add(myName); // 將該角色列入當前隊伍
+                    teamTrainees.Remove(myName); // 並移出訓練名單
+                }
+            }
+            else if (lastDropZone.gameObject.name.Contains("t"))
+            {
+                if(!teamTrainees.Contains(myName))
+                {
+                    teamTrainees.Add(myName); // 將該角色列入訓練名單
+                    teamMembers.Remove(myName); // 並移出當前隊伍
+                }
+            }
+        }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
