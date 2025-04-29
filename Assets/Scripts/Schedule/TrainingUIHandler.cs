@@ -21,12 +21,14 @@ public class TrainingUIHandler : MonoBehaviour
     {
         if(teamUIData != null){
             teamUIData.Reset(); // 重置 ScriptableObject 的資料
+            Debug.Log("TeamUIData 已重置");
         }
         else{
-            Debug.LogError("TrainingUIHandler讀不到TeamUIData的資料");
+            Debug.Log("讀不到 TeamUIData 的資料");
         }
         
-        DoorInteraction.OnDoorInteracted += ShowTrainingUI; // 訂閱並監聽事件
+        DoorInteraction.OnDoorInteracted += ShowTrainingUI; // 訂閱並監聽與門互動事件
+        ScheduleManager.OnChangeDay += EndThisDay; // 訂閱並監聽切換天數事件
 
         characterSpriteDict = new() { // 建立對照表內容
             { "Kuma", characterSprites[0] },
@@ -42,7 +44,7 @@ public class TrainingUIHandler : MonoBehaviour
         {
             if (!IsCursorClickUIObject() && trainingUIInstance != null) // 點擊非 UI 區域時關閉 UI
             {
-                Debug.Log("點擊訓練 UI 以外的地方以關閉介面");
+                Debug.Log("關閉訓練 UI");
                 trainingUIInstance.SetActive(false);
             }
         }
@@ -50,7 +52,13 @@ public class TrainingUIHandler : MonoBehaviour
 
     void OnDestroy()
     {
-        DoorInteraction.OnDoorInteracted += ShowTrainingUI; // 取消訂閱事件
+        DoorInteraction.OnDoorInteracted -= ShowTrainingUI; // 取消訂閱與門互動事件
+        ScheduleManager.OnChangeDay -= EndThisDay; // 取消訂閱切換天數事件
+    }
+
+    private void EndThisDay(){
+        Destroy(trainingUIInstance); // 銷毀訓練 UI 實例
+        teamUIData.ResetTeam(); // 重置 ScriptableObject 的資料（不含 characterSpriteDict）
     }
 
     private void ShowTrainingUI()
@@ -58,7 +66,7 @@ public class TrainingUIHandler : MonoBehaviour
         Debug.Log("開啟訓練 UI");
         if (trainingUIInstance == null)
         {
-            trainingUIInstance = Instantiate(trainingUI); // （每日結算時再進行銷毀）
+            trainingUIInstance = Instantiate(trainingUI); // 切換天數時再進行銷毀
         }
         else
         {
@@ -81,7 +89,7 @@ public class TrainingUIHandler : MonoBehaviour
                 characterImages[i].sprite = characterSpriteDict[memberName]; // 指派圖片來源
             }
 
-            teamUIData.teamMembers.Add(memberName);
+            if(!teamUIData.teamMembers.Contains(memberName)) teamUIData.teamMembers.Add(memberName);
         }
     }
 
