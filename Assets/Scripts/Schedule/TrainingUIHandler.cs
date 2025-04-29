@@ -58,6 +58,10 @@ public class TrainingUIHandler : MonoBehaviour
 
     private void EndThisDay(){
         Destroy(trainingUIInstance); // 銷毀訓練 UI 實例
+        foreach (var character in ScheduleManager.disappearCharacters) 
+        {
+            character.SetActive(true); // 回復隱藏並停用的隊伍成員
+        }
         teamUIData.ResetTeam(); // 重置 ScriptableObject 的資料（不含 characterSpriteDict）
     }
 

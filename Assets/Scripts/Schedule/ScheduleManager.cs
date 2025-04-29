@@ -14,7 +14,9 @@ public class ScheduleManager : MonoBehaviour
     public bool isWithTeacher = false; // 是否有老師協助訓練，預設為無
     public string trainingType = "Dance"; // 訓練類型，預設為舞蹈訓練
     public float danceTrainingEffect = 1.0f; // 額外訓練效果（之後會再從 IdolInstance 讀進來）
-    private bool isSettled = false; // 是否已經結算過訓練
+    public static bool isSettled = false; // 是否已經結算過訓練
+    public static List<GameObject> disappearCharacters = new(); // 訓練結算後隱藏的角色物件
+    public TeamManager teamManager; // 透過 TeamManager 物件取得當前隊長
 
 
     void Start() // 可以在開始遊戲時初始化，或每次遊戲結束時進行保存
@@ -51,7 +53,13 @@ public class ScheduleManager : MonoBehaviour
                             idolInstance.dance += (int)(60 * danceTrainingEffect);
                         }
                     }
-
+                    var playerControlMainWorld = character.GetComponent<PlayerControlMainWorld>();
+                    if(teamManager.teamMembers.IndexOf(playerControlMainWorld) == teamManager.currentLeaderIndex){
+                        // 如果該角色剛好是隊長，就先將隊長切換成下一位（不然隊長消失後隊伍會動不了）
+                        teamManager.SwitchLeader(1);
+                    }
+                    disappearCharacters.Add(character);
+                    character.SetActive(false); // 隱藏並停用角色物件（等同於從隊伍中消失）
                 }
             }
             isSettled = true; // 設定為已結算
