@@ -179,6 +179,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemOnHandIndex: 0
+  toolSpriteResolver: {fileID: 2501474872103217391}
   animator: {fileID: 5533964936063946770}
   faceDirection: 0
   moveSpeed: 5
@@ -255,7 +256,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c29cff538c195c249b69c6f2236de67b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_Library: []
+  m_Library:
+  - m_Name: Tool
+    m_Hash: 0
+    m_CategoryList:
+    - m_Name: None
+      m_Hash: 0
+      m_Sprite: {fileID: 0}
   m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: ab81952d83f071f4aa58ba09f558ba44, type: 3}
 --- !u!114 &231548468893984783
 MonoBehaviour:

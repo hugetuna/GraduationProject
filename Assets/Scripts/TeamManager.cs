@@ -134,7 +134,7 @@ public class TeamManager : MonoBehaviour
                 if (animator != null)
                 {
                     animator.SetFloat("Speed", speed);
-                    if (speed > 20f)
+                    if (speed > 10f)
                     {
                         animator.SetFloat("Speed", speed);
                     }
