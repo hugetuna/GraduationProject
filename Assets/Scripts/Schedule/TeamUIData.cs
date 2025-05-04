@@ -15,5 +15,10 @@ public class TeamUIData : ScriptableObject
         teamTrainees.Clear();
         characterSpriteDict.Clear();
     }
+    public void ResetTeam()
+    {
+        teamMembers.Clear();
+        teamTrainees.Clear();
+    }
 
 }
