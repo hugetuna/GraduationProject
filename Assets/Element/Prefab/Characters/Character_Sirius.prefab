@@ -18,7 +18,7 @@ GameObject:
   - component: {fileID: 5604280997204760862}
   m_Layer: 3
   m_Name: Character_Sirius
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -154,7 +154,11 @@ MonoBehaviour:
   vocal: 0
   dance: 0
   visual: 0
+  voTrainingBonus: 0
+  daTrainingBonus: 0
+  viTrainingBonus: 0
   charm: 0
+  charmInCount: 0
   performance: 0
   vigour: 0
   vigourMax: 0
@@ -173,6 +177,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemOnHandIndex: 0
+  toolSpriteResolver: {fileID: 0}
   animator: {fileID: 4613899073723956120}
   faceDirection: 0
   moveSpeed: 5

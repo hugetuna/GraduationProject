@@ -12,6 +12,20 @@ public class Soil : MonoBehaviour, IInteractable
     public GameObject[] seedPrefabs; // 儲存不同種類的種子預製體
     public SeedInstanceScript seedOnThisSoil;//儲存一個被種植的種子的副本
     public OrderSet orderSeter;
+    //根據名子找到public GameObject[] seedPrefabs;的預製件
+    public int findSeedIndex(string name)
+    {
+        int i = 0;
+        foreach (var seedPrefab in seedPrefabs)
+        {
+            if (name == seedPrefab.GetComponent<SeedInstanceScript>().seedData.name)
+            {
+                return i;
+            }
+            i++;
+        }
+        return 0;
+    }
     //翻土
     public void TurnTheSoil()
     {

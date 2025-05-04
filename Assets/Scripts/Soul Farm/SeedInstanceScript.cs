@@ -4,24 +4,24 @@ using UnityEngine;
 
 public class SeedInstanceScript : MonoBehaviour
 {
-    public SoulSeed seedData;  // °Ñ¦Ò ScriptableObject
-    [SerializeField] private int daysGrown = 0; // ¤w¸g¦¨ªøªº¤Ñ¼Æ
-    [SerializeField] private bool wateredToday = false;//¤µ¤Ñ¼å¤ô¤F¨S
+    public SoulSeed seedData;  // åƒè€ƒ ScriptableObject
+    [SerializeField] private int daysGrown = 0; // å·²ç¶“æˆé•·çš„å¤©æ•¸
+    [SerializeField] private bool wateredToday = false;//ä»Šå¤©æ¾†æ°´äº†æ²’
     [SerializeField] private int currentRewardPoint;
-    //µøÄ±ºŞ²z
-    public List<Sprite> growthSprites; // ¦¨ªø¹Lµ{ªº¹Ï¹³(§Ú¨S¦³³]­p¨¾§b¡A½Ğ°O±o¥Ø«e¥u¯à¶ë¤TºØ)
-    public SpriteRenderer spriteRenderer; // ¥Î¨ÓÅã¥Ü¹Ï¤ùªº²Õ¥ó
+    //è¦–è¦ºç®¡ç†
+    public List<Sprite> growthSprites; // æˆé•·éç¨‹çš„åœ–åƒ(æˆ‘æ²’æœ‰è¨­è¨ˆé˜²å‘†ï¼Œè«‹è¨˜å¾—ç›®å‰åªèƒ½å¡ä¸‰ç¨®)
+    public SpriteRenderer spriteRenderer; // ç”¨ä¾†é¡¯ç¤ºåœ–ç‰‡çš„çµ„ä»¶
 
     void Start()
     {
         if (growthSprites.Count > 0 && spriteRenderer != null)
         {
-            spriteRenderer.sprite = growthSprites[0]; // ªì©lÅã¥Ü¥®­]
+            spriteRenderer.sprite = growthSprites[0]; // åˆå§‹é¡¯ç¤ºå¹¼è‹—
         }
         currentRewardPoint = seedData.rewardPoint;
     }
     
-    public void Grown(int days)//¦¨ªø
+    public void Grown(int days)//æˆé•·
     {
         daysGrown += days;
         SpriteChange();
@@ -46,14 +46,18 @@ public class SeedInstanceScript : MonoBehaviour
         }
     }
     [ContextMenu("water")]
-    public void Water()//¼å¤ô
+    public void Water()//æ¾†æ°´
     {
         wateredToday = true;
-        Debug.Log($"{seedData.seedName} ¤w¼å¤ô");
+        Debug.Log($"{seedData.seedName} å·²æ¾†æ°´");
     }
-    private void CheckIsWatered()//ÀË¬d¬O§_¼å¤ô¡A­Y¨S¼å«h¼úÀyÅÜ®t
+    public bool getIsWateredToday()
     {
-        //®Ú¾Ú¼å¤ô±¡ªpÅÜ°Ê
+        return wateredToday;
+    }
+    private void CheckIsWatered()//æª¢æŸ¥æ˜¯å¦æ¾†æ°´ï¼Œè‹¥æ²’æ¾†å‰‡çå‹µè®Šå·®
+    {
+        //æ ¹æ“šæ¾†æ°´æƒ…æ³è®Šå‹•
         if (wateredToday == false) { 
             currentRewardPoint = currentRewardPoint - seedData.wateredMinus;
         }
@@ -67,16 +71,24 @@ public class SeedInstanceScript : MonoBehaviour
         }
     }
     [ContextMenu("end a day test")]
-    public void EndOfDay()//¤@¤Ñµ²§ô
+    public void EndOfDay()//ä¸€å¤©çµæŸ
     {
         Grown(1);
         CheckIsWatered();
         CheckIsDead();
     }
+    public int getRewardPoint()
+    {
+        return currentRewardPoint;
+    }
+    public void setRewardPoint(int value)
+    {
+        currentRewardPoint=value;
+    }
     public void Harvest()
     {
-        Debug.Log($"{seedData.seedName} ¦¨¼ô¤F¡I¼úÀyµ¥¯Å: {currentRewardPoint}");
-        // ©I¥s¼úÀy¨t²Î¨Ó©â¿ï¼úÀy
+        Debug.Log($"{seedData.seedName} æˆç†Ÿäº†ï¼çå‹µç­‰ç´š: {currentRewardPoint}");
+        // å‘¼å«çå‹µç³»çµ±ä¾†æŠ½é¸çå‹µ
         Destroy(gameObject);
     }
 }
