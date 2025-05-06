@@ -10,6 +10,8 @@ GameObject:
   m_Component:
   - component: {fileID: 1509688323241915913}
   - component: {fileID: 1359717802441270492}
+  - component: {fileID: 4283304038733634710}
+  - component: {fileID: 8652412819689381895}
   m_Layer: 0
   m_Name: PlantMid_1
   m_TagString: Untagged
@@ -54,6 +56,39 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &4283304038733634710
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3280720093519467078}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cbd83f7c51bd4f4439a703b80b0d8886, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!65 &8652412819689381895
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3280720093519467078}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 1
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.83, y: 0.98, z: 0.63}
+  m_Center: {x: 0, y: 0.82, z: 0}
 --- !u!1001 &4638438836902172897
 PrefabInstance:
   m_ObjectHideFlags: 0

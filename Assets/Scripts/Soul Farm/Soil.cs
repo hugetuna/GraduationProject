@@ -8,10 +8,15 @@ public class Soil : MonoBehaviour, IInteractable
     public bool isPlantable = false; // 是否可以種植
     public bool isPlanting = false;//是否在種植中
     public Transform seedSpawnPoint; // 種子的生成位置
-    public float yOffSet=1.5f;
+    public float yOffSet=0f;
     public GameObject[] seedPrefabs; // 儲存不同種類的種子預製體
     public SeedInstanceScript seedOnThisSoil;//儲存一個被種植的種子的副本
     public OrderSet orderSeter;
+    private void Start()
+    {
+        //GameObject seed = Instantiate(seedPrefabs[1], seedSpawnPoint.position, Quaternion.Euler(45f, 0f, 0f));
+        //seed.transform.SetParent(null); // 暫時解除所有父子關係，避免偏移
+    }
     //根據名子找到public GameObject[] seedPrefabs;的預製件
     public int findSeedIndex(string name)
     {
@@ -39,7 +44,7 @@ public class Soil : MonoBehaviour, IInteractable
             Debug.Log("此地塊已翻過土或正在種植");
         }
     }
-    //種一個種子
+    //種植個種子
     public void PlantSeed(int seedIndex)
     {
         if (!isPlantable)
@@ -52,17 +57,25 @@ public class Soil : MonoBehaviour, IInteractable
             Debug.Log("無效的種子種類！");
             return;
         }
-        // 在指定位置生成種子
-        Vector3 realSpawnPoint = seedSpawnPoint.position + new Vector3(0, yOffSet, 0);
+
+        // 正確的生成位置（僅加 y 偏移，不動 z）
+        //Vector3 realSpawnPoint = seedSpawnPoint.position + new Vector3(0, yOffSet, 0);
         Quaternion rotation = Quaternion.Euler(45f, 0f, 0f);
-        seedOnThisSoil =Instantiate(seedPrefabs[seedIndex], realSpawnPoint, rotation).GetComponent<SeedInstanceScript>();
-        seedOnThisSoil.transform.position += new Vector3(0, 0, 0.5f);
-        seedOnThisSoil.GetComponent<SortingGroup>().sortingOrder= Mathf.RoundToInt(-transform.position.z * 100)+10;
-        //改大小
-        //seedOnThisSoil.transform.localScale = seedOnThisSoil.transform.localScale * 0.5f;
-        isPlantable = false; // 標記這塊土地已經被種植
+
+        // 生成並初始化種子
+        seedOnThisSoil = Instantiate(seedPrefabs[seedIndex], seedSpawnPoint.position, rotation).GetComponent<SeedInstanceScript>();
+
+        // 移除父物件避免不必要的繼承偏移
+        seedOnThisSoil.transform.SetParent(null);
+
+        // 設定圖層順序，z 值保持不變
+        seedOnThisSoil.GetComponent<SortingGroup>().sortingOrder = Mathf.RoundToInt(-transform.position.z * 100) + 10;
+
+        // 完成種植狀態
+        isPlantable = false;
         isPlanting = true;
     }
+
     void IInteractable.Interact(int toolType) // 互動行為
     {
         //TODO:追加工具反映
