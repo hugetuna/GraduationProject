@@ -9,6 +9,6 @@ public class MoneyIncreseEffect : ItemEffect
     public override void Apply(IdolInstance target, ResourceManager manager)
     {
         manager.Money += moneyIncreseAmount;
-        Debug.Log($"[¿ú¼W¥[] ¼W¥[ {moneyIncreseAmount} ¡A²{¦b¿ú{manager.Money}");
+        Debug.Log($"[éŒ¢å¢åŠ ] å¢åŠ  {moneyIncreseAmount} ï¼Œç¾åœ¨éŒ¢{manager.Money}");
     }
 }
