@@ -15,8 +15,11 @@ public class SceneTransferTrigger : MonoBehaviour
             // 儲存土壤資料
             Soil[] allSoils = FindObjectsOfType<Soil>();
             Debug.Log(allSoils);
-            GameManager.Instance.SaveSoilData(new List<Soil>(allSoils));
-
+            if (allSoils.Length != 0)
+            {
+                GameManager.Instance.SaveSoilData(new List<Soil>(allSoils));
+            }
+            
             // 傳送到指定場景
             SceneManager.LoadScene(targetSceneName);
         }

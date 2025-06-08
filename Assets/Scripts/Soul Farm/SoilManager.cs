@@ -11,10 +11,10 @@ public class SoilManager : MonoBehaviour
     {
         foreach (var data in GameManager.Instance.soilDataList)
         {
-            GameObject soilObj = Instantiate(soilPrefab, data.position, Quaternion.identity);
+            GameObject soilObj = Instantiate(soilPrefab, data.position, Quaternion.Euler(90f, 0f, 0f));
             Soil soil = soilObj.GetComponent<Soil>();
-            soil.isPlantable = data.isPlantable;
-            soil.isPlanting = data.isPlanting;
+            //soil.isPlantable = data.isPlantable;
+            //soil.isPlanting = data.isPlanting;
             soil.seedPrefabs = seedPrefabs;
             //如果於種植狀態且該土上的種子有名字
             if (data.isPlanting && !string.IsNullOrEmpty(data.plantedSeedName))
@@ -24,9 +24,10 @@ public class SoilManager : MonoBehaviour
                 //在新生成的土上根據索引值重新種植物，並填入儲存於列表的資訊
                 if (index >= 0)
                 {
+                    soil.TurnTheSoil();
                     soil.PlantSeed(index);
                     soil.seedOnThisSoil.Grown(data.daysGrown); // 因為 PlantSeed 已長一天
-                    soil.seedOnThisSoil.setRewardPoint(data.currentRewardPoint); // 你需寫這函數
+                    soil.seedOnThisSoil.setRewardPoint(data.currentRewardPoint);
                     if (data.isWatered)
                     {
                         soil.seedOnThisSoil.Water();

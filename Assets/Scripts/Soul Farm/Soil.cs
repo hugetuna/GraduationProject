@@ -20,14 +20,14 @@ public class Soil : MonoBehaviour, IInteractable
     //根據名子找到public GameObject[] seedPrefabs;的預製件
     public int findSeedIndex(string name)
     {
-        int i = 0;
-        foreach (var seedPrefab in seedPrefabs)
+        string extendName = name + "Basic";//延長名字以符合列表
+        for (int i = 0;i<seedPrefabs.Length;i++)
         {
-            if (name == seedPrefab.GetComponent<SeedInstanceScript>().seedData.name)
+            
+            if (extendName == seedPrefabs[i].GetComponent<SeedInstanceScript>().seedData.name)
             {
                 return i;
             }
-            i++;
         }
         return 0;
     }
