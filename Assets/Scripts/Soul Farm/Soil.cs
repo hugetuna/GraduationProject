@@ -18,7 +18,7 @@ public class Soil : MonoBehaviour, IInteractable
         //seed.transform.SetParent(null); // 暫時解除所有父子關係，避免偏移
     }
     //根據名子找到public GameObject[] seedPrefabs;的預製件
-    public int findSeedIndex(string name)
+    public int FindSeedIndex(string name)
     {
         string extendName = name + "Basic";//延長名字以符合列表
         for (int i = 0;i<seedPrefabs.Length;i++)

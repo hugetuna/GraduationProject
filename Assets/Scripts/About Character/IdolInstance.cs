@@ -2,39 +2,46 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
+enum IdolWho {Kuma=0,Karo=1,Sirius=2}
 public class IdolInstance : MonoBehaviour
 {
-    //¨¤¦âªº°òÂ¦¼Æ­È
+    public int idolIndex;
+    //è§’è‰²çš„åŸºç¤æ•¸å€¼
     public Idols basicStatus;
-    //¹ê»Ú¹B¦æªº¼Æ­È
-    public int vocal;//ºq°Û¤O
-    public int dance;//»RÁĞ¤O
-    public int visual;//ªí²{¤O
-    //¤TºØ½m²ß®Ä²v
+    //å¯¦éš›é‹è¡Œçš„æ•¸å€¼
+    public int vocal;//æ­Œå”±åŠ›
+    public int dance;//èˆè¹ˆåŠ›
+    public int visual;//è¡¨ç¾åŠ›
+    //ä¸‰ç¨®ç·´ç¿’æ•ˆç‡
     public float voTrainingBonus;
     public float daTrainingBonus;
     public float viTrainingBonus;
-    public int charm;//°òÂ¦¾y¤O
-    public int charmInCount;//¾y¤O->¼È®É¤W¤É©Î¤U­°«áªº¼Æ­È¡Aµ²ºâ¤]¥Î³o­Ó
-    public int performance;//ºt§Ş
-    public int vigour;//Åé¤O
-    public int vigourMax;//Åé¤O³Ì¤j­È
-    //¯»µ·¼Æ
+    public int charm;//åŸºç¤é­…åŠ›
+    public int charmInCount;//é­…åŠ›->æš«æ™‚ä¸Šå‡æˆ–ä¸‹é™å¾Œçš„æ•¸å€¼ï¼Œçµç®—ä¹Ÿç”¨é€™å€‹
+    public int performance;//æ¼”æŠ€
+    public int vigour;//é«”åŠ›
+    public int vigourMax;//é«”åŠ›æœ€å¤§å€¼
+    //ç²‰çµ²æ•¸
     public int fans;
-    public int bondWithP;//»Pª±®aªºÅù²Ì
+    public int bondWithP;//èˆ‡ç©å®¶çš„ç¾ˆçµ†
+
+    public bool BHaveSetUp = false;
     // Start is called before the first frame update
     void Start()
     {
-        IdolSetUp();
+        if (BHaveSetUp == false)
+        {
+            IdolSetUp();
+        }
+        
     }
     
-    //ªì©l¤Æ
+    //åˆå§‹åŒ–
     private void IdolSetUp()
     {
         if (basicStatus == null)
         {
-            Debug.LogError("°ò¥»ª¬ºA (basicStatus) ¥¼³]©w¡I");
+            Debug.LogError("åŸºæœ¬ç‹€æ…‹ (basicStatus) æœªè¨­å®šï¼");
             return;
         }
         vocal = basicStatus.vocal;
@@ -49,8 +56,8 @@ public class IdolInstance : MonoBehaviour
         vigour = vigourMax = basicStatus.vigour;
         fans = 0;
     }
-    //¨C¤Ñµ²§ô®É¥²¶·­«»s¥ş­û¼È®Éª¬ºA
-    public void resetTemporaryEffect()
+    //æ¯å¤©çµæŸæ™‚å¿…é ˆé‡è£½å…¨å“¡æš«æ™‚ç‹€æ…‹
+    public void ResetTemporaryEffect()
     {
         charmInCount = charm;
         voTrainingBonus = 1f;

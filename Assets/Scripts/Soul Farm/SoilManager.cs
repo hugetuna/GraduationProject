@@ -20,7 +20,7 @@ public class SoilManager : MonoBehaviour
             if (data.isPlanting && !string.IsNullOrEmpty(data.plantedSeedName))
             {
                 //遍歷傳入的矩陣，如果種子的等級和列表紀錄的相同，則回傳相應的索引值
-                int index = soil.findSeedIndex(data.plantedSeedName);
+                int index = soil.FindSeedIndex(data.plantedSeedName);
                 //在新生成的土上根據索引值重新種植物，並填入儲存於列表的資訊
                 if (index >= 0)
                 {

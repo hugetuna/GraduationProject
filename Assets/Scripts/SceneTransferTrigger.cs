@@ -14,12 +14,17 @@ public class SceneTransferTrigger : MonoBehaviour
         {
             // 儲存土壤資料
             Soil[] allSoils = FindObjectsOfType<Soil>();
-            Debug.Log(allSoils);
             if (allSoils.Length != 0)
             {
                 GameManager.Instance.SaveSoilData(new List<Soil>(allSoils));
             }
-            
+            //儲存偶像資料
+            IdolInstance[] allIdolInstances= FindObjectsOfType<IdolInstance>();
+            if (allIdolInstances.Length != 0)
+            {
+                GameManager.Instance.SaveIdolData(new List<IdolInstance>(allIdolInstances));
+            }
+
             // 傳送到指定場景
             SceneManager.LoadScene(targetSceneName);
         }

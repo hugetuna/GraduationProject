@@ -6,13 +6,15 @@ using UnityEngine.InputSystem;
 
 public class TeamManager : MonoBehaviour
 {
-    public List<PlayerControlMainWorld> teamMembers = new List<PlayerControlMainWorld>(); // 角色列表
+    public List<PlayerControlMainWorld> teamMembers = new List<PlayerControlMainWorld>(); // 隊員列表
+    public List<GameObject> allIdols= new List<GameObject>();//全角色列表
     public int currentLeaderIndex = 0; // 當前操縱角色索引
     public float followDistance = 3f; // 角色之間的距離
     public float followSpeed = 5f; // 角色跟隨速度
     private bool isSwitchingLeader = false; // SwitchLeader執行時為真
     private void Start()
     {
+        BuildUpIdolsTeam();
         //封鎖隊長外的input system
         for (int i = 0; i < teamMembers.Count; i++)
         {
@@ -24,6 +26,32 @@ public class TeamManager : MonoBehaviour
     {
         HandleFollowers();
         UpdateSortingOrder();
+    }
+    public void BuildUpIdolsTeam()
+    {
+        var idolDataList = GameManager.Instance.idolDataList;
+        for (int i = 0; i < idolDataList.Count; i++)
+        {
+            var data = idolDataList[i];
+            var idol = Instantiate(allIdols[data.idolIndex], Vector3.forward, Quaternion.identity);
+            var idolAbility = idol.GetComponent<IdolInstance>();
+            //手動把資料填回去
+            idolAbility.vocal = data.vocal;
+            idolAbility.dance = data.dance;
+            idolAbility.visual = data.visual;
+            idolAbility.voTrainingBonus = data.voTrainingBonus;
+            idolAbility.daTrainingBonus = data.daTrainingBonus;
+            idolAbility.viTrainingBonus = data.viTrainingBonus;
+            idolAbility.charm = data.charm;
+            idolAbility.charmInCount = data.charmInCount;
+            idolAbility.performance = data.performance;
+            idolAbility.vigour = data.vigour;
+            idolAbility.vigourMax = data.vigourMax;
+            idolAbility.fans = data.fans;
+            idolAbility.bondWithP = data.bondWithP;
+            idolAbility.BHaveSetUp = data.BHaveSetUp;
+            teamMembers.Add(idol.GetComponent<PlayerControlMainWorld>());
+        }
     }
     // 角色切換(+1為下一個-1為上一個)
     public void SwitchLeader(int direction)
@@ -249,4 +277,3 @@ public class TeamManager : MonoBehaviour
         SwitchLeader(1);
     }
 }
-
