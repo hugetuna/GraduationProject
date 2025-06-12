@@ -53,7 +53,7 @@ public class SeedInstanceScript : MonoBehaviour
         wateredToday = true;
         Debug.Log($"{seedData.seedName} 已澆水");
     }
-    public bool getIsWateredToday()
+    public bool GetIsWateredToday()
     {
         return wateredToday;
     }
@@ -79,18 +79,18 @@ public class SeedInstanceScript : MonoBehaviour
         CheckIsWatered();
         CheckIsDead();
     }
-    public int getRewardPoint()
+    public int GetRewardPoint()
     {
         return currentRewardPoint;
     }
-    public void setRewardPoint(int value)
+    public void SetRewardPoint(int value)
     {
         currentRewardPoint=value;
     }
-    public void Harvest()
+    public int Harvest()
     {
         Debug.Log($"{seedData.seedName} 成熟了！獎勵等級: {currentRewardPoint}");
         // 呼叫獎勵系統來抽選獎勵
-        Destroy(gameObject);
+        return currentRewardPoint;
     }
 }

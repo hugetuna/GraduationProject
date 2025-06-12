@@ -23,7 +23,7 @@ public class FansItem : Item
         ResourceManager resourceManager = FindObjectOfType<ResourceManager>();
         if (harvester == null)
         {
-            Debug.LogError("§ä¤£¨ì IdolInstance¡I");
+            Debug.LogError("æ‰¾ä¸åˆ° IdolInstanceï¼");
             return;
         }
         if (effects.Count == 3)
@@ -32,9 +32,9 @@ public class FansItem : Item
         }
         else
         {
-            Debug.LogError("®ÄªGºØÃş¤£§¹µ½(»İ­nFans,Money,Item¤TºØ)");
+            Debug.LogError("æ•ˆæœç¨®é¡ä¸å®Œå–„(éœ€è¦Fans,Money,Itemä¸‰ç¨®)");
         }
             
-        Debug.Log($"{itemName} ³Q¨Ï¥Î¡I");
+        Debug.Log($"{itemName} è¢«ä½¿ç”¨ï¼");
     }
 }

@@ -3,18 +3,66 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
+[System.Serializable]
+public struct ItemStack
+{
+    public Item item;
+    public int quantity;
+
+    public ItemStack(Item item, int quantity)
+    {
+        this.item = item;
+        this.quantity = quantity;
+    }
+}
 public class ResourceManager : MonoBehaviour
 {
     public int Money;
-    public float MoneyBonus=1f;//ÁÈ¿ú­¿²v
-    public BondData bondAB;//¦Cªí¤¤¡AA»PBªºÅù²Ì­È¡A¥H¤U¦P
+    public float MoneyBonus=1f;//è³ºéŒ¢å€ç‡
+    public BondData bondAB;//åˆ—è¡¨ä¸­ï¼ŒAèˆ‡Bçš„ç¾ˆçµ†å€¼ï¼Œä»¥ä¸‹åŒ
     public BondData bondBC;
     public BondData bondCA;
-    public List<IdolInstance> idolsPicked;//¿ï¶i¶¤¥îªº¤T¦W°¸¹³
-    public List<Item> items;
-    //¨C¤Ñµ²§ô®É¥²¶·­«»s¸ê·½¼È®Éª¬ºA
-    public void resetTemporaryEffect()
+    public List<IdolInstance> idolsPicked;//é¸é€²éšŠä¼çš„ä¸‰åå¶åƒ
+    public List<ItemStack> items = new List<ItemStack>();
+    //æ¯å¤©çµæŸæ™‚å¿…é ˆé‡è£½è³‡æºæš«æ™‚ç‹€æ…‹
+    public void ResetTemporaryEffect()
     {
         MoneyBonus = 1f;
     }
+    //ç”¨åˆ—è¡¨æ–¹å¼æ–°å¢é“å…·(scriptable obj å¯ä»¥ç”¨"=="ä¾†åˆ¤æ–·ç›¸åŒ)
+    public void AddItem(List<Item> addList)
+    {
+        foreach (var newItem in addList)
+        {
+            bool found = false;
+            for (int i = 0; i < items.Count; i++)
+            {
+                if (items[i].item == newItem)
+                {
+                    ItemStack stack = items[i];
+                    stack.quantity += 1;
+                    items[i] = stack;
+                    found = true;
+                    break;
+                }
+            }
+
+            if (!found)
+            {
+                items.Add(new ItemStack(newItem, 1));
+            }
+        }
+    }
+    //æŸ¥æ‰¾æŒ‡å®šé“å…·çš„æ•¸é‡
+    public int GetItemCount(Item target)
+    {
+        foreach (var stack in items)
+        {
+            if (stack.item == target)
+                return stack.quantity;
+        }
+        return 0;
+    }
+
+
 }
