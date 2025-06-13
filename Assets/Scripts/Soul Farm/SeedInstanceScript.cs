@@ -61,7 +61,7 @@ public class SeedInstanceScript : MonoBehaviour
     {
         //根據澆水情況變動
         if (wateredToday == false) { 
-            currentRewardPoint = currentRewardPoint - seedData.wateredMinus;
+            currentRewardPoint -=seedData.wateredMinus;
         }
         wateredToday = false;
     }

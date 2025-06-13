@@ -93,7 +93,7 @@ public class PlayerControlMainWorld : MonoBehaviour
         {
             faceDirection = false;
         }
-        Debug.Log("Move Input: " + moveInput);
+        //Debug.Log("Move Input: " + moveInput);
     }
     public void OnInteract(InputAction.CallbackContext context)
     {

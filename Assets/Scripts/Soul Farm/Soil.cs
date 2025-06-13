@@ -12,11 +12,16 @@ public class Soil : MonoBehaviour, IInteractable
     public GameObject[] seedPrefabs; // 儲存不同種類的種子預製體
     public SeedInstanceScript seedOnThisSoil;//儲存一個被種植的種子的副本
     public OrderSet orderSeter;
-    //private void Start()
-    //{
-    //    //GameObject seed = Instantiate(seedPrefabs[1], seedSpawnPoint.position, Quaternion.Euler(45f, 0f, 0f));
-    //    //seed.transform.SetParent(null); // 暫時解除所有父子關係，避免偏移
-    //}
+    //與manager連結以獲取數據
+    public TeamManager teamManager;
+    public ResourceManager resourceManager;
+    public SoilManager soilManager;
+    private void Start()
+    {
+        teamManager=FindObjectOfType<TeamManager>();
+        resourceManager = FindObjectOfType<ResourceManager>();
+        soilManager = FindObjectOfType<SoilManager>();
+    }
     //根據名子找到public GameObject[] seedPrefabs;的預製件
     public int FindSeedIndex(string name)
     {
@@ -97,11 +102,16 @@ public class Soil : MonoBehaviour, IInteractable
         //種植中，但成長以滿->收割
         else if (isPlanting == true && isPlantable == false && seedOnThisSoil.GetDaysGrown() == seedOnThisSoil.seedData.growthDays)
         {
-            seedOnThisSoil.GetComponent<SeedInstanceScript>().Harvest();
-            //todo:從teammanager抓隊長，把種出來的粉絲填入收割者，然後再塞進道具庫
+            //從teammanager抓隊長，把種出來的粉絲填入收割者，然後再塞進道具庫
+            IdolInstance leader=teamManager.teamMembers[teamManager.currentLeaderIndex].GetComponent<IdolInstance>();
+            int seedRewardPoint = seedOnThisSoil.GetComponent<SeedInstanceScript>().Harvest();
+            //最終值算法(暫定)->種植值+魅力-80~種植值+魅力+30
+            int finalSeedRewardPoint = Random.Range(seedRewardPoint - 80 + leader.charm, seedRewardPoint + 30 + leader.charm);
+            //Debug.Log(finalSeedRewardPoint);
+            resourceManager.AddItem(soilManager.RollFansItem(finalSeedRewardPoint));
             isPlanting = false;
             isPlantable = false;
-            Destroy(seedOnThisSoil);
+            Destroy(seedOnThisSoil.gameObject);
         }
     } 
 }

@@ -36,9 +36,9 @@ public class GameManager : MonoBehaviour
             if (soil.seedOnThisSoil != null)
             {
                 data.plantedSeedName = soil.seedOnThisSoil.seedData.seedName;
-                data.isWatered = soil.seedOnThisSoil.getIsWateredToday();
+                data.isWatered = soil.seedOnThisSoil.GetIsWateredToday();
                 data.daysGrown = soil.seedOnThisSoil.GetDaysGrown();
-                data.currentRewardPoint = soil.seedOnThisSoil.getRewardPoint();
+                data.currentRewardPoint = soil.seedOnThisSoil.GetRewardPoint();
             }
             soilDataList.Add(data);
         }

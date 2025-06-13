@@ -6,7 +6,8 @@ public class SoilManager : MonoBehaviour
 {
     public GameObject soilPrefab;
     public GameObject[] seedPrefabs; // 所有種子 Prefab
-
+    //粉絲轉蛋獎池
+    public List<HarvestGachaPool> harvestGachaPools;
     void Start()
     {
         foreach (var data in GameManager.Instance.soilDataList)
@@ -27,7 +28,7 @@ public class SoilManager : MonoBehaviour
                     soil.TurnTheSoil();
                     soil.PlantSeed(index);
                     soil.seedOnThisSoil.Grown(data.daysGrown); // 因為 PlantSeed 已長一天
-                    soil.seedOnThisSoil.setRewardPoint(data.currentRewardPoint);
+                    soil.seedOnThisSoil.SetRewardPoint(data.currentRewardPoint);
                     if (data.isWatered)
                     {
                         soil.seedOnThisSoil.Water();
@@ -35,6 +36,25 @@ public class SoilManager : MonoBehaviour
                 }
             }
         }
+    }
+    public FansItem RollFansItem(int rewardPoint)
+    {
+        foreach(var pool in harvestGachaPools)
+        {
+            if (rewardPoint >= pool.rewardPointLimitMin && rewardPoint <= pool.rewardPointLimitMax)
+            {
+                if (pool.gachaPool.Count == 0)
+                {
+                    Debug.LogError("轉蛋池裡沒東西");
+                    return null;
+                }
+                int randomIndex = Random.Range(0, pool.gachaPool.Count);
+                FansItem price = pool.gachaPool[randomIndex];
+                return price;
+            }
+        }
+        Debug.LogError("沒有轉出");
+        return null;
     }
 }
 

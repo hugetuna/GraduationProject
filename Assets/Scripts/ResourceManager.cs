@@ -30,6 +30,26 @@ public class ResourceManager : MonoBehaviour
         MoneyBonus = 1f;
     }
     //用列表方式新增道具(scriptable obj 可以用"=="來判斷相同)
+    public void AddItem(Item newItem)
+    {
+        bool found = false;
+        for (int i = 0; i < items.Count; i++)
+        {
+            if (items[i].item == newItem)
+            {
+                ItemStack stack = items[i];
+                stack.quantity += 1;
+                items[i] = stack;
+                found = true;
+                break;
+            }
+        }
+        if (!found)
+        {
+            items.Add(new ItemStack(newItem, 1));
+        }
+        Debug.Log("追加道具"+ newItem.itemName);
+    }
     public void AddItem(List<Item> addList)
     {
         foreach (var newItem in addList)
