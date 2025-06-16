@@ -37,7 +37,7 @@ public class SoilManager : MonoBehaviour
             }
         }
     }
-    public FansItem RollFansItem(int rewardPoint)
+    public FansItem RollFansItem(int rewardPoint, IdolWho harvester)
     {
         foreach(var pool in harvestGachaPools)
         {
@@ -49,8 +49,11 @@ public class SoilManager : MonoBehaviour
                     return null;
                 }
                 int randomIndex = Random.Range(0, pool.gachaPool.Count);
-                FansItem price = pool.gachaPool[randomIndex];
-                return price;
+                //使用 Clone 建立副本
+                FansItem original = pool.gachaPool[randomIndex];
+                FansItem copy = (FansItem)original.Clone();
+                copy.SetHarvester(harvester);
+                return copy;
             }
         }
         Debug.LogError("沒有轉出");

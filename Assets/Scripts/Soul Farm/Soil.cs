@@ -100,15 +100,15 @@ public class Soil : MonoBehaviour, IInteractable
             seedOnThisSoil.GetComponent<SeedInstanceScript>().Water();
         }
         //種植中，但成長以滿->收割
-        else if (isPlanting == true && isPlantable == false && seedOnThisSoil.GetDaysGrown() == seedOnThisSoil.seedData.growthDays)
+        else if (isPlanting == true && isPlantable == false && seedOnThisSoil.GetDaysGrown() >= seedOnThisSoil.seedData.growthDays)
         {
             //從teammanager抓隊長，把種出來的粉絲填入收割者，然後再塞進道具庫
             IdolInstance leader=teamManager.teamMembers[teamManager.currentLeaderIndex].GetComponent<IdolInstance>();
             int seedRewardPoint = seedOnThisSoil.GetComponent<SeedInstanceScript>().Harvest();
             //最終值算法(暫定)->種植值+魅力-80~種植值+魅力+30
             int finalSeedRewardPoint = Random.Range(seedRewardPoint - 80 + leader.charm, seedRewardPoint + 30 + leader.charm);
-            //Debug.Log(finalSeedRewardPoint);
-            resourceManager.AddItem(soilManager.RollFansItem(finalSeedRewardPoint));
+            Debug.Log(finalSeedRewardPoint);
+            resourceManager.AddItem(soilManager.RollFansItem(finalSeedRewardPoint, leader.idolIndex));
             isPlanting = false;
             isPlantable = false;
             Destroy(seedOnThisSoil.gameObject);

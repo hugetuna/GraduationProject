@@ -13,4 +13,9 @@ public abstract class Item : ScriptableObject
     public int maxStack = 1;
 
     public abstract void Use();
+    public virtual Item Clone()
+    {
+        return Instantiate(this);
+    }
+
 }

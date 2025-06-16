@@ -33,7 +33,7 @@ public class TeamManager : MonoBehaviour
         for (int i = 0; i < idolDataList.Count; i++)
         {
             var data = idolDataList[i];
-            var idol = Instantiate(allIdols[data.idolIndex], Vector3.forward, Quaternion.identity);
+            var idol = Instantiate(allIdols[(int)data.idolIndex], Vector3.forward, Quaternion.identity);
             var idolAbility = idol.GetComponent<IdolInstance>();
             //手動把資料填回去
             idolAbility.vocal = data.vocal;

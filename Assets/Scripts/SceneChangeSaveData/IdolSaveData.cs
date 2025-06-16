@@ -5,7 +5,7 @@ using UnityEngine;
 public class IdolSaveData
 {
     //標示身分
-    public int idolIndex;
+    public IdolWho idolIndex;
     //實際運行的數值
     public int vocal;//歌唱力
     public int dance;//舞蹈力

@@ -2,10 +2,10 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-enum IdolWho {Kuma=0,Karo=1,Sirius=2}
+public enum IdolWho {none=-1,Kuma=0,Karo=1,Sirius=2}
 public class IdolInstance : MonoBehaviour
 {
-    public int idolIndex;
+    public IdolWho idolIndex;
     //角色的基礎數值
     public Idols basicStatus;
     //實際運行的數值
