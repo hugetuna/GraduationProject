@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 
     public List<SoilSaveData> soilDataList = new List<SoilSaveData>();
     public List<IdolSaveData> idolDataList = new List<IdolSaveData>();
+    public ResourceSaveData ResourceData;
     //單例物件生成
     void Awake()
     {
@@ -69,6 +70,17 @@ public class GameManager : MonoBehaviour
             };
             idolDataList.Add(data);
         }
+    }
+    //資源專用儲存
+    public void SaveResourceData(ResourceManager resource)
+    {
+        ResourceData = null;
+        ResourceData.Money = resource.getMoney();
+        ResourceData.MoneyBonus = resource.MoneyBonus;
+        ResourceData.bondAB = resource.bondAB;
+        ResourceData.bondBC = resource.bondBC;
+        ResourceData.bondCA = resource.bondCA;
+        ResourceData.items = resource.items;
     }
 }
 

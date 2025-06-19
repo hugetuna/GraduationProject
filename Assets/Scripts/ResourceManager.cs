@@ -17,18 +17,49 @@ public struct ItemStack
 }
 public class ResourceManager : MonoBehaviour
 {
-    public int Money;
+    private int Money=0;
     public float MoneyBonus=1f;//賺錢倍率
     public BondData bondAB;//列表中，A與B的羈絆值，以下同
     public BondData bondBC;
     public BondData bondCA;
     public List<IdolInstance> idolsPicked;//選進隊伍的三名偶像
     public List<ItemStack> items = new List<ItemStack>();
+    void Start()
+    {
+        setupResourceFromGameManager();
+    }
+    public void setupResourceFromGameManager()
+    {
+        ResourceSaveData resourceSaveData=GameManager.Instance.ResourceData;
+        Money = resourceSaveData.Money;
+        MoneyBonus = resourceSaveData.MoneyBonus;
+        bondAB = resourceSaveData.bondAB;//列表中，A與B的羈絆值，以下同
+        bondBC = resourceSaveData.bondBC;
+        bondCA = resourceSaveData.bondCA;
+        items = resourceSaveData.items;
+    }
     //每天結束時必須重製資源暫時狀態
     public void ResetTemporaryEffect()
     {
         MoneyBonus = 1f;
     }
+    //獲得金錢
+    public void GainMoney(int gain)
+    {
+        Money += (int)(gain * MoneyBonus);
+    }
+    public void SpendMoney(int spend)
+    {
+        if (spend <= Money)
+        {
+            Money -= spend;
+        }
+        else
+        {
+            Debug.Log("錢不夠花");
+        }
+    }
+    public int getMoney() { return Money; }
     //用列表方式新增道具(scriptable obj 可以用"=="來判斷相同)
     public void AddItem(Item newItem)
     {

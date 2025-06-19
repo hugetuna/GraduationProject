@@ -24,7 +24,12 @@ public class SceneTransferTrigger : MonoBehaviour
             {
                 GameManager.Instance.SaveIdolData(new List<IdolInstance>(allIdolInstances));
             }
-
+            //儲存資源
+            ResourceManager resourceManager= FindObjectOfType<ResourceManager>();
+            if (resourceManager != null)
+            {
+                GameManager.Instance.SaveResourceData(resourceManager);
+            }
             // 傳送到指定場景
             SceneManager.LoadScene(targetSceneName);
         }
