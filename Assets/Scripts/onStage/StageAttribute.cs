@@ -1,6 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+[System.Serializable]
+public struct ActionCardStack
+{
+    public ActionCard actionCard;
+    public int quantity;
+
+    public ActionCardStack(ActionCard newCard, int quantity)
+    {
+        this.actionCard = newCard;
+        this.quantity = quantity;
+    }
+}
 
 [CreateAssetMenu(fileName = "New Stage", menuName = "Stage/Stage Attribute")]
 public class StageAttribute : ScriptableObject
@@ -10,6 +22,7 @@ public class StageAttribute : ScriptableObject
 
     public Sprite backgroundImage;
     public AudioClip backgroundMusic;
+    public List<ActionCardStack> actionCardStacks;
 
     public int baseRewardFans;
 

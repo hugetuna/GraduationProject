@@ -6,8 +6,10 @@ using UnityEngine.SceneManagement;
 
 public class OnStageManager : MonoBehaviour
 {
-
-    [Header("關卡資料")]
+    [Header("關卡列表")]
+    public List<StageAttribute> allStageData;
+    [Header("當前關卡資料")]
+    public int stageIDToLoad;
     public StageAttribute currentStageData;
     public AudioSource musicSource;
     public SpriteRenderer backgroundRenderer;
@@ -23,6 +25,14 @@ public class OnStageManager : MonoBehaviour
     void Start()
     {
         //LoadIdolsToStage();
+        foreach(var stage in allStageData)
+        {
+            if(stage.stageID== stageIDToLoad)
+            {
+                currentStageData = stage;
+            }
+        }
+        LoadStage(currentStageData);
     }
     //將儲存的idol save data讀入不同於主世界的game object
     void LoadIdolsToStage()
