@@ -602,7 +602,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a2f64e678d816e439c8fc7a1953e008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  Money: 0
   MoneyBonus: 1
   bondAB:
     idolA: {fileID: 0}
@@ -778,6 +777,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7612543051509538053, guid: 74d6cc9dce5f00241ac60090049381a5, type: 3}
+      propertyPath: ResourceData.Money
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -791,6 +794,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 4666384923286213162, guid: 7fc82a1b1e705ff4ea6f5a6bc48ccc9a, type: 3}
+      propertyPath: targetSceneName
+      value: EmptyScene
+      objectReference: {fileID: 0}
     - target: {fileID: 6152539006481507244, guid: 7fc82a1b1e705ff4ea6f5a6bc48ccc9a, type: 3}
       propertyPath: m_LocalPosition.x
       value: -15.29

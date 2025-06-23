@@ -36,20 +36,7 @@ public class TeamManager : MonoBehaviour
             var idol = Instantiate(allIdols[(int)data.idolIndex], Vector3.forward, Quaternion.identity);
             var idolAbility = idol.GetComponent<IdolInstance>();
             //手動把資料填回去
-            idolAbility.vocal = data.vocal;
-            idolAbility.dance = data.dance;
-            idolAbility.visual = data.visual;
-            idolAbility.voTrainingBonus = data.voTrainingBonus;
-            idolAbility.daTrainingBonus = data.daTrainingBonus;
-            idolAbility.viTrainingBonus = data.viTrainingBonus;
-            idolAbility.charm = data.charm;
-            idolAbility.charmInCount = data.charmInCount;
-            idolAbility.performance = data.performance;
-            idolAbility.vigour = data.vigour;
-            idolAbility.vigourMax = data.vigourMax;
-            idolAbility.fans = data.fans;
-            idolAbility.bondWithP = data.bondWithP;
-            idolAbility.BHaveSetUp = data.BHaveSetUp;
+            idolAbility.LoadData(data);
             teamMembers.Add(idol.GetComponent<PlayerControlMainWorld>());
         }
     }

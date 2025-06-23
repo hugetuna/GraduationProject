@@ -56,6 +56,27 @@ public class IdolInstance : MonoBehaviour
         vigour = vigourMax = basicStatus.vigour;
         fans = 0;
     }
+    //填入讀取的資料組
+    public void LoadData(IdolSaveData data)
+    {
+        idolIndex = data.idolIndex;
+        basicStatus = data.basicStatus;
+        vocal = data.vocal;
+        dance = data.dance;
+        visual = data.visual;
+        voTrainingBonus = data.voTrainingBonus;
+        daTrainingBonus = data.daTrainingBonus;
+        viTrainingBonus = data.viTrainingBonus;
+        charm=data.charm;//基礎魅力
+        charmInCount=data.charmInCount;//魅力->暫時上升或下降後的數值，結算也用這個
+        performance=data.performance;//演技
+        vigour=data.vigour;//體力
+        vigourMax=data.vigourMax;//體力最大值
+        //粉絲數
+        fans=data.fans;
+        bondWithP=data.bondWithP;//與玩家的羈絆
+        BHaveSetUp = data.BHaveSetUp;
+    }
     //每天結束時必須重製全員暫時狀態
     public void ResetTemporaryEffect()
     {

@@ -13,9 +13,11 @@ public class OnStageManager : MonoBehaviour
     public StageAttribute currentStageData;
     public AudioSource musicSource;
     public SpriteRenderer backgroundRenderer;
+    [Header("有關卡片")]
+    public List<ActionCard> deck;
+    public List<GameObject> hands;
     [Header("偶像 Prefab")]
     public GameObject idolOnStagePrefab;
-
     [Header("上台位置（建議為3個）")]
     public Transform[] spawnPoints;
 
@@ -33,6 +35,7 @@ public class OnStageManager : MonoBehaviour
             }
         }
         LoadStage(currentStageData);
+        LoadIdolsToStage();
     }
     //將儲存的idol save data讀入不同於主世界的game object
     void LoadIdolsToStage()
@@ -51,7 +54,7 @@ public class OnStageManager : MonoBehaviour
             }
 
             // 載入儲存的資料（你要實作）
-            //instance.LoadData(idolDataList[i]);
+            instance.LoadData(idolDataList[i]);
 
             onStageIdols.Add(instance);
         }
@@ -67,9 +70,42 @@ public class OnStageManager : MonoBehaviour
         // 播放音樂
         musicSource.clip = stageData.backgroundMusic;
         musicSource.Play();
-
+        //建立卡組並打亂
+        foreach(var singleStack in stageData.actionCardStacks)
+        {
+            for(int i = 0; i < singleStack.quantity; i++)
+            {
+                deck.Add(singleStack.actionCard);
+            }
+        }
+        Shuffle();
         // 顯示描述（可以連接到 UI）
         Debug.Log($"載入關卡：{stageData.stageName} - {stageData.description}");
+    }
+    //洗牌(使用Fisher-Yates Shuffle 算法)
+    [ContextMenu("Shuffle")]
+    public void Shuffle()
+    {
+        System.Random rng = new System.Random();//要使用必須先創造一個實例
+        for (int n = deck.Count - 1; n > 0; n--)//從牌組最尾端開始取出一張卡
+        {
+            int randomIndex = rng.Next(n + 1);//從牌組中所有牌隨機取出一張與此卡交換(可為自己)
+            ActionCard temp = deck[n];
+            deck[n] = deck[randomIndex];
+            deck[randomIndex] = temp;
+        }
+        Debug.Log("牌組已洗牌");
+    }
+    public void DrawCards(int count)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            if (deck.Count == 0) break;
+            if (hands.Count < 6)
+            {
+                
+            }
+        }
     }
     // 結束演出：計算表演得分並更新 GameManager / ResourceManager
     public void EndPerformance()

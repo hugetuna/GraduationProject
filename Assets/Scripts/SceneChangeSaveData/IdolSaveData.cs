@@ -6,6 +6,7 @@ public class IdolSaveData
 {
     //標示身分
     public IdolWho idolIndex;
+    public Idols basicStatus;
     //實際運行的數值
     public int vocal;//歌唱力
     public int dance;//舞蹈力

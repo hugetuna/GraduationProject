@@ -5,6 +5,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "New ActionCard", menuName = "Stage/Action Card")]
 public class ActionCard : ScriptableObject
 {
+    public string cardId;
     public string cardName;
     public Sprite cardPic;
     //分數限制

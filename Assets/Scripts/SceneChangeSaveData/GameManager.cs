@@ -74,7 +74,7 @@ public class GameManager : MonoBehaviour
     //資源專用儲存
     public void SaveResourceData(ResourceManager resource)
     {
-        ResourceData = null;
+        //ResourceData = null;
         ResourceData.Money = resource.getMoney();
         ResourceData.MoneyBonus = resource.MoneyBonus;
         ResourceData.bondAB = resource.bondAB;

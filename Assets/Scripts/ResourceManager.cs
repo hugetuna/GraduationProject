@@ -26,9 +26,9 @@ public class ResourceManager : MonoBehaviour
     public List<ItemStack> items = new List<ItemStack>();
     void Start()
     {
-        setupResourceFromGameManager();
+        SetupResourceFromGameManager();
     }
-    public void setupResourceFromGameManager()
+    public void SetupResourceFromGameManager()
     {
         ResourceSaveData resourceSaveData=GameManager.Instance.ResourceData;
         Money = resourceSaveData.Money;
