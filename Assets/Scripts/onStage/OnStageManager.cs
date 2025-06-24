@@ -16,6 +16,8 @@ public class OnStageManager : MonoBehaviour
     [Header("有關卡片")]
     public List<ActionCard> deck;
     public List<GameObject> hands;
+    public GameObject cardPrefab;//卡片ui預置件
+    public Transform handArea; // UI 範圍 (Card 的父物件，例如是個 HorizontalLayoutGroup)
     [Header("偶像 Prefab")]
     public GameObject idolOnStagePrefab;
     [Header("上台位置（建議為3個）")]
@@ -101,10 +103,21 @@ public class OnStageManager : MonoBehaviour
         for (int i = 0; i < count; i++)
         {
             if (deck.Count == 0) break;
-            if (hands.Count < 6)
-            {
-                
-            }
+            if (hands.Count >= 6) break;
+
+            // 1. 取出最上面的一張卡
+            ActionCard drawnCard = deck[0];
+            deck.RemoveAt(0);
+
+            // 2. 實例化一個卡片 UI
+            GameObject cardGO = Instantiate(cardPrefab, handArea);
+
+            // 3. 設定卡片資料（你需要一個 Script 來顯示卡片內容）
+            SetCardUI ui = cardGO.GetComponent<SetCardUI>();
+            ui.SetCard(drawnCard);
+
+            // 4. 加進手牌列表
+            hands.Add(cardGO);
         }
     }
     // 結束演出：計算表演得分並更新 GameManager / ResourceManager
