@@ -13,6 +13,12 @@ public class OnStageManager : MonoBehaviour
     public StageAttribute currentStageData;
     public AudioSource musicSource;
     public SpriteRenderer backgroundRenderer;
+    
+    [Header("計數相關")]
+    [SerializeField]
+    private int playerPoint=0;//玩家分數
+    public int round=0;//回合數
+    public float roundTimer = 0;//計時器
     [Header("有關卡片")]
     public List<ActionCard> deck;
     public List<GameObject> hands;
@@ -72,6 +78,7 @@ public class OnStageManager : MonoBehaviour
         // 播放音樂
         musicSource.clip = stageData.backgroundMusic;
         musicSource.Play();
+
         //建立卡組並打亂
         foreach(var singleStack in stageData.actionCardStacks)
         {
@@ -105,20 +112,27 @@ public class OnStageManager : MonoBehaviour
             if (deck.Count == 0) break;
             if (hands.Count >= 6) break;
 
-            // 1. 取出最上面的一張卡
+            // 1. 取出最上面的一張卡並複製
             ActionCard drawnCard = deck[0];
             deck.RemoveAt(0);
+            ActionCard runtimeCard = CardFactory.CreateCardInstance(drawnCard);
 
             // 2. 實例化一個卡片 UI
             GameObject cardGO = Instantiate(cardPrefab, handArea);
 
             // 3. 設定卡片資料（你需要一個 Script 來顯示卡片內容）
             SetCardUI ui = cardGO.GetComponent<SetCardUI>();
-            ui.SetCard(drawnCard);
+            ui.SetCard(runtimeCard);
 
             // 4. 加進手牌列表
             hands.Add(cardGO);
         }
+    }
+    //-----------------------------------計數----------------------------------------
+    //得到分數
+    public void gainPoint(int point,float mutiply)
+    {
+        playerPoint += (int)(point * mutiply);
     }
     // 結束演出：計算表演得分並更新 GameManager / ResourceManager
     public void EndPerformance()
