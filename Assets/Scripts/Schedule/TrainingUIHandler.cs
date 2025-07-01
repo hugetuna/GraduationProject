@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class TrainingUIHandler : MonoBehaviour
 {
     public GameObject trainingUI;
-    private GameObject trainingUIInstance = null; // 記錄被生成的訓練 UI
+    public GameObject trainingUIInstance = null; // 記錄被生成的訓練 UI
 
     public TeamManager teamManager; // 透過 TeamManager 物件取得當前隊伍成員
     private List<PlayerControlMainWorld> teamMembers = new(); // 記錄取得的隊伍成員
@@ -16,28 +16,35 @@ public class TrainingUIHandler : MonoBehaviour
     private Dictionary<string, Sprite> characterSpriteDict; // 角色名稱與圖片來源的對照表
 
     public TeamUIData teamUIData; // 將隊伍 UI 資料寫入 ScriptableObject
-    
+ 
+    public TrainingUIData trainingUIData; // 訓練 UI 的資料 ScriptableObject
+
+
+
     void Start()
     {
-        if(teamUIData != null){
+        if (teamUIData != null)
+        {
             teamUIData.Reset(); // 重置 ScriptableObject 的資料
             Debug.Log("TeamUIData 已重置");
         }
-        else{
+        else
+        {
             Debug.Log("讀不到 TeamUIData 的資料");
         }
-        
+
         DoorInteraction.OnDoorInteracted += ShowTrainingUI; // 訂閱並監聽與門互動事件
         ScheduleManager.OnChangeDay += EndThisDay; // 訂閱並監聽切換天數事件
 
-        characterSpriteDict = new() { // 建立對照表內容
+        characterSpriteDict = new() { // 建立角色名稱與圖片來源對照表
             { "Kuma", characterSprites[0] },
             { "Karo", characterSprites[1] },
             { "Sirius", characterSprites[2] },
         };
         teamUIData.characterSpriteDict = characterSpriteDict;
-    }
 
+    }
+    
     void Update()
     {
         if (Input.GetMouseButtonDown(0)) // 檢查滑鼠左鍵是否被按下
@@ -71,16 +78,37 @@ public class TrainingUIHandler : MonoBehaviour
         if (trainingUIInstance == null)
         {
             trainingUIInstance = Instantiate(trainingUI); // 切換天數時再進行銷毀
+            //初始化 UI 外觀
         }
         else
         {
             trainingUIInstance.SetActive(true); // 如果 UI 已經存在，則顯示它
         }
 
+        CanvaLocator canvaLocator = trainingUIInstance.GetComponent<CanvaLocator>();
+
+        // 取得 UI 文字的插槽位置
+        Text TypeText = canvaLocator.TypeText;
+        Text TeacherText = canvaLocator.TeacherText;
+        Text VigourText = canvaLocator.VigourText;
+        Text BenefitText = canvaLocator.BenefitText;
+
+        TypeText.text = trainingUIData.trainingType; // 設定訓練類型的 UI 文字內容
+        if (trainingUIData.isWithTeacher) // 設定老師的 UI 文字內容
+        {
+            // 暫時寫死為一星的 Amy 老師
+            trainingUIData.teacherName = "Amy";
+            TeacherText.text = $"老師：{trainingUIData.teacherName} ★1";
+        }
+        else
+        {
+            TeacherText.text = "老師：無";
+        }
+        VigourText.text = $"耗費體力：{trainingUIData.neededVigour}"; // 設定耗費體力的 UI 文字內容
+        BenefitText.text = $"基本收益：{trainingUIData.basicBenefit}"; // 設定基本收益的 UI 文字內容
 
         // 取得 UI 圖片的插槽位置
-        ImageLocator imageLocator = trainingUIInstance.GetComponent<ImageLocator>();
-        characterImages = imageLocator.characterImages;
+        characterImages = canvaLocator.characterImages;
 
         // 根據目前隊伍成員決定 UI 的初始樣貌（但因為 TeamManager 的清單是固定的，所以看起來都一樣）
         teamMembers = teamManager.teamMembers;
