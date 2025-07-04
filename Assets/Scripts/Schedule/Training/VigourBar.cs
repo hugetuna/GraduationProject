@@ -8,7 +8,7 @@ public class VigourBar : MonoBehaviour
 {
     public TrainingUIData trainingUIData; // 取用當前訓練 UI 資料
     private IdolInstance[] idolInstance; // 存放偶像資料參考
-    private IdolInstance characterInfo; // 該角色的數值資料
+    public IdolInstance characterInfo; // 該角色的數值資料
     private string characterName; // 該角色名稱
     private DragToLesson dragToLesson; // 取得該角色的 DragToLesson 參考
 

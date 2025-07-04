@@ -15,6 +15,7 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     public DropZoneType currentZoneType = DropZoneType.Member; // 代表當前拖放區域
     private CanvasGroup canvasGroup;
     [SerializeField] private Vector2 dropOffset = new(0, -3.0f);
+    private bool isDragging = false; // 是否正在拖曳
 
     public TeamUIData teamUIData;  // 透過 ScriptableObject 取得當前隊伍 UI 資料
     private List<string> teamMembers;
@@ -23,6 +24,8 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     private string myName;
     public Slider vigourSlider; // 該角色的體力值 UI
     public VigourBar vigourBar;
+    public GameObject benefitBar; // 該角色的訓練收益 UI
+    public GameObject buffBoard; // 該角色的訓練buff UI
 
     private void Start()
     {
@@ -61,14 +64,33 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                     currentZoneType = DropZoneType.Trainee; // 更新當前拖放區域名稱
                 }
             }
+
+            // // 因為不能讓物件自己控制自己的可用狀態，所以寫在 DragToLsseon 裡面
+            if (!isDragging) // 沒在拖曳時才判斷
+            {
+                if (currentZoneType == DropZoneType.Trainee)
+                {
+                    if (buffBoard.activeSelf) buffBoard.SetActive(false);
+                }
+                else if (currentZoneType == DropZoneType.Member)
+                {
+                    if (!buffBoard.activeSelf) buffBoard.SetActive(true);
+                }
+
+            }
         }
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
+        isDragging = true; // 開始拖曳
+
         originalPosition = rectTransform.anchoredPosition; // 開始拖曳的當下記住原本的位置
         canvasGroup.blocksRaycasts = false; // 拖曳中不阻擋滑鼠射線（讓 DropZone 能收到事件）
+
         vigourSlider.gameObject.SetActive(false); // 拖曳時隱藏體力值 UI
+        benefitBar.SetActive(false); // 拖曳時隱藏訓練收益 UI
+        buffBoard.SetActive(false); // 拖曳時隱藏buff UI
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -79,8 +101,11 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        isDragging = false; // 結束拖曳
+
         canvasGroup.blocksRaycasts = true; // 拖曳結束後恢復阻擋滑鼠射線
         vigourSlider.gameObject.SetActive(true); // 拖曳後恢復體力值 UI 的顯示
+        benefitBar.SetActive(true); // 拖曳後恢復訓練收益 UI 的顯示
 
         RectTransform parentRect = rectTransform.parent as RectTransform;
         Vector2 screenPos, localPoint;
