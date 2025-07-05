@@ -19,6 +19,9 @@ public class OnStageManager : MonoBehaviour
     private int playerPoint=0;//玩家分數
     public int round=0;//回合數
     public float roundTimer = 0;//計時器
+    public float drawChance = 0;//抽排次數
+    public float drawCharge = 0;//抽排充能條
+    public float drawChargeLimit = 40;//抽排充能上限，超過就抽一張
     [Header("有關卡片")]
     public List<ActionCard> deck;
     public List<GameObject> hands;
@@ -45,6 +48,37 @@ public class OnStageManager : MonoBehaviour
         LoadStage(currentStageData);
         LoadIdolsToStage();
     }
+    private void Update()
+    {
+        roundTimer += Time.deltaTime;
+
+        // 每秒更新 drawCharge
+        drawCharge += Time.deltaTime * 10f; // 比如 1 秒增加 20點充能
+
+        if (drawCharge >= drawChargeLimit)
+        {
+            if (drawChance < 3)
+            {
+                drawChance += 1;
+                drawCharge = 0;
+                Debug.Log($"充能完成，獲得一次抽牌機會，目前抽牌次數：{drawChance}");
+            }
+            else
+            {
+                // 超過最大抽牌次數，不再充能
+                drawCharge = drawChargeLimit;
+            }
+        }
+
+        // 每過一回合秒數（例如 10 秒）自動增加 round
+        if (roundTimer >= currentStageData.secPerRound) // 這個值你可調
+        {
+            round++;
+            roundTimer = 0;
+            Debug.Log($"進入第 {round} 回合！");
+        }
+    }
+
     //將儲存的idol save data讀入不同於主世界的game object
     void LoadIdolsToStage()
     {
@@ -105,18 +139,23 @@ public class OnStageManager : MonoBehaviour
         }
         Debug.Log("牌組已洗牌");
     }
-    public void DrawCards(int count)
+    public bool DrawCards(int count)
     {
+        bool drewAny = false;
         for (int i = 0; i < count; i++)
         {
             if (deck.Count == 0) break;
-            if (hands.Count >= 6) break;
+            if (hands.Count >= 5) break;
 
             // 1. 取出最上面的一張卡並複製
             ActionCard drawnCard = deck[0];
             deck.RemoveAt(0);
             ActionCard runtimeCard = CardFactory.CreateCardInstance(drawnCard);
-
+            if (runtimeCard == null)
+            {
+                Debug.LogError("複製卡片失敗！");
+                continue;
+            }
             // 2. 實例化一個卡片 UI
             GameObject cardGO = Instantiate(cardPrefab, handArea);
 
@@ -126,8 +165,30 @@ public class OnStageManager : MonoBehaviour
 
             // 4. 加進手牌列表
             hands.Add(cardGO);
+            drewAny = true;
+        }
+        return drewAny;
+    }
+    //依據是否有抽牌權抽卡
+    public void CheckDrawChanceAndDraw()
+    {
+        if (drawChance == 0)
+        {
+            Debug.Log($"抽牌權為0，無法抽牌");
+            return;
+        }
+
+        if (DrawCards(1))
+        {
+            drawChance--;
+            Debug.Log($"成功抽牌，剩餘抽牌權{drawChance}");
+        }
+        else
+        {
+            Debug.Log("抽牌失敗（可能牌組已空或手牌滿了）");
         }
     }
+
     //-----------------------------------計數----------------------------------------
     //得到分數
     public void gainPoint(int point,float mutiply)
