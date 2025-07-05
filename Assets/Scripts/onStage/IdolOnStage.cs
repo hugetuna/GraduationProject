@@ -34,9 +34,9 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
     //設定卡片到偶像上，若可設定，回傳true，反之回傳否
     public bool SetApplyingCard(ActionCard cardToApply)
     {
-        if (cardToApply == null)
+        if (cardToApply == null&& applyingCard != null&&isAcion == true)
         {
-            Debug.LogError("SetApplyingCard：傳入的 cardToApply 是 null！");
+            Debug.LogError("SetApplyingCard：傳入的 cardToApply 是 null，或已處於動作狀態！");
             return false;
         }
         if (isAcion == false&& applyingCard==null)
@@ -56,7 +56,6 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
         }
         else
         {
-            applyingCard = null;
             return false;
         }
     }
@@ -87,6 +86,7 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
             if (accepted)
             {
                 Debug.Log($"{idolInstance.name} 成功接收到卡片 {incomingCard.cardName}！");
+                stageManager.hands.Remove(draggedCardUI.gameObject);
                 Destroy(draggedCardUI.gameObject); // 卡片被使用後消失
             }
             else
