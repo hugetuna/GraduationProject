@@ -43,17 +43,23 @@ public class BenefitBar : MonoBehaviour
         {
             if (trainingUIData.trainingType.ToLower() == "dance")
             {
-                int danceResult = characterInfo.dance + trainingUIData.basicBenefit;
+                int danceResult = trainingUIData.isWithTeacher ?
+                    characterInfo.dance + trainingUIData.withTeacherBenefit:
+                    characterInfo.dance + trainingUIData.basicBenefit;
                 benefitText.text = $"{characterInfo.dance}→{danceResult}";
             }
             else if (trainingUIData.trainingType.ToLower() == "vocal")
             {
-                int vocalResult = characterInfo.vocal + trainingUIData.basicBenefit;
+                int vocalResult = trainingUIData.isWithTeacher ?
+                    characterInfo.vocal + trainingUIData.withTeacherBenefit:
+                    characterInfo.vocal + trainingUIData.basicBenefit;
                 benefitText.text = $"{characterInfo.vocal}→{vocalResult}";
             }
             else if (trainingUIData.trainingType.ToLower() == "visual")
             {
-                int visualResult = characterInfo.visual + trainingUIData.basicBenefit;
+                int visualResult = trainingUIData.isWithTeacher ?
+                    characterInfo.visual + trainingUIData.withTeacherBenefit:
+                    characterInfo.visual + trainingUIData.basicBenefit;
                 benefitText.text = $"{characterInfo.visual}→{visualResult}";
             }
         }

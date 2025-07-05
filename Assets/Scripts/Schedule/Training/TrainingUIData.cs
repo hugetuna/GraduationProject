@@ -10,10 +10,11 @@ public class TrainingUIData : ScriptableObject
     public bool isWithTeacher = false; // 是否有老師協助訓練，預設為無
     public string teacherName = "無"; // 老師名稱，預設為無
     public int neededVigour = 20; // 訓練所需的體力值，預設為 20
-    public int basicBenefit = 5; // 訓練的基本收益，預設為 5（找不到設定資料QQ）
+    public int basicBenefit = 60; // 訓練的基本收益，預設為 60
+    public int withTeacherBenefit = 100; // 有老師協助訓練的收益，預設為 100
 
     /* 根據角色狀態有所浮動的部分 */
-    // 角色訓練前與訓練後的體力＆能力值 -> 讀取角色的資料再加以視覺化
+    // 角色訓練前與訓練後的體力＆能力值 -> 讀取角色的資料再加以視覺化 v
     // 角色當前的 buff 與 debuff -> 尚未實作，可以先隨意寫
 
     public void Reset() // 恢復預設值

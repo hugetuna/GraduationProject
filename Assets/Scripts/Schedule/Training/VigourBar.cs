@@ -40,8 +40,8 @@ public class VigourBar : MonoBehaviour
         dragToLesson = GetComponent<DragToLesson>();
 
         vigourSlider.maxValue = characterInfo.vigourMax; // 設定體力值 UI 的最大值
-        //vigourSlider.value = characterInfo.vigour; // 設定體力值 UI 的當前值（結算前不會做任何實質更改）
-        vigourSlider.value = vigourSlider.maxValue;
+        vigourSlider.value = characterInfo.vigour; // 設定體力值 UI 的當前值（結算前不會做任何實質更改）
+        //vigourSlider.value = vigourSlider.maxValue;
 
         // 設定消耗的體力背景（理論上只須設定一次即可）
         float ratio = (float)vigourSlider.value / vigourSlider.maxValue;
@@ -78,7 +78,7 @@ public class VigourBar : MonoBehaviour
         {
             vigourSlider.value = characterInfo.vigour;
         }
-        else if (currentZoneType == DropZoneType.Trainee)
+        else if (currentZoneType == DropZoneType.Trainee && isAbleToTrain)
         {
             vigourSlider.value = characterInfo.vigour - trainingUIData.neededVigour;
         }

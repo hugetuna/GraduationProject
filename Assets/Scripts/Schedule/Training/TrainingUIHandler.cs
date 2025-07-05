@@ -115,7 +115,7 @@ public class TrainingUIHandler : MonoBehaviour
         for (int i = 0; i < teamMembers.Count && i < characterImages.Length; i++) // 確保不會超出陣列範圍
         {
             string memberName = teamMembers[i].name; // 取得隊伍成員名稱
-            memberName = memberName[10..]; // 去除前綴（只剩名字）
+            memberName = memberName.Replace("Character_", ""); // 去除前綴（只剩名字）
             if (characterSpriteDict.ContainsKey(memberName)) // 檢查對照表中是否有該名稱
             {
                 characterImages[i].sprite = characterSpriteDict[memberName]; // 指派圖片來源
