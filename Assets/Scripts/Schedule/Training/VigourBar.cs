@@ -16,12 +16,16 @@ public class VigourBar : MonoBehaviour
     public Image lastVigourImage; // 在訓練區代表訓練前的體力條
     public bool isAbleToTrain = true; // 是否能進行訓練
 
+    private Image image; // 取得該角色的圖片參考
+    public Material grayMaterial; // 灰階材質
+
 
     void Start()
     {
         idolInstance = FindObjectsOfType<IdolInstance>(); // 獲取場景中所有具備 IdolInstance 的物件
 
-        characterName = GetComponent<Image>().sprite.name; // 取得圖片來源名稱
+        image = GetComponent<Image>(); // 取得該角色的圖片參考
+        characterName = image.sprite.name; // 取得圖片來源名稱
         characterName = characterName.Replace("UI_character_", ""); // 去除名稱前綴
         IdolWho characterIndex = IdolWho.none;
         if (characterName == "Kuma") characterIndex = IdolWho.Kuma;
@@ -65,11 +69,13 @@ public class VigourBar : MonoBehaviour
         if (characterInfo.vigour < trainingUIData.neededVigour)
         {
             isAbleToTrain = false; // 體力不足無法訓練
-            fillImage.color = new Color32(98, 0, 148, 255);
+            image.material = grayMaterial; // 使用灰階材質
+            fillImage.color = new Color32(240, 58, 106, 255); // 將不足以訓練的體力設成桃紅色
         }
         else
         {
             isAbleToTrain = true; // 有足夠體力進行訓練
+            image.material = null;
             fillImage.color = new Color32(214, 189, 255, 255);
         }
 

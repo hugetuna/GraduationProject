@@ -10,6 +10,6 @@ public class ClosePanel : MonoBehaviour
     {
         // 可使用 UI 上的叉叉關閉訓練 UI
         Debug.Log("關閉訓練 UI");
-        panelToClose?.SetActive(false);
+        panelToClose.SetActive(false);
     }
 }

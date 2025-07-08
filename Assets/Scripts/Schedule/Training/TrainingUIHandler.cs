@@ -99,13 +99,14 @@ public class TrainingUIHandler : MonoBehaviour
             // 暫時寫死為一星的 Amy 老師
             trainingUIData.teacherName = "Amy";
             TeacherText.text = $"老師：{trainingUIData.teacherName} ★1";
+            BenefitText.text = $"基本收益：{trainingUIData.withTeacherBenefit}"; // 設定基本收益的 UI 文字內容
         }
         else
         {
             TeacherText.text = "老師：無";
+            BenefitText.text = $"基本收益：{trainingUIData.basicBenefit}"; // 設定基本收益的 UI 文字內容
         }
         VigourText.text = $"耗費體力：{trainingUIData.neededVigour}"; // 設定耗費體力的 UI 文字內容
-        BenefitText.text = $"基本收益：{trainingUIData.basicBenefit}"; // 設定基本收益的 UI 文字內容
 
         // 取得 UI 圖片的插槽位置
         characterImages = canvaLocator.characterImages;

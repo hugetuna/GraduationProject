@@ -2,11 +2,12 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+using UnityEngine.EventSystems;
 
 public class ScheduleManager : MonoBehaviour
 {
-    /* date 變數和 changeDate 函式跟 DayManager.cs 的寫法一樣 */
-    public static int date = 1; // 靜態變數，保存遊戲中的日期
+    public DayManager dayManager; // 取得 DayManager 的參考
     public static event Action OnChangeDay; // 定義切換天數事件
 
     public TeamUIData teamUIData; // 在此用來取得訓練成員清單
@@ -17,17 +18,44 @@ public class ScheduleManager : MonoBehaviour
     public static List<GameObject> disappearCharacters = new(); // 訓練結算後隱藏的角色物件
     public TeamManager teamManager; // 透過 teamManager 取得當前隊長
 
+    public GameObject computerMenu;
+    public Button settleTrainingButton; // 訓練結算按鈕
+    public Button changeDayButton; // 切換天數按鈕
 
-    void Start() // 可以在開始遊戲時初始化，或每次遊戲結束時進行保存
+
+    void Start()
     {
-        date = 1; // 初始化日期，若需要可以改成從保存中讀取
-        Debug.Log($"今天是第 {date} 天");
-
+        ComputerInteraction.OnComputerInteracted += ShowMenu; // 訂閱並監聽與電腦互動事件
         teamTrainees = teamUIData.teamTrainees;
+        computerMenu.SetActive(false); // 初始時隱藏電腦選單
+        settleTrainingButton.onClick.AddListener(SettleTraining); // 訓練結算按鈕點擊事件
+        changeDayButton.onClick.AddListener(ChangeDay); // 切換天數按鈕點擊事件
     }
 
-    [ContextMenu("SettleTraining")]
-    public void SettleTraining() // 結算訓練收益的函式（目前須手動操作）
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0)) // 檢查滑鼠左鍵是否被按下
+        {
+            if (!IsCursorClickUIObject()) // 點擊非 UI 區域時關閉 UI
+            {
+                //Debug.Log("關閉電腦選單 UI");
+                computerMenu.SetActive(false);
+            }
+        }
+    }
+
+    void OnDestroy()
+    {
+        ComputerInteraction.OnComputerInteracted -= ShowMenu; // 取消訂閱與電腦互動事件
+    }
+
+    private void ShowMenu() // 顯示電腦選單的函式
+    {
+        computerMenu.SetActive(true); // 顯示電腦選單
+    }
+
+    //[ContextMenu("SettleTraining")]
+    public void SettleTraining() // 結算訓練收益的函式
     {
         if (!isSettled)
         {
@@ -37,7 +65,7 @@ public class ScheduleManager : MonoBehaviour
             {
                 var character = GameObject.Find($"Character_{trainee}"); // 尋找場景上對應的角色物件
                 if (character != null) // 確保角色物件存在
-                { 
+                {
                     IdolInstance idolInstance = character.GetComponent<IdolInstance>(); // 取得角色的 IdolInstance 組件
                     idolInstance.vigour -= trainingUIData.neededVigour; // 減少體力值
                     if (trainingUIData.trainingType == "Dance") // 如果是舞蹈訓練
@@ -62,6 +90,7 @@ public class ScheduleManager : MonoBehaviour
                     character.SetActive(false); // 隱藏並停用角色物件（等同於從隊伍中消失）
                 }
             }
+            computerMenu.SetActive(false);
             isSettled = true; // 設定為已結算
         }
         else
@@ -72,14 +101,14 @@ public class ScheduleManager : MonoBehaviour
 
     }
 
-    [ContextMenu("ChangeDay")]
-    public void ChangeDay() // 用來更動日期的函式（目前須手動操作）
+    //[ContextMenu("ChangeDay")]
+    public void ChangeDay() // 用來更動日期的函式
     {
         if (isSettled) // 如果已經結算過訓練
         {
+            dayManager.ChangeDay();
             OnChangeDay?.Invoke(); // 觸發切換天數事件
-            date++;
-            Debug.Log($"今天是第 {date} 天");
+            computerMenu.SetActive(false);
             isSettled = false; // 重置結算狀態
         }
         else
@@ -88,4 +117,19 @@ public class ScheduleManager : MonoBehaviour
         }
     }
 
+    private bool IsCursorClickUIObject()
+    {
+        // 根據當前操作，設定滑鼠或觸控位置
+        PointerEventData eventData = new(EventSystem.current)
+        {
+            position = Input.mousePosition
+        };
+
+        // RaycastAll 會從 eventData 中的滑鼠位置發射一條射線，檢測所有碰撞的 UI 元素
+        // 符合條件的 UI 元素會被加到 raycastResults 清單中
+        var raycastResults = new List<RaycastResult>();
+        EventSystem.current.RaycastAll(eventData, raycastResults);
+
+        return raycastResults.Count > 0;
+    }
 }
