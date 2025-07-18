@@ -12,7 +12,7 @@ public abstract class Item : ScriptableObject
     public ItemType itemType;
     public int maxStack = 1;
 
-    public abstract void Use();
+    public abstract void Use(IdolInstance target);
     public virtual Item Clone()
     {
         return Instantiate(this);

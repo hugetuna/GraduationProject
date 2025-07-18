@@ -6,14 +6,14 @@ public class ConsumableItem : Item
 {
     public List<ItemEffect> effects;
 
-    public override void Use()
+    public override void Use(IdolInstance target)
     {
-        //todo ¨Ïª±®a¦Û¤v¿ï¥Î¹D¨ã¬I©ñ¹ï¶H
-        IdolInstance target = FindObjectOfType<IdolInstance>();
+        //todo ï¿½Ïªï¿½ï¿½aï¿½Û¤vï¿½ï¿½Î¹Dï¿½ï¿½Iï¿½ï¿½ï¿½H
+        //IdolInstance target = FindObjectOfType<IdolInstance>();
         ResourceManager resourceManager = FindObjectOfType<ResourceManager>();
         if (target == null|| resourceManager==null)
         {
-            Debug.LogError("§ä¤£¨ì IdolInstance©ÎresourceManager¡I");
+            Debug.LogError("ï¿½ä¤£ï¿½ï¿½ IdolInstanceï¿½ï¿½resourceManagerï¿½I");
             return;
         }
 
@@ -22,6 +22,6 @@ public class ConsumableItem : Item
             effect.Apply(target, resourceManager);
         }
 
-        Debug.Log($"{itemName} ³Q¨Ï¥Î¡I");
+        Debug.Log($"{itemName} ï¿½Qï¿½Ï¥Î¡I");
     }
 }

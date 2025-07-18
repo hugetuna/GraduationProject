@@ -9,12 +9,12 @@ public class InventoryManager : MonoBehaviour
     public void AddItem(Item newItem)
     {
         items.Add(newItem);
-        Debug.Log("Àò±o¹D¨ã¡G" + newItem.itemName);
+        Debug.Log("ï¿½ï¿½oï¿½Dï¿½ï¿½G" + newItem.itemName);
     }
 
-    public void UseItem(Item item)
+    public void UseItem(Item item, IdolInstance target)
     {
-        item.Use();
+        item.Use(target);
         if (item.maxStack == 1) items.Remove(item);
     }
 }

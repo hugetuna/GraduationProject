@@ -18,7 +18,7 @@ public class FansItem : Item
     {
         harvester = target;
     }
-    public override void Use()
+    public override void Use(IdolInstance target)
     {
         ResourceManager resourceManager = FindObjectOfType<ResourceManager>();
         TeamManager teamManager = FindObjectOfType<TeamManager>();
