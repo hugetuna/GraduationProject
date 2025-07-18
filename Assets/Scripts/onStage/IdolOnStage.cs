@@ -8,16 +8,23 @@ using UnityEngine.EventSystems;
 public class IdolOnStage : MonoBehaviour, IDropHandler
 {
     [Header("上台的偶像資料")]
-    public SpriteRenderer spriteRenderer;
     public IdolInstance idolInstance;
     public float actionTimer=0;
     public bool isAcion = false;
     public ActionCard applyingCard=null;
     private OnStageManager stageManager;
+    //不同的偶像有不同的視覺呈現，在此以連續圖片列表模擬動畫
+    [Header("上台的偶像視覺呈現")]
+    public SpriteRenderer spriteRenderer;
+    public SpriteAnimator spriteAnimator;
+    public List<Sprite> idleFrames;
+    public List<Sprite> actionFrames;
     // Start is called before the first frame update
     void Start()
     {
         stageManager = FindObjectOfType<OnStageManager>();
+        spriteAnimator = gameObject.GetComponent<SpriteAnimator>();
+        spriteAnimator.SetFrames(idleFrames);
     }
     private void Update()
     {
@@ -45,6 +52,7 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
             //如果有過標準就結算效果
             if (idolInstance.vocal >= applyingCard.voGate && idolInstance.dance >= applyingCard.daGate && idolInstance.visual >= applyingCard.viGate)
             {
+                spriteAnimator.SetFrames(actionFrames);
                 foreach (var applyEffect in applyingCard.effects)
                 {
                     applyEffect.OnApply(this, stageManager);
@@ -65,7 +73,8 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
         //如果有過標準就結算效果
         if(idolInstance.vocal>=applyingCard.voGate&& idolInstance.dance >= applyingCard.daGate&& idolInstance.visual >= applyingCard.viGate)
         {
-            foreach(var endEffect in applyingCard.effects)
+            spriteAnimator.SetFrames(idleFrames);
+            foreach (var endEffect in applyingCard.effects)
             {
                 endEffect.OnEnd(this, stageManager);
             }
