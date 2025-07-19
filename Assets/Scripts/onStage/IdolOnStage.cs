@@ -15,16 +15,25 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
     private OnStageManager stageManager;
     //不同的偶像有不同的視覺呈現，在此以連續圖片列表模擬動畫
     [Header("上台的偶像視覺呈現")]
+    //圖片動畫
     public SpriteRenderer spriteRenderer;
     public SpriteAnimator spriteAnimator;
     public List<Sprite> idleFrames;
     public List<Sprite> actionFrames;
+    //旋轉部分
+    private bool isRotating = false;
+    private float rotationTimer = 0f;
+    private float rotationDuration = 0.2f; // 旋轉持續時間 (秒)
+    private Quaternion startRotation;
+    private Quaternion endRotation;
     // Start is called before the first frame update
     void Start()
     {
         stageManager = FindObjectOfType<OnStageManager>();
         spriteAnimator = gameObject.GetComponent<SpriteAnimator>();
         spriteAnimator.SetFrames(idleFrames);
+        startRotation = Quaternion.Euler(0, 0, 0);
+        endRotation = Quaternion.Euler(0, 180f, 0);
     }
     private void Update()
     {
@@ -35,7 +44,30 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
             if (actionTimer >= applyingCard.applyDuration)
             {
                 ApllyOnEndAndReset();
+                isRotating = true;
             }
+        }
+        if (isRotating == true)
+        {
+            rotationTimer += Time.deltaTime;
+            float t = rotationTimer / rotationDuration;
+
+            if (t >= 1f)
+            {
+                t = 1f;
+                isRotating = false;
+                rotationTimer = 0;
+            }
+            // 動作時順轉，結束時逆轉
+            if (isAcion == true)
+            {
+                transform.localRotation = Quaternion.Slerp(startRotation, endRotation, t);
+            }
+            else
+            {
+                transform.localRotation = Quaternion.Slerp(endRotation, startRotation, t);
+            }
+            
         }
     }
     //設定卡片到偶像上，若可設定，回傳true，反之回傳否
@@ -60,6 +92,7 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
             }
             actionTimer = 0;
             isAcion = true;
+            isRotating = true;
             return true;
         }
         else
@@ -71,7 +104,7 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
     public void ApllyOnEndAndReset()
     {
         //如果有過標準就結算效果
-        if(idolInstance.vocal>=applyingCard.voGate&& idolInstance.dance >= applyingCard.daGate&& idolInstance.visual >= applyingCard.viGate)
+        if (idolInstance.vocal>=applyingCard.voGate&& idolInstance.dance >= applyingCard.daGate&& idolInstance.visual >= applyingCard.viGate)
         {
             spriteAnimator.SetFrames(idleFrames);
             foreach (var endEffect in applyingCard.effects)

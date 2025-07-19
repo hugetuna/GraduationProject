@@ -76,11 +76,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 58a6f8974be4c9241ab9532a9da6012d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  spriteRenderer: {fileID: 7756542665267888318}
   idolInstance: {fileID: 6438761890368787679}
   actionTimer: 0
   isAcion: 0
   applyingCard: {fileID: 0}
+  spriteRenderer: {fileID: 7756542665267888318}
+  spriteAnimator: {fileID: 0}
   idleFrames:
   - {fileID: 21300000, guid: b6ba5ae715b2b9f4f988106a2dee0a4b, type: 3}
   - {fileID: 21300000, guid: 62a8383ad411d2344926af7398fa2b58, type: 3}
@@ -187,7 +188,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   spriteRenderer: {fileID: 7756542665267888318}
   frames: []
-  frameRate: 12
+  frameRate: 30
 --- !u!65 &5815928495896451706
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -207,7 +208,7 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 2.35, y: 2.47, z: 1}
+  m_Size: {x: 2.35, y: 4.04, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &7339415896235003991
 GameObject:
@@ -282,7 +283,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 4ba6f46970592ca4a9dc802976202cee, type: 3}
+  m_Sprite: {fileID: 21300000, guid: b6ba5ae715b2b9f4f988106a2dee0a4b, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
