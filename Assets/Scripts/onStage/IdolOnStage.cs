@@ -31,9 +31,12 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
     {
         stageManager = FindObjectOfType<OnStageManager>();
         spriteAnimator = gameObject.GetComponent<SpriteAnimator>();
+        idleFrames = idolInstance.basicStatus.idleFrames;
+        actionFrames = idolInstance.basicStatus.actionFrames;
         spriteAnimator.SetFrames(idleFrames);
         startRotation = Quaternion.Euler(0, 0, 0);
         endRotation = Quaternion.Euler(0, 180f, 0);
+
     }
     private void Update()
     {

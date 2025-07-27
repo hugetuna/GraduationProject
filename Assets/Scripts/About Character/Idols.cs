@@ -5,11 +5,15 @@ using UnityEngine;
 
 public class Idols : ScriptableObject
 {
-    public string idolName;  // ¨¤¦â¦WºÙ
-    public int vocal;//ºq°Û¤O
-    public int dance;//»RÁĞ¤O
-    public int visual;//ªí²{¤O
-    public int charm;//¾y¤O
-    public int performance;//ºt§Ş
-    public int vigour;//Åé¤O
+    //èˆå°åœ–ç‰‡çµ„
+    public List<Sprite> idleFrames;
+    public List<Sprite> actionFrames;
+    //å…¶ä»–åŸºæœ¬æ•¸å€¼
+    public string idolName;  // è§’è‰²åç¨±
+    public int vocal;//æ­Œå”±åŠ›
+    public int dance;//èˆè¹ˆåŠ›
+    public int visual;//è¡¨ç¾åŠ›
+    public int charm;//é­…åŠ›
+    public int performance;//æ¼”æŠ€
+    public int vigour;//é«”åŠ›
 }
