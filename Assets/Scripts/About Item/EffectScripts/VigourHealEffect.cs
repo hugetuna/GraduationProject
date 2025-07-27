@@ -10,6 +10,6 @@ public class VigourHealEffect : ItemEffect
     {
         int before = target.vigour;
         target.vigour = Mathf.Min(target.vigour + healAmount, target.vigourMax);
-        Debug.Log($"[Åé¤O«ì´_] ±q {before} ¡÷ {target.vigour}");
+        Debug.Log($"[é«”åŠ›æ¢å¾©] å¾ {before} â†’ {target.vigour}");
     }
 }

@@ -10,10 +10,10 @@ public class ItemInfoUI : MonoBehaviour
     private TextMeshProUGUI itemInfoName; // 道具詳細資訊的名稱
     private TextMeshProUGUI itemInfoDescription; // 道具詳細資訊的描述
     //-----------------------------------------------------------------//
-    public Button[] itemButtons;
-    private Vector3[] originalButtonPos; // 儲存按鈕的原始位置
+    public List<Button> itemButtons;
+    private List<Vector3> originalButtonPos; // 儲存按鈕的原始位置
     //-----------------------------------------------------------------//
-    public Item sellectedItem; // 當前選擇的道具
+    public Item selectedItem; // 當前選擇的道具
 
     void Start()
     {
@@ -21,13 +21,11 @@ public class ItemInfoUI : MonoBehaviour
         itemInfoDescription = transform.Find("EffectText").GetComponent<TextMeshProUGUI>();
         itemInfoIcon = transform.Find("Image").GetComponent<Image>();
 
-        originalButtonPos = new Vector3[itemButtons.Length];
-        for (int i = 0; i < itemButtons.Length; i++)
+        originalButtonPos = new List<Vector3>();
+        foreach (Button btn in itemButtons)
         {
-            Button btn = itemButtons[i];
             RectTransform rt = btn.GetComponent<RectTransform>();
-            originalButtonPos[i] = rt.localPosition;
-
+            originalButtonPos.Add(rt.localPosition);
             Button tempBtn = btn; // 捕捉當下按鈕以避免閉包問題
             tempBtn.onClick.AddListener(() => OnButtonClick(tempBtn));
         }
@@ -35,20 +33,20 @@ public class ItemInfoUI : MonoBehaviour
 
     public void OnButtonClick(Button clickedButton)
     {
-        for (int i = 0; i < itemButtons.Length; i++)
+        for (int i = 0; i < itemButtons.Count; i++)
         {
             // 一般按鈕
             RectTransform rt = itemButtons[i].GetComponent<RectTransform>();
             rt.localPosition = originalButtonPos[i];
         }
 
-        // 被按下的按鈕
+        // 被按下的按鈕（唯一）
         RectTransform clickedRt = clickedButton.GetComponent<RectTransform>();
         float x = originalButtonPos[0].x + 11.0f; // 每個按鈕的原始 x 位置都一樣
         float y = clickedRt.localPosition.y;
         clickedRt.localPosition = new Vector3(x, y, 0);
 
-        Item item = sellectedItem = clickedButton.GetComponent<SetItemUI>().item;
+        Item item = selectedItem = clickedButton.GetComponent<SetItemUI>().item;
         itemInfoName.text = item.itemName;
         itemInfoDescription.text = item.description;
         itemInfoIcon.sprite = item.icon;

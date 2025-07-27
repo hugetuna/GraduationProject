@@ -3,16 +3,31 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 
+/* 掛在背包 UI 外控制背包 */
 public class PackUIHandler : MonoBehaviour
 {
     public GameObject packUI; // 背包 UI
     public Button packButton; // 背包按鈕
+    //-----------------------------------------------------------------//
+    public TeamManager teamManager; // 透過 TeamManager 物件取得當前隊伍成員
+    private List<PlayerControlMainWorld> teamMembers = new(); // 記錄取得的隊伍成員
+    private List<PlayerInput> playerInputs = new(); // 玩家輸入系統
 
     void Start()
     {
         packUI.SetActive(false); // 初始化背包 UI 狀態
         packButton.onClick.AddListener(OpenPackUI); // 設置按鈕點擊事件
+
+        teamMembers = teamManager.teamMembers; // 獲取當前隊伍成員
+        foreach (PlayerControlMainWorld member in teamMembers)
+        {
+            if (member.TryGetComponent<PlayerInput>(out var playerInput))
+            {
+                playerInputs.Add(playerInput); // 收集所有玩家的輸入系統
+            }
+        }
     }
 
     void Update()
@@ -26,16 +41,30 @@ public class PackUIHandler : MonoBehaviour
             }
         }
 
-        // 檢查背包 UI 是否開啟，並根據狀態啟用或禁用背包按鈕
-        if (!packUI.activeSelf) packButton.interactable = true; // 啟用背包按鈕
-        else packButton.interactable = false; // 禁用背包按鈕
+        // 檢查背包 UI 是否開啟，並根據狀態啟用或禁用背包按鈕＆角色移動
+        if (!packUI.activeSelf)
+        {
+            packButton.interactable = true; // 啟用背包按鈕
+            foreach (PlayerInput input in playerInputs)
+            {
+                input.enabled = true; // 啟用所有玩家的輸入系統
+            }
+        }
+        else
+        {
+            packButton.interactable = false; // 禁用背包按鈕
+            foreach (PlayerInput input in playerInputs)
+            {
+                input.enabled = false; // 禁用所有玩家的輸入系統
+            }
+        }
     }
 
     private void OpenPackUI()
     {
         if (!packUI.activeSelf) packUI.SetActive(true); // 如果背包 UI 未開啟，則打開它
     }
-    
+
     private bool IsCursorClickUIObject()
     {
         // 根據當前操作，設定滑鼠或觸控位置

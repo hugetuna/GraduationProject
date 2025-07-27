@@ -4,7 +4,7 @@ using UnityEngine;
 
 [CreateAssetMenu(menuName = "ItemEffects/TrainingBoost")]
 public class TrainingBoostEffect : ItemEffect {
-    //¤TºØ½m²ß®Ä²v¥[¦¨
+    //ä¸‰ç¨®ç·´ç¿’æ•ˆç‡åŠ æˆ
     public float voTrainingBoost=1;
     public float daTrainingBoost=1;
     public float viTrainingBoost=1;
@@ -13,9 +13,9 @@ public class TrainingBoostEffect : ItemEffect {
         target.voTrainingBonus *= voTrainingBoost;
         target.daTrainingBonus *= daTrainingBoost;
         target.viTrainingBonus *= viTrainingBoost;
-        // °²³]§A¦³³]­p training ¼Ò¦¡·|¥h¨Ï¥Î³o­Ó¥[¦¨
-        Debug.Log($"[ºq°Û°V½m¥[¦¨] ³]©w vocal bonus ­¼¥H {voTrainingBoost}");
-        Debug.Log($"[»RÁĞ°V½m¥[¦¨] ³]©w dance bonus ­¼¥H {daTrainingBoost}");
-        Debug.Log($"[ºq°Û°V½m¥[¦¨] ³]©w visual bonus ­¼¥H {viTrainingBoost}");
+        // å‡è¨­ä½ æœ‰è¨­è¨ˆ training æ¨¡å¼æœƒå»ä½¿ç”¨é€™å€‹åŠ æˆ
+        Debug.Log($"[æ­Œå”±è¨“ç·´åŠ æˆ] è¨­å®š vocal bonus ä¹˜ä»¥ {voTrainingBoost}");
+        Debug.Log($"[èˆè¹ˆè¨“ç·´åŠ æˆ] è¨­å®š dance bonus ä¹˜ä»¥ {daTrainingBoost}");
+        Debug.Log($"[è¡¨ç¾åŠ›è¨“ç·´åŠ æˆ] è¨­å®š visual bonus ä¹˜ä»¥ {viTrainingBoost}");
     }
 }

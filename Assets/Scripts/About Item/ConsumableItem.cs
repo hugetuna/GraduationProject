@@ -8,12 +8,12 @@ public class ConsumableItem : Item
 
     public override void Use(IdolInstance target)
     {
-        //todo �Ϫ��a�ۤv��ιD��I���H
+        // 透過函式引數可指定使用道具的偶像
         //IdolInstance target = FindObjectOfType<IdolInstance>();
         ResourceManager resourceManager = FindObjectOfType<ResourceManager>();
         if (target == null|| resourceManager==null)
         {
-            Debug.LogError("�䤣�� IdolInstance��resourceManager�I");
+            Debug.LogError("找不到 IdolInstance 或 ResourceManager");
             return;
         }
 
@@ -22,6 +22,6 @@ public class ConsumableItem : Item
             effect.Apply(target, resourceManager);
         }
 
-        Debug.Log($"{itemName} �Q�ϥΡI");
+        Debug.Log($"{itemName} 使用完畢");
     }
 }

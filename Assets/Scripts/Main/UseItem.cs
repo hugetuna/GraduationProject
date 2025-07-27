@@ -21,7 +21,9 @@ public class UseItem : MonoBehaviour
     {
         // 根據目前隊伍成員決定下拉選單的選項
         dropdown.options.Clear(); // 清空原有選項
+
         teamMembers = teamManager.teamMembers;
+        
         for (int i = 0; i < teamMembers.Count; i++) // 確保不會超出陣列範圍
         {
             string memberName = teamMembers[i].name; // 取得隊伍成員名稱
@@ -71,13 +73,19 @@ public class UseItem : MonoBehaviour
         }
 
         // 欲使用的道具（可從 itemInfoUI 獲取）
-        Item item = itemInfoUI.sellectedItem;
+        Item item = itemInfoUI.selectedItem;
 
         // 使用道具
         if (item.itemType == ItemType.Consumable)
         {
             var itemToUse = item as ConsumableItem;
             itemToUse.Use(itemUser);
-        } 
+        }
+        else if (item.itemType == ItemType.Fans)
+        {
+            var itemToUse = item as FansItem;
+            itemToUse.Use(itemUser);
+        }
+        // 裝備的使用尚未實作
     }
 }
