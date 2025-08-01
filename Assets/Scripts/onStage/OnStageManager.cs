@@ -1,8 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+using TMPro;
+using UnityEngine.EventSystems;
 
 public class OnStageManager : MonoBehaviour
 {
@@ -22,6 +24,10 @@ public class OnStageManager : MonoBehaviour
     public float drawChance = 0;//抽排次數
     public float drawCharge = 0;//抽排充能條
     public float drawChargeLimit = 40;//抽排充能上限，超過就抽一張
+    [Header("視覺化計數")]
+    public TextMeshProUGUI timerText;
+    public TextMeshProUGUI roundText;
+    public TextMeshProUGUI musicNameText;
     [Header("有關卡片")]
     public List<ActionCard> deck;
     public List<GameObject> hands;
@@ -37,8 +43,9 @@ public class OnStageManager : MonoBehaviour
 
     void Start()
     {
+        
         //LoadIdolsToStage();
-        foreach(var stage in allStageData)
+        foreach (var stage in allStageData)
         {
             if(stage.stageID== stageIDToLoad)
             {
@@ -47,11 +54,14 @@ public class OnStageManager : MonoBehaviour
         }
         LoadStage(currentStageData);
         LoadIdolsToStage();
+        //寫字
+        roundText.text = round.ToString() + "/" + currentStageData.roundMax.ToString();
+        musicNameText.text = "music: "+currentStageData.musicName;
     }
     private void Update()
     {
         roundTimer += Time.deltaTime;
-
+        timerText.text = roundTimer.ToString("F1") + "s";
         // 每秒更新 drawCharge
         drawCharge += Time.deltaTime * 10f; // 比如 1 秒增加 20點充能
 
@@ -74,6 +84,7 @@ public class OnStageManager : MonoBehaviour
         if (roundTimer >= currentStageData.secPerRound) // 這個值你可調
         {
             round++;
+            roundText.text = round.ToString()+ "/"+currentStageData.roundMax.ToString();
             roundTimer = 0;
             Debug.Log($"進入第 {round} 回合！");
         }

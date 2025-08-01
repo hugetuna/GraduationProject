@@ -22,6 +22,7 @@ public class StageAttribute : ScriptableObject
 
     public Sprite backgroundImage;
     public AudioClip backgroundMusic;
+    public string musicName;
     public List<ActionCardStack> actionCardStacks;
 
     public int baseRewardFans;
