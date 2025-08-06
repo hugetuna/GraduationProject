@@ -2,15 +2,19 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class TrainingUIHandler : MonoBehaviour
 {
     public GameObject trainingUI;
     public GameObject trainingUIInstance = null; // 記錄被生成的訓練 UI
+    //-----------------------------------------------------------------//
 
     public TeamManager teamManager; // 透過 TeamManager 物件取得當前隊伍成員
     private List<PlayerControlMainWorld> teamMembers = new(); // 記錄取得的隊伍成員
+    private List<PlayerInput> playerInputs = new(); // 玩家輸入系統
+    //-----------------------------------------------------------------//
     private Image[] characterImages; // 顯示在 UI 上的（角色）圖片
     public Sprite[] characterSprites; // 角色 UI 圖片來源（檔案資料夾）
     private Dictionary<string, Sprite> characterSpriteDict; // 角色名稱與圖片來源的對照表
@@ -44,7 +48,7 @@ public class TrainingUIHandler : MonoBehaviour
         teamUIData.characterSpriteDict = characterSpriteDict;
 
     }
-    
+
     void Update()
     {
         if (Input.GetMouseButtonDown(0)) // 檢查滑鼠左鍵是否被按下
@@ -53,6 +57,22 @@ public class TrainingUIHandler : MonoBehaviour
             {
                 Debug.Log("關閉訓練 UI");
                 trainingUIInstance.SetActive(false);
+            }
+        }
+        
+        if(trainingUIInstance != null && trainingUIInstance.activeSelf)
+        {
+            // 根據訓練 UI 的開啟狀態，決定是否禁用角色移動
+            foreach (PlayerInput input in playerInputs)
+            {
+                input.enabled = false; // 禁用所有玩家的輸入系統
+            }
+        }
+        else
+        {
+            foreach (PlayerInput input in playerInputs)
+            {
+                input.enabled = true; // 啟用所有玩家的輸入系統
             }
         }
     }
@@ -122,7 +142,16 @@ public class TrainingUIHandler : MonoBehaviour
                 characterImages[i].sprite = characterSpriteDict[memberName]; // 指派圖片來源
             }
 
-            if(!teamUIData.teamMembers.Contains(memberName)) teamUIData.teamMembers.Add(memberName);
+            if (!teamUIData.teamMembers.Contains(memberName)) teamUIData.teamMembers.Add(memberName);
+        }
+        
+        // 收集所有玩家的輸入系統
+        foreach (PlayerControlMainWorld member in teamMembers)
+        {
+            if (member.TryGetComponent<PlayerInput>(out var playerInput))
+            {
+                playerInputs.Add(playerInput);
+            }
         }
     }
 

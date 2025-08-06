@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "TeamUIData", menuName = "Schedule/TeamUIData")]
+[CreateAssetMenu(fileName = "TeamUIData", menuName = "Training/TeamUIData")]
 public class TeamUIData : ScriptableObject
 {
     public List<string> teamMembers = new(); // 儲存當前隊伍成員（在 TrainingUIHandler 初始化）

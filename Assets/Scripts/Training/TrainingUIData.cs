@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[CreateAssetMenu(fileName = "TrainingUIData", menuName = "Schedule/TrainingUIData")]
+[CreateAssetMenu(fileName = "TrainingUIData", menuName = "Training/TrainingUIData")]
 public class TrainingUIData : ScriptableObject
 {
     /* 訓練 UI 的基本介紹部分 */
