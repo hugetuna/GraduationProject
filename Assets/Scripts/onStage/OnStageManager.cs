@@ -28,6 +28,7 @@ public class OnStageManager : MonoBehaviour
     public TextMeshProUGUI timerText;
     public TextMeshProUGUI roundText;
     public TextMeshProUGUI musicNameText;
+    public TextMeshProUGUI playerPointText;
     [Header("有關卡片")]
     public List<ActionCard> deck;
     public List<GameObject> hands;
@@ -202,9 +203,10 @@ public class OnStageManager : MonoBehaviour
 
     //-----------------------------------計數----------------------------------------
     //得到分數
-    public void gainPoint(int point,float mutiply)
+    public void GainPoint(int point,float mutiply)
     {
         playerPoint += (int)(point * mutiply);
+        playerPointText.GetComponent<LerpChange>().SetText(playerPoint);
     }
     // 結束演出：計算表演得分並更新 GameManager / ResourceManager
     public void EndPerformance()

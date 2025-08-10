@@ -36,7 +36,6 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
         spriteAnimator.SetFrames(idleFrames);
         startRotation = Quaternion.Euler(0, 0, 0);
         endRotation = Quaternion.Euler(0, 180f, 0);
-
     }
     private void Update()
     {
@@ -87,15 +86,15 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
             //如果有過標準就結算效果
             if (idolInstance.vocal >= applyingCard.voGate && idolInstance.dance >= applyingCard.daGate && idolInstance.visual >= applyingCard.viGate)
             {
-                spriteAnimator.SetFrames(actionFrames);
                 foreach (var applyEffect in applyingCard.effects)
                 {
                     applyEffect.OnApply(this, stageManager);
                 }
             }
+            spriteAnimator.SetFrames(actionFrames);
+            isRotating = true;
             actionTimer = 0;
             isAcion = true;
-            isRotating = true;
             return true;
         }
         else
@@ -109,12 +108,12 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
         //如果有過標準就結算效果
         if (idolInstance.vocal>=applyingCard.voGate&& idolInstance.dance >= applyingCard.daGate&& idolInstance.visual >= applyingCard.viGate)
         {
-            spriteAnimator.SetFrames(idleFrames);
             foreach (var endEffect in applyingCard.effects)
             {
                 endEffect.OnEnd(this, stageManager);
             }
         }
+        spriteAnimator.SetFrames(idleFrames);
         actionTimer = 0;
         isAcion = false;
         applyingCard = null;

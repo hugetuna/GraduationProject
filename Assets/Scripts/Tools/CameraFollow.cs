@@ -6,6 +6,7 @@ public class CameraFollow : MonoBehaviour
 {
     public CinemachineVirtualCamera cinemachineCamera;
     public TeamManager teamManager;
+    
     void Update()
     {
         if (teamManager != null && cinemachineCamera != null)

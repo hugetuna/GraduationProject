@@ -22,7 +22,7 @@ public class AddScoreEffect : CardEffectBase
         if (parentCard != null)
         {
             int score = parentCard.point;
-            onStageManager.gainPoint(score, 1f);
+            onStageManager.GainPoint(score, 1f);
             Debug.Log($"加了 {score} 分！");
         }
         else
