@@ -10,8 +10,8 @@ public class ItemInfoUI : MonoBehaviour
     private TextMeshProUGUI itemInfoName; // 道具詳細資訊的名稱
     private TextMeshProUGUI itemInfoDescription; // 道具詳細資訊的描述
     //-----------------------------------------------------------------//
-    public List<Button> itemButtons;
-    private List<Vector3> originalButtonPos; // 儲存按鈕的原始位置
+    public List<Button> itemButtons = new();
+    private List<Vector3> originalButtonPos = new(); // 儲存按鈕的原始位置
     //-----------------------------------------------------------------//
     public Item selectedItem; // 當前選擇的道具
 

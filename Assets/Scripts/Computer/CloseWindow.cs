@@ -6,8 +6,8 @@ using UnityEngine.UI;
 
 public class CloseWindow : MonoBehaviour
 {
-    public GameObject windowToClose;
-    // public static event Action OnCloseButtonClicked;
+    public SetAppUI setAppUI; // 對應 App 的 UI 控制腳本 
+    public GameObject windowToClose; // App 視窗
 
     void Start()
     {
@@ -20,13 +20,10 @@ public class CloseWindow : MonoBehaviour
         Debug.Log("關閉視窗 UI");
         windowToClose.SetActive(false);
 
-        SetAppUI appUI = windowToClose.GetComponent<SetAppUI>();
-        Button button = appUI.gameObject.GetComponent<Button>();
-        button.interactable = true; // 恢復按鈕可點擊狀態
-        if (appUI != null && appUI.miniInstance != null)
-        {
-            Destroy(appUI.miniInstance); // 銷毀最小化按鈕實例
-        }
-        // OnCloseButtonClicked?.Invoke(); // 觸發關閉視窗的事件（看來暫時不會用到）
+        GameObject miniInstance = setAppUI.GetMiniInstance();
+        if (miniInstance != null) Destroy(miniInstance); // 銷毀最小化按鈕實例
+
+        WindowManager windowManager = setAppUI.windowmanager;
+        windowManager.DeregisterWindow();
     }
 }

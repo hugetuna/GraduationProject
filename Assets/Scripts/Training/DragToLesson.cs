@@ -18,8 +18,8 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     private bool isDragging = false; // 是否正在拖曳
 
     public TeamUIData teamUIData;  // 透過 ScriptableObject 取得當前隊伍 UI 資料
-    private List<string> teamMembers;
-    private List<string> teamTrainees;
+    private List<string> teamMembers = new();
+    private List<string> teamTrainees = new();
     private UnityEngine.UI.Image image;
     private string myName;
     public Slider vigourSlider; // 該角色的體力值 UI

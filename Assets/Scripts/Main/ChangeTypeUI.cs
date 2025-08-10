@@ -8,7 +8,7 @@ using System.Linq;
 
 public class ChangeTypeUI : MonoBehaviour
 {
-    public List<Button> itemTypeButtons; // 儲存按鈕的列表，分別代表消耗品、裝備和紛絲
+    public List<Button> itemTypeButtons = new(); // 儲存按鈕的列表，分別代表消耗品、裝備和紛絲
     public Sprite activeBtnImg;
     public Sprite normalBtnImg;
     //-----------------------------------------------------------------//

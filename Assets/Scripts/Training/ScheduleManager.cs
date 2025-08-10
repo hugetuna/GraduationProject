@@ -11,7 +11,7 @@ public class ScheduleManager : MonoBehaviour
     public static event Action OnChangeDay; // 定義切換天數事件
 
     public TeamUIData teamUIData; // 在此用來取得訓練成員清單
-    private List<string> teamTrainees;
+    private List<string> teamTrainees = new();
     public TrainingUIData trainingUIData;
 
     public static bool isSettled = false; // 是否已經結算過訓練
