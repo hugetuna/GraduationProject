@@ -35,8 +35,8 @@ public class WindowManager : MonoBehaviour
         if(windowCount > 0) windowCount--;
     }
 
-    // public void BringToFront(RectTransform window) // 讓視窗置頂（目前看起來不會用到）
-    // {
-    //     window.SetAsLastSibling();
-    // }
+    public void BringToFront(RectTransform window) // 讓視窗置頂
+    {
+        window.SetAsLastSibling();
+    }
 }

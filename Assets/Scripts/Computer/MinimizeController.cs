@@ -6,18 +6,12 @@ using UnityEngine.UI;
 /* 掛在最小化按鈕的 prefab 上，以控制視窗的最小化動畫 */
 public class MinimizeController : MonoBehaviour
 {
-    public GameObject appWindow; // 預計由負責生成該物件的 SetAppUI 指派
+    private GameObject appWindow; // （由負責生成該物件的 SetAppUI 指派）
     private MinimizeAnimation minimizeAnimation; // 最小化動畫控制器（可由 appWindow 取得）
     void Start()
     {
-        minimizeAnimation = appWindow.GetComponent<MinimizeAnimation>();
         GetComponent<Button>().onClick.AddListener(ToggleMinimize);
     }
-
-    // void Update()
-    // {
-
-    // }
 
     public void ToggleMinimize()
     {
@@ -32,5 +26,11 @@ public class MinimizeController : MonoBehaviour
                 minimizeAnimation.Restore();
             }
         }
+    }
+
+    public void SetAppWindow(GameObject window)
+    {
+        appWindow = window;
+        minimizeAnimation = appWindow.GetComponent<MinimizeAnimation>();
     }
 }

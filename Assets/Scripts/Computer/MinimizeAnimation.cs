@@ -6,7 +6,11 @@ using UnityEngine;
 public class MinimizeAnimation : MonoBehaviour
 {
     private CanvasGroup canvasGroup;
-    [SerializeField] private float duration = 0.4f;  // 動畫時間
+
+    [Tooltip("最小化與放大動畫的時間")]
+    [SerializeField]private float duration = 0.4f;  // 動畫時間
+
+    [Tooltip("視窗的彈性效果")]
     [SerializeField] private float overshoot = 1.1f; // 彈出比例 (比原本大10%)
 
     private Vector3 originalScale; // 原先比例

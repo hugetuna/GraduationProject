@@ -3,10 +3,13 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+/* 掛在 UIManager 等物件上，不得掛在 UI（視窗）本身 */
 public class DesktopUIHandler : MonoBehaviour
 {
+    [Tooltip("桌面 UI —— 與電腦互動可開啟電腦介面")]
     public GameObject desktopUI;
     //-----------------------------------------------------------------//
+    [Tooltip("用來取得當前隊伍成員，並在介面開啟時停用角色控制")]
     public TeamManager teamManager; // 透過 TeamManager 物件取得當前隊伍成員
     private List<PlayerControlMainWorld> teamMembers = new(); // 記錄取得的隊伍成員
     private List<PlayerInput> playerInputs = new(); // 玩家輸入系統

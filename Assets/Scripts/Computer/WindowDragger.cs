@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/* 預計掛在視窗的標題列上 */
 public class WindowDragger : MonoBehaviour, IBeginDragHandler, IDragHandler
 {
     private RectTransform windowRect;
@@ -10,7 +11,7 @@ public class WindowDragger : MonoBehaviour, IBeginDragHandler, IDragHandler
 
     void Awake()
     {
-        // 腳本預計掛在標題列的位置（父物件是視窗本人）
+        // 取得父物件（視窗本人）
         windowRect = transform.parent.GetComponent<RectTransform>();
     }
 
