@@ -26,7 +26,8 @@ public class CloseWindow : MonoBehaviour
         if (miniInstance != null) Destroy(miniInstance); // 銷毀最小化按鈕實例
 
         WindowManager windowManager = setAppUI.windowManager;
-        windowManager.DeregisterWindow();
+        RectTransform windowRect = GetComponent<RectTransform>();
+        windowManager.DeregisterWindow(windowRect);
     }
 
     public void BindSetAppUI(SetAppUI setAppUI)

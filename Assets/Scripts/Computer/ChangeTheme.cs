@@ -19,6 +19,10 @@ public class ChangeTheme : MonoBehaviour
     private Color desktopTbColor = new Color32(255, 213, 252, 255); // 桌面 UI 工作列顏色
     private Color demonPbColor = new Color32(98, 0, 148, 255); // 惡魔 UI 電源鍵顏色
     private Color desktopPbColor = new Color32(255, 141, 211, 255); // 桌面 UI 電源鍵顏色
+    //-----------------------------------------------------------------//
+    [Header("換色時間")]
+    [SerializeField] private float duration = 0.3f;
+
 
     void Start()
     {
@@ -28,16 +32,20 @@ public class ChangeTheme : MonoBehaviour
 
     public void SetDesktopTheme()
     {
-        taskbar.GetComponent<Image>().color = desktopTbColor;
+        StopAllCoroutines();
 
-        apps.SetActive(true); // 顯示應用程式按鈕
+        // 顏色平滑過渡
+        StartCoroutine(LerpImageColor(taskbar.GetComponent<Image>(), desktopTbColor));
+        StartCoroutine(LerpImageColor(powerButton.GetComponent<Image>(), desktopPbColor));
 
-        powerButton.GetComponent<Image>().color = desktopPbColor;
+        // 顯示應用程式按鈕
+        apps.SetActive(true);
 
-        Transform pt = theMinimized.transform;
-        if (pt.childCount > 0)
+        // 直接幫最小化按鈕換背景圖
+        Transform parentTransform = theMinimized.transform;
+        if (parentTransform.childCount > 0)
         {
-            foreach (Transform child in pt)
+            foreach (Transform child in parentTransform)
             {
                 child.GetComponent<Image>().sprite = desktopMiniBg;
             }
@@ -47,12 +55,16 @@ public class ChangeTheme : MonoBehaviour
 
     public void SetDemonTheme()
     {
-        taskbar.GetComponent<Image>().color = demonTbColor;
+        StopAllCoroutines();
 
-        apps.SetActive(false); // 隱藏應用程式按鈕
+        // 顏色平滑過渡
+        StartCoroutine(LerpImageColor(taskbar.GetComponent<Image>(), demonTbColor));
+        StartCoroutine(LerpImageColor(powerButton.GetComponent<Image>(), demonPbColor));
 
-        powerButton.GetComponent<Image>().color = demonPbColor;
+        // 隱藏應用程式按鈕
+        apps.SetActive(false);
 
+        // 直接幫最小化按鈕換背景圖
         Transform parentTransform = theMinimized.transform;
         if (parentTransform.childCount > 0)
         {
@@ -63,4 +75,18 @@ public class ChangeTheme : MonoBehaviour
         }
 
     }
+
+    IEnumerator LerpImageColor(Image img, Color targetColor)
+    {
+        Color startColor = img.color;
+        float t = 0f;
+        while (t < 1f)
+        {
+            t += Time.deltaTime / duration;
+            img.color = Color.Lerp(startColor, targetColor, t);
+            yield return null;
+        }
+        img.color = targetColor;
+    }
+
 }

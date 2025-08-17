@@ -53,15 +53,6 @@ public class SetAppUI : MonoBehaviour
         if (appWindow.activeSelf)
         {
             appButton.interactable = false; // 避免重複點擊按鈕
-            // 若滑鼠點擊了視窗，則將該視窗置頂
-            if (Input.GetMouseButtonDown(0))
-            {
-                RectTransform winRect = appWindow.GetComponent<RectTransform>();
-                if (IsPointerOverUIObject(winRect))
-                {
-                    windowManager.BringToFront(winRect);
-                }
-            }
         }
         else
         {
@@ -93,26 +84,5 @@ public class SetAppUI : MonoBehaviour
     public GameObject GetMiniInstance()
     {
         return miniInstance; // 返回最小化按鈕實例
-    }
-
-    private bool IsPointerOverUIObject(RectTransform uiElement) // 檢查特定 UI 元件是否被滑鼠點擊
-    {
-        PointerEventData pointerData = new(EventSystem.current)
-        {
-            position = Input.mousePosition
-        };
-
-        List<RaycastResult> results = new();
-        EventSystem.current.RaycastAll(pointerData, results);
-
-        foreach (var result in results)
-        {
-            if (result.gameObject.transform == uiElement ||
-                result.gameObject.transform.IsChildOf(uiElement))
-            {
-                return true;
-            }
-        }
-        return false;
     }
 }
