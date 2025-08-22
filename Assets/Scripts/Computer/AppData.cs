@@ -12,13 +12,4 @@ public class AppData : ScriptableObject
     public GameObject appWindowPrefab; // 對應的視窗 Prefab
     //private GameObject appPrefab; // 對應的應用程式 Prefab
     // public AppTypes appType; // 應用程式類型
-
-    // public void SetAppPrefab(GameObject prefab)
-    // {
-    //     appPrefab = prefab;
-    // }
-    // public GameObject GetAppPrefab()
-    // {
-    //     return appPrefab;
-    // }
 }

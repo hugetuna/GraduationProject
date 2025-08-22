@@ -13,7 +13,16 @@ public class WindowManager : MonoBehaviour
     public Vector2 startPos = new Vector2(-60, 60); // 第一個視窗位置
     public Vector2 offset = new Vector2(30, -20); // 每個新視窗的偏移量
     //-----------------------------------------------------------------//
+    [Header("傳給視窗的資料")]
+    public ResourceManager resourceManager;
+    //-----------------------------------------------------------------//
     private static int windowCount = 0;
+
+    void Start()
+    {
+        // 預先設定好，讓視窗 prefab 之後能自行取用
+        WindowDataSetup.SetResourceManager(resourceManager); 
+    }
 
     void Update()
     {

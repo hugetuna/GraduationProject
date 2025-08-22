@@ -45,7 +45,6 @@ public class SetAppUI : MonoBehaviour
 
         appButton = GetComponent<Button>();
         appButton.onClick.AddListener(OpenTheWindow);
-        // appData.SetAppPrefab(appWindow); // 綁定資料
     }
 
     void Update()
