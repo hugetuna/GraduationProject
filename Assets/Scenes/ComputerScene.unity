@@ -297,6 +297,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 368447892}
     - target: {fileID: 5139474603848608486, guid: 753142603e048de44aed83ac3f0083df, type: 3}
+      propertyPath: resourceManager
+      value: 
+      objectReference: {fileID: 1852184134}
+    - target: {fileID: 5139474603848608486, guid: 753142603e048de44aed83ac3f0083df, type: 3}
       propertyPath: windowContainer
       value: 
       objectReference: {fileID: 1624994027}
@@ -647,6 +651,7 @@ MonoBehaviour:
   windowContainer: {fileID: 1624994027}
   startPos: {x: -60, y: 60}
   offset: {x: 30, y: -20}
+  resourceManager: {fileID: 1852184134}
 --- !u!114 &368447893
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1115,6 +1120,10 @@ PrefabInstance:
       propertyPath: windowmanager
       value: 
       objectReference: {fileID: 368447892}
+    - target: {fileID: 5139474603848608486, guid: 753142603e048de44aed83ac3f0083df, type: 3}
+      propertyPath: resourceManager
+      value: 
+      objectReference: {fileID: 1852184134}
     - target: {fileID: 5139474603848608486, guid: 753142603e048de44aed83ac3f0083df, type: 3}
       propertyPath: windowContainer
       value: 
@@ -2168,6 +2177,10 @@ PrefabInstance:
       propertyPath: windowmanager
       value: 
       objectReference: {fileID: 368447892}
+    - target: {fileID: 5139474603848608486, guid: 753142603e048de44aed83ac3f0083df, type: 3}
+      propertyPath: resourceManager
+      value: 
+      objectReference: {fileID: 1852184134}
     - target: {fileID: 5139474603848608486, guid: 753142603e048de44aed83ac3f0083df, type: 3}
       propertyPath: windowContainer
       value: 
@@ -3413,6 +3426,65 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1850596420}
   m_CullTransparentMesh: 1
+--- !u!1 &1852184133
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1852184135}
+  - component: {fileID: 1852184134}
+  m_Layer: 0
+  m_Name: ResourceManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &1852184134
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1852184133}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0a2f64e678d816e439c8fc7a1953e008, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MoneyBonus: 1
+  bondAB:
+    idolA: {fileID: 0}
+    idolB: {fileID: 0}
+    bondValue: 0
+  bondBC:
+    idolA: {fileID: 0}
+    idolB: {fileID: 0}
+    bondValue: 0
+  bondCA:
+    idolA: {fileID: 0}
+    idolB: {fileID: 0}
+    bondValue: 0
+  idolsPicked: []
+  items: []
+--- !u!4 &1852184135
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1852184133}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 456.39203, y: 115.60505, z: 0.8587889}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1855453541
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3453,6 +3525,10 @@ PrefabInstance:
       propertyPath: windowmanager
       value: 
       objectReference: {fileID: 368447892}
+    - target: {fileID: 5139474603848608486, guid: 753142603e048de44aed83ac3f0083df, type: 3}
+      propertyPath: resourceManager
+      value: 
+      objectReference: {fileID: 1852184134}
     - target: {fileID: 5139474603848608486, guid: 753142603e048de44aed83ac3f0083df, type: 3}
       propertyPath: windowContainer
       value: 
@@ -3769,6 +3845,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 368447892}
     - target: {fileID: 5139474603848608486, guid: 753142603e048de44aed83ac3f0083df, type: 3}
+      propertyPath: resourceManager
+      value: 
+      objectReference: {fileID: 1852184134}
+    - target: {fileID: 5139474603848608486, guid: 753142603e048de44aed83ac3f0083df, type: 3}
       propertyPath: windowContainer
       value: 
       objectReference: {fileID: 1624994027}
@@ -3885,3 +3965,4 @@ SceneRoots:
   - {fileID: 1062931391}
   - {fileID: 368447890}
   - {fileID: 1387377220}
+  - {fileID: 1852184135}
