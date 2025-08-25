@@ -22,11 +22,10 @@ public class PlayerControlMainWorld : MonoBehaviour
     {
         //初始化工具對應的圖樣tag->綁定toolAnimations字典
         tools[0] = "None";
-        tools[1] = "Hoe";
-        tools[2] = "WateringCan";
+        tools[1] = "Normal";
         // 初始化工具對應的動畫->綁定toolAnimations字典
         toolAnimations[0] = null;
-        toolAnimations[1] = "THoe";
+        toolAnimations[1] = "TGrow";
         SetItemOnHandIndex(0);//重制為未持狀態
         //如果自己不是隊長就不啟動
         if (this != FindObjectOfType<TeamManager>().teamMembers[0])
@@ -74,7 +73,7 @@ public class PlayerControlMainWorld : MonoBehaviour
         // 當按鍵被按下或釋放時讀取輸入
         if (context.performed)
         {
-            SetItemOnHandIndex((itemOnHandIndex + 1) % 3);
+            SetItemOnHandIndex((itemOnHandIndex + 1) % 2);
         }
     }
     public void OnMove(InputAction.CallbackContext context)

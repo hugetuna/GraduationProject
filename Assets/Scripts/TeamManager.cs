@@ -231,16 +231,19 @@ public class TeamManager : MonoBehaviour
         if (isSwitchingLeader != true)
         {
             Animator leaderAnimator = teamMembers[currentLeaderIndex].GetComponent<Animator>();
-            float idleTime = leaderAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1; // 取得隊長 Idle 動畫進度
-
-            foreach (var member in teamMembers)
+            if (leaderAnimator.GetCurrentAnimatorStateInfo(0).IsTag("Idle"))
             {
-                Animator memberAnimator = member.GetComponent<Animator>();
-                AnimatorStateInfo stateInfo = memberAnimator.GetCurrentAnimatorStateInfo(0);
-                if (member != teamMembers[currentLeaderIndex] && stateInfo.tagHash == Animator.StringToHash("Idle"))
+                float idleTime = leaderAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime % 1; // 取得隊長 Idle 動畫進度
+
+                foreach (var member in teamMembers)
                 {
-                    int IdleAnimationName = stateInfo.shortNameHash;
-                    memberAnimator.Play(IdleAnimationName, 0, idleTime); // 讓所有人從隊長的時間點開始播放
+                    Animator memberAnimator = member.GetComponent<Animator>();
+                    AnimatorStateInfo stateInfo = memberAnimator.GetCurrentAnimatorStateInfo(0);
+                    if (member != teamMembers[currentLeaderIndex] && stateInfo.tagHash == Animator.StringToHash("Idle"))
+                    {
+                        int IdleAnimationName = stateInfo.shortNameHash;
+                        memberAnimator.Play(IdleAnimationName, 0, idleTime); // 讓所有人從隊長的時間點開始播放
+                    }
                 }
             }
         }    
