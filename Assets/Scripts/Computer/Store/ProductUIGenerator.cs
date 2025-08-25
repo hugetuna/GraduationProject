@@ -6,20 +6,17 @@ using UnityEngine.UI;
 /* 放在商店視窗根部以生成不同分類 ScrollView 中的商品們 */
 public class ProductUIGenerator : MonoBehaviour
 {
-    // 因為該腳本還不算非常完整，所以先不撰寫 Header 等屬性
+    [Header("商品資料")]
     // 目前沒有任何地方能獲取商品清單之類的
-    public List<ProductData> productList = new(); // 儲存商品資訊的清單（暫時這麼寫）
+    public List<Item> productList = new(); // 儲存商品資訊的清單（商品 = 道具）
     //-----------------------------------------------------------------//
     public GameObject productPrefab; // 用於生成商品項目的預製件
     public List<Transform> productContent = new(); // 用於放置生成的商品物件的容器
-    //-----------------------------------------------------------------//
-    public GameObject cartContent; // 購物車內容物件
-    public GameObject cartItemPrefab; // 購物車項目預製件
 
     void Start()
     {
         // 從無處獲取商品清單
-        foreach (ProductData product in productList) // 按清單生成初始的商品項目
+        foreach (Item product in productList) // 按清單生成初始的商品項目
         {
             // 生成商品並分類...然而現在還沒有分類
             GameObject productObject = Instantiate(productPrefab, productContent[0]); // "Wrapper" + Card
@@ -33,7 +30,6 @@ public class ProductUIGenerator : MonoBehaviour
             // 設定商品卡片的 UI 資料
             SetProductUI setProductUI = card.GetComponent<SetProductUI>();
             setProductUI.SetProduct(product);
-            setProductUI.SetCart(cartContent, cartItemPrefab);
         }
     }
 }

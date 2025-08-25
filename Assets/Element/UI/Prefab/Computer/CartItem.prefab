@@ -225,6 +225,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dda95345a89cb1a4ab513935e77d091b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  productNameText: {fileID: 8499922154254623470}
+  productPriceText: {fileID: 5294587161044979204}
+  quantityText: {fileID: 8403481056788406018}
+  addButton: {fileID: 3755626630701400041}
+  reduceButton: {fileID: 3793015494075122023}
 --- !u!1 &782727336202039259
 GameObject:
   m_ObjectHideFlags: 0
@@ -393,8 +398,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 27, y: 1.2546}
-  m_SizeDelta: {x: 34.5057, y: 41.1033}
+  m_AnchoredPosition: {x: 26.71, y: 1.2546}
+  m_SizeDelta: {x: 13.7841, y: 41.1033}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2677352028077900542
 CanvasRenderer:
@@ -642,8 +647,8 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 8636430680662949862}
   - {fileID: 132107589050924042}
+  - {fileID: 8636430680662949862}
   - {fileID: 1420781939556758084}
   m_Father: {fileID: 3123838388121216874}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -796,7 +801,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7434950815597952256}
   m_Layer: 0
-  m_Name: CartContent
+  m_Name: CartItem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
