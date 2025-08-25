@@ -74,8 +74,7 @@ public class PlayerControlMainWorld : MonoBehaviour
         // 當按鍵被按下或釋放時讀取輸入
         if (context.performed)
         {
-            itemOnHandIndex = (itemOnHandIndex + 1 )% 3;
-            SetItemOnHandIndex(itemOnHandIndex);
+            SetItemOnHandIndex((itemOnHandIndex + 1) % 3);
         }
     }
     public void OnMove(InputAction.CallbackContext context)

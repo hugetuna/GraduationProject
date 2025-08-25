@@ -26,11 +26,15 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
     private float rotationDuration = 0.2f; // 旋轉持續時間 (秒)
     private Quaternion startRotation;
     private Quaternion endRotation;
+    [Header("UI視覺引導")]
+    //UI提示計時器
+    public TextMeshProUGUI actionTimerText;
+    public Image circleClockUI;
     // Start is called before the first frame update
     void Start()
     {
         stageManager = FindObjectOfType<OnStageManager>();
-        spriteAnimator = gameObject.GetComponent<SpriteAnimator>();
+        //spriteAnimator = gameObject.GetComponent<SpriteAnimator>();
         idleFrames = idolInstance.basicStatus.idleFrames;
         actionFrames = idolInstance.basicStatus.actionFrames;
         spriteAnimator.SetFrames(idleFrames);
@@ -42,10 +46,17 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
         if(isAcion==true&& applyingCard != null)
         {
             actionTimer += Time.deltaTime;
-            //使用時間到，歸零計時
+
+            //用(總時長-現在時長)來設置計時器文字及填滿ui
+            actionTimerText.text = Mathf.RoundToInt(actionTimer).ToString();
+            circleClockUI.fillAmount = (float)(actionTimer/ applyingCard.applyDuration);
+            //使用時間到，歸零計時及填滿ui
             if (actionTimer >= applyingCard.applyDuration)
             {
+                actionTimerText.text = "0";
+                circleClockUI.fillAmount = 0;
                 ApllyOnEndAndReset();
+                //觸發轉回
                 isRotating = true;
             }
         }
@@ -63,11 +74,11 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
             // 動作時順轉，結束時逆轉
             if (isAcion == true)
             {
-                transform.localRotation = Quaternion.Slerp(startRotation, endRotation, t);
+                spriteRenderer.gameObject.transform.localRotation = Quaternion.Slerp(startRotation, endRotation, t);
             }
             else
             {
-                transform.localRotation = Quaternion.Slerp(endRotation, startRotation, t);
+                spriteRenderer.gameObject.transform.localRotation = Quaternion.Slerp(endRotation, startRotation, t);
             }
             
         }
@@ -91,8 +102,9 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
                     applyEffect.OnApply(this, stageManager);
                 }
             }
-            spriteAnimator.SetFrames(actionFrames);
-            isRotating = true;
+            spriteRenderer.flipX = true;//因為要轉身但還是要保持正確方向
+            spriteAnimator.SetFrames(actionFrames);//變成動作姿勢
+            isRotating = true;//開始旋轉
             actionTimer = 0;
             isAcion = true;
             return true;
@@ -113,6 +125,7 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
                 endEffect.OnEnd(this, stageManager);
             }
         }
+        spriteRenderer.flipX = false;//轉回去
         spriteAnimator.SetFrames(idleFrames);
         actionTimer = 0;
         isAcion = false;

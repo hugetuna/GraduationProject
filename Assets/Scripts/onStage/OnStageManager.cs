@@ -44,7 +44,6 @@ public class OnStageManager : MonoBehaviour
 
     void Start()
     {
-        
         //LoadIdolsToStage();
         foreach (var stage in allStageData)
         {
