@@ -16,4 +16,6 @@ public class Idols : ScriptableObject
     public int charm;//魅力
     public int performance;//演技
     public int vigour;//體力
+    //舞台基本數值
+    public int onStageStamina;//舞台體力
 }

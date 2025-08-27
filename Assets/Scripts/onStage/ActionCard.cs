@@ -17,5 +17,6 @@ public class ActionCard : ScriptableObject
     public string effectString;
     //使用結果
     public float applyDuration = 2f; // 動作時間
+    public int staminaCost = 0;
     public List<CardEffectBase> effects;    // 效果引用
 }

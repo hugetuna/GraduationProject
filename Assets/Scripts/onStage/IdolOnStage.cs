@@ -12,6 +12,8 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
     public float actionTimer=0;
     public bool isAcion = false;
     public ActionCard applyingCard=null;
+    public int StageStamina;
+    public int StageStaminaMax;
     private OnStageManager stageManager;
     //不同的偶像有不同的視覺呈現，在此以連續圖片列表模擬動畫
     [Header("上台的偶像視覺呈現")]
@@ -30,16 +32,24 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
     //UI提示計時器
     public TextMeshProUGUI actionTimerText;
     public Image circleClockUI;
+    public TextMeshProUGUI StageStaminaText;
+    public Image StaminaBarUI;
     // Start is called before the first frame update
     void Start()
     {
         stageManager = FindObjectOfType<OnStageManager>();
         //spriteAnimator = gameObject.GetComponent<SpriteAnimator>();
+        //設置動作圖片
         idleFrames = idolInstance.basicStatus.idleFrames;
         actionFrames = idolInstance.basicStatus.actionFrames;
         spriteAnimator.SetFrames(idleFrames);
+        //設置旋轉量
         startRotation = Quaternion.Euler(0, 0, 0);
         endRotation = Quaternion.Euler(0, 180f, 0);
+        //設置血量
+        StageStaminaMax = idolInstance.basicStatus.onStageStamina;
+        StageStamina = StageStaminaMax;
+        StageStaminaText.text = $"{StageStamina}/{StageStaminaMax}";
     }
     private void Update()
     {
@@ -107,6 +117,7 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
             isRotating = true;//開始旋轉
             actionTimer = 0;
             isAcion = true;
+            SetStamina(StageStamina - applyingCard.staminaCost);//扣血
             return true;
         }
         else
@@ -131,6 +142,36 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
         isAcion = false;
         applyingCard = null;
     }
+    //血量變動及其協程
+    // 呼叫這個函數來更新體力
+    public void SetStamina(int targetValue)
+    {
+        //targetValue = Mathf.Clamp01(targetValue); // 限制範圍 0~1
+        StopAllCoroutines(); // 避免多個 Coroutine 疊加
+        if (targetValue >= StageStaminaMax) targetValue = StageStaminaMax;
+        else if (targetValue <= 0) targetValue = 0;
+        StartCoroutine(AnimateStamina(targetValue));
+    }
+    IEnumerator AnimateStamina(int targetValue)
+    {
+        float startValue = StageStamina;
+        float changeDuration = 0.4f;
+        float elapsed = 0f;
+
+        while (elapsed < changeDuration)
+        {
+            elapsed += Time.deltaTime;
+            StageStamina = Mathf.RoundToInt(Mathf.Lerp(startValue, targetValue, elapsed / changeDuration));
+            StaminaBarUI.fillAmount = (float)StageStamina/ StageStaminaMax;
+            StageStaminaText.text = $"{StageStamina}/{StageStaminaMax}";
+            yield return null;
+        }
+
+        StageStamina = targetValue; // 確保結束時精準
+        StaminaBarUI.fillAmount = (float)StageStamina / StageStaminaMax;
+        StageStaminaText.text = $"{StageStamina}/{StageStaminaMax}";
+        
+    }
     //拖曳落點
     public void OnDrop(PointerEventData eventData)
     {
@@ -154,3 +195,5 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
     }
 
 }
+
+
