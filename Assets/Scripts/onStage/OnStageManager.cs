@@ -70,7 +70,7 @@ public class OnStageManager : MonoBehaviour
             if (drawChance < 3)
             {
                 drawChance += 1;
-                drawCharge = 0;
+                drawCharge -= drawChargeLimit;
                 Debug.Log($"充能完成，獲得一次抽牌機會，目前抽牌次數：{drawChance}");
             }
             else
@@ -206,6 +206,10 @@ public class OnStageManager : MonoBehaviour
     {
         playerPoint += (int)(point * mutiply);
         playerPointText.GetComponent<LerpChange>().SetText(playerPoint);
+    }
+    public void GaindrawCharge(int amount)
+    {
+        drawCharge += amount;
     }
     // 結束演出：計算表演得分並更新 GameManager / ResourceManager
     public void EndPerformance()

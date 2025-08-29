@@ -7,6 +7,8 @@ using UnityEngine.EventSystems;
 
 public class SetCardUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
+    //讓休息及準備行為與卡片共用，建立一個是否為卡片的旗標
+    public bool isCard;
     [Header("UI 元件")]
     public Image cardImage;
     public TextMeshProUGUI nameText;
@@ -62,6 +64,7 @@ public class SetCardUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     //滑鼠進入與出
     public void OnPointerEnter(PointerEventData eventData)
     {
+        if(!isCard) return;//非卡片不顯示
         //紀錄位置
         originalPosition = transform.localPosition;
         if (isDragging) return; // 拖曳中不顯示

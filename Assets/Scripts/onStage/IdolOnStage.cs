@@ -185,7 +185,7 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
             {
                 Debug.Log($"{idolInstance.name} 成功接收到卡片 {incomingCard.cardName}！");
                 stageManager.hands.Remove(draggedCardUI.gameObject);
-                Destroy(draggedCardUI.gameObject); // 卡片被使用後消失
+                if(draggedCardUI.isCard) Destroy(draggedCardUI.gameObject); // 卡片被使用後消失
             }
             else
             {
