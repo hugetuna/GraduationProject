@@ -8,7 +8,7 @@ using UnityEngine.UI;
 public class TrainingUIHandler : MonoBehaviour
 {
     public GameObject trainingUI;
-    public GameObject trainingUIInstance = null; // 記錄被生成的訓練 UI
+    private GameObject trainingUIInstance = null; // 記錄被生成的訓練 UI
     //-----------------------------------------------------------------//
 
     public TeamManager teamManager; // 透過 TeamManager 物件取得當前隊伍成員
@@ -20,7 +20,7 @@ public class TrainingUIHandler : MonoBehaviour
     private Dictionary<string, Sprite> characterSpriteDict; // 角色名稱與圖片來源的對照表
 
     public TeamUIData teamUIData; // 將隊伍 UI 資料寫入 ScriptableObject
- 
+
     public TrainingUIData trainingUIData; // 訓練 UI 的資料 ScriptableObject
 
 
@@ -59,8 +59,8 @@ public class TrainingUIHandler : MonoBehaviour
                 trainingUIInstance.SetActive(false);
             }
         }
-        
-        if(trainingUIInstance != null && trainingUIInstance.activeSelf)
+
+        if (trainingUIInstance != null && trainingUIInstance.activeSelf)
         {
             // 根據訓練 UI 的開啟狀態，決定是否禁用角色移動
             foreach (PlayerInput input in playerInputs)
@@ -83,9 +83,10 @@ public class TrainingUIHandler : MonoBehaviour
         ScheduleManager.OnChangeDay -= EndThisDay; // 取消訂閱切換天數事件
     }
 
-    private void EndThisDay(){
+    private void EndThisDay()
+    {
         Destroy(trainingUIInstance); // 銷毀訓練 UI 實例
-        foreach (var character in ScheduleManager.disappearCharacters) 
+        foreach (var character in ScheduleManager.disappearCharacters)
         {
             character.SetActive(true); // 回復隱藏並停用的隊伍成員
         }
@@ -136,7 +137,9 @@ public class TrainingUIHandler : MonoBehaviour
         for (int i = 0; i < teamMembers.Count && i < characterImages.Length; i++) // 確保不會超出陣列範圍
         {
             string memberName = teamMembers[i].name; // 取得隊伍成員名稱
-            memberName = memberName.Replace("Character_", ""); // 去除前綴（只剩名字）
+            // 去除前後多餘的字元（只剩名字）
+            memberName = memberName.Replace("Character_", ""); 
+            memberName = memberName.Replace("2.0", "");
             if (characterSpriteDict.ContainsKey(memberName)) // 檢查對照表中是否有該名稱
             {
                 characterImages[i].sprite = characterSpriteDict[memberName]; // 指派圖片來源
@@ -144,7 +147,7 @@ public class TrainingUIHandler : MonoBehaviour
 
             if (!teamUIData.teamMembers.Contains(memberName)) teamUIData.teamMembers.Add(memberName);
         }
-        
+
         // 收集所有玩家的輸入系統
         foreach (PlayerControlMainWorld member in teamMembers)
         {
@@ -169,5 +172,10 @@ public class TrainingUIHandler : MonoBehaviour
         EventSystem.current.RaycastAll(eventData, raycastResults);
 
         return raycastResults.Count > 0;
+    }
+
+    public GameObject GetTrainingUIInstance()
+    {
+        return trainingUIInstance;
     }
 }

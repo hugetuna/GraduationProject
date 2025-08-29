@@ -123,12 +123,17 @@ public class CartController : MonoBehaviour
 
     public void CheckBill() // 按下結帳按鈕以處理購物車訂單
     {
-        if(totalPrice <= 0) return; // 購物車為空不處理
-
-        // 將購買的商品交由 ResourceManager 管理（尚未與背包對接）
         ResourceManager resourceManager = WindowDataSetup.GetResourceManager();
 
-        List<Item> itemsToAdd = new(); // 以清單進行統整
+        // 檢查例外狀況
+        bool isMoneyEnough = resourceManager.getMoney() >= totalPrice;
+        if (totalPrice <= 0 || !isMoneyEnough){ // 購物車為空或金錢不足時不處理
+            Debug.Log("無法結帳，購物車內不得為空，且玩家須持有足夠金額");
+            return; 
+        }
+
+        // 將購買的商品交由 ResourceManager 管理（尚未與背包對接）
+            List<Item> itemsToAdd = new(); // 以清單進行統整
         foreach (var product in cartData.Values)
         {
             for (int i = 0; i < product.qty; i++) itemsToAdd.Add(product.item);

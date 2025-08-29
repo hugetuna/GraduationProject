@@ -7,7 +7,7 @@ public class DropZone : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public static DropZone currentDragZone;
 
-    public RectTransform myPos;
+    private RectTransform myPos;
 
     private void Start()
     {
@@ -22,5 +22,10 @@ public class DropZone : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
     public void OnPointerExit(PointerEventData eventData) // 當滑鼠將角色拖曳離開
     {
         if (currentDragZone == this) currentDragZone = null;
+    }
+
+    public RectTransform GetMyPos()
+    {
+        return myPos;
     }
 }

@@ -26,6 +26,7 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     public VigourBar vigourBar;
     public GameObject benefitBar; // 該角色的訓練收益 UI
     public GameObject buffBoard; // 該角色的訓練buff UI
+    private Vector2 pointerOffset; // 記錄滑鼠和物件中心的偏移，避免一開始物件跳動
 
     private void Start()
     {
@@ -36,7 +37,7 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         teamMembers = teamUIData.teamMembers;
         teamTrainees = teamUIData.teamTrainees;
         image = GetComponent<UnityEngine.UI.Image>();
-        myName = image.sprite.name.Replace("UI_character_", ""); ; // 取得該角色的來源圖片名稱（不含副檔名）
+        myName = image.sprite.name.Replace("UI_character_", ""); // 取得該角色的來源圖片名稱（不含副檔名）
 
         vigourBar = GetComponent<VigourBar>(); // 取得該角色的 VigourBar 參考
     }
@@ -65,7 +66,7 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                 }
             }
 
-            // // 因為不能讓物件自己控制自己的可用狀態，所以寫在 DragToLsseon 裡面
+            // 因為不能讓物件自己控制自己的可用狀態，所以寫在 DragToLesson 裡面
             if (!isDragging) // 沒在拖曳時才判斷
             {
                 if (currentZoneType == DropZoneType.Trainee)
@@ -76,7 +77,6 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                 {
                     if (!buffBoard.activeSelf) buffBoard.SetActive(true);
                 }
-
             }
         }
     }
@@ -86,9 +86,16 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         if (vigourBar.isAbleToTrain)
         {
             isDragging = true; // 開始拖曳
-
-            originalPosition = rectTransform.anchoredPosition; // 開始拖曳的當下記住原本的位置
+            originalPosition = rectTransform.anchoredPosition; // 記錄開始拖曳時的位置
             canvasGroup.blocksRaycasts = false; // 拖曳中不阻擋滑鼠射線（讓 DropZone 能收到事件）
+
+            // 記錄滑鼠和物件中心的差距，避免一開始物件跳動
+            RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                rectTransform,
+                eventData.position,
+                eventData.pressEventCamera,
+                out pointerOffset
+            );
 
             vigourSlider.gameObject.SetActive(false); // 拖曳時隱藏體力值 UI
             benefitBar.SetActive(false); // 拖曳時隱藏訓練收益 UI
@@ -100,10 +107,17 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     {
         if (vigourBar.isAbleToTrain)
         {
-            // 讓被拖曳物件隨著滑鼠移動，並確保拖曳不被畫面與 UI 縮放影響
-            rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
+            // 使用座標轉換（ScreenPoint → LocalPoint），避免解析度改變造成偏移
+            Vector2 localPoint;
+            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
+                rectTransform.parent as RectTransform,
+                eventData.position,
+                eventData.pressEventCamera,
+                out localPoint))
+            {
+                rectTransform.anchoredPosition = localPoint - pointerOffset; // 加回偏移，保持拖曳手感
+            }
         }
-
     }
 
     public void OnEndDrag(PointerEventData eventData)
@@ -111,22 +125,23 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         if (vigourBar.isAbleToTrain)
         {
             isDragging = false; // 結束拖曳
-
             canvasGroup.blocksRaycasts = true; // 拖曳結束後恢復阻擋滑鼠射線
+
             vigourSlider.gameObject.SetActive(true); // 拖曳後恢復體力值 UI 的顯示
             benefitBar.SetActive(true); // 拖曳後恢復訓練收益 UI 的顯示
 
             RectTransform parentRect = rectTransform.parent as RectTransform;
             Vector2 screenPos, localPoint;
             bool isSuccess; // 紀錄座標是否轉換成功
-                            // 判斷最終放置位置
+
+            // 判斷最終放置位置
             if (DropZone.currentDragZone != null)
             {
                 // 取得放置點在螢幕上的座標
                 screenPos = RectTransformUtility.WorldToScreenPoint(
-                        eventData.pressEventCamera,
-                        DropZone.currentDragZone.myPos.position
-                    );
+                    eventData.pressEventCamera,
+                    DropZone.currentDragZone.GetMyPos().position
+                );
 
                 // 轉換為本地 anchoredPosition
                 isSuccess =
@@ -143,9 +158,9 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             {
                 // 取得放置點在螢幕上的座標
                 screenPos = RectTransformUtility.WorldToScreenPoint(
-                        eventData.pressEventCamera,
-                        lastDropZone.myPos.position
-                    );
+                    eventData.pressEventCamera,
+                    lastDropZone.GetMyPos().position
+                );
 
                 // 轉換為本地 anchoredPosition
                 isSuccess =

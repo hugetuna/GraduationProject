@@ -7,6 +7,7 @@ using UnityEngine.EventSystems;
 
 public class ScheduleManager : MonoBehaviour
 {
+    [Header("訓練結算＆切換天數所需資料")]
     public DayManager dayManager; // 取得 DayManager 的參考
     public static event Action OnChangeDay; // 定義切換天數事件
 
@@ -18,6 +19,7 @@ public class ScheduleManager : MonoBehaviour
     public static List<GameObject> disappearCharacters = new(); // 訓練結算後隱藏的角色物件
     public TeamManager teamManager; // 透過 teamManager 取得當前隊長
 
+    [Header("電腦選單設定（暫時）")]
     public GameObject computerMenu;
     public Button settleTrainingButton; // 訓練結算按鈕
     public Button changeDayButton; // 切換天數按鈕
@@ -63,7 +65,7 @@ public class ScheduleManager : MonoBehaviour
 
             foreach (string trainee in teamTrainees) // 迭代訓練成員
             {
-                var character = GameObject.Find($"Character_{trainee}"); // 尋找場景上對應的角色物件
+                var character = GameObject.Find($"Character_{trainee}2.0"); // 尋找場景上對應的角色物件
                 if (character != null) // 確保角色物件存在
                 {
                     IdolInstance idolInstance = character.GetComponent<IdolInstance>(); // 取得角色的 IdolInstance 組件

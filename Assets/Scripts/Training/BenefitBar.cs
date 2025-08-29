@@ -21,7 +21,7 @@ public class BenefitBar : MonoBehaviour
 
     void Update()
     {
-        characterInfo = vigourBar.characterInfo;
+        characterInfo = vigourBar.GetCharacterInfo();
 
         DropZoneType currentZoneType = dragToLesson.currentZoneType; // 取得當前拖放區域名稱
         if (currentZoneType == DropZoneType.Member)

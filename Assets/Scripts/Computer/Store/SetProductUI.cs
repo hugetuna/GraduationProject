@@ -18,12 +18,6 @@ public class SetProductUI : MonoBehaviour
     {
         product = newProduct;
 
-        if (product == null || productNameText == null || productPriceText == null || productImage == null)
-        {
-            Debug.LogError("UI 元件尚未設定完全！");
-            return;
-        }
-
         // 設定 UI 顯示
         productNameText.text = product.itemName;
         productPriceText.text = $"${product.price}";
