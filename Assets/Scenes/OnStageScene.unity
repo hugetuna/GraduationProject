@@ -136,15 +136,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4643882591293938233, guid: 74d6cc9dce5f00241ac60090049381a5, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -8.386003
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4643882591293938233, guid: 74d6cc9dce5f00241ac60090049381a5, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -1.8920879
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4643882591293938233, guid: 74d6cc9dce5f00241ac60090049381a5, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 11.059031
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4643882591293938233, guid: 74d6cc9dce5f00241ac60090049381a5, type: 3}
       propertyPath: m_LocalRotation.w
@@ -314,6 +314,17 @@ AudioSource:
   m_CorrespondingSourceObject: {fileID: 7674224146616806836, guid: 1a995c5b9aaba9d42972bcd627e28505, type: 3}
   m_PrefabInstance: {fileID: 5193520651039969272}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1115196673 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6595767838021757287, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
+  m_PrefabInstance: {fileID: 6796696927425795413}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &1225034706 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4829785397052859461, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
@@ -559,15 +570,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4919598211453922498, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5.1404285
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4919598211453922498, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1.4380236
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4919598211453922498, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 10.474975
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4919598211453922498, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
       propertyPath: m_LocalRotation.w
@@ -629,6 +640,14 @@ PrefabInstance:
       propertyPath: musicNameText
       value: 
       objectReference: {fileID: 1361837274}
+    - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
+      propertyPath: drawChanceText
+      value: 
+      objectReference: {fileID: 6796696927425795414}
+    - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
+      propertyPath: drawChargeGauge
+      value: 
+      objectReference: {fileID: 1115196673}
     - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
       propertyPath: drawChargeLimit
       value: 40
@@ -835,11 +854,26 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Target
       value: 
       objectReference: {fileID: 1507968526}
+    - target: {fileID: 7771428016789726296, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
+      propertyPath: m_SizeDelta.y
+      value: 150
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
+--- !u!114 &6796696927425795414 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 8576471780952800252, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
+  m_PrefabInstance: {fileID: 6796696927425795413}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

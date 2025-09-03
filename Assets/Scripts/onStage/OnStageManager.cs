@@ -29,6 +29,8 @@ public class OnStageManager : MonoBehaviour
     public TextMeshProUGUI roundText;
     public TextMeshProUGUI musicNameText;
     public TextMeshProUGUI playerPointText;
+    public Image drawChargeGauge;
+    public TextMeshProUGUI drawChanceText;
     [Header("有關卡片")]
     public List<ActionCard> deck;
     public List<GameObject> hands;
@@ -64,12 +66,13 @@ public class OnStageManager : MonoBehaviour
         timerText.text = roundTimer.ToString("F1") + "s";
         // 每秒更新 drawCharge
         drawCharge += Time.deltaTime * 10f; // 比如 1 秒增加 20點充能
-
+        drawChargeGauge.fillAmount = (float)drawCharge/drawChargeLimit;
         if (drawCharge >= drawChargeLimit)
         {
             if (drawChance < 3)
             {
                 drawChance += 1;
+                drawChanceText.text = drawChance.ToString();
                 drawCharge -= drawChargeLimit;
                 Debug.Log($"充能完成，獲得一次抽牌機會，目前抽牌次數：{drawChance}");
             }
@@ -192,6 +195,7 @@ public class OnStageManager : MonoBehaviour
         if (DrawCards(1))
         {
             drawChance--;
+            drawChanceText.text = drawChance.ToString();
             Debug.Log($"成功抽牌，剩餘抽牌權{drawChance}");
         }
         else

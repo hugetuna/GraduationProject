@@ -30,6 +30,7 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
     private Quaternion endRotation;
     [Header("UI視覺引導")]
     //UI提示計時器
+    public GameObject actionTimerUI;
     public TextMeshProUGUI actionTimerText;
     public Image circleClockUI;
     public TextMeshProUGUI StageStaminaText;
@@ -65,6 +66,7 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
             {
                 actionTimerText.text = "0";
                 circleClockUI.fillAmount = 0;
+                actionTimerUI.SetActive(false);
                 ApllyOnEndAndReset();
                 //觸發轉回
                 isRotating = true;
@@ -116,6 +118,7 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
             spriteAnimator.SetFrames(actionFrames);//變成動作姿勢
             isRotating = true;//開始旋轉
             actionTimer = 0;
+            actionTimerUI.SetActive(true);
             isAcion = true;
             SetStamina(StageStamina - applyingCard.staminaCost);//扣血
             return true;
