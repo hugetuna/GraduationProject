@@ -39,6 +39,11 @@ public class GuideInfoUI : MonoBehaviour
         }
 
         collectText.text = $"{collectedFansSum:D2} / {fansButtons.Count} 種";
+
+        // 預設文字（之後會再改）
+        quoteText.text = "這是屬於我的長椅";
+        powerText.text = "推坑之力：0";
+        harvestText.text = "累積收成數：0";
     }
 
     public void AddToFansButtons(Button newButton)
