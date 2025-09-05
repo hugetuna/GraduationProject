@@ -4,10 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
+/* 掛在道具項目的 prefab 根部 */
 public class SetItemUI : MonoBehaviour
 {
     public Item item; // 道具資料
     public int quantity; // 道具數量
+    //-----------------------------------------------------------------//
     private TextMeshProUGUI itemNameText; // 顯示道具名稱的 UI 元素
     private TextMeshProUGUI itemStackText; // 顯示道具數量的 UI 元素
     private Image itemIcon; // 顯示道具圖示的 UI 元素
@@ -27,10 +29,4 @@ public class SetItemUI : MonoBehaviour
         itemNameText.ForceMeshUpdate();
         itemStackText.ForceMeshUpdate();
     }
-
-    // void Update()
-    // {
-
-    // }
-    
 }

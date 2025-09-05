@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 
+/* 掛在背包頁面的使用按鈕上，按下按鈕時會使用選擇的道具在特定角色上 */
 public class UseItem : MonoBehaviour
 {
     public TMP_Dropdown dropdown; // 可選擇使用道具的角色之下拉選單
@@ -12,22 +13,28 @@ public class UseItem : MonoBehaviour
     public TeamManager teamManager; // 透過 TeamManager 物件取得當前隊伍成員
     private List<PlayerControlMainWorld> teamMembers = new(); // 記錄取得的隊伍成員
     //-----------------------------------------------------------------//
-    // 該腳本會掛在「使用道具」的按鈕上，當按下按鈕時會使用選擇的道具在特定角色上
     private IdolInstance[] idolInstance; // 存放偶像資料參考
     private IdolInstance itemUser; // 使用道具的角色
     public ItemInfoUI itemInfoUI; // 用於獲取欲使用的道具資訊
+    //-----------------------------------------------------------------//
+    public AudioClip UseItemSound;
+    private AudioSource audioSource;
 
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     void Start()
     {
         // 根據目前隊伍成員決定下拉選單的選項
         dropdown.options.Clear(); // 清空原有選項
 
         teamMembers = teamManager.teamMembers;
-        
+
         for (int i = 0; i < teamMembers.Count; i++) // 確保不會超出陣列範圍
         {
             string memberName = teamMembers[i].name; // 取得隊伍成員名稱
-            memberName = memberName.Replace("Character_", ""); // 去除前綴（只剩名字）
+            memberName = memberName.Replace("Character_", "").Replace("2.0", ""); // 去除前後綴（只剩名字）
             dropdown.options.Add(new TMP_Dropdown.OptionData("給 " + memberName));
         }
         dropdown.value = 0; // 預設選擇第一個選項
@@ -41,12 +48,7 @@ public class UseItem : MonoBehaviour
         GetComponent<Button>().onClick.AddListener(OnUseItem);
 
         // 獲取場景中所有具備 IdolInstance 的物件
-        idolInstance = FindObjectsOfType<IdolInstance>(); 
-    }
-
-    void Update()
-    {
-
+        idolInstance = FindObjectsOfType<IdolInstance>();
     }
 
     private void OnDropdownValueChanged(int index)
@@ -86,6 +88,15 @@ public class UseItem : MonoBehaviour
             var itemToUse = item as FansItem;
             itemToUse.Use(itemUser);
         }
+        audioSource.PlayOneShot(UseItemSound); // 播放音效
+
         // 裝備的使用尚未實作
+    }
+
+    public void ResetDropdown()
+    {
+        dropdown.value = 0; // 重置為第一個選項
+        dropdown.RefreshShownValue(); // 確保 UI 正確顯示
+        selectedCharacterName = dropdown.options[0].text; // 重置選擇的角色名稱
     }
 }

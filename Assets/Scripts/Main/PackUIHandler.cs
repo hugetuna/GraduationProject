@@ -14,7 +14,14 @@ public class PackUIHandler : MonoBehaviour
     public TeamManager teamManager; // 透過 TeamManager 物件取得當前隊伍成員
     private List<PlayerControlMainWorld> teamMembers = new(); // 記錄取得的隊伍成員
     private List<PlayerInput> playerInputs = new(); // 玩家輸入系統
+    //-----------------------------------------------------------------//
+    public AudioClip openPackSound;
+    private AudioSource audioSource;
 
+    void Awake()
+    {
+        audioSource = GetComponent<AudioSource>();
+    }
     void Start()
     {
         packUI.SetActive(false); // 初始化背包 UI 狀態
@@ -62,7 +69,11 @@ public class PackUIHandler : MonoBehaviour
 
     private void OpenPackUI()
     {
-        if (!packUI.activeSelf) packUI.SetActive(true); // 如果背包 UI 未開啟，則打開它
+        if (!packUI.activeSelf) // 如果背包 UI 未開啟，則打開它
+        {
+            packUI.SetActive(true); 
+            audioSource.PlayOneShot(openPackSound); // 播放音效
+        }
     }
 
     private bool IsCursorClickUIObject()

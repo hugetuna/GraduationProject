@@ -3,20 +3,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-/* 主要用來生成會放在 ScrollView 的道具項目 UI */
+/* 掛在背包頁面根部，主要用來生成會放在 ScrollView 的道具項目 UI */
 public class ItemUIGenerator : MonoBehaviour
 {
     public ResourceManager resourceManager; // 資源管理器，用於獲取道具清單
     private List<ItemStack> itemList = new(); // 儲存道具資訊的清單
     //-----------------------------------------------------------------//
     public GameObject itemPrefab; // 用於生成道具項目的預製件
-    // public GameObject hintTextPrefab; // 用於生成提示文字的預製件（針對沒有道具的頁面）
     public Transform consumableContent; // 用於放置生成的道具物件的容器（消耗品）
     public Transform fansContent; // 用於放置生成的道具物件的容器（粉絲）
     public Transform equipContent; // 用於放置生成的道具物件的容器（裝備）
     //-----------------------------------------------------------------//
-    private SetItemUI setItemUI;
-    public ItemInfoUI itemInfoUI;
+    public ItemInfoUI itemInfoUI; // 使生成的道具項目能夠與詳細資訊的腳本連接
 
     void Start()
     {
@@ -45,28 +43,17 @@ public class ItemUIGenerator : MonoBehaviour
                 continue;
             }
             GameObject inside = itemObject.transform.Find("Button").gameObject; // Wrapper + "Button"
-            itemInfoUI.itemButtons.Add(inside.GetComponent<Button>()); // 設定按鈕的點擊效果
-            setItemUI = inside.GetComponent<SetItemUI>();
-            setItemUI.item = itemStack.item; // 設置道具資料
+            Button btn = inside.GetComponent<Button>();
+            itemInfoUI.itemButtons.Add(btn); // 設定按鈕的點擊效果
+            btn.onClick.AddListener(() => itemInfoUI.OnButtonClick(btn)); // 設定按鈕的點擊事件
+            if (itemInfoUI.originalPos == Vector2.zero) // 記錄按鈕的起始位置
+            {
+                itemInfoUI.originalPos = inside.GetComponent<RectTransform>().localPosition;
+            }
+            // 設置道具資料
+            SetItemUI setItemUI = inside.GetComponent<SetItemUI>();
+            setItemUI.item = itemStack.item;
             setItemUI.quantity = itemStack.quantity;
         }
-
-        // 如果沒有道具，則顯示提示文字
-        // if(consumableContent.childCount == 0)
-        // {
-        //     Instantiate(hintTextPrefab, consumableContent);
-        // }else if(fansContent.childCount == 0)
-        // {
-        //     Instantiate(hintTextPrefab, fansContent);
-        // }
-        // else if(equipContent.childCount == 0)
-        // {
-        //     Instantiate(hintTextPrefab, equipContent);
-        // }
-    }
-
-    void Update()
-    {
-
     }
 }

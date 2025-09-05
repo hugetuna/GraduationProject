@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
+/* 掛在用來切換道具類型的背包子物件上 */
 public class ChangeTypeUI : MonoBehaviour
 {
     public List<Button> itemTypeButtons = new(); // 儲存按鈕的列表，分別代表消耗品、裝備和紛絲
@@ -82,11 +83,6 @@ public class ChangeTypeUI : MonoBehaviour
         equipPage.SetActive(false);
     }
 
-    void Update()
-    {
-
-    }
-
     public void OnButtonClick(Button clickedButton)
     {
         for (int i = 0; i < itemTypeButtons.Count; i++)
@@ -122,5 +118,10 @@ public class ChangeTypeUI : MonoBehaviour
             fansPage.SetActive(true);
             currentIndex = 2; // 更新當前索引
         }
+    }
+
+    public void ResetTypeUI()
+    {
+        SelectButton(0); // 重置為第一個按鈕
     }
 }
