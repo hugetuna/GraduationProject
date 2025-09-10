@@ -23,7 +23,7 @@ public class MoneyUsage : MonoBehaviour
 
     public void UpdateMoneyText()
     {
-        moneyText.text = $"${resourceManager.getMoney()}";
+        moneyText.text = $"$ {resourceManager.getMoney():N0}";
     }
 
 }

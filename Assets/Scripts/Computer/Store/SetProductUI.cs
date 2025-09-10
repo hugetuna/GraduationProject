@@ -12,6 +12,7 @@ public class SetProductUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI productNameText; // 商品名稱文字
     [SerializeField] private TextMeshProUGUI productPriceText; // 商品價格文字
     [SerializeField] private Image productImage; // 商品圖片
+    // [SerializeField] private TextMeshProUGUI stackText; // 庫存數量文字
     [SerializeField] private Button cartButton; // 加入購物車的按鈕
 
     public void SetProduct(Item newProduct)

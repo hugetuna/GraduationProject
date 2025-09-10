@@ -16,8 +16,11 @@ public class GuideInfoUI : MonoBehaviour
     public TextMeshProUGUI powerText; // 粉絲詳細資訊的推坑力 -> None
     public TextMeshProUGUI harvestText; // 粉絲詳細資訊的累積收成數 -> None
     //-----------------------------------------------------------------//
-    private List<Button> fansButtons = new(); // 所有粉絲卡片皆可點擊
-    //private FansItem selectedFans; // 當前選擇的粉絲卡片
+    private List<Button> fansButtons = new(); // 所有粉絲卡片皆有點擊效果
+    [SerializeField] private Color32 normalColor = new(255, 255, 255, 255); // 按鈕正常顏色
+    [SerializeField] private Color32 pressedColor = new(200, 200, 200, 255); // 按鈕被按下的顏色
+    //-----------------------------------------------------------------//
+
     public TextMeshProUGUI collectText; // 顯示目前收集的粉絲種類總數
     private int collectedFansSum = 0;
 
@@ -53,7 +56,15 @@ public class GuideInfoUI : MonoBehaviour
 
     public void OnButtonClick(Button clickedButton)
     {
+        // 一般按鈕
+        foreach (Button btn in fansButtons)
+        {
+            btn.gameObject.GetComponent<Image>().color = normalColor;
+        }
+
         // 被按下的按鈕（唯一）
+        clickedButton.gameObject.GetComponent<Image>().color = pressedColor;
+        // 根據按下的按鈕更新粉絲詳細資訊
         FansItem fans = clickedButton.GetComponent<SetGuideItemUI>().GetFansItem();
         fansInfoIcon.sprite = fans.icon;
         fansInfoName.text = fans.itemName;
