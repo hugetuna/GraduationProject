@@ -9,6 +9,9 @@ public class FansItem : Item
     public PriceType priceType=PriceType.Fans;
 
     public IdolWho harvester = IdolWho.none;
+    public int OShiPower;
+    public int moneyPower;
+    public List<Item> dropableItems;
     public List<ItemEffect> effects;//效果列表
     public void SetPriceType(PriceType Type)
     {
