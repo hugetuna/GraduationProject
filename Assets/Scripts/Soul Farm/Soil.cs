@@ -5,6 +5,8 @@ using UnityEngine.Rendering;
 
 public class Soil : MonoBehaviour, IInteractable
 {
+    public string InteractionKey => "TGrow"; // 這個字串用來指定動畫 key
+
     public bool isPlantable = false; // 是否可以種植
     public bool isPlanting = false;//是否在種植中
     public Transform seedSpawnPoint; // 種子的生成位置
@@ -84,8 +86,8 @@ public class Soil : MonoBehaviour, IInteractable
     void IInteractable.Interact(int toolType) // 互動行為
     {
         //TODO:追加工具反映
-        //未處於種植狀態且不可種植->翻土(使用鋤頭tool==1)
-        if(isPlanting == false && isPlantable == false && toolType==1)
+        //未處於種植狀態且不可種植->翻土
+        if(isPlanting == false && isPlantable == false)
         {
             TurnTheSoil();
         }

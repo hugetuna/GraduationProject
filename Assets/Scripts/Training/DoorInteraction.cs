@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class DoorInteraction : MonoBehaviour, IInteractable
 {
+    public string InteractionKey => ""; // 這個字串用來指定動畫 key
     // 定義碰到門，按下互動鍵跳出 UI 的事件
     public static event Action OnDoorInteracted;
 

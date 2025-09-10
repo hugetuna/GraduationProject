@@ -6,11 +6,10 @@ using UnityEngine.U2D.Animation;
 
 public class PlayerControlMainWorld : MonoBehaviour
 {
-
     public int itemOnHandIndex=0;//用數字表示當前持有的道具，0為無道具
     public SpriteResolver toolSpriteResolver; // 工具的 Sprite Resolver 元件
     public Dictionary<int, string> tools = new Dictionary<int,string>(); // 工具對應Sprite Resolver的tag表單
-    public Dictionary<int, string> toolAnimations = new Dictionary<int, string>();// 工具對應動畫的名稱表單
+    // Dictionary<int, string> toolAnimations = new Dictionary<int, string>();// 工具對應動畫的名稱表單
     // 操作與動畫
     public Animator animator;//綁定角色動畫
     private Vector2 moveInput; // 儲存 Move Action 的輸入
@@ -24,8 +23,8 @@ public class PlayerControlMainWorld : MonoBehaviour
         tools[0] = "None";
         tools[1] = "Normal";
         // 初始化工具對應的動畫->綁定toolAnimations字典
-        toolAnimations[0] = null;
-        toolAnimations[1] = "TGrow";
+        //toolAnimations[0] = null;
+        //toolAnimations[1] = "TGrow";
         SetItemOnHandIndex(0);//重制為未持狀態
         //如果自己不是隊長就不啟動
         if (this != FindObjectOfType<TeamManager>().teamMembers[0])
@@ -119,12 +118,12 @@ public class PlayerControlMainWorld : MonoBehaviour
                     moveInput = Vector2.zero;
                     animator.SetFloat("Speed", 0);
                     // **撥放動畫**
-                    if (toolAnimations.ContainsKey(itemOnHandIndex))
+                    if (interactable.InteractionKey!=null)
                     {
-                        animator.SetTrigger(toolAnimations[itemOnHandIndex]);
+                        animator.SetTrigger(interactable.InteractionKey);
                         interactable.Interact(itemOnHandIndex);
                     }
-                    Debug.Log("與 " + hit.gameObject.name + " 互動"+ toolAnimations[itemOnHandIndex]);
+                    Debug.Log("與 " + hit.gameObject.name + "互動");
                     return; // 只與最近的物件互動
                 }
             }

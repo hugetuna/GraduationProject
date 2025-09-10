@@ -89,6 +89,7 @@ public class TrainingUIHandler : MonoBehaviour
         foreach (var character in ScheduleManager.disappearCharacters)
         {
             character.SetActive(true); // 回復隱藏並停用的隊伍成員
+            character.GetComponent<PlayerControlMainWorld>().enabled = false;
         }
         teamUIData.ResetTeam(); // 重置 ScriptableObject 的資料（不含 characterSpriteDict）
     }

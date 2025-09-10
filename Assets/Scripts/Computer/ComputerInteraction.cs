@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class ComputerInteraction : MonoBehaviour, IInteractable
 {
+    public string InteractionKey => ""; // 這個字串用來指定動畫 key
     // 定義碰到電腦，按下互動鍵跳出選單的事件
     public static event Action OnComputerInteracted;
 

@@ -5,7 +5,7 @@ using UnityEngine;
 public class FadeObject : MonoBehaviour
 {
     public float fadeDuration = 0.5f;
-    private Renderer renderer;
+    private new Renderer renderer;
     //private Color originalColor;
 
     void Start()
