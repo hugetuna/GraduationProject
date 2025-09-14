@@ -1,4 +1,5 @@
-又是新的一天
+VAR playerName = "Alice"
+又是新的一天{playerName}
 
  * [來訓練吧!]
  ->train
