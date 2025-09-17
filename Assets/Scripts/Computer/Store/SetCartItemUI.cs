@@ -7,7 +7,7 @@ using TMPro;
 /* 掛在購物車項目的 prefab 上（不看 Wrapper）*/
 public class SetCartItemUI : MonoBehaviour
 {
-    private Item product;
+    private Product product;
     private int quantity; // 購物車內的商品數量
     //-----------------------------------------------------------------//
     [Header("購物車項目的 UI 設定")]
@@ -24,23 +24,23 @@ public class SetCartItemUI : MonoBehaviour
         controller = ctrl;
     }
 
-    public void SetProduct(Item item, int qty)
+    public void Initialize(Product product, int qty)
     {
         // 設定該購物車項目對應的商品資料
-        product = item;
+        this.product = product;
         quantity = qty;
 
         // 設定 UI 顯示
-        productNameText.text = product.itemName;
+        productNameText.text = product.item.itemName;
         productPriceText.text = $"${product.price}";
-        SetQuantity(quantity);
+        UpdateCartQuantity(quantity);
 
         // 商品購買數量的增減控制
         addButton.onClick.AddListener(OnAddClicked);
         reduceButton.onClick.AddListener(OnReduceClicked);
     }
 
-    public void SetQuantity(int qty) // 變更購買數量用
+    public void UpdateCartQuantity(int qty)
     {
         quantity = qty;
         quantityText.text = quantity.ToString();

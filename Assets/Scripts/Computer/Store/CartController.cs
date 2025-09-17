@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,12 +9,12 @@ using TMPro;
 [System.Serializable]
 public class CartItemData
 {
-    public Item item;
+    public Product productToBuy;
     public int qty;
 
-    public CartItemData(Item item, int qty = 1)
+    public CartItemData(Product product, int qty = 1)
     {
-        this.item = item;
+        this.productToBuy = product;
         this.qty = qty;
     }
 }
@@ -31,14 +32,16 @@ public class CartController : MonoBehaviour
     [SerializeField] private TextMeshProUGUI totalPriceText; // 總價文字
     [SerializeField] private Button buyButton; // 購物車結帳按鈕
     //-----------------------------------------------------------------//
-    private Dictionary<Item, CartItemData> cartData = new(); // 存放商品與其數量
-    private Dictionary<Item, SetCartItemUI> cartItemUIDict = new(); // 存放商品與其 UI 控制器
+    private Dictionary<Product, CartItemData> cartData = new(); // 存放商品與其數量
+    private Dictionary<Product, SetCartItemUI> cartItemUIDict = new(); // 存放商品與其 UI 控制器
     //-----------------------------------------------------------------//
     [Header("結帳功能設定")]
     private int totalPrice = 0; // 購物車總價
     [SerializeField] private TextMeshProUGUI moneyText; // 玩家持有金錢文字
     public AudioClip checkBillSound;
     private AudioSource audioSource;
+    public static event Action OnPurchaseSuccess; // 購買成功的事件
+
 
 
     void Awake()
@@ -62,13 +65,19 @@ public class CartController : MonoBehaviour
         if (Instance == this) Instance = null; // 清除單一實例
     }
 
-    public void AddToCart(Item product)
+    public void AddToCart(Product product)
     {
         if (cartData.ContainsKey(product))
         {
             // 若該購物車項目已存在，增加其購買數量
             cartData[product].qty++;
-            cartItemUIDict[product].SetQuantity(cartData[product].qty);
+            if(cartData[product].qty > product.stack) // 若購買數量超過庫存
+            {
+                Debug.Log("已達庫存上限，無法再增加購買數量");
+                cartData[product].qty = product.stack; // 限制購買數量為庫存數量
+            }
+
+            cartItemUIDict[product].UpdateCartQuantity(cartData[product].qty);   
         }
         else
         {
@@ -80,7 +89,7 @@ public class CartController : MonoBehaviour
             GameObject card = cartObject.transform.Find("Card").gameObject; // Wrapper + Card
             SetCartItemUI setCartItemUI = card.GetComponent<SetCartItemUI>();
 
-            setCartItemUI.SetProduct(product, cartItemData.qty); // 傳遞商品資料與數量
+            setCartItemUI.Initialize(product, cartItemData.qty); // 傳遞商品資料與數量
             setCartItemUI.SetController(this); // 綁定個別購物車項目與整個購物車
             cartItemUIDict[product] = setCartItemUI; // 記錄商品與其 UI 控制器
         }
@@ -88,7 +97,7 @@ public class CartController : MonoBehaviour
         UpdateTotalPrice();
     }
 
-    public void ReduceQuantity(Item product)
+    public void ReduceQuantity(Product product)
     {
         if (!cartData.ContainsKey(product)) return;
 
@@ -102,7 +111,7 @@ public class CartController : MonoBehaviour
         }
         else
         {
-            cartItemUIDict[product].SetQuantity(cartData[product].qty);
+            cartItemUIDict[product].UpdateCartQuantity(cartData[product].qty);
         }
 
         UpdateTotalPrice();
@@ -114,11 +123,14 @@ public class CartController : MonoBehaviour
         totalPrice = 0;
         foreach (var data in cartData.Values)
         {
-            totalPrice += data.item.price * data.qty;
+            totalPrice += data.productToBuy.price * data.qty;
         }
 
-        totalPriceText.text = $"${totalPrice}";
+        totalPriceText.text = $"${totalPrice:N0}";
         totalPriceText.ForceMeshUpdate();
+
+        // 購物車為空時禁用結帳按鈕，反之
+        buyButton.interactable = totalPrice > 0;
     }
 
     public void CheckBill() // 按下結帳按鈕以處理購物車訂單
@@ -126,24 +138,27 @@ public class CartController : MonoBehaviour
         ResourceManager resourceManager = WindowDataSetup.GetResourceManager();
 
         // 檢查例外狀況
-        bool isMoneyEnough = resourceManager.getMoney() >= totalPrice;
-        if (totalPrice <= 0 || !isMoneyEnough){ // 購物車為空或金錢不足時不處理
-            Debug.Log("無法結帳，購物車內不得為空，且玩家須持有足夠金額");
-            return; 
+        if (resourceManager.getMoney() < totalPrice)
+        {
+            Debug.Log("玩家持有金額不足，無法結帳");
+            return;
         }
 
         // 將購買的商品交由 ResourceManager 管理（尚未與背包對接）
-            List<Item> itemsToAdd = new(); // 以清單進行統整
-        foreach (var product in cartData.Values)
+        List<Item> itemsToAdd = new(); // 以清單進行統整
+        foreach (CartItemData value in cartData.Values)
         {
-            for (int i = 0; i < product.qty; i++) itemsToAdd.Add(product.item);
+            int buyCount = Mathf.Min(value.qty, value.productToBuy.stack);
+            for (int i = 0; i < buyCount; i++)
+            {
+                itemsToAdd.Add(value.productToBuy.item);
+            }
+            value.productToBuy.stack -= buyCount;
         }
         resourceManager.AddItem(itemsToAdd);
 
         // 處理金錢流向
         resourceManager.SpendMoney(totalPrice);
-        MoneyUsage moneyUsage = moneyText.GetComponent<MoneyUsage>();
-        moneyUsage.UpdateMoneyText(); // 反映到商店視窗的玩家金錢上
 
         // 播放結帳音效
         audioSource.PlayOneShot(checkBillSound);
@@ -156,6 +171,8 @@ public class CartController : MonoBehaviour
         cartData.Clear();
         cartItemUIDict.Clear();
 
+        // 統一廣播外部 UI 更新及背包對接（尚未完成）事件
         UpdateTotalPrice();
+        OnPurchaseSuccess?.Invoke();
     }
 }

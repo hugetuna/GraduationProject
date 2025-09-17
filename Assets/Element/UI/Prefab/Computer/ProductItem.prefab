@@ -65,7 +65,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: $300
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 824c685c95153f74c97df55e7a138ed4, type: 2}
   m_sharedMaterial: {fileID: 4620658195853480737, guid: 824c685c95153f74c97df55e7a138ed4, type: 2}
@@ -74,8 +74,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4283124735
-  m_fontColor: {r: 1, g: 0.29411766, b: 0.29411766, a: 1}
+    rgba: 4293288851
+  m_fontColor: {r: 0.5764706, g: 0.3882353, b: 0.9019608, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
@@ -231,8 +231,15 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   productNameText: {fileID: 8554151126469736956}
   productPriceText: {fileID: 8075809590127812084}
+  oldProductPriceText: {fileID: 200375121337715663}
   productImage: {fileID: 7638064265489860491}
+  stackText: {fileID: 2200766260201105353}
   cartButton: {fileID: 4271198951191805592}
+  normalPriceColor: {r: 147, g: 99, b: 230, a: 255}
+  discountPriceColor:
+    serializedVersion: 2
+    rgba: 4283124735
+  discountDash: {fileID: 3964955595901563320}
 --- !u!1 &1017231687294098711
 GameObject:
   m_ObjectHideFlags: 0
@@ -384,7 +391,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &6574143659434943716
 RectTransform:
   m_ObjectHideFlags: 0
@@ -567,7 +574,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\u80FD\u91CF\u70B8\u5F48"
+  m_text: 
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 1fa3210cc6539bb4c97c6783d10db9cc, type: 2}
   m_sharedMaterial: {fileID: -4724069481595551031, guid: 1fa3210cc6539bb4c97c6783d10db9cc, type: 2}
@@ -822,7 +829,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: c35bce4a544b91a4ebf2718e52b0774c, type: 3}
+  m_Sprite: {fileID: 0}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1

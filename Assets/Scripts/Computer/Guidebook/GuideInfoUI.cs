@@ -69,7 +69,7 @@ public class GuideInfoUI : MonoBehaviour
         fansInfoIcon.sprite = fans.icon;
         fansInfoName.text = fans.itemName;
         fansInfoDescription.text = fans.description;
-        goldText.text = $"奉獻金：{fans.price}";
+        goldText.text = $"奉獻金：{fans.moneyPower}";
 
         // 確保字型正確渲染
         fansInfoName.ForceMeshUpdate();

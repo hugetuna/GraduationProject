@@ -19,6 +19,13 @@ public class MoneyUsage : MonoBehaviour
         resourceManager = WindowDataSetup.GetResourceManager();
         resourceManager.GainMoney(1000); // 避免無法測試商店購買功能
         UpdateMoneyText();
+
+        CartController.OnPurchaseSuccess += UpdateMoneyText; // 訂閱結帳事件
+    }
+
+    void OnDestroy()
+    {
+        CartController.OnPurchaseSuccess -= UpdateMoneyText; // 取消訂閱結帳事件
     }
 
     public void UpdateMoneyText()

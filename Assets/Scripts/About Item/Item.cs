@@ -11,7 +11,6 @@ public abstract class Item : ScriptableObject
     public Sprite icon;
     public ItemType itemType;
     public int maxStack = 1;
-    public int price = 0;
 
     public abstract void Use(IdolInstance target);
     public virtual Item Clone()
