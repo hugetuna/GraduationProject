@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.Events;
 using TMPro;
 using Ink.Runtime;
 
@@ -13,6 +14,9 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI dialogueText;
     public Transform dialogueChoices;
     public GameObject ChoiceButtomPrefab;
+    //對話結束時呼叫的函式
+    [Header("對話結束時呼叫的函式")]
+    public UnityEvent onDialogueEnd;
     void Start()
     {
         story = new Story(inkJSONAsset.text);
@@ -29,7 +33,7 @@ public class DialogueManager : MonoBehaviour
         if (story.canContinue)
         {
             string text = story.Continue();
-            dialogueText.text = text;
+            dialogueText.text = text.Trim();
         }
         else if (story.currentChoices.Count > 0)
         {
@@ -81,7 +85,7 @@ public class DialogueManager : MonoBehaviour
     public bool TrySetVariable<T>(string varName, T setValue)
     {//檢查型別是否正確，正確就設值
         object value = story.variablesState[varName];
-        if (value is T castValue) {
+        if (value is T) {
             story.variablesState[varName] = setValue;
             Debug.Log($"成功設置變數");
             return true;
