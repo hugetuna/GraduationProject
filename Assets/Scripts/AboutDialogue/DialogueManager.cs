@@ -14,6 +14,10 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI dialogueText;
     public Transform dialogueChoices;
     public GameObject ChoiceButtomPrefab;
+    //打字機效果用
+    public float typingSpeed = 0.05f;    // 每個字的間隔時間
+    private Coroutine typingCoroutine;
+    private bool isTyping = false;
     //對話結束時呼叫的函式
     [Header("對話結束時呼叫的函式")]
     public UnityEvent onDialogueEnd;
@@ -30,13 +34,31 @@ public class DialogueManager : MonoBehaviour
     }
     //推進對話
     public void ContinueStory() {
+
         if (story.canContinue)
         {
-            string text = story.Continue();
-            dialogueText.text = text.Trim();
+            if (isTyping == true)
+            {
+                StopCoroutine(typingCoroutine);
+                isTyping = false;
+                string text = story.currentText;
+                dialogueText.text = BuildStairText(text.Trim());
+            }
+            else
+            {
+                string text = BuildStairText(story.Continue());
+                typingCoroutine=StartCoroutine(TypeText(text));
+            }
         }
         else if (story.currentChoices.Count > 0)
         {
+            if (isTyping == true)
+            {
+                StopCoroutine(typingCoroutine);
+                isTyping = false;
+                string text = story.currentText;
+                dialogueText.text = BuildStairText(text.Trim());
+            }
             dialogueChoices.gameObject.SetActive(true);
             ShowChoices();
         }
@@ -44,6 +66,64 @@ public class DialogueManager : MonoBehaviour
         {
             dialogueText.text = "(劇情結束)";
         }
+    }
+    //字串加工，使其有縮排
+    private string BuildStairText(string line, int indentStart = 10, int lettersPerLine = 25, int indentStep = 5, int maxLines = 3)
+    {
+        System.Text.StringBuilder sb = new System.Text.StringBuilder();
+
+        int currentIndent = indentStart;
+        int letterCount = 0;
+        int lineCount = 1;
+
+        sb.Append($"<indent={currentIndent}%>");
+
+        foreach (char letter in line.ToCharArray())
+        {
+            sb.Append(letter);
+            letterCount++;
+
+            if (letterCount >= lettersPerLine && lineCount < maxLines)
+            {
+                sb.AppendLine();
+                lineCount++;
+                letterCount = 0;
+
+                currentIndent = Mathf.Max(0, currentIndent - indentStep);
+                sb.Append($"<indent={currentIndent}%>");
+            }
+        }
+        return sb.ToString();
+    }
+    private IEnumerator TypeText(string line)
+    {
+        isTyping = true;
+        dialogueText.text = "";
+
+        string processed = line;
+        int i = 0;
+        while (i < processed.Length)
+        {
+            if (processed[i] == '<') //偵測標籤開頭
+            {
+                int closeIndex = processed.IndexOf('>', i);
+                if (closeIndex != -1)
+                {
+                    // 一次性加入完整標籤
+                    string tag = processed.Substring(i, closeIndex - i+ 1);
+                    dialogueText.text += tag;
+                    i = closeIndex + 1;
+                    continue;
+                }
+            }
+            //普通文字逐字顯示
+            dialogueText.text += processed[i];
+            i++;
+
+            yield return new WaitForSeconds(typingSpeed);
+        }
+
+        isTyping = false;
     }
     //跳轉至特定選項
     public void JumpToKnot(string knotName)

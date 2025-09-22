@@ -1,6 +1,8 @@
 VAR playerName = "Alice"
+是人類用來記錄和傳播語言的書寫符號體系，可單獨或經組合表達某種或某些語意信息。書寫體(writing system)
 又是新的一天{playerName}
-
+做人就是要好好工作，所以趕快去工作吧!!
+今天要做些甚麼?
  * [來訓練吧!]
  ->train
  * [來種田吧!]
@@ -26,6 +28,6 @@ VAR playerName = "Alice"
 ->train
 ===farm===
 - They lived happily ever after.
-    -> END
+-> ending
 ===ending===
 -> END
