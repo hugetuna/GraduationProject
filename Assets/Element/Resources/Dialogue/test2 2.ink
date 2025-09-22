@@ -1,7 +1,13 @@
 VAR playerName = "Alice"
-是人類用來記錄和傳播語言的書寫符號體系，可單獨或經組合表達某種或某些語意信息。書寫體(writing system)
+#speaker:Kuma
+臣亮言：先帝創業未半，而中道崩殂。今天下三分，益州疲弊，此誠危急存亡之秋也。然侍衛之臣，不懈於內；
+#speaker:Kuma
+忠志之士，忘身於外者，蓋追先帝之殊遇，欲報之於陛下也。誠宜開張聖聽，以光先帝遺德，恢宏志士之氣；不宜妄自菲薄，引喻失義，以塞忠諫之路也。
+#speaker:Kuma
 又是新的一天{playerName}
+#speaker:Kuma #emotion:Happy
 做人就是要好好工作，所以趕快去工作吧!!
+#speaker:Kuma #emotion:Happy
 今天要做些甚麼?
  * [來訓練吧!]
  ->train

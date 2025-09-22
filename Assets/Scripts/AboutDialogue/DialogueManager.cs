@@ -14,6 +14,10 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI dialogueText;
     public Transform dialogueChoices;
     public GameObject ChoiceButtomPrefab;
+    //應應tag改變演示
+    public List<CharacterDialogueProfile> characterDialogueProfiles;
+    public TextMeshProUGUI speakerName;
+    public Image speakerImage;
     //打字機效果用
     public float typingSpeed = 0.05f;    // 每個字的間隔時間
     private Coroutine typingCoroutine;
@@ -48,6 +52,7 @@ public class DialogueManager : MonoBehaviour
             {
                 string text = BuildStairText(story.Continue());
                 typingCoroutine=StartCoroutine(TypeText(text));
+                ApplyTags(story.currentTags);
             }
         }
         else if (story.currentChoices.Count > 0)
@@ -124,6 +129,51 @@ public class DialogueManager : MonoBehaviour
         }
 
         isTyping = false;
+    }
+    //改立繪與頭像
+    void ApplyTags(List<string> tags)
+    {
+        string speakerTag = null;
+        string emotionTag = null;
+
+        // 先掃一次 tags，存下來
+        foreach (string tag in tags)
+        {
+            if (tag.StartsWith("speaker:"))
+                speakerTag = tag.Substring("speaker:".Length);
+
+            else if (tag.StartsWith("emotion:"))
+                emotionTag = tag.Substring("emotion:".Length);
+        }
+
+        // 如果沒有 speaker，代表這句是旁白，清空 UI
+        if (string.IsNullOrEmpty(speakerTag))
+        {
+            speakerImage.sprite = null;
+            speakerName.text = "";
+            return;
+        }
+
+        // 找角色
+        CharacterDialogueProfile profile = characterDialogueProfiles.Find(p => p.characterTag == speakerTag);
+        if (profile == null) return; // 沒找到就跳過
+
+        // 更新角色名字
+        speakerName.text = profile.characterName;
+
+        // 判斷有沒有情緒
+        if (!string.IsNullOrEmpty(emotionTag))
+        {
+            EmotionSprite emotion = profile.emotions.Find(e => e.emotion == emotionTag);
+            if (emotion != null)
+                speakerImage.sprite = emotion.portrait;
+            else
+                speakerImage.sprite = profile.defaultPortrait; // 沒找到情緒就用預設
+        }
+        else
+        {
+            speakerImage.sprite = profile.defaultPortrait;
+        }
     }
     //跳轉至特定選項
     public void JumpToKnot(string knotName)
