@@ -18,6 +18,8 @@ public class DialogueManager : MonoBehaviour
     public List<CharacterDialogueProfile> characterDialogueProfiles;
     public TextMeshProUGUI speakerName;
     public Image speakerImage;
+    public BGMPlayer BGMPlayer;
+    public BackGroundSetter backGroundSetter;
     //打字機效果用
     public float typingSpeed = 0.05f;    // 每個字的間隔時間
     private Coroutine typingCoroutine;
@@ -29,6 +31,9 @@ public class DialogueManager : MonoBehaviour
     {
         story = new Story(inkJSONAsset.text);
         TrySetVariable<string>("playerName","郭家豪");
+        string text = BuildStairText(story.Continue());
+        typingCoroutine = StartCoroutine(TypeText(text));
+        ApplyTags(story.currentTags);
     }
     //設置愈顯示的劇本
     public void SetStoryJSON(TextAsset newInkJSONAsset)
@@ -135,17 +140,31 @@ public class DialogueManager : MonoBehaviour
     {
         string speakerTag = null;
         string emotionTag = null;
+        string bgmTag = null;
+        string backgroundTag = null;
 
         // 先掃一次 tags，存下來
         foreach (string tag in tags)
         {
             if (tag.StartsWith("speaker:"))
                 speakerTag = tag.Substring("speaker:".Length);
-
             else if (tag.StartsWith("emotion:"))
                 emotionTag = tag.Substring("emotion:".Length);
+            else if (tag.StartsWith("bgm:"))
+                bgmTag = tag.Substring("bgm:".Length);
+            else if (tag.StartsWith("background:"))
+                backgroundTag = tag.Substring("background:".Length);
         }
-
+        //更換當前bgm
+        if (!string.IsNullOrEmpty(bgmTag))
+        {
+            BGMPlayer.SetAndPlayBGM(bgmTag);
+        }
+        //更換當前背景圖
+        if (!string.IsNullOrEmpty(backgroundTag))
+        {
+            backGroundSetter.SetBackGround(backgroundTag);
+        }
         // 如果沒有 speaker，代表這句是旁白，清空 UI
         if (string.IsNullOrEmpty(speakerTag))
         {
@@ -153,14 +172,11 @@ public class DialogueManager : MonoBehaviour
             speakerName.text = "";
             return;
         }
-
         // 找角色
         CharacterDialogueProfile profile = characterDialogueProfiles.Find(p => p.characterTag == speakerTag);
         if (profile == null) return; // 沒找到就跳過
-
         // 更新角色名字
         speakerName.text = profile.characterName;
-
         // 判斷有沒有情緒
         if (!string.IsNullOrEmpty(emotionTag))
         {
