@@ -5,15 +5,16 @@ VAR playerName = "Alice"
 忠志之士，忘身於外者，蓋追先帝之殊遇，欲報之於陛下也。誠宜開張聖聽，以光先帝遺德，恢宏志士之氣；不宜妄自菲薄，引喻失義，以塞忠諫之路也。
 #speaker:Kuma
 又是新的一天{playerName}
-#speaker:Kuma #emotion:Happy
+#speaker:Kuma #emotion:Laugh
 做人就是要好好工作，所以趕快去工作吧!!
-#speaker:Kuma #emotion:Happy #bgm:StarlightParade #background:NormalStage
+#speaker:Kuma #emotion:Laugh #bgm:StarlightParade #background:NormalStage
 今天要做些甚麼?
  * [來訓練吧!]
  ->train
  * [來種田吧!]
  ->farm
 ===train===
+#speaker:Karo #emotion:Angry
 {(train_vo||train_da||train_vi):還要訓練甚麼嗎|"今天要訓練哪項能力呢?"}
 +[歌唱]
 ->train_vo

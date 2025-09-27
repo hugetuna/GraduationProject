@@ -18,6 +18,7 @@ public class DialogueManager : MonoBehaviour
     public List<CharacterDialogueProfile> characterDialogueProfiles;
     public TextMeshProUGUI speakerName;
     public Image speakerImage;
+    public Sprite EmptyImg;
     public BGMPlayer BGMPlayer;
     public BackGroundSetter backGroundSetter;
     //打字機效果用
@@ -168,7 +169,7 @@ public class DialogueManager : MonoBehaviour
         // 如果沒有 speaker，代表這句是旁白，清空 UI
         if (string.IsNullOrEmpty(speakerTag))
         {
-            speakerImage.sprite = null;
+            speakerImage.sprite = EmptyImg;
             speakerName.text = "";
             return;
         }
