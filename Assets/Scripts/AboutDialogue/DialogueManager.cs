@@ -16,6 +16,7 @@ public class DialogueManager : MonoBehaviour
     public GameObject ChoiceButtomPrefab;
     //應應tag改變演示
     public List<CharacterDialogueProfile> characterDialogueProfiles;
+    public TachieManager tachieManager;
     public TextMeshProUGUI speakerName;
     public Image speakerImage;
     public Sprite EmptyImg;
@@ -156,6 +157,8 @@ public class DialogueManager : MonoBehaviour
             else if (tag.StartsWith("background:"))
                 backgroundTag = tag.Substring("background:".Length);
         }
+        //也給立繪掃一次
+        tachieManager.ApplyTachieTags(tags);
         //更換當前bgm
         if (!string.IsNullOrEmpty(bgmTag))
         {

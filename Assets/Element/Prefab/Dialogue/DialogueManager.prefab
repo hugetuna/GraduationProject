@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 6351769211698898940}
   - component: {fileID: 6818318229001809294}
+  - component: {fileID: 4560520132745631748}
   m_Layer: 0
   m_Name: DialogueManager
   m_TagString: Untagged
@@ -48,3 +49,50 @@ MonoBehaviour:
   dialogueText: {fileID: 0}
   dialogueChoices: {fileID: 0}
   ChoiceButtomPrefab: {fileID: 4048001512824644546, guid: 5927c1035c0fada4ea3a49e60f9b658b, type: 3}
+  characterDialogueProfiles:
+  - {fileID: 11400000, guid: dd45e69b014eb6843a905195ddf12ef2, type: 2}
+  - {fileID: 11400000, guid: 1a619092c422f0f45a90b74b67079f02, type: 2}
+  - {fileID: 11400000, guid: 72fc4efa986a1a249acff76f3682e6a6, type: 2}
+  - {fileID: 11400000, guid: 4a3ad573ea3ee9a42a2555007bffe88b, type: 2}
+  tachieManager: {fileID: 4560520132745631748}
+  speakerName: {fileID: 0}
+  speakerImage: {fileID: 0}
+  EmptyImg: {fileID: 10917, guid: 0000000000000000f000000000000000, type: 0}
+  BGMPlayer: {fileID: 0}
+  backGroundSetter: {fileID: 0}
+  typingSpeed: 0.05
+  onDialogueEnd:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &4560520132745631748
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8577641657372293939}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9334a50be1d2821489420f94837c844d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tachieSlots:
+  - slotName: Tachie1
+    image: {fileID: 0}
+    slotTransform: {fileID: 0}
+    originalPos: {x: 0, y: 0, z: 0}
+    nowPos: {x: 0, y: 0, z: 0}
+    runningType: 
+  - slotName: Tachie2
+    image: {fileID: 0}
+    slotTransform: {fileID: 0}
+    originalPos: {x: 0, y: 0, z: 0}
+    nowPos: {x: 0, y: 0, z: 0}
+    runningType: 
+  - slotName: Tachie3
+    image: {fileID: 0}
+    slotTransform: {fileID: 0}
+    originalPos: {x: 0, y: 0, z: 0}
+    nowPos: {x: 0, y: 0, z: 0}
+    runningType: 
+  dialogueManager: {fileID: 6818318229001809294}
