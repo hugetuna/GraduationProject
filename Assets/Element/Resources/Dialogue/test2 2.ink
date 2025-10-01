@@ -1,9 +1,10 @@
 VAR playerName = "Alice"
 #Tachie1_Character:Kuma #speaker:Kuma #bgm:RickRoll #background:TestTrain
+#Tachie2_Move:((-450,0),0.01)
 臣亮言：先帝創業未半，而中道崩殂。今天下三分，益州疲弊，此誠危急存亡之秋也。然侍衛之臣，不懈於內；
 #speaker:Kuma 
 #Tachie1_Character:Kuma #Tachie1_Emotion:Laugh #Tachie1_Move:((500,0),0.5)
-#Tachie2_Character:Sirius #Tachie2_Emotion:Angry #Tachie2_Behavior:Shake
+#Tachie2_Character:Sirius #Tachie2_Emotion:Angry  #Tachie2_Behavior:Shake
 忠志之士，忘身於外者，蓋追先帝之殊遇，欲報之於陛下也。誠宜開張聖聽，以光先帝遺德，恢宏志士之氣；不宜妄自菲薄，引喻失義，以塞忠諫之路也。
 #speaker:Kuma #Tachie1_Behavior:Jump
 又是新的一天{playerName}

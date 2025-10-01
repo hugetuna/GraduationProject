@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
 
 public class SceneTransferTrigger : MonoBehaviour
 {
@@ -38,4 +39,10 @@ public class SceneTransferTrigger : MonoBehaviour
         // 傳送到指定場景
         SceneManager.LoadScene(targetSceneName);
     }
+    public void teleportToDialogueScene(DialogueSaveData dialogueSaveData)
+    {
+        GameManager.Instance.SaveInkJSONAssetData(dialogueSaveData);
+        teleportByTargetSceneName("Dialogue Scene");
+    }
+
 }

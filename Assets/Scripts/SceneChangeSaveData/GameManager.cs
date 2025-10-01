@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +9,7 @@ public class GameManager : MonoBehaviour
 
     public List<SoilSaveData> soilDataList = new List<SoilSaveData>();
     public List<IdolSaveData> idolDataList = new List<IdolSaveData>();
+    public DialogueSaveData dialogueSaveData;
     public ResourceSaveData ResourceData;
     //單例物件生成
     void Awake()
@@ -70,6 +72,11 @@ public class GameManager : MonoBehaviour
             };
             idolDataList.Add(data);
         }
+    }
+    //保存劇情文本(方便轉場時直接使用)
+    public void SaveInkJSONAssetData(DialogueSaveData data)
+    {
+        dialogueSaveData=data;
     }
     //資源專用儲存
     public void SaveResourceData(ResourceManager resource)

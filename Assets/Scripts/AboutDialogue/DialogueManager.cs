@@ -27,10 +27,13 @@ public class DialogueManager : MonoBehaviour
     private Coroutine typingCoroutine;
     private bool isTyping = false;
     //對話結束時呼叫的函式
-    [Header("對話結束時呼叫的函式")]
-    public UnityEvent onDialogueEnd;
+    [Header("對話結束時呼叫的場景")]
+    public SceneTransferTrigger sceneTransferTrigger;
+    public string onDialogueEndScene;
     void Start()
     {
+        inkJSONAsset = GameManager.Instance.dialogueSaveData.inkJSONAsset;
+        onDialogueEndScene= GameManager.Instance.dialogueSaveData.backToSceneName;
         story = new Story(inkJSONAsset.text);
         TrySetVariable<string>("playerName","郭家豪");
         string text = BuildStairText(story.Continue());
@@ -76,7 +79,7 @@ public class DialogueManager : MonoBehaviour
         }
         else
         {
-            dialogueText.text = "(劇情結束)";
+            OnDialougeEnd();
         }
     }
     //字串加工，使其有縮排
@@ -241,5 +244,9 @@ public class DialogueManager : MonoBehaviour
             return true;
         }
         return false;
+    }
+    private void OnDialougeEnd()
+    {
+        sceneTransferTrigger.teleportByTargetSceneName(onDialogueEndScene);
     }
 }

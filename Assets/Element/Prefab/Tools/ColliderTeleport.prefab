@@ -11,8 +11,9 @@ GameObject:
   - component: {fileID: 6152539006481507244}
   - component: {fileID: 4942533222686375505}
   - component: {fileID: 4666384923286213162}
+  - component: {fileID: 681002330747363930}
   m_Layer: 0
-  m_Name: testTeleport
+  m_Name: ColliderTeleport
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -66,4 +67,30 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c192d334a8059349af25569831e7ed3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  targetSceneName: EmptyScene
+--- !u!114 &681002330747363930
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6979185848346478555}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 450f67a138d37c84b8b92a391e44ba8d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4666384923286213162}
+        m_TargetAssemblyTypeName: SceneTransferTrigger, Assembly-CSharp
+        m_MethodName: teleportToDialogueScene
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 71e85a0e4a2b506489970227b14ca3ed, type: 2}
+          m_ObjectArgumentAssemblyTypeName: DialogueSaveData, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
