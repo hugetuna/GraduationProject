@@ -46,14 +46,7 @@ public class OnStageManager : MonoBehaviour
 
     void Start()
     {
-        //LoadIdolsToStage();
-        foreach (var stage in allStageData)
-        {
-            if(stage.stageID== stageIDToLoad)
-            {
-                currentStageData = stage;
-            }
-        }
+        currentStageData = GameManager.Instance.onStageStage;
         LoadStage(currentStageData);
         LoadIdolsToStage();
         //寫字

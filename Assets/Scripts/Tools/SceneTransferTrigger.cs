@@ -39,10 +39,5 @@ public class SceneTransferTrigger : MonoBehaviour
         // 傳送到指定場景
         SceneManager.LoadScene(targetSceneName);
     }
-    public void teleportToDialogueScene(DialogueSaveData dialogueSaveData)
-    {
-        GameManager.Instance.SaveInkJSONAssetData(dialogueSaveData);
-        teleportByTargetSceneName("Dialogue Scene");
-    }
 
 }

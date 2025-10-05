@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     public List<SoilSaveData> soilDataList = new List<SoilSaveData>();
     public List<IdolSaveData> idolDataList = new List<IdolSaveData>();
     public DialogueSaveData dialogueSaveData;
+    public StageAttribute onStageStage;
     public ResourceSaveData ResourceData;
     //單例物件生成
     void Awake()
@@ -54,6 +55,7 @@ public class GameManager : MonoBehaviour
         {
             var data = new IdolSaveData
             {
+                basicStatus = idol.basicStatus,
                 idolIndex=idol.idolIndex,
                 vocal = idol.vocal,
                 dance = idol.dance,
@@ -77,6 +79,11 @@ public class GameManager : MonoBehaviour
     public void SaveInkJSONAssetData(DialogueSaveData data)
     {
         dialogueSaveData=data;
+    }
+    //保存舞台資料(方便轉場時直接使用)
+    public void SaveStageAttribute(StageAttribute data)
+    {
+        onStageStage = data;
     }
     //資源專用儲存
     public void SaveResourceData(ResourceManager resource)
