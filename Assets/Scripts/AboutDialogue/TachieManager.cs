@@ -149,6 +149,11 @@ public class TachieManager : MonoBehaviour
                     slot.runningType = "Shake";
                     StartCoroutine(Shake(slot.image));
                 }
+                else if (BehaviorType == "Flip")//轉向
+                {
+                    slot.runningType = "Flip";
+                    slot.image.rectTransform.localScale = new Vector3(-slot.image.rectTransform.localScale.x, slot.image.rectTransform.localScale.y, slot.image.rectTransform.localScale.z);
+                }
             }
         }
     }

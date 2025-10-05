@@ -15,7 +15,13 @@ public class OnStageManager : MonoBehaviour
     public StageAttribute currentStageData;
     public AudioSource musicSource;
     public SpriteRenderer backgroundRenderer;
-    
+    [Header("關卡開始與結束旗標")]
+    public bool gameStarted = false;
+    public bool gameEnded = false;
+    public GameObject gameStartUIPanel;
+    public GameObject gameOngoingUIPanel;
+    public GameObject gameEndUIPanel;
+    //public bool gamePaused = false;
     [Header("計數相關")]
     [SerializeField]
     private int playerPoint=0;//玩家分數
@@ -40,21 +46,23 @@ public class OnStageManager : MonoBehaviour
     public GameObject idolOnStagePrefab;
     [Header("上台位置（建議為3個）")]
     public Transform[] spawnPoints;
-
     [Header("目前場上的偶像")]
     private List<IdolInstance> onStageIdols = new List<IdolInstance>();
 
     void Start()
     {
         currentStageData = GameManager.Instance.onStageStage;
-        LoadStage(currentStageData);
-        LoadIdolsToStage();
+        gameStartUIPanel.SetActive(true);
+        LodeCardDemonstration();
+        gameOngoingUIPanel.SetActive(false);
+        gameEndUIPanel.SetActive(false);
         //寫字
         roundText.text = round.ToString() + "/" + currentStageData.roundMax.ToString();
         musicNameText.text = "music: "+currentStageData.musicName;
     }
     private void Update()
     {
+        if (!gameStarted || gameEnded) return;
         roundTimer += Time.deltaTime;
         timerText.text = roundTimer.ToString("F1") + "s";
         // 每秒更新 drawCharge
@@ -83,9 +91,37 @@ public class OnStageManager : MonoBehaviour
             roundText.text = round.ToString()+ "/"+currentStageData.roundMax.ToString();
             roundTimer = 0;
             Debug.Log($"進入第 {round} 回合！");
+            if(round> currentStageData.roundMax)
+            {
+                Debug.Log("達到最大回合數，遊戲結束！");
+                GameEnd();
+            }
         }
     }
-
+    //在遊戲開始前於UI展示卡組內容
+    public void LodeCardDemonstration()
+    {
+        foreach(var singleStack in currentStageData.actionCardStacks)
+        {
+            for(int i=0;i< singleStack.quantity;i++)
+            {
+                //從卡片組中抓資料(CardFactory會深拷貝)->實例化->設定UI
+                ActionCard actionCard = CardFactory.CreateCardInstance(singleStack.actionCard);
+                GameObject cardGO = Instantiate(cardPrefab, gameStartUIPanel.transform.Find("ShowDeckAndEquipment").Find("AcionCardDemonstration"));
+                SetCardUI ui = cardGO.GetComponent<SetCardUI>();
+                ui.isInteractive = false;
+                ui.SetCard(actionCard);
+            }
+        }
+    }
+    public void GameStart()
+    {
+        gameStarted = true;
+        gameStartUIPanel.SetActive(false);
+        gameOngoingUIPanel.SetActive(true);
+        LoadIdolsToStage();
+        LoadStage(currentStageData);
+    }
     //將儲存的idol save data讀入不同於主世界的game object
     void LoadIdolsToStage()
     {
@@ -102,14 +138,14 @@ public class OnStageManager : MonoBehaviour
                 continue;
             }
 
-            // 載入儲存的資料（你要實作）
+            // 載入儲存的資料
             instance.LoadData(idolDataList[i]);
 
             onStageIdols.Add(instance);
         }
     }
-    //根據關卡編號與角色所持道具生成卡組
-    //根據關卡編號生成背景、音樂等次要素
+    //根據關卡與角色所持道具生成卡組
+    //根據關卡生成背景、音樂等次要素
     public void LoadStage(StageAttribute stageData)
     {
         currentStageData = stageData;
@@ -121,9 +157,9 @@ public class OnStageManager : MonoBehaviour
         musicSource.Play();
 
         //建立卡組並打亂
-        foreach(var singleStack in stageData.actionCardStacks)
+        foreach (var singleStack in stageData.actionCardStacks)
         {
-            for(int i = 0; i < singleStack.quantity; i++)
+            for (int i = 0; i < singleStack.quantity; i++)
             {
                 deck.Add(singleStack.actionCard);
             }
@@ -132,6 +168,21 @@ public class OnStageManager : MonoBehaviour
         // 顯示描述（可以連接到 UI）
         Debug.Log($"載入關卡：{stageData.stageName} - {stageData.description}");
     }
+    public void GameEnd()
+    {
+        gameStarted = false;
+        gameEnded = true;
+        gameOngoingUIPanel.SetActive(false);
+        gameEndUIPanel.SetActive(true);
+        // 停止遊戲、顯示結果或記錄分數
+    }
+    // 結束演出：計算表演得分並更新 GameManager / ResourceManager
+    public void EndAndLeave()
+    {
+        //TODO:用關卡資料動態回歸場景
+        gameObject.GetComponent<SceneTransferTrigger>().teleportByTargetSceneName(currentStageData.nextSceneName);
+    }
+    
     //洗牌(使用Fisher-Yates Shuffle 算法)
     [ContextMenu("Shuffle")]
     public void Shuffle()
@@ -208,15 +259,6 @@ public class OnStageManager : MonoBehaviour
     {
         drawCharge += amount;
     }
-    // 結束演出：計算表演得分並更新 GameManager / ResourceManager
-    public void EndPerformance()
-    {
-
-        // 把更新後的 idol 資料重新塞回 GameManager
-        GameManager.Instance.SaveIdolData(onStageIdols);
-
-        // 回原場景（你要設定好原場景名稱）
-        SceneManager.LoadScene("MainScene"); // 替換為你的主場景名稱
-    }
+    
 }
 

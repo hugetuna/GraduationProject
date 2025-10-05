@@ -8,7 +8,7 @@ VAR playerName = "Alice"
 忠志之士，忘身於外者，蓋追先帝之殊遇，欲報之於陛下也。誠宜開張聖聽，以光先帝遺德，恢宏志士之氣；不宜妄自菲薄，引喻失義，以塞忠諫之路也。
 #speaker:Kuma #Tachie1_Behavior:Jump
 又是新的一天{playerName}
-#speaker:Kuma #emotion:Laugh
+#speaker:Kuma #emotion:Laugh #Tachie1_Behavior:Flip
 做人就是要好好工作，所以趕快去工作吧!!
 #speaker:Kuma #emotion:Laugh #bgm:StarlightParade #background:NormalStage
 今天要做些甚麼?

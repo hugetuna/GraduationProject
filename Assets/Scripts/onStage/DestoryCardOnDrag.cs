@@ -27,7 +27,7 @@ public class DestoryCardOnDrag : MonoBehaviour, IDropHandler
         {
             ActionCard incomingCard = draggedCardUI.cardData;
             bool accepted = incomingCard!=null;
-            if (accepted)
+            if (accepted&& draggedCardUI.isCard)
             {
                 Debug.Log($"丟棄卡片 {incomingCard.cardName}！");
                 stageManager.hands.Remove(draggedCardUI.gameObject);

@@ -8,6 +8,8 @@ using UnityEngine.EventSystems;
 public class SetCardUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IPointerEnterHandler, IPointerExitHandler
 {
     //讓休息及準備行為與卡片共用，建立一個是否為卡片的旗標
+    [Header("狀態控制")]
+    public bool isInteractive = true; // true = 可以拖曳; false = 僅展示
     public bool isCard;
     [Header("UI 元件")]
     public Image cardImage;
@@ -39,7 +41,6 @@ public class SetCardUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         canvas = GetComponentInParent<Canvas>();
         canvasGroup = GetComponent<CanvasGroup>();
         rectTransform = GetComponent<RectTransform>();
-        dragLayer = GameObject.FindGameObjectWithTag("dragLayer").GetComponent<RectTransform>();
         //紀錄位置
         originalParent = transform.parent;
         originalPosition = transform.localPosition;
@@ -48,6 +49,7 @@ public class SetCardUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     //紀錄原位置及卡片資訊
     public void SetCard(ActionCard cardToSet)
     {
+        if (isInteractive) dragLayer = GameObject.FindGameObjectWithTag("dragLayer").GetComponent<RectTransform>();
         cardData = cardToSet;
         cardImage.sprite = cardData.cardPic;
         nameText.text = cardData.cardName;
@@ -83,6 +85,7 @@ public class SetCardUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     //拖曳
     public void OnBeginDrag(PointerEventData eventData)
     {
+        if (!isInteractive) return; // 不可拖曳就跳出
         isDragging = true;
         transform.localPosition = originalPosition;
         //紀錄位置
@@ -94,11 +97,13 @@ public class SetCardUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
 
     public void OnDrag(PointerEventData eventData)
     {
+        if (!isInteractive) return; // 不可拖曳就跳出
         rectTransform.anchoredPosition += eventData.delta / canvas.scaleFactor;
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
+        if (!isInteractive) return; // 不可拖曳就跳出
         isDragging = false;
         transform.SetParent(originalParent);
         transform.localPosition = originalPosition;
