@@ -122,9 +122,9 @@ public class PlayerControlMainWorld : MonoBehaviour
                     if (interactable.InteractionKey!=null)
                     {
                         animator.SetTrigger(interactable.InteractionKey);
-                        interactable.Interact(itemOnHandIndex);
                         StartCoroutine(InteractionAnimation(GetAnimationLength(toolAnimationName[interactable.InteractionKey])));
                     }
+                    interactable.Interact(itemOnHandIndex);
                     Debug.Log("與 " + hit.gameObject.name + "互動");
                     return; // 只與最近的物件互動
                 }

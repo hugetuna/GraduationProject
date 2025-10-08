@@ -1,10 +1,10 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Cinemachine;
+using Unity.Cinemachine;
 public class CameraFollow : MonoBehaviour
 {
-    public CinemachineVirtualCamera cinemachineCamera;
+    public CinemachineCamera cinemachineCamera;
     public TeamManager teamManager;
     
     void Update()

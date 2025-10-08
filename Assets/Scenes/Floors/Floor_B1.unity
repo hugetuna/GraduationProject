@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 10
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -38,12 +38,12 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 12
-  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -66,9 +66,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -96,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000, type: 0}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -171,6 +168,8 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -352,6 +351,8 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -436,6 +437,8 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -617,6 +620,8 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -705,11 +710,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4782329735121765458, guid: fe7419af4a455bc498a18b5c8fb526dc, type: 3}
-      propertyPath: teamMembers.Array.data[0]
+      propertyPath: 'teamMembers.Array.data[0]'
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4782329735121765458, guid: fe7419af4a455bc498a18b5c8fb526dc, type: 3}
-      propertyPath: teamMembers.Array.data[1]
+      propertyPath: 'teamMembers.Array.data[1]'
       value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4844826841340400612, guid: fe7419af4a455bc498a18b5c8fb526dc, type: 3}
@@ -808,6 +813,8 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -892,6 +899,8 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1221,6 +1230,63 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 8507273680267989609, guid: 5e171b7a770c403449073f188731c118, type: 3}
   m_PrefabInstance: {fileID: 697580605}
   m_PrefabAsset: {fileID: 0}
+--- !u!1001 &701690536
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3894208688146214750, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: m_Name
+      value: GameMangerGen
+      objectReference: {fileID: 0}
+    - target: {fileID: 7896774796638631959, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: -8.386003
+      objectReference: {fileID: 0}
+    - target: {fileID: 7896774796638631959, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: -1.8920879
+      objectReference: {fileID: 0}
+    - target: {fileID: 7896774796638631959, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 11.059031
+      objectReference: {fileID: 0}
+    - target: {fileID: 7896774796638631959, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 7896774796638631959, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7896774796638631959, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7896774796638631959, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7896774796638631959, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7896774796638631959, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7896774796638631959, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
 --- !u!1 &712949435
 GameObject:
   m_ObjectHideFlags: 0
@@ -1246,9 +1312,8 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 712949435}
   m_Enabled: 1
-  serializedVersion: 10
+  serializedVersion: 11
   m_Type: 1
-  m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
   m_Range: 10
@@ -1504,6 +1569,8 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1615,6 +1682,8 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -1936,6 +2005,8 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2117,6 +2188,8 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2400,6 +2473,8 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2527,6 +2602,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: 45
       objectReference: {fileID: 0}
+    - target: {fileID: 7400266554673329078, guid: 98984dd7fe6e1bf4493cf881908bdcef, type: 3}
+      propertyPath: m_Name
+      value: Virtual Camera Main World
+      objectReference: {fileID: 0}
     - target: {fileID: 8412452296277772712, guid: 98984dd7fe6e1bf4493cf881908bdcef, type: 3}
       propertyPath: m_Follow
       value: 
@@ -2535,68 +2614,14 @@ PrefabInstance:
       propertyPath: m_Name
       value: CameraController
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8412452296277772712, guid: 98984dd7fe6e1bf4493cf881908bdcef, type: 3}
+    - {fileID: 8587639884555517122, guid: 98984dd7fe6e1bf4493cf881908bdcef, type: 3}
+    - {fileID: 8254984303234770240, guid: 98984dd7fe6e1bf4493cf881908bdcef, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 98984dd7fe6e1bf4493cf881908bdcef, type: 3}
---- !u!1001 &1596675860
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 2064797243285216590, guid: 74d6cc9dce5f00241ac60090049381a5, type: 3}
-      propertyPath: m_Name
-      value: GameMangerGen
-      objectReference: {fileID: 0}
-    - target: {fileID: 4643882591293938233, guid: 74d6cc9dce5f00241ac60090049381a5, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: -8.386003
-      objectReference: {fileID: 0}
-    - target: {fileID: 4643882591293938233, guid: 74d6cc9dce5f00241ac60090049381a5, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: -1.8920879
-      objectReference: {fileID: 0}
-    - target: {fileID: 4643882591293938233, guid: 74d6cc9dce5f00241ac60090049381a5, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 11.059031
-      objectReference: {fileID: 0}
-    - target: {fileID: 4643882591293938233, guid: 74d6cc9dce5f00241ac60090049381a5, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4643882591293938233, guid: 74d6cc9dce5f00241ac60090049381a5, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4643882591293938233, guid: 74d6cc9dce5f00241ac60090049381a5, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4643882591293938233, guid: 74d6cc9dce5f00241ac60090049381a5, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4643882591293938233, guid: 74d6cc9dce5f00241ac60090049381a5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4643882591293938233, guid: 74d6cc9dce5f00241ac60090049381a5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 4643882591293938233, guid: 74d6cc9dce5f00241ac60090049381a5, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents: []
-  m_SourcePrefab: {fileID: 100100000, guid: 74d6cc9dce5f00241ac60090049381a5, type: 3}
 --- !u!1 &1679476041
 GameObject:
   m_ObjectHideFlags: 0
@@ -2674,11 +2699,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -4683669308469848369, guid: fa68852b2934ad34b98aa7afda84926c, type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 9db678f32a20eff4fb61c34f9a8dd97c, type: 2}
     - target: {fileID: -678588488315902003, guid: fa68852b2934ad34b98aa7afda84926c, type: 3}
-      propertyPath: m_Materials.Array.data[0]
+      propertyPath: 'm_Materials.Array.data[0]'
       value: 
       objectReference: {fileID: 2100000, guid: 9db678f32a20eff4fb61c34f9a8dd97c, type: 2}
     - target: {fileID: 919132149155446097, guid: fa68852b2934ad34b98aa7afda84926c, type: 3}
@@ -2831,6 +2856,8 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -2896,6 +2923,8 @@ MeshRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 2
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3100,28 +3129,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ShowDebugText: 0
-  m_ShowCameraFrustum: 1
-  m_IgnoreTimeScale: 0
-  m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 2
-  m_BlendUpdateMethod: 1
-  m_DefaultBlend:
-    m_Style: 1
-    m_Time: 2
-    m_CustomCurve:
+  ShowDebugText: 0
+  ShowCameraFrustum: 1
+  IgnoreTimeScale: 0
+  WorldUpOverride: {fileID: 0}
+  ChannelMask: -1
+  UpdateMethod: 2
+  BlendUpdateMethod: 1
+  LensModeOverride:
+    Enabled: 0
+    DefaultMode: 2
+  DefaultBlend:
+    Style: 1
+    Time: 2
+    CustomCurve:
       serializedVersion: 2
       m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  m_CustomBlends: {fileID: 0}
-  m_CameraCutEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_CameraActivatedEvent:
-    m_PersistentCalls:
-      m_Calls: []
+  CustomBlends: {fileID: 0}
 --- !u!81 &1777440200
 AudioListener:
   m_ObjectHideFlags: 0
@@ -3315,6 +3342,8 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3712,6 +3741,8 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3796,6 +3827,8 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
@@ -3841,4 +3874,4 @@ SceneRoots:
   - {fileID: 516827093}
   - {fileID: 235096216}
   - {fileID: 1175616764}
-  - {fileID: 1596675860}
+  - {fileID: 701690536}

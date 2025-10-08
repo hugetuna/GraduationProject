@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 10
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -38,12 +38,12 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 12
-  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -66,9 +66,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -96,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000, type: 0}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -147,9 +144,8 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 63832276}
   m_Enabled: 1
-  serializedVersion: 10
+  serializedVersion: 11
   m_Type: 1
-  m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
   m_Range: 10
@@ -508,11 +504,18 @@ PrefabInstance:
       propertyPath: teamManager
       value: 
       objectReference: {fileID: 673036052}
+    - target: {fileID: 7400266554673329078, guid: 98984dd7fe6e1bf4493cf881908bdcef, type: 3}
+      propertyPath: m_Name
+      value: Virtual Camera Main World
+      objectReference: {fileID: 0}
     - target: {fileID: 8726574497059811416, guid: 98984dd7fe6e1bf4493cf881908bdcef, type: 3}
       propertyPath: m_Name
       value: CameraController
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8412452296277772712, guid: 98984dd7fe6e1bf4493cf881908bdcef, type: 3}
+    - {fileID: 8587639884555517122, guid: 98984dd7fe6e1bf4493cf881908bdcef, type: 3}
+    - {fileID: 8254984303234770240, guid: 98984dd7fe6e1bf4493cf881908bdcef, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -820,11 +823,11 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4782329735121765458, guid: fe7419af4a455bc498a18b5c8fb526dc, type: 3}
-      propertyPath: teamMembers.Array.data[0]
+      propertyPath: 'teamMembers.Array.data[0]'
       value: 
       objectReference: {fileID: 1013626015}
     - target: {fileID: 4782329735121765458, guid: fe7419af4a455bc498a18b5c8fb526dc, type: 3}
-      propertyPath: teamMembers.Array.data[1]
+      propertyPath: 'teamMembers.Array.data[1]'
       value: 
       objectReference: {fileID: 1280936629}
     - target: {fileID: 4844826841340400612, guid: fe7419af4a455bc498a18b5c8fb526dc, type: 3}
@@ -846,7 +849,7 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
 --- !u!95 &2048247440
 Animator:
-  serializedVersion: 5
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -860,6 +863,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
