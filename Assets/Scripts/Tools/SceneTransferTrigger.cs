@@ -19,19 +19,19 @@ public class SceneTransferTrigger : MonoBehaviour
     public void teleportByTargetSceneName(string targetSceneName)
     {
         // 儲存土壤資料
-        Soil[] allSoils = FindObjectsOfType<Soil>();
+        Soil[] allSoils = FindObjectsByType<Soil>(FindObjectsSortMode.None);
         if (allSoils.Length != 0)
         {
             GameManager.Instance.SaveSoilData(new List<Soil>(allSoils));
         }
         //儲存偶像資料
-        IdolInstance[] allIdolInstances = FindObjectsOfType<IdolInstance>();
+        IdolInstance[] allIdolInstances = FindObjectsByType<IdolInstance>(FindObjectsSortMode.None);
         if (allIdolInstances.Length != 0)
         {
             GameManager.Instance.SaveIdolData(new List<IdolInstance>(allIdolInstances));
         }
         //儲存資源
-        ResourceManager resourceManager = FindObjectOfType<ResourceManager>();
+        ResourceManager resourceManager = FindAnyObjectByType<ResourceManager>();
         if (resourceManager != null)
         {
             GameManager.Instance.SaveResourceData(resourceManager);
