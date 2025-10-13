@@ -107,7 +107,8 @@ public class OnStageManager : MonoBehaviour
             {
                 //從卡片組中抓資料(CardFactory會深拷貝)->實例化->設定UI
                 ActionCard actionCard = CardFactory.CreateCardInstance(singleStack.actionCard);
-                GameObject cardGO = Instantiate(cardPrefab, gameStartUIPanel.transform.Find("ShowDeckAndEquipment").Find("AcionCardDemonstration"));
+                Transform content = gameStartUIPanel.transform.Find("ShowDeckAndEquipment").Find("AcionCardDemonstration").Find("Viewport").Find("Content");
+                GameObject cardGO = Instantiate(cardPrefab, content);
                 SetCardUI ui = cardGO.GetComponent<SetCardUI>();
                 ui.isInteractive = false;
                 ui.SetCard(actionCard);

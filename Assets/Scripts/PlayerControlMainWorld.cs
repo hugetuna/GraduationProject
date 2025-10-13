@@ -28,7 +28,7 @@ public class PlayerControlMainWorld : MonoBehaviour
         //toolAnimations[1] = "TGrow";
         SetItemOnHandIndex(0);//重制為未持狀態
         //如果自己不是隊長就不啟動
-        if (this != FindObjectOfType<TeamManager>().teamMembers[0])
+        if (this != FindAnyObjectByType<TeamManager>().teamMembers[0])
         {
             this.enabled = false; // 只有第一個角色預設可動
         }
@@ -122,9 +122,9 @@ public class PlayerControlMainWorld : MonoBehaviour
                     if (interactable.InteractionKey!=null)
                     {
                         animator.SetTrigger(interactable.InteractionKey);
-                        interactable.Interact(itemOnHandIndex);
                         StartCoroutine(InteractionAnimation(GetAnimationLength(toolAnimationName[interactable.InteractionKey])));
                     }
+                    interactable.Interact(itemOnHandIndex);
                     Debug.Log("與 " + hit.gameObject.name + "互動");
                     return; // 只與最近的物件互動
                 }

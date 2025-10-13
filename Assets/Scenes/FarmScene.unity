@@ -13,7 +13,7 @@ OcclusionCullingSettings:
 --- !u!104 &2
 RenderSettings:
   m_ObjectHideFlags: 0
-  serializedVersion: 9
+  serializedVersion: 10
   m_Fog: 0
   m_FogColor: {r: 0.5, g: 0.5, b: 0.5, a: 1}
   m_FogMode: 3
@@ -38,12 +38,12 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
+  m_IndirectSpecularColor: {r: 0.18028378, g: 0.22571412, b: 0.30692285, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 12
-  m_GIWorkflowMode: 1
   m_GISettings:
     serializedVersion: 2
     m_BounceScale: 1
@@ -66,9 +66,6 @@ LightmapSettings:
     m_LightmapParameters: {fileID: 0}
     m_LightmapsBakeMode: 1
     m_TextureCompression: 1
-    m_FinalGather: 0
-    m_FinalGatherFiltering: 1
-    m_FinalGatherRayCount: 256
     m_ReflectionCompression: 2
     m_MixedBakeMode: 2
     m_BakeBackend: 1
@@ -96,7 +93,7 @@ LightmapSettings:
     m_ExportTrainingData: 0
     m_TrainingDataDestination: TrainingData
     m_LightProbeSampleCountMultiplier: 4
-  m_LightingDataAsset: {fileID: 0}
+  m_LightingDataAsset: {fileID: 20201, guid: 0000000000000000f000000000000000, type: 0}
   m_LightingSettings: {fileID: 0}
 --- !u!196 &4
 NavMeshSettings:
@@ -334,9 +331,8 @@ Light:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1326000465}
   m_Enabled: 1
-  serializedVersion: 10
+  serializedVersion: 11
   m_Type: 1
-  m_Shape: 0
   m_Color: {r: 1, g: 0.95686275, b: 0.8392157, a: 1}
   m_Intensity: 1
   m_Range: 10
@@ -508,28 +504,26 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 72ece51f2901e7445ab60da3685d6b5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_ShowDebugText: 0
-  m_ShowCameraFrustum: 1
-  m_IgnoreTimeScale: 0
-  m_WorldUpOverride: {fileID: 0}
-  m_UpdateMethod: 2
-  m_BlendUpdateMethod: 1
-  m_DefaultBlend:
-    m_Style: 1
-    m_Time: 2
-    m_CustomCurve:
+  ShowDebugText: 0
+  ShowCameraFrustum: 1
+  IgnoreTimeScale: 0
+  WorldUpOverride: {fileID: 0}
+  ChannelMask: -1
+  UpdateMethod: 2
+  BlendUpdateMethod: 1
+  LensModeOverride:
+    Enabled: 0
+    DefaultMode: 2
+  DefaultBlend:
+    Style: 1
+    Time: 2
+    CustomCurve:
       serializedVersion: 2
       m_Curve: []
       m_PreInfinity: 2
       m_PostInfinity: 2
       m_RotationOrder: 4
-  m_CustomBlends: {fileID: 0}
-  m_CameraCutEvent:
-    m_PersistentCalls:
-      m_Calls: []
-  m_CameraActivatedEvent:
-    m_PersistentCalls:
-      m_Calls: []
+  CustomBlends: {fileID: 0}
 --- !u!1 &1548170498
 GameObject:
   m_ObjectHideFlags: 0
@@ -896,15 +890,15 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4782329735121765458, guid: fe7419af4a455bc498a18b5c8fb526dc, type: 3}
-      propertyPath: allIdols.Array.data[0]
+      propertyPath: 'allIdols.Array.data[0]'
       value: 
       objectReference: {fileID: 2490980026185192416, guid: 74d7b0c23dc001a429f6a5da9e8c6e81, type: 3}
     - target: {fileID: 4782329735121765458, guid: fe7419af4a455bc498a18b5c8fb526dc, type: 3}
-      propertyPath: allIdols.Array.data[1]
+      propertyPath: 'allIdols.Array.data[1]'
       value: 
       objectReference: {fileID: 1230984911459168541, guid: ae08e525f8b7078439fad97e0a668798, type: 3}
     - target: {fileID: 4782329735121765458, guid: fe7419af4a455bc498a18b5c8fb526dc, type: 3}
-      propertyPath: allIdols.Array.data[2]
+      propertyPath: 'allIdols.Array.data[2]'
       value: 
       objectReference: {fileID: 3064106402500530401, guid: 19c526706af77b445bf07db08229eb4b, type: 3}
     - target: {fileID: 4782329735121765458, guid: fe7419af4a455bc498a18b5c8fb526dc, type: 3}
@@ -1121,6 +1115,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3219104350073116093, guid: 98984dd7fe6e1bf4493cf881908bdcef, type: 3}
+      propertyPath: FollowOffset.y
+      value: 9
+      objectReference: {fileID: 0}
     - target: {fileID: 4923602725058111285, guid: 98984dd7fe6e1bf4493cf881908bdcef, type: 3}
       propertyPath: teamManager
       value: 
@@ -1165,15 +1163,26 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.x
       value: 40
       objectReference: {fileID: 0}
+    - target: {fileID: 7400266554673329078, guid: 98984dd7fe6e1bf4493cf881908bdcef, type: 3}
+      propertyPath: m_Name
+      value: Virtual Camera Main World
+      objectReference: {fileID: 0}
     - target: {fileID: 8412452296277772712, guid: 98984dd7fe6e1bf4493cf881908bdcef, type: 3}
       propertyPath: m_Follow
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 8587639884555517122, guid: 98984dd7fe6e1bf4493cf881908bdcef, type: 3}
+      propertyPath: m_FollowOffset.y
+      value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 8726574497059811416, guid: 98984dd7fe6e1bf4493cf881908bdcef, type: 3}
       propertyPath: m_Name
       value: CameraController
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 8412452296277772712, guid: 98984dd7fe6e1bf4493cf881908bdcef, type: 3}
+    - {fileID: 8587639884555517122, guid: 98984dd7fe6e1bf4493cf881908bdcef, type: 3}
+    - {fileID: 8254984303234770240, guid: 98984dd7fe6e1bf4493cf881908bdcef, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
@@ -1231,39 +1240,39 @@ PrefabInstance:
       value: 9
       objectReference: {fileID: 0}
     - target: {fileID: 4237359387044955137, guid: 36160bf213958cd4194c589cd9a13cf2, type: 3}
-      propertyPath: harvestGachaPools.Array.data[0]
+      propertyPath: 'harvestGachaPools.Array.data[0]'
       value: 
       objectReference: {fileID: 11400000, guid: a7550688498dc5341ac19551fad22802, type: 2}
     - target: {fileID: 4237359387044955137, guid: 36160bf213958cd4194c589cd9a13cf2, type: 3}
-      propertyPath: harvestGachaPools.Array.data[1]
+      propertyPath: 'harvestGachaPools.Array.data[1]'
       value: 
       objectReference: {fileID: 11400000, guid: 7667386f022590a43ae3515a60b01bf9, type: 2}
     - target: {fileID: 4237359387044955137, guid: 36160bf213958cd4194c589cd9a13cf2, type: 3}
-      propertyPath: harvestGachaPools.Array.data[2]
+      propertyPath: 'harvestGachaPools.Array.data[2]'
       value: 
       objectReference: {fileID: 11400000, guid: 6765223604452754592f33a4a656613c, type: 2}
     - target: {fileID: 4237359387044955137, guid: 36160bf213958cd4194c589cd9a13cf2, type: 3}
-      propertyPath: harvestGachaPools.Array.data[3]
+      propertyPath: 'harvestGachaPools.Array.data[3]'
       value: 
       objectReference: {fileID: 11400000, guid: f262b57ae0341fb459fb440cd88b6b4d, type: 2}
     - target: {fileID: 4237359387044955137, guid: 36160bf213958cd4194c589cd9a13cf2, type: 3}
-      propertyPath: harvestGachaPools.Array.data[4]
+      propertyPath: 'harvestGachaPools.Array.data[4]'
       value: 
       objectReference: {fileID: 11400000, guid: 9ea593572d138574195a08acdddcdc3c, type: 2}
     - target: {fileID: 4237359387044955137, guid: 36160bf213958cd4194c589cd9a13cf2, type: 3}
-      propertyPath: harvestGachaPools.Array.data[5]
+      propertyPath: 'harvestGachaPools.Array.data[5]'
       value: 
       objectReference: {fileID: 11400000, guid: da02cae50c6704c4bb93e93ba39acd53, type: 2}
     - target: {fileID: 4237359387044955137, guid: 36160bf213958cd4194c589cd9a13cf2, type: 3}
-      propertyPath: harvestGachaPools.Array.data[6]
+      propertyPath: 'harvestGachaPools.Array.data[6]'
       value: 
       objectReference: {fileID: 11400000, guid: 2dbb65958e3af7c46b5af38bde8cea3a, type: 2}
     - target: {fileID: 4237359387044955137, guid: 36160bf213958cd4194c589cd9a13cf2, type: 3}
-      propertyPath: harvestGachaPools.Array.data[7]
+      propertyPath: 'harvestGachaPools.Array.data[7]'
       value: 
       objectReference: {fileID: 11400000, guid: 9dcf94b10a3aa714db2f1687f8c909c1, type: 2}
     - target: {fileID: 4237359387044955137, guid: 36160bf213958cd4194c589cd9a13cf2, type: 3}
-      propertyPath: harvestGachaPools.Array.data[8]
+      propertyPath: 'harvestGachaPools.Array.data[8]'
       value: 
       objectReference: {fileID: 11400000, guid: f7a3b7bf05a3f134eb5a229bcb019852, type: 2}
     - target: {fileID: 5588743975557757320, guid: 36160bf213958cd4194c589cd9a13cf2, type: 3}

@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Elevator : MonoBehaviour, IInteractable
 {
-    public string InteractionKey => ""; // 這個字串用來指定動畫 key
+    public string InteractionKey => null; // 這個字串用來指定動畫 key
     public GameObject elevatorSelection;
     // Start is called before the first frame update
     void Start()
