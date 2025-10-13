@@ -1331,6 +1331,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2941492399214081035}
   - component: {fileID: 6151519890997232095}
+  - component: {fileID: 1421787846107052062}
   m_Layer: 5
   m_Name: Rightside
   m_TagString: Untagged
@@ -1371,6 +1372,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   chatNameText: {fileID: 1958351282467840452}
+--- !u!114 &1421787846107052062
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2814475138029488370}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e260c7759c132343ac211f4bace36b5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inkJSONAsset: {fileID: 4900000, guid: c59620f192c9f0f48bc63f4b8ce640de, type: 3}
   respondButtons:
   - {fileID: 3169112534169534878}
   - {fileID: 6020925797686988212}
@@ -2343,7 +2357,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 6600632921090621387}
-  - component: {fileID: 7668385634541912627}
   m_Layer: 5
   m_Name: Center
   m_TagString: Untagged
@@ -2371,19 +2384,6 @@ RectTransform:
   m_AnchoredPosition: {x: 0.00045967, y: 33.385}
   m_SizeDelta: {x: 176.52, y: 166.77}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!114 &7668385634541912627
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4431545309794297639}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8e260c7759c132343ac211f4bace36b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  chatBubbleManager: {fileID: 0}
 --- !u!1 &4936107466615290339
 GameObject:
   m_ObjectHideFlags: 0

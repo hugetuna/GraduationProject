@@ -11,7 +11,7 @@ public class ChooseUserRespond : MonoBehaviour
     [SerializeField] private TextMeshProUGUI chatNameText;
 
     [Tooltip("回應按鈕們（目前有三個）")]
-    [SerializeField] private List<Button> respondButtons;
+    // [SerializeField] private List<Button> respondButtons;
     private static User currentUser = null; // 目前正在聊天的用戶
 
     void Start()
@@ -33,8 +33,6 @@ public class ChooseUserRespond : MonoBehaviour
         chatNameText.text = user.userName;
         chatNameText.ForceMeshUpdate();
 
-        TurnOffRespondButtons(); // 預設回應按鈕不可點
-
         // 聊天內容的切換之後再實作
     }
 
@@ -43,19 +41,19 @@ public class ChooseUserRespond : MonoBehaviour
         return currentUser;
     }
 
-    public void TurnOnRespondButtons()
-    {
-        foreach (Button button in respondButtons)
-        {
-            button.interactable = true; // 開啟回應按鈕
-        }
-    }
+    // public void TurnOnRespondButtons()
+    // {
+    //     foreach (Button button in respondButtons)
+    //     {
+    //         button.interactable = true; // 開啟回應按鈕
+    //     }
+    // }
 
-    public void TurnOffRespondButtons()
-    {
-        foreach (Button button in respondButtons)
-        {
-            button.interactable = false; // 關閉回應按鈕
-        }
-    }
+    // public void TurnOffRespondButtons()
+    // {
+    //     foreach (Button button in respondButtons)
+    //     {
+    //         button.interactable = false; // 關閉回應按鈕
+    //     }
+    // }
 }
