@@ -5,14 +5,12 @@ using UnityEngine.UI;
 using TMPro;
 
 /* 掛在聊天室視窗的 Rightside 聊天室上 */
-public class ChooseUserRespond : MonoBehaviour
+public class ChangeUserChat : MonoBehaviour
 {
     [Tooltip("聊天室標題文字")]
     [SerializeField] private TextMeshProUGUI chatNameText;
-
-    [Tooltip("回應按鈕們（目前有三個）")]
-    // [SerializeField] private List<Button> respondButtons;
-    private static User currentUser = null; // 目前正在聊天的用戶
+    private Dictionary<User, UserRuntime> userRuntimeDict = new();
+    private static User currentUser = null; // 目前正在聊天的用戶（靜態資料）
 
     void Start()
     {
@@ -33,27 +31,12 @@ public class ChooseUserRespond : MonoBehaviour
         chatNameText.text = user.userName;
         chatNameText.ForceMeshUpdate();
 
-        // 聊天內容的切換之後再實作
+        // 聊天內容與對應 UI 的切換
+        if (!userRuntimeDict.TryGetValue(user, out var userRuntime))
+        {
+            userRuntime = new UserRuntime() { user = user };
+            userRuntimeDict[user] = userRuntime;
+        }
+        ChatRoomManager.Instance.StartChatting(userRuntime);
     }
-
-    public static User GetCurrentUser()
-    {
-        return currentUser;
-    }
-
-    // public void TurnOnRespondButtons()
-    // {
-    //     foreach (Button button in respondButtons)
-    //     {
-    //         button.interactable = true; // 開啟回應按鈕
-    //     }
-    // }
-
-    // public void TurnOffRespondButtons()
-    // {
-    //     foreach (Button button in respondButtons)
-    //     {
-    //         button.interactable = false; // 關閉回應按鈕
-    //     }
-    // }
 }

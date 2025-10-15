@@ -66,4 +66,15 @@ public class ChatBubbleManager : MonoBehaviour
         Canvas.ForceUpdateCanvases();
         scrollRect.verticalNormalizedPosition = 0f;
     }
+
+    public void ClearAllBubbles() // 清掉現有的對話泡泡
+    {
+        foreach (Transform child in content) Destroy(child.gameObject);
+    }
+    
+    public void RebuildFromHistory(List<(string text, bool isPlayer)> history) // 根據對話紀錄重建對話泡泡
+    {
+        ClearAllBubbles();
+        foreach (var (text, isPlayer) in history) AddBubble(text, isPlayer);
+    }
 }
