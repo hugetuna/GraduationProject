@@ -12,6 +12,7 @@ public class GameManager : MonoBehaviour
     public DialogueSaveData dialogueSaveData;
     public StageAttribute onStageStage;
     public ResourceSaveData ResourceData;
+
     //單例物件生成
     void Awake()
     {
