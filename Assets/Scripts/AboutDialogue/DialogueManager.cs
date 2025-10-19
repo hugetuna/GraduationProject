@@ -14,7 +14,7 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI dialogueText;
     public Transform dialogueChoices;
     public GameObject ChoiceButtomPrefab;
-    //應應tag改變演示
+    [Header("應應tag改變演示")]
     public List<CharacterDialogueProfile> characterDialogueProfiles;
     public TachieManager tachieManager;
     public TextMeshProUGUI speakerName;
@@ -22,7 +22,11 @@ public class DialogueManager : MonoBehaviour
     public Sprite EmptyImg;
     public BGMPlayer BGMPlayer;
     public BackGroundSetter backGroundSetter;
-    //打字機效果用
+    [Header("Log相關")]
+    public GameObject LogBlock;
+    public Transform LogContent;
+    public ScrollRect scrollRect;
+    [Header("打字機效果用")]
     public float typingSpeed = 0.05f;    // 每個字的間隔時間
     private Coroutine typingCoroutine;
     private bool isTyping = false;
@@ -62,6 +66,7 @@ public class DialogueManager : MonoBehaviour
             {
                 string text = BuildStairText(story.Continue());
                 typingCoroutine=StartCoroutine(TypeText(text));
+                AddLogBlock();
                 ApplyTags(story.currentTags);
             }
         }
@@ -197,6 +202,18 @@ public class DialogueManager : MonoBehaviour
         {
             speakerImage.sprite = profile.defaultPortrait;
         }
+    }
+    //追加LogBlock
+    public void AddLogBlock()
+    {
+        GameObject logBlockObj = Instantiate(LogBlock, LogContent);
+        LogBlockSetting setLogBlock = logBlockObj.GetComponent<LogBlockSetting>();
+        setLogBlock.setDialogueContent(story.currentText);
+        setLogBlock.setSpeakerName(speakerName.text);
+        //自動捲動到底
+        Canvas.ForceUpdateCanvases();
+        scrollRect.verticalNormalizedPosition = 0f;
+        Canvas.ForceUpdateCanvases();
     }
     //跳轉至特定選項
     public void JumpToKnot(string knotName)
