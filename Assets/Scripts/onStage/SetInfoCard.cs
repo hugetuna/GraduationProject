@@ -7,8 +7,8 @@ public class SetInfoCard : MonoBehaviour
 {
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI descriptionText;
-    public TextMeshProUGUI durationText;
-    public TextMeshProUGUI vigorCostText;
+    //public TextMeshProUGUI durationText;
+    //public TextMeshProUGUI vigorCostText;
     public TextMeshProUGUI voGateText;
     public TextMeshProUGUI daGateText;
     public TextMeshProUGUI viGateText;
@@ -16,8 +16,8 @@ public class SetInfoCard : MonoBehaviour
     {
         nameText.text = infoToSet.cardName;
         descriptionText.text = infoToSet.effectString;
-        durationText.text = infoToSet.applyDuration.ToString();
-        vigorCostText.text = infoToSet.staminaCost.ToString();
+        //if (durationText != null) durationText.text = infoToSet.applyDuration.ToString();
+        //if (vigorCostText != null) vigorCostText.text = infoToSet.staminaCost.ToString();
         voGateText.text = infoToSet.voGate.ToString();
         daGateText.text = infoToSet.daGate.ToString();
         viGateText.text = infoToSet.viGate.ToString();
@@ -26,8 +26,8 @@ public class SetInfoCard : MonoBehaviour
     {
         nameText.text = "";
         descriptionText.text = "";
-        durationText.text = "";
-        vigorCostText.text = "";
+        //durationText.text = "";
+        //vigorCostText.text = "";
         voGateText.text = "";
         daGateText.text = "";
         viGateText.text = "";
