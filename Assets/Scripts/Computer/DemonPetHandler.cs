@@ -8,8 +8,8 @@ using UnityEngine.EventSystems;
 public class DemonPetHandler : MonoBehaviour
 {
     [Header("惡魔桌寵與頁面設定")]
-    [Tooltip("惡魔桌寵按鈕")] public Button demonButton;
-    [Tooltip("點擊惡魔桌寵按鈕可開啟惡魔頁面")] public GameObject demonUI;
+    [Tooltip("惡魔桌寵按鈕")] public GameObject demonPet;
+    [Tooltip("惡魔頁面（可透過點擊惡魔桌寵開啟）")] public GameObject demonUI;
     [Tooltip("退出惡魔頁面的按鈕")] public Button byeButton;
     //-----------------------------------------------------------------//
     [Header("畫面切換設定")]
@@ -20,26 +20,32 @@ public class DemonPetHandler : MonoBehaviour
     void Start()
     {
         demonUI.SetActive(false); // 初始時隱藏惡魔頁面
-        demonButton.onClick.AddListener(OnDemonButtonClick); // 設置按鈕點擊事件
         byeButton.onClick.AddListener(OnByeButtonClick); // 設置退出按鈕點擊事件
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) // 點擊惡魔頁面可將其置前
+        if (Input.GetMouseButtonDown(0))
+        {
+            // 點擊惡魔桌寵可開啟惡魔頁面
+            if (IsPointerOver3DObject(demonPet.transform))
             {
-                RectTransform rt = demonUI.GetComponent<RectTransform>();
-                if (IsPointerOverUIObject(rt))
-                {
-                    windowManager.BringToFront(rt);
-                }
+                OnDemonButtonClick();
             }
+
+            // 點擊惡魔頁面可將其置前
+            RectTransform rt = demonUI.GetComponent<RectTransform>();
+            if (IsPointerOverUIObject(rt))
+            {
+                windowManager.BringToFront(rt);
+            }
+        }
     }
 
     public void OnDemonButtonClick()
     {
         Debug.Log("點擊了惡魔桌寵");
-        demonButton.gameObject.SetActive(false); // 隱藏惡魔桌寵
+        demonPet.SetActive(false); // 隱藏惡魔桌寵
         changeTheme.SetDemonTheme(); // 切換到惡魔 UI 主題
 
         demonUI.SetActive(true); // 顯示惡魔頁面
@@ -49,7 +55,7 @@ public class DemonPetHandler : MonoBehaviour
     public void OnByeButtonClick()
     {
         Debug.Log("對惡魔說：沒事");
-        demonButton.gameObject.SetActive(true); // 顯示惡魔桌寵
+        demonPet.SetActive(true); // 顯示惡魔桌寵
         changeTheme.SetDesktopTheme(); // 換回桌面 UI 主題
         demonUI.SetActive(false); // 隱藏惡魔頁面
     }
@@ -72,6 +78,23 @@ public class DemonPetHandler : MonoBehaviour
                 return true;
             }
         }
+        return false;
+    }
+
+    private bool IsPointerOver3DObject(Transform target) // 檢查特定場景物件是否被滑鼠點擊
+    {
+        Camera cam = Camera.main;
+        if (cam == null) return false;
+
+        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
+        if (Physics.Raycast(ray, out RaycastHit hit))
+        {
+            Transform hitTransform = hit.collider.transform;
+
+            // 如果命中物件是目標或目標的子物件
+            if (hitTransform == target || hitTransform.IsChildOf(target)) return true;
+        }
+
         return false;
     }
 }

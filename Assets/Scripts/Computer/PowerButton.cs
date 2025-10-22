@@ -22,5 +22,8 @@ public class PowerButton : MonoBehaviour
     private void TurnOffComputer()
     {
         desktopUI.SetActive(false); // 關閉電腦桌面 UI
+
+        // 切換成透視投影
+        Camera.main.orthographic = false;
     }
 }

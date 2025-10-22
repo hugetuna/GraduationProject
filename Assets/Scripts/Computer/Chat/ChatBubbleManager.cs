@@ -11,7 +11,9 @@ public class ChatBubbleManager : MonoBehaviour
     //-----------------------------------------------------------------//
     [Header("訊息泡泡 UI ")]
     [SerializeField] private GameObject userBubblePrefab; // 訊息泡泡預製件（用戶）
+    private Sprite userBubbleIcon; // 用戶的大頭貼
     [SerializeField] private GameObject playerBubblePrefab; // 訊息泡泡預製件（玩家）
+    [SerializeField] private Sprite playerBubbleIcon; // 玩家的大頭貼
     //-----------------------------------------------------------------//
     [Header("聊天室排版")]
     [SerializeField] private ScrollRect scrollRect; // 該物件的 ScrollRect 組件
@@ -38,6 +40,23 @@ public class ChatBubbleManager : MonoBehaviour
         GameObject bubblePrefab = isPlayer ? playerBubblePrefab : userBubblePrefab;
         GameObject bubble = Instantiate(bubblePrefab, content);
 
+        // 設定大頭貼
+        string path = isPlayer ? "Player/IconMask/Icon" : "User/IconMask/Icon";
+        if(!bubble.transform.Find(path).TryGetComponent<Image>(out var iconImage))
+        {
+            Debug.LogWarning($"找不到{(isPlayer ? "玩家" : "用戶")}泡泡的大頭照，請確認圖示路徑是否正確");
+            return;
+        }
+        
+        if(isPlayer)
+        {
+            iconImage.sprite = playerBubbleIcon;
+        }
+        else if(userBubbleIcon != null)
+        {
+            iconImage.sprite = userBubbleIcon;
+        }
+        
         // 設定文字內容
         TextMeshProUGUI messageText = bubble.GetComponentInChildren<TextMeshProUGUI>();
         messageText.text = message;
@@ -60,7 +79,7 @@ public class ChatBubbleManager : MonoBehaviour
         }
 
         // 強制更新 Layout，避免捲動時尺寸錯亂
-        LayoutRebuilder.ForceRebuildLayoutImmediate(content as RectTransform);
+        LayoutRebuilder.ForceRebuildLayoutImmediate(content);
 
         // 自動捲到最底
         Canvas.ForceUpdateCanvases();
@@ -71,10 +90,14 @@ public class ChatBubbleManager : MonoBehaviour
     {
         foreach (Transform child in content) Destroy(child.gameObject);
     }
-    
+
     public void RebuildFromHistory(List<(string text, bool isPlayer)> history) // 根據對話紀錄重建對話泡泡
     {
-        ClearAllBubbles();
         foreach (var (text, isPlayer) in history) AddBubble(text, isPlayer);
+    }
+
+    public void SetUserBubbleIcon(Sprite icon) // 設定用戶泡泡的大頭貼
+    {
+        userBubbleIcon = icon;
     }
 }

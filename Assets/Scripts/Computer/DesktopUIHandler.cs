@@ -14,6 +14,12 @@ public class DesktopUIHandler : MonoBehaviour
     private List<PlayerControlMainWorld> teamMembers = new(); // 記錄取得的隊伍成員
     private List<PlayerInput> playerInputs = new(); // 玩家輸入系統
 
+    void Awake()
+    {
+        // 初始為透視投影
+        Camera.main.orthographic = false;
+    }
+
     void Start()
     {
         desktopUI.SetActive(false); // 初始隱藏桌面 UI
@@ -55,5 +61,9 @@ public class DesktopUIHandler : MonoBehaviour
     private void ShowDesktopUI()
     {
         desktopUI.SetActive(true); // 顯示桌面 UI
+        Camera cam = GetComponent<Camera>();
+
+        // 切換成平行投影
+        Camera.main.orthographic = true;
     }
 }

@@ -60,7 +60,8 @@ public class ChatRoomManager : MonoBehaviour
         // 若是不同用戶才重建 UI
         if (isSwitchingUser)
         {
-            ChatBubbleManager.Instance.RebuildFromHistory(currentUserRuntime.chatHistory);
+            chatBubbleManager.ClearAllBubbles();
+            chatBubbleManager.RebuildFromHistory(currentUserRuntime.chatHistory);
         }
 
         waitingForChoice = false;

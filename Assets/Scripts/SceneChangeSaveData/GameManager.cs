@@ -13,6 +13,8 @@ public class GameManager : MonoBehaviour
     public StageAttribute onStageStage;
     public ResourceSaveData ResourceData;
 
+    public ChatSaveData chatSaveData;
+
     //單例物件生成
     void Awake()
     {
@@ -96,6 +98,12 @@ public class GameManager : MonoBehaviour
         ResourceData.bondBC = resource.bondBC;
         ResourceData.bondCA = resource.bondCA;
         ResourceData.items = resource.items;
+    }
+
+    //聊天視窗專用儲存
+    public void SaveChatData(ChatSaveData data)
+    {
+        chatSaveData = data;
     }
 }
 
