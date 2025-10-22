@@ -37,6 +37,7 @@ public class TeamManager : MonoBehaviour
             var idolAbility = idol.GetComponent<IdolInstance>();
             //手動把資料填回去
             idolAbility.LoadData(data);
+            idolAbility.positionInTeam = i;
             teamMembers.Add(idol.GetComponent<PlayerControlMainWorld>());
         }
     }
@@ -61,7 +62,11 @@ public class TeamManager : MonoBehaviour
         }
         // 啟動移動協程，讓兩個角色互換位置
         StartCoroutine(SwapPositionSmoothly(teamMembers[previousLeaderIndex], teamMembers[currentLeaderIndex], previousLeaderPos, newLeaderPos));
-
+        //交換站位編號
+        for (int i = 0; i < teamMembers.Count; i++)
+        {
+            teamMembers[(currentLeaderIndex+i)%3].GetComponent<IdolInstance>().positionInTeam = i;
+        }
         Debug.Log("當前主控角色：" + teamMembers[currentLeaderIndex].gameObject.name);
         
     }

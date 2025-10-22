@@ -6,6 +6,7 @@ public enum IdolWho {none=-1,Kuma=0,Karo=1,Sirius=2}
 public class IdolInstance : MonoBehaviour
 {
     public IdolWho idolIndex;
+    public int positionInTeam;//站位編號
     //角色的基礎數值
     public Idols basicStatus;
     //實際運行的數值

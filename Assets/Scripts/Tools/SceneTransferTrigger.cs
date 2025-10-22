@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class SceneTransferTrigger : MonoBehaviour
 {
@@ -28,7 +29,8 @@ public class SceneTransferTrigger : MonoBehaviour
         IdolInstance[] allIdolInstances = FindObjectsByType<IdolInstance>(FindObjectsSortMode.None);
         if (allIdolInstances.Length != 0)
         {
-            GameManager.Instance.SaveIdolData(new List<IdolInstance>(allIdolInstances));
+            var sortedIdols = allIdolInstances.OrderBy(i => i.positionInTeam).ToList();
+            GameManager.Instance.SaveIdolData(sortedIdols);
         }
         //儲存資源
         ResourceManager resourceManager = FindAnyObjectByType<ResourceManager>();

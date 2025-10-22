@@ -74,9 +74,12 @@ public class SetCardUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         if(!isCard) return;//非卡片不顯示
         //紀錄位置
-        originalPosition = transform.localPosition;
         if (isDragging) return; // 拖曳中不顯示
-        transform.localPosition = originalPosition + hoverOffset;
+        originalPosition = transform.localPosition;
+        if (isInteractive)
+        {
+            transform.localPosition = originalPosition + hoverOffset;
+        }
         if (infoPanel != null&&isInteractive)
             infoPanel.SetInfo(cardData);
     }
