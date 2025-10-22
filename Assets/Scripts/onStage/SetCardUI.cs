@@ -16,6 +16,7 @@ public class SetCardUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public TextMeshProUGUI nameText;
     public TextMeshProUGUI pointText;
     public TextMeshProUGUI durationText;
+    public TextMeshProUGUI vigorCostText;
     public TextMeshProUGUI voGateText;
     public TextMeshProUGUI daGateText;
     public TextMeshProUGUI viGateText;
@@ -30,7 +31,7 @@ public class SetCardUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     private CanvasGroup canvasGroup;
     private RectTransform rectTransform;
     [Header("資訊框")]
-    public GameObject infoPanel; // 拖進 Inspector
+    public SetInfoCard infoPanel; // 拖進 Inspector
     public Vector3 hoverOffset = new Vector3(0, 30, 0); // 往上浮的距離
     [Header("拖曳區間")]
     public RectTransform dragLayer;
@@ -49,7 +50,11 @@ public class SetCardUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     //紀錄原位置及卡片資訊
     public void SetCard(ActionCard cardToSet)
     {
-        if (isInteractive) dragLayer = GameObject.FindGameObjectWithTag("dragLayer").GetComponent<RectTransform>();
+        if (isInteractive)
+        {
+            dragLayer = GameObject.FindGameObjectWithTag("dragLayer").GetComponent<RectTransform>();
+            infoPanel= FindAnyObjectByType<SetInfoCard>();
+        }
         cardData = cardToSet;
         cardImage.sprite = cardData.cardPic;
         nameText.text = cardData.cardName;
@@ -58,6 +63,7 @@ public class SetCardUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         else
             pointText.text = cardData.point.ToString();
         durationText.text = cardData.applyDuration.ToString();
+        vigorCostText.text = cardData.staminaCost.ToString();
         voGateText.text = cardData.voGate.ToString();
         daGateText.text = cardData.daGate.ToString();
         viGateText.text = cardData.viGate.ToString();
@@ -71,15 +77,15 @@ public class SetCardUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         originalPosition = transform.localPosition;
         if (isDragging) return; // 拖曳中不顯示
         transform.localPosition = originalPosition + hoverOffset;
-        if (infoPanel != null)
-            infoPanel.SetActive(true);
+        if (infoPanel != null&&isInteractive)
+            infoPanel.SetInfo(cardData);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         transform.localPosition = originalPosition;
-        if (infoPanel != null)
-            infoPanel.SetActive(false);
+        if (infoPanel != null&& isInteractive)
+            infoPanel.ClearInfo();
     }
 
     //拖曳
