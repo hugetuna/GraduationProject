@@ -210,10 +210,12 @@ public class DialogueManager : MonoBehaviour
         LogBlockSetting setLogBlock = logBlockObj.GetComponent<LogBlockSetting>();
         setLogBlock.setDialogueContent(story.currentText);
         setLogBlock.setSpeakerName(speakerName.text);
+    }
+    public void ScrollToButtom()
+    {
         //自動捲動到底
         Canvas.ForceUpdateCanvases();
         scrollRect.verticalNormalizedPosition = 0f;
-        Canvas.ForceUpdateCanvases();
     }
     //跳轉至特定選項
     public void JumpToKnot(string knotName)

@@ -31,7 +31,7 @@ public class OnStageManager : MonoBehaviour
     public float drawCharge = 0;//抽排充能條
     public float drawChargeLimit = 40;//抽排充能上限，超過就抽一張
     [Header("視覺化計數")]
-    public TextMeshProUGUI timerText;
+    public Image timerFillImg;
     public TextMeshProUGUI roundText;
     public TextMeshProUGUI musicNameText;
     public TextMeshProUGUI playerPointText;
@@ -64,7 +64,7 @@ public class OnStageManager : MonoBehaviour
     {
         if (!gameStarted || gameEnded) return;
         roundTimer += Time.deltaTime;
-        timerText.text = roundTimer.ToString("F1") + "s";
+        timerFillImg.fillAmount = roundTimer / currentStageData.secPerRound;
         // 每秒更新 drawCharge
         drawCharge += Time.deltaTime * 10f; // 比如 1 秒增加 20點充能
         drawChargeGauge.fillAmount = (float)drawCharge/drawChargeLimit;
