@@ -94,6 +94,16 @@ public class WindowManager : MonoBehaviour
         }
     }
 
+    // public void CloseAllWindows() // 關閉所有視窗的實作與調整
+    // {
+    //     foreach (RectTransform window in registeredWinRect)
+    //     {
+    //         window.gameObject.SetActive(false);
+    //     }
+    //     registeredWinRect.Clear();
+    //     windowCount = 0;
+    // }
+
     public void BringToFront(RectTransform window) // 讓視窗置頂
     {
         window.SetAsLastSibling();
