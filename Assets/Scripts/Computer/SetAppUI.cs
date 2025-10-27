@@ -4,7 +4,6 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
-using UnityEngine.EventSystems;
 
 /* 預計掛在 AppButton 的 Prefab 根部 */
 public class SetAppUI : MonoBehaviour
@@ -71,8 +70,11 @@ public class SetAppUI : MonoBehaviour
             windowManager.RegisterWindow(appWindow.GetComponent<RectTransform>()); // 設定視窗位置與排序
 
             miniInstance = Instantiate(miniPrefab, theMinimized.transform); // 生成最小化按鈕
-            Image icon = miniInstance.transform.Find("Icon").GetComponent<Image>();
-            icon.sprite = appData.appIcon; // 設定最小化按鈕的圖示
+            // Image icon = miniInstance.GetComponentInChildren<Image>();
+            // icon.sprite = appData.appIcon; // 設定最小化按鈕的圖示
+            TextMeshProUGUI text = miniInstance.transform.Find("Text (TMP)").GetComponent<TextMeshProUGUI>();
+            text.text = appData.appName; // 設定最小化按鈕的名稱
+
             MinimizeController minimizeController = miniInstance.GetComponent<MinimizeController>();
             minimizeController.SetAppWindow(appWindow); // 設定最小化按鈕所對應的視窗
         }
