@@ -49,7 +49,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f42c995ecff9894d80eca7099af5ae7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  animationName: TGrow
   isPlantable: 0
   isPlanting: 0
   seedSpawnPoint: {fileID: 8507273680267989609}
@@ -64,6 +63,10 @@ MonoBehaviour:
   teamManager: {fileID: 0}
   resourceManager: {fileID: 0}
   soilManager: {fileID: 0}
+  audio_TurnTheSoil: {fileID: 8300000, guid: 7f88b61d685a7d24880bdc30699b5d73, type: 3}
+  audio_PlantSeed: {fileID: 8300000, guid: 7b48586a19c09864483eb34fec8e9820, type: 3}
+  audio_WaterSeed: {fileID: 8300000, guid: eaf336be53e0c7e44ae5db7a19b67e4e, type: 3}
+  audio_HarvestSeed: {fileID: 8300000, guid: 92e7d612a57f0de4eb0072f32a4aadfc, type: 3}
 --- !u!212 &7599326609779185684
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -81,6 +84,8 @@ SpriteRenderer:
   m_ReflectionProbeUsage: 1
   m_RayTracingMode: 0
   m_RayTraceProcedural: 0
+  m_RayTracingAccelStructBuildFlagsOverride: 0
+  m_RayTracingAccelStructBuildFlags: 1
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:

@@ -22,8 +22,7 @@ public class BlurRenderer : MonoBehaviour
             Debug.LogWarning("BlurRenderer 缺少相機或材質！");
             return;
         }
-
-        blurRT = new RenderTexture(Screen.width, Screen.height, 16, RenderTextureFormat.DefaultHDR);
+        blurRT = new RenderTexture(Screen.width, Screen.height, 16);
         blurRT.name = "BlurRenderTexture";
         blurRT.Create();
 

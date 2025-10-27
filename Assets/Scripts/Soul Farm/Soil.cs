@@ -18,11 +18,17 @@ public class Soil : MonoBehaviour, IInteractable
     public TeamManager teamManager;
     public ResourceManager resourceManager;
     public SoilManager soilManager;
+    [Header("種田相關音效")]
+    public AudioClip audio_TurnTheSoil;
+    public AudioClip audio_PlantSeed;
+    public AudioClip audio_WaterSeed;
+    public AudioClip audio_HarvestSeed;
     private void Start()
     {
-        teamManager=FindObjectOfType<TeamManager>();
-        resourceManager = FindObjectOfType<ResourceManager>();
-        soilManager = FindObjectOfType<SoilManager>();
+        
+        teamManager = FindAnyObjectByType<TeamManager>();
+        resourceManager = FindAnyObjectByType<ResourceManager>();
+        soilManager = FindAnyObjectByType<SoilManager>();
     }
     //根據名子找到public GameObject[] seedPrefabs;的預製件
     public int FindSeedIndex(string name)
@@ -90,20 +96,24 @@ public class Soil : MonoBehaviour, IInteractable
         if(isPlanting == false && isPlantable == false)
         {
             TurnTheSoil();
+            AudioManager.Instance.PlaySFX(audio_TurnTheSoil);
         }
         //未處於種植狀態且可種植->種植
         else if (isPlanting == false && isPlantable == true)
         {
-            PlantSeed(1); 
+            PlantSeed(1);
+            AudioManager.Instance.PlaySFX(audio_PlantSeed);
         }
         //種植中，但成長未滿->澆水
         else if (isPlanting == true && isPlantable == false && seedOnThisSoil.GetDaysGrown()< seedOnThisSoil.seedData.growthDays)
         {
             seedOnThisSoil.GetComponent<SeedInstanceScript>().Water();
+            AudioManager.Instance.PlaySFX(audio_WaterSeed);
         }
         //種植中，但成長以滿->收割
         else if (isPlanting == true && isPlantable == false && seedOnThisSoil.GetDaysGrown() >= seedOnThisSoil.seedData.growthDays)
         {
+            AudioManager.Instance.PlaySFX(audio_HarvestSeed);
             //從teammanager抓隊長，把種出來的粉絲填入收割者，然後再塞進道具庫
             IdolInstance leader=teamManager.teamMembers[teamManager.currentLeaderIndex].GetComponent<IdolInstance>();
             int seedRewardPoint = seedOnThisSoil.GetComponent<SeedInstanceScript>().Harvest();
