@@ -34,6 +34,6 @@ public class LerpChange : MonoBehaviour
     //由內部更新數字並反映在UI
     private void UpdateScoreText()
     {
-        scoreText.text = Mathf.RoundToInt(beforeText).ToString()+"pt";
+        scoreText.text = Mathf.RoundToInt(beforeText).ToString();
     }
 }

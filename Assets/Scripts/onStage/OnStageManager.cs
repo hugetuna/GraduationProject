@@ -21,6 +21,7 @@ public class OnStageManager : MonoBehaviour
     public GameObject gameStartUIPanel;
     public GameObject gameOngoingUIPanel;
     public GameObject gameEndUIPanel;
+    public GameObject Monitor;
     //public bool gamePaused = false;
     [Header("計數相關")]
     [SerializeField]
@@ -33,10 +34,14 @@ public class OnStageManager : MonoBehaviour
     [Header("視覺化計數")]
     public Image timerFillImg;
     public TextMeshProUGUI roundText;
+    public Transform roundBlockParant;
+    public GameObject roundBlockPrefab;
+    private GameObject[] roundBlocks;
     public TextMeshProUGUI musicNameText;
     public TextMeshProUGUI playerPointText;
-    public Image drawChargeGauge;
-    public TextMeshProUGUI drawChanceText;
+    public List<GameObject> showDrawChanceCard;
+    //public Image drawChargeGauge;
+    //public TextMeshProUGUI drawChanceText;
     [Header("有關卡片")]
     public List<ActionCard> deck;
     public List<GameObject> hands;
@@ -57,30 +62,58 @@ public class OnStageManager : MonoBehaviour
         gameOngoingUIPanel.SetActive(false);
         gameEndUIPanel.SetActive(false);
         //寫字
-        roundText.text = round.ToString() + "/" + currentStageData.roundMax.ToString();
+        roundText.text = "ROUND " + round.ToString();
         musicNameText.text = "music: "+currentStageData.musicName;
+        //生成回合塊
+        roundBlocks = new GameObject[currentStageData.roundMax];
+        for (int i=0;i< currentStageData.roundMax; i++)
+        {
+            GameObject newBlock=Instantiate(roundBlockPrefab, roundBlockParant);
+            if(i< round)
+            {
+                Color color;
+                if (ColorUtility.TryParseHtmlString("#B8DAFF", out color))
+                {
+                    newBlock.GetComponent<Image>().color = color;
+                }
+                else
+                {
+                    Debug.LogWarning("顏色字串格式錯誤");
+                }
+            }
+            else
+            {
+                newBlock.GetComponent<Image>().color = Color.black;
+            }
+            roundBlocks[i]= newBlock;
+        }
     }
     private void Update()
     {
         if (!gameStarted || gameEnded) return;
+        // 每秒更新 roundTimer
         roundTimer += Time.deltaTime;
         timerFillImg.fillAmount = roundTimer / currentStageData.secPerRound;
         // 每秒更新 drawCharge
-        drawCharge += Time.deltaTime * 10f; // 比如 1 秒增加 20點充能
-        drawChargeGauge.fillAmount = (float)drawCharge/drawChargeLimit;
+        if (drawChance < 3)
+        {
+            drawCharge += Time.deltaTime * 10f; // 比如 1 秒增加 20點充能
+        }
+        else
+        {
+            drawCharge += 0;
+        }
+        //drawChargeGauge.fillAmount = (float)drawCharge/drawChargeLimit;
+        // 檢查是否達到充能上限，可以增加抽牌次數
         if (drawCharge >= drawChargeLimit)
         {
             if (drawChance < 3)
             {
                 drawChance += 1;
-                drawChanceText.text = drawChance.ToString();
+                //drawChanceText.text = drawChance.ToString();
                 drawCharge -= drawChargeLimit;
+                UpdateDrawChanceUI();
                 Debug.Log($"充能完成，獲得一次抽牌機會，目前抽牌次數：{drawChance}");
-            }
-            else
-            {
-                // 超過最大抽牌次數，不再充能
-                drawCharge = drawChargeLimit;
             }
         }
 
@@ -88,8 +121,28 @@ public class OnStageManager : MonoBehaviour
         if (roundTimer >= currentStageData.secPerRound) // 這個值你可調
         {
             round++;
-            roundText.text = round.ToString()+ "/"+currentStageData.roundMax.ToString();
+            roundText.text = "ROUND "+round.ToString();
             roundTimer = 0;
+            //更新回合塊顏色
+            for (int i = 0; i < currentStageData.roundMax; i++)
+            {
+                if (i < round)
+                {
+                    Color color;
+                    if (ColorUtility.TryParseHtmlString("#B8DAFF", out color))
+                    {
+                        roundBlocks[i].GetComponent<Image>().color = color;
+                    }
+                    else
+                    {
+                        Debug.LogWarning("顏色字串格式錯誤");
+                    }
+                }
+                else
+                {
+                    roundBlocks[i].GetComponent<Image>().color = Color.black;
+                }
+            }
             Debug.Log($"進入第 {round} 回合！");
             if(round> currentStageData.roundMax)
             {
@@ -120,6 +173,7 @@ public class OnStageManager : MonoBehaviour
         gameStarted = true;
         gameStartUIPanel.SetActive(false);
         gameOngoingUIPanel.SetActive(true);
+        Monitor.SetActive(true);
         LoadIdolsToStage();
         LoadStage(currentStageData);
     }
@@ -175,6 +229,7 @@ public class OnStageManager : MonoBehaviour
         gameEnded = true;
         gameOngoingUIPanel.SetActive(false);
         gameEndUIPanel.SetActive(true);
+        Monitor.SetActive(false);
         // 停止遊戲、顯示結果或記錄分數
     }
     // 結束演出：計算表演得分並更新 GameManager / ResourceManager
@@ -240,7 +295,8 @@ public class OnStageManager : MonoBehaviour
         if (DrawCards(1))
         {
             drawChance--;
-            drawChanceText.text = drawChance.ToString();
+            //drawChanceText.text = drawChance.ToString();
+            UpdateDrawChanceUI();
             Debug.Log($"成功抽牌，剩餘抽牌權{drawChance}");
         }
         else
@@ -248,7 +304,21 @@ public class OnStageManager : MonoBehaviour
             Debug.Log("抽牌失敗（可能牌組已空或手牌滿了）");
         }
     }
-
+    //改變抽牌權視覺化
+    public void UpdateDrawChanceUI()
+    {
+        for (int i = 0; i < showDrawChanceCard.Count; i++)
+        {
+            if (i < drawChance)
+            {
+                showDrawChanceCard[i].SetActive(true);
+            }
+            else
+            {
+                showDrawChanceCard[i].SetActive(false);
+            }
+        }
+    }
     //-----------------------------------計數----------------------------------------
     //得到分數
     public void GainPoint(int point,float mutiply)

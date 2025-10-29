@@ -12,6 +12,7 @@ public class Soil : MonoBehaviour, IInteractable
     public Transform seedSpawnPoint; // 種子的生成位置
     public float yOffSet=0f;
     public GameObject[] seedPrefabs; // 儲存不同種類的種子預製體
+    public GameObject pot;//盆栽物件
     public SeedInstanceScript seedOnThisSoil;//儲存一個被種植的種子的副本
     public OrderSet orderSeter;
     //與manager連結以獲取數據
@@ -25,7 +26,6 @@ public class Soil : MonoBehaviour, IInteractable
     public AudioClip audio_HarvestSeed;
     private void Start()
     {
-        
         teamManager = FindAnyObjectByType<TeamManager>();
         resourceManager = FindAnyObjectByType<ResourceManager>();
         soilManager = FindAnyObjectByType<SoilManager>();
@@ -82,8 +82,7 @@ public class Soil : MonoBehaviour, IInteractable
         seedOnThisSoil.transform.SetParent(null);
 
         // 設定圖層順序，z 值保持不變
-        seedOnThisSoil.GetComponent<SortingGroup>().sortingOrder = Mathf.RoundToInt(-transform.position.z * 100) + 10;
-
+        seedOnThisSoil.GetComponent<SortingGroup>().sortingOrder = Mathf.RoundToInt(-transform.position.z * 100);
         // 完成種植狀態
         isPlantable = false;
         isPlanting = true;
@@ -101,6 +100,7 @@ public class Soil : MonoBehaviour, IInteractable
         //未處於種植狀態且可種植->種植
         else if (isPlanting == false && isPlantable == true)
         {
+            pot.SetActive(false);
             PlantSeed(1);
             AudioManager.Instance.PlaySFX(audio_PlantSeed);
         }
@@ -113,6 +113,7 @@ public class Soil : MonoBehaviour, IInteractable
         //種植中，但成長以滿->收割
         else if (isPlanting == true && isPlantable == false && seedOnThisSoil.GetDaysGrown() >= seedOnThisSoil.seedData.growthDays)
         {
+            pot.SetActive(true);
             AudioManager.Instance.PlaySFX(audio_HarvestSeed);
             //從teammanager抓隊長，把種出來的粉絲填入收割者，然後再塞進道具庫
             IdolInstance leader=teamManager.teamMembers[teamManager.currentLeaderIndex].GetComponent<IdolInstance>();
