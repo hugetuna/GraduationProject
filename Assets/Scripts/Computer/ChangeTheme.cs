@@ -27,7 +27,7 @@ public class ChangeTheme : MonoBehaviour
     void Start()
     {
         theMinimized = taskbar.transform.Find("TheMinimized").gameObject;
-        powerButton = taskbar.transform.Find("PowerButton").gameObject;
+        powerButton = taskbar.transform.Find("Menu/PowerButton").gameObject;
     }
 
     public void SetDesktopTheme()
