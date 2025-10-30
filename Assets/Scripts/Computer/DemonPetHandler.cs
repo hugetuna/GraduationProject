@@ -28,7 +28,7 @@ public class DemonPetHandler : MonoBehaviour
         if (Input.GetMouseButtonDown(0))
         {
             // 點擊惡魔桌寵可開啟惡魔頁面
-            if (IsPointerOver3DObject(demonPet.transform))
+            if (demonPet.activeSelf && IsPointerOver3DObject(demonPet.transform))
             {
                 OnDemonButtonClick();
             }
@@ -83,16 +83,17 @@ public class DemonPetHandler : MonoBehaviour
 
     private bool IsPointerOver3DObject(Transform target) // 檢查特定場景物件是否被滑鼠點擊
     {
-        Camera cam = Camera.main;
-        if (cam == null) return false;
+        Plane plane = new(Vector3.up, Vector3.zero); // Y=0 平面
+        Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        Ray ray = cam.ScreenPointToRay(Input.mousePosition);
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        if (plane.Raycast(ray, out float distance))
         {
-            Transform hitTransform = hit.collider.transform;
-
-            // 如果命中物件是目標或目標的子物件
-            if (hitTransform == target || hitTransform.IsChildOf(target)) return true;
+            Vector3 worldPos = ray.GetPoint(distance); // 滑鼠點擊所對應的世界座標
+            Debug.Log("滑鼠對應世界座標: " + worldPos);
+            if (Mathf.Abs(worldPos.x - target.position.x) < 1.0f) // 假設目標物件半徑為 1 單位
+            {
+                return true;
+            }
         }
 
         return false;

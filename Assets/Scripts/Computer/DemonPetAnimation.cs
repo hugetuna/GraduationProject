@@ -123,12 +123,12 @@ public class DemonPetAnimation : MonoBehaviour
             transform.position = pos;
 
             // 根據水平移動方向轉向
-            if (Mathf.Abs(direction.x) > 0.01f) // 避免微小抖動時亂翻面
-            {
-                Vector3 scale = transform.localScale;
-                scale.x = -Mathf.Sign(direction.x) * Mathf.Abs(scale.x);
-                transform.localScale = scale;
-            }
+            // if (Mathf.Abs(direction.x) > 0.01f) // 避免微小抖動時亂翻面
+            // {
+            //     Vector3 scale = transform.localScale;
+            //     scale.x = -Mathf.Sign(direction.x) * Mathf.Abs(scale.x);
+            //     transform.localScale = scale;
+            // }
 
             elapsed += Time.deltaTime;
             yield return null;
@@ -149,9 +149,9 @@ public class DemonPetAnimation : MonoBehaviour
         Vector3 slopeTangent = new Vector3(0f, Mathf.Cos(Mathf.Deg2Rad * rotationAngle), Mathf.Sin(Mathf.Deg2Rad * rotationAngle)).normalized;
 
         // 隨機翻面
-        Vector3 scale = transform.localScale;
-        scale.x = Mathf.Sign(Random.Range(-1f, 1f)) * Mathf.Abs(scale.x);
-        transform.localScale = scale;
+        // Vector3 scale = transform.localScale;
+        // scale.x = Mathf.Sign(Random.Range(-1f, 1f)) * Mathf.Abs(scale.x);
+        // transform.localScale = scale;
 
         while (elapsed < duration)
         {

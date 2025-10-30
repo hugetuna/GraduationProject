@@ -32,61 +32,61 @@ public class ChangeTheme : MonoBehaviour
 
     public void SetDesktopTheme()
     {
-        StopAllCoroutines();
-
+        // StopAllCoroutines();
+        //
         // 顏色平滑過渡
-        StartCoroutine(LerpImageColor(taskbar.GetComponent<Image>(), desktopTbColor));
-        StartCoroutine(LerpImageColor(powerButton.GetComponent<Image>(), desktopPbColor));
+        // StartCoroutine(LerpImageColor(taskbar.GetComponent<Image>(), desktopTbColor));
+        // StartCoroutine(LerpImageColor(powerButton.GetComponent<Image>(), desktopPbColor));
 
         // 顯示應用程式按鈕
         apps.SetActive(true);
 
         // 直接幫最小化按鈕換背景圖
-        Transform parentTransform = theMinimized.transform;
-        if (parentTransform.childCount > 0)
-        {
-            foreach (Transform child in parentTransform)
-            {
-                child.GetComponent<Image>().sprite = desktopMiniBg;
-            }
-        }
+        // Transform parentTransform = theMinimized.transform;
+        // if (parentTransform.childCount > 0)
+        // {
+        //     foreach (Transform child in parentTransform)
+        //     {
+        //         child.GetComponent<Image>().sprite = desktopMiniBg;
+        //     }
+        // }
 
     }
 
     public void SetDemonTheme()
     {
-        StopAllCoroutines();
-
+        // StopAllCoroutines();
+        //
         // 顏色平滑過渡
-        StartCoroutine(LerpImageColor(taskbar.GetComponent<Image>(), demonTbColor));
-        StartCoroutine(LerpImageColor(powerButton.GetComponent<Image>(), demonPbColor));
+        // StartCoroutine(LerpImageColor(taskbar.GetComponent<Image>(), demonTbColor));
+        // StartCoroutine(LerpImageColor(powerButton.GetComponent<Image>(), demonPbColor));
 
         // 隱藏應用程式按鈕
         apps.SetActive(false);
 
         // 直接幫最小化按鈕換背景圖
-        Transform parentTransform = theMinimized.transform;
-        if (parentTransform.childCount > 0)
-        {
-            foreach (Transform child in parentTransform)
-            {
-                child.GetComponent<Image>().sprite = demonMiniBg;
-            }
-        }
+        // Transform parentTransform = theMinimized.transform;
+        // if (parentTransform.childCount > 0)
+        // {
+        //     foreach (Transform child in parentTransform)
+        //     {
+        //         child.GetComponent<Image>().sprite = demonMiniBg;
+        //     }
+        // }
 
     }
 
-    IEnumerator LerpImageColor(Image img, Color targetColor)
-    {
-        Color startColor = img.color;
-        float t = 0f;
-        while (t < 1f)
-        {
-            t += Time.deltaTime / duration;
-            img.color = Color.Lerp(startColor, targetColor, t);
-            yield return null;
-        }
-        img.color = targetColor;
-    }
+    // IEnumerator LerpImageColor(Image img, Color targetColor)
+    // {
+    //     Color startColor = img.color;
+    //     float t = 0f;
+    //     while (t < 1f)
+    //     {
+    //         t += Time.deltaTime / duration;
+    //         img.color = Color.Lerp(startColor, targetColor, t);
+    //         yield return null;
+    //     }
+    //     img.color = targetColor;
+    // }
 
 }
