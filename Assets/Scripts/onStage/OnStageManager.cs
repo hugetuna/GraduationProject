@@ -40,7 +40,7 @@ public class OnStageManager : MonoBehaviour
     public TextMeshProUGUI musicNameText;
     public TextMeshProUGUI playerPointText;
     public List<GameObject> showDrawChanceCard;
-    //public Image drawChargeGauge;
+    public Image drawChargeGauge;
     //public TextMeshProUGUI drawChanceText;
     [Header("有關卡片")]
     public List<ActionCard> deck;
@@ -103,7 +103,7 @@ public class OnStageManager : MonoBehaviour
         {
             drawCharge += 0;
         }
-        //drawChargeGauge.fillAmount = (float)drawCharge/drawChargeLimit;
+        drawChargeGauge.fillAmount = (float)drawCharge/drawChargeLimit;
         // 檢查是否達到充能上限，可以增加抽牌次數
         if (drawCharge >= drawChargeLimit)
         {

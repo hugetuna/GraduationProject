@@ -50,10 +50,14 @@ public class SetCardUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     //紀錄原位置及卡片資訊
     public void SetCard(ActionCard cardToSet)
     {
-        if (isInteractive)
+        if (isInteractive&&isCard)
         {
             dragLayer = GameObject.FindGameObjectWithTag("dragLayer").GetComponent<RectTransform>();
-            infoPanel= FindAnyObjectByType<SetInfoCard>();
+            infoPanel = GameObject.FindGameObjectWithTag("InfoCardInInGame").GetComponent<SetInfoCard>();
+        }
+        else if (isCard&&!isInteractive)
+        {
+            infoPanel = GameObject.FindGameObjectWithTag("InfoCardInGameStartPanel").GetComponent<SetInfoCard>();
         }
         cardData = cardToSet;
         cardImage.sprite = cardData.cardPic;
@@ -80,14 +84,14 @@ public class SetCardUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         {
             transform.localPosition = originalPosition + hoverOffset;
         }
-        if (infoPanel != null&&isInteractive)
+        if (infoPanel != null)
             infoPanel.SetInfo(cardData);
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         transform.localPosition = originalPosition;
-        if (infoPanel != null&& isInteractive)
+        if (infoPanel != null)
             infoPanel.ClearInfo();
     }
 

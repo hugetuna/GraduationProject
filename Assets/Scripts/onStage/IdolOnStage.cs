@@ -31,14 +31,13 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
     [Header("UI視覺引導")]
     //UI提示計時器
     public GameObject actionTimerUI;
-    public TextMeshProUGUI actionTimerText;
     public Image circleClockUI;
     public TextMeshProUGUI StageStaminaText;
     public Image StaminaBarUI;
     // Start is called before the first frame update
     void Start()
     {
-        stageManager = FindObjectOfType<OnStageManager>();
+        stageManager = FindAnyObjectByType<OnStageManager>();
         //spriteAnimator = gameObject.GetComponent<SpriteAnimator>();
         //設置動作圖片
         idleFrames = idolInstance.basicStatus.idleFrames;
@@ -59,12 +58,10 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
             actionTimer += Time.deltaTime;
 
             //用(總時長-現在時長)來設置計時器文字及填滿ui
-            actionTimerText.text = Mathf.RoundToInt(actionTimer).ToString();
             circleClockUI.fillAmount = (float)(actionTimer/ applyingCard.applyDuration);
             //使用時間到，歸零計時及填滿ui
             if (actionTimer >= applyingCard.applyDuration)
             {
-                actionTimerText.text = "0";
                 circleClockUI.fillAmount = 0;
                 actionTimerUI.SetActive(false);
                 ApllyOnEndAndReset();
