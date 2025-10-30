@@ -51,7 +51,7 @@ public class PackUIHandler : MonoBehaviour
         // 檢查背包 UI 是否開啟，並根據狀態啟用或禁用背包按鈕＆角色移動
         if (!packUI.activeSelf)
         {
-            packButton.interactable = true; // 啟用背包按鈕
+            // packButton.interactable = true; // 啟用背包按鈕
             foreach (PlayerInput input in playerInputs)
             {
                 input.enabled = true; // 啟用所有玩家的輸入系統
@@ -59,7 +59,7 @@ public class PackUIHandler : MonoBehaviour
         }
         else
         {
-            packButton.interactable = false; // 禁用背包按鈕
+            // packButton.interactable = false; // 禁用背包按鈕
             foreach (PlayerInput input in playerInputs)
             {
                 input.enabled = false; // 禁用所有玩家的輸入系統

@@ -112,10 +112,12 @@ public class ScheduleManager : MonoBehaviour
             OnChangeDay?.Invoke(); // 觸發切換天數事件
             computerMenu.SetActive(false);
             isSettled = false; // 重置結算狀態
-        }
-        else
-        {
-            Debug.Log("請先結算今日訓練後再切換天數");
+
+            foreach(GameObject idol in teamManager.allIdols)
+            {
+                bool isLeader = idol.GetComponent<IdolInstance>().positionInTeam == 0;
+                idol.GetComponent<PlayerControlMainWorld>().enabled = isLeader;
+            }
         }
     }
 
