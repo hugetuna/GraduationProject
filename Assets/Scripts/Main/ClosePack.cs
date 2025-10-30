@@ -17,7 +17,7 @@ public class ClosePack : MonoBehaviour
     public void CloseThePack() // 使用 UI 上的叉叉關閉 UI
     {
         Debug.Log("關閉 UI");
-        ResetPackUI();
+        // ResetPackUI();
         packToClose.SetActive(false);
     }
 

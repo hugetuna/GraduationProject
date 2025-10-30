@@ -24,7 +24,9 @@ public class UseItem : MonoBehaviour
     {
         audioSource = GetComponent<AudioSource>();
     }
-    void Start()
+
+    [System.Obsolete]
+    void OnEnable()
     {
         // 根據目前隊伍成員決定下拉選單的選項
         dropdown.options.Clear(); // 清空原有選項
@@ -34,7 +36,10 @@ public class UseItem : MonoBehaviour
         for (int i = 0; i < teamMembers.Count; i++) // 確保不會超出陣列範圍
         {
             string memberName = teamMembers[i].name; // 取得隊伍成員名稱
-            memberName = memberName.Replace("Character_", "").Replace("2.0", ""); // 去除前後綴（只剩名字）
+            // 去除前後綴（只剩名字）
+            int front = memberName.IndexOf("_");
+            int end = memberName.IndexOf("2");
+            memberName = memberName.Substring(front + 1, end - front - 1);
             dropdown.options.Add(new TMP_Dropdown.OptionData("給 " + memberName));
         }
         dropdown.value = 0; // 預設選擇第一個選項
