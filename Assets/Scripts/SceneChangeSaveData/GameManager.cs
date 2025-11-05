@@ -12,8 +12,8 @@ public class GameManager : MonoBehaviour
     public DialogueSaveData dialogueSaveData;
     public StageAttribute onStageStage;
     public ResourceSaveData ResourceData;
-
     public ChatSaveData chatSaveData;
+    public bool isElevatorUsedToday=false;
 
     //單例物件生成
     void Awake()

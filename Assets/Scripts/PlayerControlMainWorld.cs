@@ -66,7 +66,7 @@ public class PlayerControlMainWorld : MonoBehaviour
     private void UpdateToolVisibility()
     {
         toolSpriteResolver.SetCategoryAndLabel("Tool", tools[itemOnHandIndex]);
-        Debug.Log("switch to" + tools[itemOnHandIndex]);
+        //Debug.Log("switch to" + tools[itemOnHandIndex]);
     }
     public void OnSwitchItem(InputAction.CallbackContext context)
     {
@@ -98,6 +98,12 @@ public class PlayerControlMainWorld : MonoBehaviour
     }
     public void OnInteract(InputAction.CallbackContext context)
     {
+        //如果自己不是隊長就不啟動
+        if (FindAnyObjectByType<TeamManager>().teamMembers[
+            FindAnyObjectByType<TeamManager>().currentLeaderIndex] != this)
+        {
+            return;
+        }
         if (context.performed&&actionLock)
         {
             float interactRadius = 1.8f; // 互動範圍
@@ -157,7 +163,6 @@ public class PlayerControlMainWorld : MonoBehaviour
         //監測動畫長度
         yield return new WaitForSeconds(animationTime); // 等動畫跑完
         actionLock = true;
-        Debug.Log("動畫結束"+ animationTime);
     }
     //可視化互動區
     void OnDrawGizmos()

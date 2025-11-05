@@ -489,11 +489,6 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 674346496253344723, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
   m_PrefabInstance: {fileID: 6796696927425795413}
   m_PrefabAsset: {fileID: 0}
---- !u!82 &1054596799 stripped
-AudioSource:
-  m_CorrespondingSourceObject: {fileID: 7674224146616806836, guid: 1a995c5b9aaba9d42972bcd627e28505, type: 3}
-  m_PrefabInstance: {fileID: 5193520651039969272}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1268906298 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1958041305085420821, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
@@ -1047,13 +1042,29 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 2123436002141327406, guid: 460ed5f112c9c14458a53913d04924f2, type: 3}
     - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
+      propertyPath: RoundEndSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 0e594420c27735a4dab2c06fed8a01df, type: 3}
+    - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
+      propertyPath: drawCardSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: 49d11c27800669e42962987d8ae18aa9, type: 3}
+    - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
+      propertyPath: dropCardSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: c3769fe02e3080c43a2dec6fa3955556, type: 3}
+    - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
       propertyPath: musicSource
       value: 
-      objectReference: {fileID: 1054596799}
+      objectReference: {fileID: 0}
     - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
       propertyPath: playerPoint
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
+      propertyPath: gainPointSFX
+      value: 
+      objectReference: {fileID: 8300000, guid: dc6eece44fa75e544be5ebe8d09fd32d, type: 3}
     - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
       propertyPath: gameEndPanel
       value: 
@@ -1484,6 +1495,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 2318860593516228238, guid: bf50e6daab30a764cba5f2c9cd08680c, type: 3}
+      propertyPath: Music
+      value: 
+      objectReference: {fileID: 7993145882194163383}
     - target: {fileID: 4269543788852802635, guid: bf50e6daab30a764cba5f2c9cd08680c, type: 3}
       propertyPath: m_Name
       value: AudioManager
@@ -1533,6 +1548,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: bf50e6daab30a764cba5f2c9cd08680c, type: 3}
+--- !u!1 &7993145882194163383 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4859152727815471518, guid: bf50e6daab30a764cba5f2c9cd08680c, type: 3}
+  m_PrefabInstance: {fileID: 7993145882194163382}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

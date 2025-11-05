@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Rendering;
 using UnityEngine.InputSystem;
-
+[DefaultExecutionOrder(-100)]
 public class TeamManager : MonoBehaviour
 {
     public List<PlayerControlMainWorld> teamMembers = new List<PlayerControlMainWorld>(); // 隊員列表
@@ -12,15 +12,16 @@ public class TeamManager : MonoBehaviour
     public float followDistance = 3f; // 角色之間的距離
     public float followSpeed = 5f; // 角色跟隨速度
     private bool isSwitchingLeader = false; // SwitchLeader執行時為真
+
     private void Start()
     {
         BuildUpIdolsTeam();
-        //封鎖隊長外的input system
-        for (int i = 0; i < teamMembers.Count; i++)
-        {
-            bool isLeader = (i == currentLeaderIndex);
-            teamMembers[i].GetComponent<PlayerInput>().enabled = isLeader;
-        }
+        //封鎖隊長外的PlayerControlMainWorld
+        //for (int i = 0; i < teamMembers.Count; i++)
+        //{
+        //    bool isLeader = (i == currentLeaderIndex);
+        //    teamMembers[i].GetComponent<PlayerControlMainWorld>().enabled = isLeader;
+        //}
     }
     void Update()
     {
@@ -54,11 +55,11 @@ public class TeamManager : MonoBehaviour
         // 取得原隊長與新隊長的位置
         Vector3 previousLeaderPos = teamMembers[previousLeaderIndex].transform.position;
         Vector3 newLeaderPos = teamMembers[currentLeaderIndex].transform.position;
-        //封鎖隊長外的input system
+        //封鎖隊長外的PlayerControlMainWorld
         for (int i = 0; i < teamMembers.Count; i++)
         {
             bool isLeader = (i == currentLeaderIndex);
-            teamMembers[i].GetComponent<PlayerInput>().enabled = isLeader;
+            teamMembers[i].GetComponent<PlayerControlMainWorld>().enabled = isLeader;
         }
         // 啟動移動協程，讓兩個角色互換位置
         StartCoroutine(SwapPositionSmoothly(teamMembers[previousLeaderIndex], teamMembers[currentLeaderIndex], previousLeaderPos, newLeaderPos));
@@ -105,8 +106,7 @@ public class TeamManager : MonoBehaviour
         if (newLeaderAnim) newLeaderAnim.SetFloat("Speed", 0);
         // 延遲 0.1 秒後，確保新隊長啟用，舊隊長禁用
         yield return new WaitForSeconds(0.1f);
-        oldLeader.GetComponent<PlayerControlMainWorld>().enabled = false; // 只禁用 PlayerControlMainWorld，而不是整個 GameObject
-        newLeader.GetComponent<PlayerControlMainWorld>().enabled = true;
+        
         isSwitchingLeader = false;
         StartCoroutine(ResumeFollowAfterDelay(0.1f));
     }

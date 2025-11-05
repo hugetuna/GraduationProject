@@ -5,10 +5,11 @@ using UnityEngine;
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager Instance;
-
+    public List<BGMFile> bgmFiles;
     [Header("音效池設定")]
     public int poolSize = 10;
     public AudioSource audioSourcePrefab;
+    public GameObject Music;
     private Queue<AudioSource> sfxPool;
 
     [Header("全域音效音量")]
@@ -34,7 +35,7 @@ public class AudioManager : MonoBehaviour
             sfxPool.Enqueue(src);
         }
     }
-
+    // 播放音效
     public void PlaySFX(AudioClip clip, float volume = 1f)
     {
         if (clip == null) return;
@@ -48,7 +49,22 @@ public class AudioManager : MonoBehaviour
         // 播完自動放回池中
         StartCoroutine(ReturnToPool(src, clip.length));
     }
-
+    // 設定背景音樂
+    public void SetMusic(AudioClip clip, float volume = 1f)
+    {
+        AudioSource musicSource = Music.GetComponent<AudioSource>();
+        musicSource.clip = clip;
+        musicSource.volume = volume;
+        musicSource.loop = true;
+        musicSource.Play();
+    }
+    //停止背景音樂
+    public void StopMusic()
+    {
+        AudioSource musicSource = Music.GetComponent<AudioSource>();
+        musicSource.Stop();
+    }
+    // 將音源放回池中
     private IEnumerator ReturnToPool(AudioSource src, float delay)
     {
         yield return new WaitForSeconds(delay);

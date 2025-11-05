@@ -9,8 +9,14 @@ using Ink.Runtime;
 public class DialogueManager : MonoBehaviour
 {
     public TextAsset inkJSONAsset;
+    //對話類型，true為對話場景，false為主場景
+    public bool dialogueType = true;
     private Story story;
+    [Header("主世界專用調控")]
+    public TeamManager teamManager;
+    public GameObject MainCanvas;
     [Header("文本與按鈕等UI元件")]
+    public GameObject dialogueCanvas;
     public TextMeshProUGUI dialogueText;
     public Transform dialogueChoices;
     public GameObject ChoiceButtomPrefab;
@@ -20,7 +26,7 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI speakerName;
     public Image speakerImage;
     public Sprite EmptyImg;
-    public BGMPlayer BGMPlayer;
+    public List<BGMFile> bgmFiles;
     public BackGroundSetter backGroundSetter;
     [Header("Log相關")]
     public GameObject LogBlock;
@@ -36,10 +42,25 @@ public class DialogueManager : MonoBehaviour
     public string onDialogueEndScene;
     void Start()
     {
+        //TrySetVariable<string>("playerName", "郭家豪");
+        if (dialogueType==true)
+        {
+            DialogueStart();
+            teamManager= FindAnyObjectByType<TeamManager>();
+        }
+    }
+    public void DialogueStart()
+    {
+        //關閉玩家操作、ui顯示
+        if (dialogueType==false) {
+            dialogueCanvas.SetActive(true);
+            MainCanvas.SetActive(false);
+            FindAnyObjectByType<TeamManager>().teamMembers[
+            FindAnyObjectByType<TeamManager>().currentLeaderIndex].enabled = false;
+        }
         inkJSONAsset = GameManager.Instance.dialogueSaveData.inkJSONAsset;
-        onDialogueEndScene= GameManager.Instance.dialogueSaveData.backToSceneName;
+        onDialogueEndScene = GameManager.Instance.dialogueSaveData.backToSceneName;
         story = new Story(inkJSONAsset.text);
-        TrySetVariable<string>("playerName","郭家豪");
         string text = BuildStairText(story.Continue());
         typingCoroutine = StartCoroutine(TypeText(text));
         ApplyTags(story.currentTags);
@@ -165,15 +186,22 @@ public class DialogueManager : MonoBehaviour
             else if (tag.StartsWith("background:"))
                 backgroundTag = tag.Substring("background:".Length);
         }
-        //也給立繪掃一次
-        tachieManager.ApplyTachieTags(tags);
-        //更換當前bgm
-        if (!string.IsNullOrEmpty(bgmTag))
+        if (dialogueType == true)
         {
-            BGMPlayer.SetAndPlayBGM(bgmTag);
+            //也給立繪掃一次
+            tachieManager.ApplyTachieTags(tags);
+        }
+        //更換當前bgm
+        if (!string.IsNullOrEmpty(bgmTag)&&dialogueType==true)
+        {
+            AudioClip audioClip = bgmFiles.Find(bgm => bgm.BGMName == bgmTag)?.audioClip;
+            if (audioClip != null)
+            {
+                 AudioManager.Instance.SetMusic(audioClip);
+            }
         }
         //更換當前背景圖
-        if (!string.IsNullOrEmpty(backgroundTag))
+        if (!string.IsNullOrEmpty(backgroundTag) && dialogueType == true)
         {
             backGroundSetter.SetBackGround(backgroundTag);
         }
@@ -266,6 +294,12 @@ public class DialogueManager : MonoBehaviour
     }
     private void OnDialougeEnd()
     {
-        sceneTransferTrigger.teleportByTargetSceneName(onDialogueEndScene);
+        if (dialogueType == true) { sceneTransferTrigger.teleportByTargetSceneName(onDialogueEndScene); }
+        else {
+            dialogueCanvas.SetActive(false);
+            MainCanvas.SetActive(true);
+            FindAnyObjectByType<TeamManager>().teamMembers[
+            FindAnyObjectByType<TeamManager>().currentLeaderIndex].enabled = true;
+        }
     }
 }

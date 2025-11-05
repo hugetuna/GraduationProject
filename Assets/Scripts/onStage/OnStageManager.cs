@@ -13,7 +13,6 @@ public class OnStageManager : MonoBehaviour
     [Header("當前關卡資料")]
     public int stageIDToLoad;
     public StageAttribute currentStageData;
-    public AudioSource musicSource;
     public SpriteRenderer backgroundRenderer;
     [Header("關卡開始與結束旗標")]
     public bool gameStarted = false;
@@ -47,6 +46,10 @@ public class OnStageManager : MonoBehaviour
     public List<GameObject> hands;
     public GameObject cardPrefab;//卡片ui預置件
     public Transform handArea; // UI 範圍 (Card 的父物件，例如是個 HorizontalLayoutGroup)
+    [Header("有關音效")]
+    public AudioClip drawCardSFX;
+    public AudioClip RoundEndSFX;
+    public AudioClip gainPointSFX;
     [Header("偶像 Prefab")]
     public GameObject idolOnStagePrefab;
     [Header("上台位置（建議為3個）")]
@@ -143,6 +146,7 @@ public class OnStageManager : MonoBehaviour
                     roundBlocks[i].GetComponent<Image>().color = Color.black;
                 }
             }
+            AudioManager.Instance.PlaySFX(RoundEndSFX);
             Debug.Log($"進入第 {round} 回合！");
             if(round> currentStageData.roundMax)
             {
@@ -208,8 +212,7 @@ public class OnStageManager : MonoBehaviour
         backgroundRenderer.sprite = stageData.backgroundImage;
 
         // 播放音樂
-        musicSource.clip = stageData.backgroundMusic;
-        musicSource.Play();
+        AudioManager.Instance.SetMusic(stageData.backgroundMusic);
 
         //建立卡組並打亂
         foreach (var singleStack in stageData.actionCardStacks)
@@ -296,6 +299,7 @@ public class OnStageManager : MonoBehaviour
         {
             drawChance--;
             //drawChanceText.text = drawChance.ToString();
+            AudioManager.Instance.PlaySFX(drawCardSFX);
             UpdateDrawChanceUI();
             Debug.Log($"成功抽牌，剩餘抽牌權{drawChance}");
         }
@@ -325,6 +329,7 @@ public class OnStageManager : MonoBehaviour
     {
         playerPoint += (int)(point * mutiply);
         playerPointText.GetComponent<LerpChange>().SetText(playerPoint);
+        AudioManager.Instance.PlaySFX(gainPointSFX);
     }
     public void GaindrawCharge(int amount)
     {

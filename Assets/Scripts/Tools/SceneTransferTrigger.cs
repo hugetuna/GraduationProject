@@ -39,6 +39,7 @@ public class SceneTransferTrigger : MonoBehaviour
             GameManager.Instance.SaveResourceData(resourceManager);
         }
         // 傳送到指定場景
+        AudioManager.Instance.StopMusic();
         SceneManager.LoadScene(targetSceneName);
     }
 

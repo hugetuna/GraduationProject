@@ -8,10 +8,11 @@ using UnityEngine.EventSystems;
 public class DestoryCardOnDrag : MonoBehaviour, IDropHandler
 {
     private OnStageManager stageManager;
+    public AudioClip dropCardSFX;
     // Start is called before the first frame update
     void Start()
     {
-        stageManager = FindObjectOfType<OnStageManager>();
+        stageManager = FindAnyObjectByType<OnStageManager>();
     }
 
     // Update is called once per frame
@@ -32,6 +33,7 @@ public class DestoryCardOnDrag : MonoBehaviour, IDropHandler
                 Debug.Log($"丟棄卡片 {incomingCard.cardName}！");
                 stageManager.hands.Remove(draggedCardUI.gameObject);
                 Destroy(draggedCardUI.gameObject); // 卡片被使用後消失
+                AudioManager.Instance.PlaySFX(dropCardSFX);
             }
             else
             {

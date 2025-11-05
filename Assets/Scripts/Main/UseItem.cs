@@ -5,12 +5,15 @@ using TMPro;
 using UnityEngine.UI;
 
 /* 掛在背包頁面的使用按鈕上，按下按鈕時會使用選擇的道具在特定角色上 */
+[DefaultExecutionOrder(0)]
 public class UseItem : MonoBehaviour
 {
     public TMP_Dropdown dropdown; // 可選擇使用道具的角色之下拉選單
+    [SerializeField]
     private string selectedCharacterName; // 儲存選擇的角色名稱
     //-----------------------------------------------------------------//
     public TeamManager teamManager; // 透過 TeamManager 物件取得當前隊伍成員
+    [SerializeField]
     private List<PlayerControlMainWorld> teamMembers = new(); // 記錄取得的隊伍成員
     //-----------------------------------------------------------------//
     private IdolInstance[] idolInstance; // 存放偶像資料參考
@@ -26,7 +29,7 @@ public class UseItem : MonoBehaviour
     }
 
     [System.Obsolete]
-    void OnEnable()
+    private void Start()
     {
         // 根據目前隊伍成員決定下拉選單的選項
         dropdown.options.Clear(); // 清空原有選項
@@ -40,6 +43,7 @@ public class UseItem : MonoBehaviour
             int front = memberName.IndexOf("_");
             int end = memberName.IndexOf("2");
             memberName = memberName.Substring(front + 1, end - front - 1);
+            Debug.Log("隊伍成員名稱：" + memberName);
             dropdown.options.Add(new TMP_Dropdown.OptionData("給 " + memberName));
         }
         dropdown.value = 0; // 預設選擇第一個選項
@@ -53,7 +57,7 @@ public class UseItem : MonoBehaviour
         GetComponent<Button>().onClick.AddListener(OnUseItem);
 
         // 獲取場景中所有具備 IdolInstance 的物件
-        idolInstance = FindObjectsOfType<IdolInstance>();
+        idolInstance = FindObjectsByType<IdolInstance>(FindObjectsSortMode.None);
     }
 
     private void OnDropdownValueChanged(int index)
