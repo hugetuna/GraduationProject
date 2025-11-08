@@ -23,6 +23,7 @@ public class AddScoreEffect : CardEffectBase
         {
             int score = parentCard.point;
             onStageManager.GainPoint(score, 1f);
+            target.idolPersonalPoint += score;
             Debug.Log($"加了 {score} 分！");
         }
         else

@@ -9,6 +9,8 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
 {
     [Header("上台的偶像資料")]
     public IdolInstance idolInstance;
+    public int idolPersonalPoint;//偶像個人得分數
+    public List<ActionCard> usedCards;
     public float actionTimer=0;
     public bool isAcion = false;
     public ActionCard applyingCard=null;
@@ -133,6 +135,7 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
         {
             foreach (var endEffect in applyingCard.effects)
             {
+                usedCards.Add(applyingCard);
                 endEffect.OnEnd(this, stageManager);
             }
         }

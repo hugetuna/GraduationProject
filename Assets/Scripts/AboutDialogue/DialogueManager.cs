@@ -30,6 +30,7 @@ public class DialogueManager : MonoBehaviour
     public BackGroundSetter backGroundSetter;
     [Header("Log相關")]
     public GameObject LogBlock;
+    public List<GameObject> LogBlocks;
     public Transform LogContent;
     public ScrollRect scrollRect;
     [Header("打字機效果用")]
@@ -238,6 +239,14 @@ public class DialogueManager : MonoBehaviour
         LogBlockSetting setLogBlock = logBlockObj.GetComponent<LogBlockSetting>();
         setLogBlock.setDialogueContent(story.currentText);
         setLogBlock.setSpeakerName(speakerName.text);
+        LogBlocks.Add(logBlockObj);
+        //將最新的log設為黃色，其他的設回白色
+        foreach (GameObject oldLogBlock in LogBlocks)
+        {
+            LogBlockSetting oldSetLogBlock = oldLogBlock.GetComponent<LogBlockSetting>();
+            oldSetLogBlock.boldLogBlock(false);
+        }
+        setLogBlock.boldLogBlock(true);
     }
     public void ScrollToButtom()
     {
