@@ -2,23 +2,31 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class BuffBoard : MonoBehaviour
 {
-    private TrainingUIData trainingUIData; // 取用當前訓練 UI 資料
     // private IdolInstance characterInfo; // 該角色的數值資料（從 VigourBar 取得）
-    public VigourBar vigourBar; // 取用 VigourBar 的參考
-    public Text buffText; // 顯示訓練加乘效果的文字
+    [SerializeField] private TextMeshProUGUI buffText; // 顯示訓練加乘效果的文字
 
     void Start()
     {
-        buffText.text = "DANCE收益+10%" + "\n" + "魅力+"; // 尚未實作 buff 功能，暫時先寫死文字
-        trainingUIData = vigourBar.trainingUIData;
+        buffText.text = "";
+    }
+    void OnEnable()
+    {
+        DragToLesson.OnEnableOrEndDrag += UpdateBuffBoard; // 訂閱拖曳結束事件    
     }
 
-    
-    void Update()
+    void OnDisable()
     {
-        // characterInfo = vigourBar.GetCharacterInfo();
+        DragToLesson.OnEnableOrEndDrag -= UpdateBuffBoard; // 取消訂閱拖曳結束事件    
+    }
+
+    public void UpdateBuffBoard(TrainingUIData trainingUIData)
+    {
+        // characterInfo = vigourBar.CharacterInfo;
+
+        buffText.text = "DANCE收益+10%" + "\n" + "魅力+"; // 尚未實作 buff 功能，暫時先寫死文字
     }
 }

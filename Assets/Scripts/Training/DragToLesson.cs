@@ -1,183 +1,157 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
-using Microsoft.Unity.VisualStudio.Editor;
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems; // UI 和物件的拖曳寫法不同
+using System.Collections;
 
 public enum DropZoneType { None, Member, Trainee } // 不受限於類別內
+
 public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
+    public static event Action<TrainingUIData> OnEnableOrEndDrag; // 拖曳結束或重啟 UI 事件
+    //-----------------------------------------------------------------//
     private RectTransform rectTransform;
     private Canvas canvas;
-    private Vector2 originalPosition;
-    private DropZone lastDropZone = null; // 記住上次放下的位置
-    public DropZoneType currentZoneType = DropZoneType.Member; // 代表當前拖放區域
     private CanvasGroup canvasGroup;
-    [SerializeField] private Vector2 dropOffset = new(0, -3.0f);
-    private bool isDragging = false; // 是否正在拖曳
-
-    public TeamUIData teamUIData;  // 透過 ScriptableObject 取得當前隊伍 UI 資料
+    //-----------------------------------------------------------------//
+    [Header("拖曳後的偏移")]
+    [SerializeField] private Vector3 dropOffset = new(0f, 2f, 0f);
+    private Vector2 originalPosition;
+    private bool isDragging = false;
+    private DropZone lastDropZone = null;
+    private DropZoneType currentZoneType = DropZoneType.Member;
+    public DropZoneType CurrentZoneType
+    {
+        get { return currentZoneType; }
+    }
+    //-----------------------------------------------------------------//
+    [Header("拖曳時受影響的 UI 元素")]
+    [SerializeField] private Slider vigourSlider;
+    [SerializeField] private GameObject benefitBar;
+    [SerializeField] private GameObject buffBoard;
+    //-----------------------------------------------------------------//
+    [Header("訓練 UI 資料")]
+    [SerializeField] private TrainingUIData trainingUIData;
     private List<string> teamMembers = new();
     private List<string> teamTrainees = new();
-    private UnityEngine.UI.Image image;
-    private string myName;
-    public Slider vigourSlider; // 該角色的體力值 UI
-    public VigourBar vigourBar;
-    public GameObject benefitBar; // 該角色的訓練收益 UI
-    public GameObject buffBoard; // 該角色的訓練buff UI
-    private Vector2 pointerOffset; // 記錄滑鼠和物件中心的偏移，避免一開始物件跳動
-
-    private void Start()
+    private string myName = null;
+    private string MyName
     {
-        rectTransform = GetComponent<RectTransform>(); // 取得角色 UI 自己的位置
-        canvas = GetComponentInParent<Canvas>(); // 取得自己所在的畫布
-        canvasGroup = GetComponent<CanvasGroup>(); // 取得 CanvasGroup，方便後面使用
+        get
+        {
+            if (string.IsNullOrEmpty(myName))
+            {
+                Image img = GetComponent<Image>();
+                if (img != null && img.sprite != null)
+                {
+                    myName = img.sprite.name.Replace("UI_character_", "");
+                }
+            }
+            return myName;
+        }
+    }
+    //-----------------------------------------------------------------//
+    [Header("相關音效")]
+    [SerializeField] private AudioClip dragCompletedSound; // 拖曳成功的音效
 
-        teamMembers = teamUIData.teamMembers;
-        teamTrainees = teamUIData.teamTrainees;
-        image = GetComponent<UnityEngine.UI.Image>();
-        myName = image.sprite.name.Replace("UI_character_", ""); // 取得該角色的來源圖片名稱（不含副檔名）
-
-        vigourBar = GetComponent<VigourBar>(); // 取得該角色的 VigourBar 參考
+    void Awake()
+    {
+        rectTransform = GetComponent<RectTransform>();
+        canvas = GetComponentInParent<Canvas>();
+        canvasGroup = GetComponent<CanvasGroup>();
     }
 
-    private void Update()
+    void OnEnable()
     {
-        // 判斷該角色 UI 目前在 Member 區還是 Trainee 區
-        if (lastDropZone != null)
-        {
-            if (lastDropZone.gameObject.name.Contains("m"))
-            {
-                if (!teamMembers.Contains(myName))
-                {
-                    teamMembers.Add(myName); // 將該角色列入當前隊伍
-                    teamTrainees.Remove(myName); // 並移出訓練名單
-                    currentZoneType = DropZoneType.Member; // 更新當前拖放區域名稱
-                }
-            }
-            else if (lastDropZone.gameObject.name.Contains("t"))
-            {
-                if (!teamTrainees.Contains(myName))
-                {
-                    teamTrainees.Add(myName); // 將該角色列入訓練名單
-                    teamMembers.Remove(myName); // 並移出當前隊伍
-                    currentZoneType = DropZoneType.Trainee; // 更新當前拖放區域名稱
-                }
-            }
+        StartCoroutine(InitAfterFrame());
+    }
 
-            // 因為不能讓物件自己控制自己的可用狀態，所以寫在 DragToLesson 裡面
-            if (!isDragging) // 沒在拖曳時才判斷
-            {
-                if (currentZoneType == DropZoneType.Trainee)
-                {
-                    if (buffBoard.activeSelf) buffBoard.SetActive(false);
-                }
-                else if (currentZoneType == DropZoneType.Member)
-                {
-                    if (!buffBoard.activeSelf) buffBoard.SetActive(true);
-                }
-            }
-        }
+    private IEnumerator InitAfterFrame()
+    {
+        yield return null; // 等待所有物件完成 Start 以前的初始化，避免存取到 null 參考
+
+        teamMembers = trainingUIData.teamData.GetMembers();
+        teamTrainees = trainingUIData.teamData.GetTrainees();
+        OnEnableOrEndDrag?.Invoke(trainingUIData); // 每次重啟 UI 就更新一次，確保介面狀態正確
     }
 
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (vigourBar.isAbleToTrain)
-        {
-            isDragging = true; // 開始拖曳
-            originalPosition = rectTransform.anchoredPosition; // 記錄開始拖曳時的位置
-            canvasGroup.blocksRaycasts = false; // 拖曳中不阻擋滑鼠射線（讓 DropZone 能收到事件）
+        isDragging = true;
+        canvasGroup.blocksRaycasts = false;
 
-            // 記錄滑鼠和物件中心的差距，避免一開始物件跳動
-            RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                rectTransform,
-                eventData.position,
-                eventData.pressEventCamera,
-                out pointerOffset
-            );
-
-            vigourSlider.gameObject.SetActive(false); // 拖曳時隱藏體力值 UI
-            benefitBar.SetActive(false); // 拖曳時隱藏訓練收益 UI
-            buffBoard.SetActive(false); // 拖曳時隱藏buff UI
-        }
+        // 開始拖曳時，隱藏角色底下的 UI 元素
+        vigourSlider.gameObject.SetActive(false);
+        benefitBar.SetActive(false);
+        buffBoard.SetActive(false);
     }
 
     public void OnDrag(PointerEventData eventData)
     {
-        if (vigourBar.isAbleToTrain)
+        // 將滑鼠位置轉成世界座標，直接設置物件位置
+        if (RectTransformUtility.ScreenPointToWorldPointInRectangle(
+            canvas.transform as RectTransform,
+            eventData.position,
+            eventData.pressEventCamera,
+            out Vector3 globalMousePos))
         {
-            // 使用座標轉換（ScreenPoint → LocalPoint），避免解析度改變造成偏移
-            Vector2 localPoint;
-            if (RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                rectTransform.parent as RectTransform,
-                eventData.position,
-                eventData.pressEventCamera,
-                out localPoint))
-            {
-                rectTransform.anchoredPosition = localPoint - pointerOffset; // 加回偏移，保持拖曳手感
-            }
+            rectTransform.position = globalMousePos;
         }
     }
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        if (vigourBar.isAbleToTrain)
+        isDragging = false;
+        canvasGroup.blocksRaycasts = true;
+
+        if (DropZone.currentDragZone != null) // 拖曳成功，放到新的 DropZone
         {
-            isDragging = false; // 結束拖曳
-            canvasGroup.blocksRaycasts = true; // 拖曳結束後恢復阻擋滑鼠射線
+            AudioManager.Instance.PlaySFX(dragCompletedSound, 0.5f); // 播放拖曳成功音效
+            rectTransform.position = DropZone.currentDragZone.GetMyPos().position + dropOffset;
+            lastDropZone = DropZone.currentDragZone;
+        }
+        else if (lastDropZone != null) // 拖曳失敗，回到上個 DropZone
+        {
+            rectTransform.position = lastDropZone.GetMyPos().position + dropOffset;
+        }
+        else // 拖曳失敗，回到原始位置（沒有上個 DropZone）
+        {
+            rectTransform.anchoredPosition = originalPosition + (Vector2)dropOffset;
+        }
 
-            vigourSlider.gameObject.SetActive(true); // 拖曳後恢復體力值 UI 的顯示
-            benefitBar.SetActive(true); // 拖曳後恢復訓練收益 UI 的顯示
+        UpdateTeamStatus(); // 更新隊伍狀態
 
-            RectTransform parentRect = rectTransform.parent as RectTransform;
-            Vector2 screenPos, localPoint;
-            bool isSuccess; // 紀錄座標是否轉換成功
+        // 結束拖曳時，顯示角色底下的 UI 元素
+        vigourSlider.gameObject.SetActive(true);
+        benefitBar.SetActive(true);
+        if (currentZoneType == DropZoneType.Member) buffBoard.SetActive(true);
 
-            // 判斷最終放置位置
-            if (DropZone.currentDragZone != null)
+        OnEnableOrEndDrag?.Invoke(trainingUIData); // 觸發拖曳結束事件
+    }
+
+    private void UpdateTeamStatus()
+    {
+        if (lastDropZone == null) return;
+
+        if (lastDropZone.gameObject.name.Contains("m"))
+        {
+            if (!teamMembers.Contains(MyName))
             {
-                // 取得放置點在螢幕上的座標
-                screenPos = RectTransformUtility.WorldToScreenPoint(
-                    eventData.pressEventCamera,
-                    DropZone.currentDragZone.GetMyPos().position
-                );
-
-                // 轉換為本地 anchoredPosition
-                isSuccess =
-                    RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                        parentRect,
-                        screenPos,
-                        eventData.pressEventCamera,
-                        out localPoint
-                    );
-                if (isSuccess) rectTransform.anchoredPosition = localPoint + dropOffset; // 吸附到新位置
-                lastDropZone = DropZone.currentDragZone; // 記住這次的位置
+                teamMembers.Add(MyName);
+                teamTrainees.Remove(MyName);
+                currentZoneType = DropZoneType.Member;
             }
-            else if (lastDropZone != null)
+        }
+        else if (lastDropZone.gameObject.name.Contains("t"))
+        {
+            if (!teamTrainees.Contains(MyName))
             {
-                // 取得放置點在螢幕上的座標
-                screenPos = RectTransformUtility.WorldToScreenPoint(
-                    eventData.pressEventCamera,
-                    lastDropZone.GetMyPos().position
-                );
-
-                // 轉換為本地 anchoredPosition
-                isSuccess =
-                    RectTransformUtility.ScreenPointToLocalPointInRectangle(
-                        parentRect,
-                        screenPos,
-                        eventData.pressEventCamera,
-                        out localPoint
-                    );
-                // 沒有吸附任何新地方，但有舊 DropZone，就吸回去
-                if (isSuccess) rectTransform.anchoredPosition = localPoint + dropOffset;
-            }
-            else
-            {
-                // 完全沒進任何 DropZone，就回到最初原點
-                rectTransform.anchoredPosition = originalPosition + dropOffset;
+                teamTrainees.Add(MyName);
+                teamMembers.Remove(MyName);
+                currentZoneType = DropZoneType.Trainee;
             }
         }
     }
 }
+

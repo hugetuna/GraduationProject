@@ -1,126 +1,79 @@
-using System.Collections;
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
+using TMPro;
 
+/* 掛在 TrainingManager 上 */
 public class TrainingUIHandler : MonoBehaviour
 {
-    public GameObject trainingUI;
-    private GameObject trainingUIInstance = null; // 記錄被生成的訓練 UI
+    public static event Action<TeamManager, TrainingUIData> OnTrainingUIClosed; // 定義訓練 UI 關閉事件
     //-----------------------------------------------------------------//
-
-    public TeamManager teamManager; // 透過 TeamManager 物件取得當前隊伍成員
-    private List<PlayerControlMainWorld> teamMembers = new(); // 記錄取得的隊伍成員
-    private List<PlayerInput> playerInputs = new(); // 玩家輸入系統
+    [Header("訓練 UI 元素")]
+    [SerializeField] private GameObject trainingUI; // 直接使用場景中的，不必另外生成
     //-----------------------------------------------------------------//
-    private Image[] characterImages; // 顯示在 UI 上的（角色）圖片
-    public Sprite[] characterSprites; // 角色 UI 圖片來源（檔案資料夾）
-    private Dictionary<string, Sprite> characterSpriteDict; // 角色名稱與圖片來源的對照表
-
-    public TeamUIData teamUIData; // 將隊伍 UI 資料寫入 ScriptableObject
-
-    public TrainingUIData trainingUIData; // 訓練 UI 的資料 ScriptableObject
-
-
+    [SerializeField] private Button closeButton; // 關閉 UI 的叉叉按鈕
+    [SerializeField] private TextMeshProUGUI TypeText;
+    [SerializeField] private TextMeshProUGUI TeacherText;
+    [SerializeField] private TextMeshProUGUI VigourText;
+    [SerializeField] private TextMeshProUGUI BenefitText;
+    [SerializeField] private List<Image> characterImages = new(); //  UI 上的（角色）圖片插槽
+    //-----------------------------------------------------------------//
+    [Header("介面所需資料")]
+    [SerializeField] private TrainingUIData trainingUIData; // 訓練 UI 的資料 ScriptableObject
+    [SerializeField] private TeamManager teamManager; // 透過 TeamManager 物件取得當前隊伍成員
+    [SerializeField] private List<Sprite> characterSprites = new(); // 角色 UI 圖片
+    private TeamData teamData; // 隊伍資料 ScriptableObject（從 trainingUIData 取得）
+    //-----------------------------------------------------------------//
+    [Header("相關音效")]
+    [SerializeField] private AudioClip openSound; // 開啟訓練 UI 的音效
 
     void Start()
     {
-        if (teamUIData != null)
-        {
-            teamUIData.Reset(); // 重置 ScriptableObject 的資料
-            Debug.Log("TeamUIData 已重置");
-        }
-        else
-        {
-            Debug.Log("讀不到 TeamUIData 的資料");
-        }
-
         DoorInteraction.OnDoorInteracted += ShowTrainingUI; // 訂閱並監聽與門互動事件
-        ScheduleManager.OnChangeDay += EndThisDay; // 訂閱並監聽切換天數事件
+        closeButton.onClick.AddListener(CloseTrainingUI); // 設定關閉按鈕的監聽事件
 
-        characterSpriteDict = new() { // 建立角色名稱與圖片來源對照表
-            { "Kuma", characterSprites[0] },
-            { "Karo", characterSprites[1] },
-            { "Sirius", characterSprites[2] },
-        };
-        teamUIData.characterSpriteDict = characterSpriteDict;
+        trainingUI.SetActive(false); // 預設關閉訓練 UI
 
+        teamData = trainingUIData.teamData = ScriptableObject.CreateInstance<TeamData>();
+        teamData.Initialize(teamManager, characterSprites); // 初始化隊伍資料
     }
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(0)) // 檢查滑鼠左鍵是否被按下
+        if (Input.GetMouseButtonDown(0)) // 點擊非 UI 區域時關閉 UI
         {
-            if (!IsCursorClickUIObject() && trainingUIInstance != null) // 點擊非 UI 區域時關閉 UI
-            {
-                Debug.Log("關閉訓練 UI");
-                trainingUIInstance.SetActive(false);
-            }
+            if(!IsCursorClickUIObject() && trainingUI.activeSelf) CloseTrainingUI();
         }
 
-        if (trainingUIInstance != null && trainingUIInstance.activeSelf)
+        if (trainingUI.activeSelf) // 根據訓練 UI 的開啟狀態，決定是否禁用角色移動
         {
-            // 根據訓練 UI 的開啟狀態，決定是否禁用角色移動
-            foreach (PlayerInput input in playerInputs)
-            {
-                input.enabled = false; // 禁用所有玩家的輸入系統
-            }
+            UIAndPlayerInput.DisableAllPlayerInputs(); // UI 已開啟 -> 禁用所有玩家移動
         }
         else
         {
-            foreach (PlayerInput input in playerInputs)
-            {
-                input.enabled = true; // 啟用所有玩家的輸入系統
-            }
+            UIAndPlayerInput.EnableAllPlayerInputs(); // UI 已關閉 -> 啟用所有玩家移動
         }
     }
 
     void OnDestroy()
     {
         DoorInteraction.OnDoorInteracted -= ShowTrainingUI; // 取消訂閱與門互動事件
-        ScheduleManager.OnChangeDay -= EndThisDay; // 取消訂閱切換天數事件
-    }
-
-    private void EndThisDay()
-    {
-        Destroy(trainingUIInstance); // 銷毀訓練 UI 實例
-        foreach (var character in ScheduleManager.disappearCharacters)
-        {
-            character.SetActive(true); // 回復隱藏並停用的隊伍成員
-            character.GetComponent<PlayerControlMainWorld>().enabled = false;
-        }
-        teamUIData.ResetTeam(); // 重置 ScriptableObject 的資料（不含 characterSpriteDict）
     }
 
     private void ShowTrainingUI()
     {
         Debug.Log("開啟訓練 UI");
-        if (trainingUIInstance == null)
-        {
-            trainingUIInstance = Instantiate(trainingUI); // 切換天數時再進行銷毀
-            //初始化 UI 外觀
-        }
-        else
-        {
-            trainingUIInstance.SetActive(true); // 如果 UI 已經存在，則顯示它
-        }
-
-        CanvaLocator canvaLocator = trainingUIInstance.GetComponent<CanvaLocator>();
-
-        // 取得 UI 文字的插槽位置
-        Text TypeText = canvaLocator.TypeText;
-        Text TeacherText = canvaLocator.TeacherText;
-        Text VigourText = canvaLocator.VigourText;
-        Text BenefitText = canvaLocator.BenefitText;
+        trainingUI.SetActive(true);
+        AudioManager.Instance.PlaySFX(openSound);
 
         TypeText.text = trainingUIData.trainingType; // 設定訓練類型的 UI 文字內容
-        if (trainingUIData.isWithTeacher) // 設定老師的 UI 文字內容
+        if (trainingUIData.teacherName != null) // 設定老師的 UI 文字內容
         {
             // 暫時寫死為一星的 Amy 老師
             trainingUIData.teacherName = "Amy";
-            TeacherText.text = $"老師：{trainingUIData.teacherName} ★1";
+            TeacherText.text = $"老師：{trainingUIData.teacherName} 星1";
             BenefitText.text = $"基本收益：{trainingUIData.withTeacherBenefit}"; // 設定基本收益的 UI 文字內容
         }
         else
@@ -130,33 +83,19 @@ public class TrainingUIHandler : MonoBehaviour
         }
         VigourText.text = $"耗費體力：{trainingUIData.neededVigour}"; // 設定耗費體力的 UI 文字內容
 
-        // 取得 UI 圖片的插槽位置
-        characterImages = canvaLocator.characterImages;
-
-        // 根據目前隊伍成員決定 UI 的初始樣貌（但因為 TeamManager 的清單是固定的，所以看起來都一樣）
-        teamMembers = teamManager.teamMembers;
-        for (int i = 0; i < teamMembers.Count && i < characterImages.Length; i++) // 確保不會超出陣列範圍
+        List<Sprite> sprites = teamData.GetAllCharacterSprites();
+        for (int i = 0; i < characterImages.Count; i++)
         {
-            string memberName = teamMembers[i].name; // 取得隊伍成員名稱
-            // 去除前後多餘的字元（只剩名字）
-            memberName = memberName.Replace("Character_", ""); 
-            memberName = memberName.Replace("2.0", "");
-            if (characterSpriteDict.ContainsKey(memberName)) // 檢查對照表中是否有該名稱
-            {
-                characterImages[i].sprite = characterSpriteDict[memberName]; // 指派圖片來源
-            }
-
-            if (!teamUIData.teamMembers.Contains(memberName)) teamUIData.teamMembers.Add(memberName);
+            if (i < sprites.Count) characterImages[i].sprite = sprites[i];
+            else characterImages[i].sprite = null; // 超出範圍的圖片插槽設為空，避免報錯
         }
+    }
 
-        // 收集所有玩家的輸入系統
-        foreach (PlayerControlMainWorld member in teamMembers)
-        {
-            if (member.TryGetComponent<PlayerInput>(out var playerInput))
-            {
-                playerInputs.Add(playerInput);
-            }
-        }
+    private void CloseTrainingUI()
+    {
+        Debug.Log("關閉訓練 UI");
+        trainingUI.SetActive(false);
+        OnTrainingUIClosed?.Invoke(teamManager, trainingUIData); // 觸發訓練 UI 關閉事件
     }
 
     private bool IsCursorClickUIObject()
@@ -173,10 +112,5 @@ public class TrainingUIHandler : MonoBehaviour
         EventSystem.current.RaycastAll(eventData, raycastResults);
 
         return raycastResults.Count > 0;
-    }
-
-    public GameObject GetTrainingUIInstance()
-    {
-        return trainingUIInstance;
     }
 }
