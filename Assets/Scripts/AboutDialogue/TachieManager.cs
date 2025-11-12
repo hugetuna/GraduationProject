@@ -32,12 +32,15 @@ public class TachieManager : MonoBehaviour
     public void ApplyTachieTags(List<string> tags)
     {
         string characterTag=null;
+        string closeTag = null;
         string emotionTag = null;
         string behaviorTag = null;
         string moveTag = null;
         foreach (TachieSlot slot in tachieSlots)
         {
             characterTag=GetTag(tags, slot.slotName + "_Character:");
+            if (!string.IsNullOrEmpty(characterTag)) Debug.Log(characterTag);//沒有這個插槽的標籤就跳過
+            closeTag = GetTag(tags, slot.slotName + "_Close:");
             emotionTag = GetTag(tags, slot.slotName + "_Emotion:");
             behaviorTag = GetTag(tags, slot.slotName + "_Behavior:");
             moveTag = GetTag(tags, slot.slotName + "_Move:");
@@ -72,8 +75,11 @@ public class TachieManager : MonoBehaviour
             {
                 divideMoveTagAndMoveSlot(slot.slotName, moveTag);
             }
-        }
-        
+            if (!string.IsNullOrEmpty(closeTag))
+            {
+                slot.image.gameObject.SetActive(false);
+            }
+        } 
     }
     string GetTag(List<string> tags, string prefix)
     {

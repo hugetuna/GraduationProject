@@ -8,6 +8,12 @@ public class BGMFile
     public string BGMName;
     public AudioClip audioClip;
 }
+[System.Serializable]
+public class sfxFile
+{
+    public string sfxName;
+    public AudioClip audioClip;
+}
 public class BGMPlayer : MonoBehaviour
 {
     public AudioSource audioSource;

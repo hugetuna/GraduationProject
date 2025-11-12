@@ -27,6 +27,7 @@ public class DialogueManager : MonoBehaviour
     public Image speakerImage;
     public Sprite EmptyImg;
     public List<BGMFile> bgmFiles;
+    public List<sfxFile> sfxFiles;
     public BackGroundSetter backGroundSetter;
     [Header("Log相關")]
     public GameObject LogBlock;
@@ -62,9 +63,7 @@ public class DialogueManager : MonoBehaviour
         inkJSONAsset = GameManager.Instance.dialogueSaveData.inkJSONAsset;
         onDialogueEndScene = GameManager.Instance.dialogueSaveData.backToSceneName;
         story = new Story(inkJSONAsset.text);
-        string text = BuildStairText(story.Continue());
-        typingCoroutine = StartCoroutine(TypeText(text));
-        ApplyTags(story.currentTags);
+        ContinueStory();
     }
     //設置愈顯示的劇本
     public void SetStoryJSON(TextAsset newInkJSONAsset)
@@ -170,9 +169,11 @@ public class DialogueManager : MonoBehaviour
     //改立繪與頭像
     void ApplyTags(List<string> tags)
     {
+        //Debug.Log("Applying Tags: " + string.Join(", ", tags));
         string speakerTag = null;
         string emotionTag = null;
         string bgmTag = null;
+        string sfxTag = null;
         string backgroundTag = null;
 
         // 先掃一次 tags，存下來
@@ -184,6 +185,8 @@ public class DialogueManager : MonoBehaviour
                 emotionTag = tag.Substring("emotion:".Length);
             else if (tag.StartsWith("bgm:"))
                 bgmTag = tag.Substring("bgm:".Length);
+            else if (tag.StartsWith("sfx:"))
+                sfxTag = tag.Substring("sfx:".Length);
             else if (tag.StartsWith("background:"))
                 backgroundTag = tag.Substring("background:".Length);
         }
@@ -195,10 +198,24 @@ public class DialogueManager : MonoBehaviour
         //更換當前bgm
         if (!string.IsNullOrEmpty(bgmTag)&&dialogueType==true)
         {
+            if (bgmTag == "Stop")
+            {
+                AudioManager.Instance.StopMusic();
+                return;
+            }
             AudioClip audioClip = bgmFiles.Find(bgm => bgm.BGMName == bgmTag)?.audioClip;
             if (audioClip != null)
             {
-                 AudioManager.Instance.SetMusic(audioClip);
+                AudioManager.Instance.SetMusic(audioClip);
+            }
+        }
+        //播放sfx
+        if (!string.IsNullOrEmpty(sfxTag) && dialogueType == true)
+        {
+            AudioClip audioClip = sfxFiles.Find(sfx =>sfx.sfxName==sfxTag)?.audioClip;
+            if (audioClip != null)
+            {
+                AudioManager.Instance.PlaySFX(audioClip);
             }
         }
         //更換當前背景圖

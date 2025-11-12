@@ -14,7 +14,11 @@ public class AudioManager : MonoBehaviour
 
     [Header("全域音效音量")]
     [Range(0f, 1f)]
+    public float volume = 1f;
+    [Range(0f, 1f)]
     public float sfxVolume = 1f;
+    [Range(0f, 1f)]
+    public float musicVolume = 1f;
 
     private void Awake()
     {
@@ -36,25 +40,25 @@ public class AudioManager : MonoBehaviour
         }
     }
     // 播放音效
-    public void PlaySFX(AudioClip clip, float volume = 1f)
+    public void PlaySFX(AudioClip clip, float setVolume = 1f)
     {
         if (clip == null) return;
 
         // 取出可用音源
         AudioSource src = sfxPool.Dequeue();
         src.clip = clip;
-        src.volume = sfxVolume * volume;
+        src.volume = volume * sfxVolume * setVolume;
         src.Play();
 
         // 播完自動放回池中
         StartCoroutine(ReturnToPool(src, clip.length));
     }
     // 設定背景音樂
-    public void SetMusic(AudioClip clip, float volume = 1f)
+    public void SetMusic(AudioClip clip, float setVolume = 1f)
     {
         AudioSource musicSource = Music.GetComponent<AudioSource>();
         musicSource.clip = clip;
-        musicSource.volume = volume;
+        musicSource.volume = volume * musicVolume * setVolume;
         musicSource.loop = true;
         musicSource.Play();
     }
