@@ -7,6 +7,9 @@ using UnityEngine.Events;
 public class ColliderTrigger : MonoBehaviour
 {
     public UnityEvent Event;
+    //傳送用
+    public bool isTP;
+    public string targetSceneName;
 
     private void OnTriggerEnter(Collider other)
     {
@@ -14,6 +17,10 @@ public class ColliderTrigger : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             Event.Invoke();
+            if (isTP)
+            {
+                SceneTransitionManager.Instance.teleportByTargetSceneName(targetSceneName);
+            }
         }
     }
 

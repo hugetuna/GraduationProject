@@ -40,7 +40,7 @@ public class DialogueManager : MonoBehaviour
     private bool isTyping = false;
     //對話結束時呼叫的函式
     [Header("對話結束時呼叫的場景")]
-    public SceneTransferTrigger sceneTransferTrigger;
+    public SceneTransitionManager sceneTransferTrigger;
     public string onDialogueEndScene;
     void Start()
     {
@@ -87,8 +87,8 @@ public class DialogueManager : MonoBehaviour
             {
                 string text = BuildStairText(story.Continue());
                 typingCoroutine=StartCoroutine(TypeText(text));
-                AddLogBlock();
                 ApplyTags(story.currentTags);
+                AddLogBlock();
             }
         }
         else if (story.currentChoices.Count > 0)

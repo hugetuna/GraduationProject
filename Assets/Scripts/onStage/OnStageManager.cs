@@ -239,7 +239,7 @@ public class OnStageManager : MonoBehaviour
     public void EndAndLeave()
     {
         //TODO:用關卡資料動態回歸場景
-        gameObject.GetComponent<SceneTransferTrigger>().teleportByTargetSceneName(currentStageData.nextSceneName);
+        gameObject.GetComponent<SceneTransitionManager>().teleportByTargetSceneName(currentStageData.nextSceneName);
     }
     
     //洗牌(使用Fisher-Yates Shuffle 算法)
