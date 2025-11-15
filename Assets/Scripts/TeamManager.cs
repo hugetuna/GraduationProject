@@ -68,7 +68,7 @@ public class TeamManager : MonoBehaviour
         {
             teamMembers[(currentLeaderIndex+i)%3].GetComponent<IdolInstance>().positionInTeam = i;
         }
-        Debug.Log("當前主控角色：" + teamMembers[currentLeaderIndex].gameObject.name);
+        Debug.Log("當前主控角色：" + teamMembers[currentLeaderIndex].gameObject.name+ direction);
         
     }
     // 讓兩個角色平滑走到彼此的位置
@@ -267,7 +267,7 @@ public class TeamManager : MonoBehaviour
     }
     [ContextMenu("switch")]
     // 切換角色
-    void UpdateInput()
+    public void UpdateInput()
     {
         SwitchLeader(1);
     }

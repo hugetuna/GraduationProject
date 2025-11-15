@@ -24,13 +24,13 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "SwitchItem",
-                    "type": "Button",
+                    "name": "Switch",
+                    "type": "Value",
                     "id": "4319c1f5-fa4b-453e-830a-161b081a7729",
-                    "expectedControlType": "Button",
+                    "expectedControlType": "Axis",
                     "processors": "",
                     "interactions": "",
-                    "initialStateCheck": false
+                    "initialStateCheck": true
                 }
             ],
             "bindings": [
@@ -101,15 +101,37 @@
                     "isPartOfComposite": false
                 },
                 {
-                    "name": "",
-                    "id": "28c3c18c-4b4a-4fef-a7eb-1f097af7bac8",
+                    "name": "1D Axis",
+                    "id": "548baed5-0000-4616-bb6c-e71cb352fdba",
+                    "path": "1DAxis",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "negative",
+                    "id": "441ae131-a5f2-4a58-96cd-10be45a0fad3",
+                    "path": "<Keyboard>/q",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Switch",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "positive",
+                    "id": "7a384002-87b6-4276-9198-588fb9637a8d",
                     "path": "<Keyboard>/e",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "SwitchItem",
+                    "action": "Switch",
                     "isComposite": false,
-                    "isPartOfComposite": false
+                    "isPartOfComposite": true
                 }
             ]
         }

@@ -42,7 +42,7 @@ Transform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!95 &5393082369993727541
 Animator:
-  serializedVersion: 5
+  serializedVersion: 7
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -56,6 +56,7 @@ Animator:
   m_ApplyRootMotion: 0
   m_LinearVelocityBlending: 0
   m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
   m_WarningMessage: 
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
@@ -101,7 +102,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: 414d2521-324e-4457-bf89-6ec0809ed1cc
-    m_ActionName: PlayerActionMain/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
+    m_ActionName: 'PlayerActionMain/Move[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]'
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 874445509639540754}
@@ -117,12 +118,12 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: ac92a316-41cd-4286-a478-243014e245c5
-    m_ActionName: PlayerActionMain/Interact[/Keyboard/space]
+    m_ActionName: 'PlayerActionMain/Interact[/Keyboard/space]'
   - m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 874445509639540754}
         m_TargetAssemblyTypeName: PlayerControlMainWorld, Assembly-CSharp
-        m_MethodName: OnSwitchItem
+        m_MethodName: OnSwitch
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -133,7 +134,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
     m_ActionId: 4319c1f5-fa4b-453e-830a-161b081a7729
-    m_ActionName: PlayerActionMain/SwitchItem[/Keyboard/e]
+    m_ActionName: 'PlayerActionMain/SwitchItem[/Keyboard/e]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: PlayerActionMain
@@ -152,6 +153,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   idolIndex: 2
+  positionInTeam: 0
   basicStatus: {fileID: 11400000, guid: e14ab52a0b03c89419a4e9a8c75d38ed, type: 2}
   vocal: 0
   dance: 0
@@ -179,6 +181,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dd22021e0ae0e79499782ba09882aeb6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  teamManager: {fileID: 0}
   itemOnHandIndex: 0
   toolSpriteResolver: {fileID: 361163798380701161}
   animator: {fileID: 5393082369993727541}

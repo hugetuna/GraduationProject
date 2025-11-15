@@ -6,6 +6,11 @@ using UnityEngine.U2D.Animation;
 
 public class PlayerControlMainWorld : MonoBehaviour
 {
+    //更換角色用
+    public TeamManager teamManager;
+    static private bool switchLock = false;
+    private float lockCooldown = 0.2f;  // 防止連按或多次觸發
+    //基礎設定
     public int itemOnHandIndex=0;//用數字表示當前持有的道具，0為無道具
     public SpriteResolver toolSpriteResolver; // 工具的 Sprite Resolver 元件
     public Dictionary<int, string> tools = new Dictionary<int,string>(); // 工具對應Sprite Resolver的tag表單
@@ -20,6 +25,7 @@ public class PlayerControlMainWorld : MonoBehaviour
     //設定初始可操作角色
     void Start()
     {
+        teamManager= FindAnyObjectByType<TeamManager>();
         //初始化工具對應的圖樣tag->綁定toolAnimations字典
         tools[0] = "None";
         tools[1] = "Normal";
@@ -68,13 +74,31 @@ public class PlayerControlMainWorld : MonoBehaviour
         toolSpriteResolver.SetCategoryAndLabel("Tool", tools[itemOnHandIndex]);
         //Debug.Log("switch to" + tools[itemOnHandIndex]);
     }
-    public void OnSwitchItem(InputAction.CallbackContext context)
+    //切換隊長
+    public void OnSwitch(InputAction.CallbackContext context)
     {
-        // 當按鍵被按下或釋放時讀取輸入
+        if (!actionLock) return;
+
         if (context.performed)
         {
-            SetItemOnHandIndex((itemOnHandIndex + 1) % 2);
+            float value = context.ReadValue<float>();
+            if (value != 0)
+            {
+                if (!switchLock)
+                {
+                    switchLock = true;
+
+                    teamManager.SwitchLeader((int)value);
+
+                    StartCoroutine(UnlockSwitchAfterDelay());
+                }
+            }
         }
+    }
+    private IEnumerator UnlockSwitchAfterDelay()
+    {
+        yield return new WaitForSeconds(lockCooldown);
+        switchLock = false;
     }
     public void OnMove(InputAction.CallbackContext context)
     {
@@ -98,6 +122,7 @@ public class PlayerControlMainWorld : MonoBehaviour
     }
     public void OnInteract(InputAction.CallbackContext context)
     {
+        
         //如果自己不是隊長就不啟動
         if (FindAnyObjectByType<TeamManager>().teamMembers[
             FindAnyObjectByType<TeamManager>().currentLeaderIndex] != this)

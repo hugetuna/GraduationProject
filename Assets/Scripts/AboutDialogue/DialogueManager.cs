@@ -48,8 +48,8 @@ public class DialogueManager : MonoBehaviour
         if (dialogueType==true)
         {
             DialogueStart();
-            teamManager= FindAnyObjectByType<TeamManager>();
         }
+        teamManager = FindAnyObjectByType<TeamManager>();
     }
     public void DialogueStart()
     {
@@ -57,7 +57,7 @@ public class DialogueManager : MonoBehaviour
         if (dialogueType==false) {
             dialogueCanvas.SetActive(true);
             MainCanvas.SetActive(false);
-            FindAnyObjectByType<TeamManager>().teamMembers[
+            teamManager.teamMembers[
             FindAnyObjectByType<TeamManager>().currentLeaderIndex].enabled = false;
         }
         inkJSONAsset = GameManager.Instance.dialogueSaveData.inkJSONAsset;
