@@ -172,6 +172,7 @@ public class DialogueManager : MonoBehaviour
         //Debug.Log("Applying Tags: " + string.Join(", ", tags));
         string speakerTag = null;
         string emotionTag = null;
+        List<string> fontTags = new List<string>();
         string bgmTag = null;
         string sfxTag = null;
         string backgroundTag = null;
@@ -183,6 +184,8 @@ public class DialogueManager : MonoBehaviour
                 speakerTag = tag.Substring("speaker:".Length);
             else if (tag.StartsWith("emotion:"))
                 emotionTag = tag.Substring("emotion:".Length);
+            else if (tag.StartsWith("font:"))
+                fontTags.Add(tag.Substring("font:".Length));
             else if (tag.StartsWith("bgm:"))
                 bgmTag = tag.Substring("bgm:".Length);
             else if (tag.StartsWith("sfx:"))
@@ -194,6 +197,41 @@ public class DialogueManager : MonoBehaviour
         {
             //也給立繪掃一次
             tachieManager.ApplyTachieTags(tags);
+        }
+        //更換字體性質
+        if (fontTags.Count!=0)
+        {
+            foreach (string tag in fontTags)
+            {
+                if (tag == "Bold")
+                {
+                    dialogueText.fontStyle = FontStyles.Bold;
+                }
+                else if (tag == "Italic")
+                {
+                    dialogueText.fontStyle = FontStyles.Italic;
+                }
+                else if (tag == "Big")
+                {
+                    dialogueText.fontSize = 48;
+                }
+                else if (tag == "Red")
+                {
+                    dialogueText.color = Color.red;
+                }
+                if(tag == "Shake")
+                {
+                    //開始震動協程
+                    StartCoroutine(Shake());
+                }
+                if (tag == "Normal")
+                {
+                    //恢復預設
+                    dialogueText.fontStyle = FontStyles.Normal;
+                    dialogueText.fontSize = 36;
+                    dialogueText.color = Color.black;
+                }
+            }
         }
         //更換當前bgm
         if (!string.IsNullOrEmpty(bgmTag)&&dialogueType==true)
@@ -248,6 +286,27 @@ public class DialogueManager : MonoBehaviour
         {
             speakerImage.sprite = profile.defaultPortrait;
         }
+    }
+    IEnumerator Shake(float strength = 15f, float duration = 0.4f, int vibrato = 2)
+    {
+        if (dialogueText == null) yield break;
+        RectTransform rt = dialogueText.rectTransform;
+        if (rt == null) yield break;
+
+        Vector3 start = rt.localPosition;
+
+        float t = 0f;
+        while (t < 1f)
+        {
+            float progress = t / 1f; // 0→1
+                                     // 振動 (sin 波 * 衰減)
+            float offset = Mathf.Sin(progress * vibrato * Mathf.PI * 2) * strength;
+            rt.localPosition = start + Vector3.right * offset;
+
+            t += Time.deltaTime / duration;
+            yield return null;
+        }
+        rt.localPosition = start; // 保證回到原點
     }
     //追加LogBlock
     public void AddLogBlock()

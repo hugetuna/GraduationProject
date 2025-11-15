@@ -1,9 +1,9 @@
 
 #speaker:Manager #bgm:RickRoll #background:Street
 ......
-#speaker:Manager 
+#speaker:Manager #font:Big #font:Bold #font:Shake
 今天要去新的公司...
-#speaker:Manager 
+#speaker:Manager #font:Normal 
 有點緊張呢，已經三年沒正式工作了
 #speaker:Manager 
 上一份工作...

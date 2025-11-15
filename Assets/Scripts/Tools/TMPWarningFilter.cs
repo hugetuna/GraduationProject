@@ -22,6 +22,6 @@ public class TMPWarningFilter : MonoBehaviour
         }
 
         // 其他訊息照常顯示
-        Debug.unityLogger.Log(type, logString);
+        //Debug.unityLogger.Log(type, logString);
     }
 }
