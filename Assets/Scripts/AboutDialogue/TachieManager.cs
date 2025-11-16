@@ -49,12 +49,12 @@ public class TachieManager : MonoBehaviour
             {
                 CharacterDialogueProfile profile = dialogueManager.characterDialogueProfiles.Find(p => p.characterTag == characterTag);
                 ChangeSlotImg(slot.slotName, profile.defaultPortrait);
+                slot.image.gameObject.SetActive(true);
                 if (!string.IsNullOrEmpty(emotionTag))
                 {
                     if (emotionTag == "Empty") { slot.image.gameObject.SetActive(false); }
                     else
                     {
-                        slot.image.gameObject.SetActive(true);
                         EmotionSprite emotionSprite = profile.emotions.Find(p => p.emotion == emotionTag);
                         ChangeSlotImg(slot.slotName, emotionSprite.portrait);
                     }
