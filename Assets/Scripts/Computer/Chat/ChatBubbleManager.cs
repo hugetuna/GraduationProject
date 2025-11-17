@@ -42,30 +42,24 @@ public class ChatBubbleManager : MonoBehaviour
 
         // 設定大頭貼
         string path = isPlayer ? "Player/IconMask/Icon" : "User/IconMask/Icon";
-        if(!bubble.transform.Find(path).TryGetComponent<Image>(out var iconImage))
+        if (!bubble.transform.Find(path).TryGetComponent<Image>(out var iconImage))
         {
             Debug.LogWarning($"找不到{(isPlayer ? "玩家" : "用戶")}泡泡的大頭照，請確認圖示路徑是否正確");
             return;
         }
-        
-        if(isPlayer)
+
+        if (isPlayer)
         {
             iconImage.sprite = playerBubbleIcon;
         }
-        else if(userBubbleIcon != null)
+        else if (userBubbleIcon != null)
         {
             iconImage.sprite = userBubbleIcon;
         }
-        
+
         // 設定文字內容
         TextMeshProUGUI messageText = bubble.GetComponentInChildren<TextMeshProUGUI>();
         messageText.text = message;
-
-        // 計算並設定泡泡高度
-        int rowNum = (int)(messageText.preferredWidth / maxTextWidth) + 1; // 計算文字的行數，預設為 1 行
-        float bubbleHeight = baseHeight + (rowNum - 1) * heightPerRow; // 計算泡泡高度
-        RectTransform bubbleRect = bubble.GetComponent<RectTransform>();
-        bubbleRect.sizeDelta = new Vector2(bubbleRect.sizeDelta.x, bubbleHeight);
 
         // 限制泡泡最大寬度
         LayoutElement layout = bubble.GetComponentInChildren<LayoutElement>();
@@ -78,12 +72,18 @@ public class ChatBubbleManager : MonoBehaviour
             layout.preferredWidth = -1; // -1 表示自動大小
         }
 
+        // 計算並設定泡泡高度
+        int rowNum = (int)(messageText.preferredWidth / maxTextWidth) + 1; // 計算文字的行數，預設為 1 行
+        float bubbleHeight = baseHeight + (rowNum - 1) * heightPerRow; // 計算泡泡高度
+        RectTransform bubbleRect = bubble.GetComponent<RectTransform>();
+        bubbleRect.sizeDelta = new Vector2(bubbleRect.sizeDelta.x, bubbleHeight);
+
         // 強制更新 Layout，避免捲動時尺寸錯亂
+        Canvas.ForceUpdateCanvases();
+        messageText.ForceMeshUpdate();
         LayoutRebuilder.ForceRebuildLayoutImmediate(content);
 
-        // 自動捲到最底
-        Canvas.ForceUpdateCanvases();
-        scrollRect.verticalNormalizedPosition = 0f;
+        scrollRect.verticalNormalizedPosition = 0f; // 自動捲到最底
     }
 
     public void ClearAllBubbles() // 清掉現有的對話泡泡

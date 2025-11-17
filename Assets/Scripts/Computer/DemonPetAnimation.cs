@@ -6,6 +6,7 @@ using UnityEngine;
 public class DemonPetAnimation : MonoBehaviour
 {
     private Animator animator;
+    private Transform model; // 惡魔桌寵模型
     //-----------------------------------------------------------------//
     [Header("動作間隔秒數")]
     [SerializeField] private float minWait = 3f;
@@ -35,6 +36,7 @@ public class DemonPetAnimation : MonoBehaviour
     void Awake()
     {
         animator = GetComponentInChildren<Animator>();
+        model = gameObject.transform.Find("Drawables");
     }
 
     void OnEnable()
@@ -76,59 +78,74 @@ public class DemonPetAnimation : MonoBehaviour
             }
         }
     }
+
     private IEnumerator Run(Vector3 direction, float speed, float duration)
     {
         if (isMoving) yield break;
         isMoving = true;
 
         // 將水平方向投影到傾斜平面上
-        Vector3 planeNormal = new(0f, Mathf.Sin(Mathf.Deg2Rad * rotationAngle), -Mathf.Cos(Mathf.Deg2Rad * rotationAngle));
+        Vector3 planeNormal = new Vector3(
+            0f,
+            Mathf.Sin(Mathf.Deg2Rad * rotationAngle),
+            -Mathf.Cos(Mathf.Deg2Rad * rotationAngle)
+        );
         direction = Vector3.ProjectOnPlane(direction, planeNormal).normalized;
 
         float elapsed = 0f;
+
         while (elapsed < duration)
         {
-            // 計算新位置
-            Vector3 pos = transform.position;
-            pos += speed * Time.deltaTime * direction;
+            Vector3 currentPos = transform.position;
+            Vector3 nextPos = currentPos + direction * speed * Time.deltaTime;
 
-            // 檢查是否超出任何 Invisible Volume
+            // 檢查是否仍在合法區域
             bool insideAnyVolume = false;
             foreach (var vol in movementVolumes)
             {
-                if (vol.bounds.Contains(pos))
+                if (vol.bounds.Contains(nextPos))
                 {
                     insideAnyVolume = true;
                     break;
                 }
             }
 
-            if (!insideAnyVolume)
+            if (!insideAnyVolume) // 碰到邊界後沿著邊界移動
             {
-                // 找到距離最近的合法位置（看起來會停留在邊界附近）
-                Vector3 closestPoint = movementVolumes[0].bounds.ClosestPoint(pos);
+                // 找距離邊界最近的點
+                Vector3 closestPoint = movementVolumes[0].bounds.ClosestPoint(nextPos);
                 foreach (var vol in movementVolumes)
                 {
-                    Vector3 candidate = vol.bounds.ClosestPoint(pos);
-                    if ((candidate - pos).sqrMagnitude < (closestPoint - pos).sqrMagnitude)
+                    Vector3 candidate = vol.bounds.ClosestPoint(nextPos);
+                    if ((candidate - nextPos).sqrMagnitude < (closestPoint - nextPos).sqrMagnitude)
                         closestPoint = candidate;
                 }
 
-                pos = closestPoint;
-                transform.position = pos;
-                break; // 跳出迴圈，不繼續移動
+                // 計算靠近邊界的方向向量
+                Vector3 toBoundary = closestPoint - currentPos;
+
+                // 將合法方向投影到移動方向（滑動）
+                Vector3 slide = Vector3.Project(toBoundary, direction);
+
+                // 得到最自然的貼邊移動位置
+                nextPos = currentPos + slide;
+                transform.position = nextPos;
+
+                // 這幀不需要再做翻面與其餘處理，跳到下一幀
+                elapsed += Time.deltaTime;
+                yield return null;
+                continue;
             }
 
             // 更新座標
-            transform.position = pos;
+            transform.position = nextPos;
 
-            // 根據水平移動方向轉向
-            // if (Mathf.Abs(direction.x) > 0.01f) // 避免微小抖動時亂翻面
-            // {
-            //     Vector3 scale = transform.localScale;
-            //     scale.x = -Mathf.Sign(direction.x) * Mathf.Abs(scale.x);
-            //     transform.localScale = scale;
-            // }
+            // 水平翻面
+            if (Mathf.Abs(direction.x) > 0.01f)
+            {
+                float faceDir = Mathf.Sign(direction.x);
+                model.localRotation = Quaternion.Euler(0, faceDir > 0 ? 0 : 180, 0);
+            }
 
             elapsed += Time.deltaTime;
             yield return null;
@@ -136,6 +153,7 @@ public class DemonPetAnimation : MonoBehaviour
 
         isMoving = false;
     }
+
 
     private IEnumerator Fly(float height, float duration)
     {
@@ -149,9 +167,8 @@ public class DemonPetAnimation : MonoBehaviour
         Vector3 slopeTangent = new Vector3(0f, Mathf.Cos(Mathf.Deg2Rad * rotationAngle), Mathf.Sin(Mathf.Deg2Rad * rotationAngle)).normalized;
 
         // 隨機翻面
-        // Vector3 scale = transform.localScale;
-        // scale.x = Mathf.Sign(Random.Range(-1f, 1f)) * Mathf.Abs(scale.x);
-        // transform.localScale = scale;
+        float faceDir = Random.value < 0.5f ? -1f : 1f;
+        model.localRotation = Quaternion.Euler(0, faceDir > 0 ? 0 : 180, 0);
 
         while (elapsed < duration)
         {

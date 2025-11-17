@@ -14,6 +14,17 @@ public class MenuToggler : MonoBehaviour
         startButton = GetComponent<Button>();
     }
 
+    void Update()
+    {
+        if (Input.GetMouseButtonDown(0)) // 點擊非 UI 區域時關閉 UI
+        {
+            if (!UIAndPlayerInput.IsCursorClickUIObject() && startMenu.activeSelf)
+            {
+                startMenu.SetActive(false);
+            }
+        }
+    }
+
     void Start()
     {
         startMenu.SetActive(false); // 初始隱藏開始選單

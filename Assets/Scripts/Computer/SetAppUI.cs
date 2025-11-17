@@ -10,9 +10,10 @@ public class SetAppUI : MonoBehaviour
 {
     [Header("應用程式設定")]
     [Tooltip("選擇應用程式的種類")] public AppData appData; // 這個 App 的資料
-    private Button appButton; // 這個 App 本身（按鈕）
-    private Image appIcon; // App 圖示
-    private TextMeshProUGUI appName; // App 名稱
+    [SerializeField] private Button appButton; // 這個 App 本身（按鈕）
+    [SerializeField] private Image appIcon; // App 圖示
+    [SerializeField] private TextMeshProUGUI appName; // App 名稱
+    [SerializeField] private TextMeshProUGUI appNameOutline; // App 名稱描邊
     //-----------------------------------------------------------------//
     [Header("視窗設定")]
     private GameObject appWindow; // 該 App 對應的視窗
@@ -31,10 +32,8 @@ public class SetAppUI : MonoBehaviour
     void Start()
     {
         // 設定 App 的資料
-        appIcon = transform.Find("Icon").GetComponentInChildren<Image>();
-        appName = GetComponentInChildren<TextMeshProUGUI>();
         appIcon.sprite = appData.appIcon;
-        appName.text = appData.appName;
+        appName.text = appNameOutline.text = appData.appName;
 
         // 將對應視窗放入場景
         appWindow = Instantiate(appData.appWindowPrefab, windowContainer);

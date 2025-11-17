@@ -44,7 +44,10 @@ public class TrainingUIHandler : MonoBehaviour
     {
         if (Input.GetMouseButtonDown(0)) // 點擊非 UI 區域時關閉 UI
         {
-            if(!IsCursorClickUIObject() && trainingUI.activeSelf) CloseTrainingUI();
+            if (!UIAndPlayerInput.IsCursorClickUIObject() && trainingUI.activeSelf)
+            {
+                CloseTrainingUI();
+            }
         }
 
         if (trainingUI.activeSelf) // 根據訓練 UI 的開啟狀態，決定是否禁用角色移動
@@ -96,21 +99,5 @@ public class TrainingUIHandler : MonoBehaviour
         Debug.Log("關閉訓練 UI");
         trainingUI.SetActive(false);
         OnTrainingUIClosed?.Invoke(teamManager, trainingUIData); // 觸發訓練 UI 關閉事件
-    }
-
-    private bool IsCursorClickUIObject()
-    {
-        // 根據當前操作，設定滑鼠或觸控位置
-        PointerEventData eventData = new(EventSystem.current)
-        {
-            position = Input.mousePosition
-        };
-
-        // RaycastAll 會從 eventData 中的滑鼠位置發射一條射線，檢測所有碰撞的 UI 元素
-        // 符合條件的 UI 元素會被加到 raycastResults 清單中
-        var raycastResults = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(eventData, raycastResults);
-
-        return raycastResults.Count > 0;
     }
 }
