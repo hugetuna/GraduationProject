@@ -1,5 +1,115 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1436071306541290212
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8549433472835153992}
+  - component: {fileID: 2856421327443950450}
+  m_Layer: 0
+  m_Name: TrainingUIHandler_Dance
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8549433472835153992
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436071306541290212}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 306181339968945832}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2856421327443950450
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1436071306541290212}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dde62da8364321447ae0fb8a84fff62c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trainingUI: {fileID: 0}
+  closeButton: {fileID: 0}
+  TypeText: {fileID: 0}
+  TeacherText: {fileID: 0}
+  VigourText: {fileID: 0}
+  BenefitText: {fileID: 0}
+  characterImages:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  openSound: {fileID: 8300000, guid: 21f166225243f354694ab2a00d2f107a, type: 3}
+--- !u!1 &6937339651332682439
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 9045581772481066924}
+  - component: {fileID: 5980967854834077417}
+  m_Layer: 0
+  m_Name: TrainingUIHandler_Visual
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &9045581772481066924
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6937339651332682439}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 306181339968945832}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &5980967854834077417
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6937339651332682439}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dde62da8364321447ae0fb8a84fff62c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trainingUI: {fileID: 0}
+  closeButton: {fileID: 0}
+  TypeText: {fileID: 0}
+  TeacherText: {fileID: 0}
+  VigourText: {fileID: 0}
+  BenefitText: {fileID: 0}
+  characterImages:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}
+  openSound: {fileID: 8300000, guid: 21f166225243f354694ab2a00d2f107a, type: 3}
 --- !u!1 &7507360102896070279
 GameObject:
   m_ObjectHideFlags: 0
@@ -9,8 +119,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 306181339968945832}
-  - component: {fileID: 7028428257144856482}
   - component: {fileID: 475265928032338770}
+  - component: {fileID: 1100295322003930893}
   m_Layer: 0
   m_Name: TrainingManager
   m_TagString: Untagged
@@ -30,16 +140,84 @@ Transform:
   m_LocalPosition: {x: -1.0901856, y: -8.121023, z: 22.335505}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
-  m_Children: []
+  m_Children:
+  - {fileID: 8549433472835153992}
+  - {fileID: 6020655412069508570}
+  - {fileID: 9045581772481066924}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7028428257144856482
+--- !u!114 &475265928032338770
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7507360102896070279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 958634063e6fef045b50eb373e0ccefb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1100295322003930893
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7507360102896070279}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d97a847b0c92d594b8d7a8fe3db16941, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  trainingUIHandlers:
+  - {fileID: 2856421327443950450}
+  - {fileID: 259768372867403755}
+  - {fileID: 5980967854834077417}
+  teamManager: {fileID: 0}
+  characterSprites:
+  - {fileID: 21300000, guid: 0099ecf598c388c40b54043fdf68a403, type: 3}
+  - {fileID: 21300000, guid: 30f2ce5d3c7c0e444a2738948ccb8a7a, type: 3}
+  - {fileID: 21300000, guid: c82fa3f448ef1ee48b81cc25f8eb2bef, type: 3}
+--- !u!1 &7807126037213407287
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 6020655412069508570}
+  - component: {fileID: 259768372867403755}
+  m_Layer: 0
+  m_Name: TrainingUIHandler_Vocal
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &6020655412069508570
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7807126037213407287}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 306181339968945832}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &259768372867403755
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7807126037213407287}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: dde62da8364321447ae0fb8a84fff62c, type: 3}
@@ -55,22 +233,4 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  trainingUIData: {fileID: 0}
-  teamManager: {fileID: 0}
-  characterSprites:
-  - {fileID: 21300000, guid: 0099ecf598c388c40b54043fdf68a403, type: 3}
-  - {fileID: 21300000, guid: 30f2ce5d3c7c0e444a2738948ccb8a7a, type: 3}
-  - {fileID: 21300000, guid: c82fa3f448ef1ee48b81cc25f8eb2bef, type: 3}
   openSound: {fileID: 8300000, guid: 21f166225243f354694ab2a00d2f107a, type: 3}
---- !u!114 &475265928032338770
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7507360102896070279}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 958634063e6fef045b50eb373e0ccefb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 

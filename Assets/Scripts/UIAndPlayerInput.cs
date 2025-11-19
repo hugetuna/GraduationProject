@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.EventSystems;
 
-/* 管理 UI 和玩家輸入相關的函式 */
+/* 管理 UI 和玩家輸入相關的函式，不用特別掛在什麼地方 */
 public class UIAndPlayerInput : MonoBehaviour
 {
     public static List<PlayerInput> playerInputs = new(); // 玩家輸入系統

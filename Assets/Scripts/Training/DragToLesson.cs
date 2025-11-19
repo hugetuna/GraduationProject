@@ -9,8 +9,6 @@ public enum DropZoneType { None, Member, Trainee } // 不受限於類別內
 
 public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
 {
-    public static event Action<TrainingUIData> OnEnableOrEndDrag; // 拖曳結束或重啟 UI 事件
-    //-----------------------------------------------------------------//
     private RectTransform rectTransform;
     private Canvas canvas;
     private CanvasGroup canvasGroup;
@@ -30,12 +28,15 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     [SerializeField] private Slider vigourSlider;
     [SerializeField] private GameObject benefitBar;
     [SerializeField] private GameObject buffBoard;
+    private VigourBar vigourBar;
+    private BenefitBar benefitBarComp;
+    private BuffBoard buffBoardComp;
     //-----------------------------------------------------------------//
-    [Header("訓練 UI 資料")]
-    [SerializeField] private TrainingUIData trainingUIData;
-    private List<string> teamMembers = new();
-    private List<string> teamTrainees = new();
-    private string myName = null;
+    // [Header("訓練 UI 資料")]
+    private TrainingUIData trainingUIData;
+    private List<string> members = new();
+    private List<string> trainees = new();
+    private string myName = "";
     private string MyName
     {
         get
@@ -45,8 +46,9 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
                 Image img = GetComponent<Image>();
                 if (img != null && img.sprite != null)
                 {
-                    myName = img.sprite.name.Replace("UI_character_", "");
+                    myName = TeamDataUtility.CleanNameOfCharacterUI(img.sprite.name);
                 }
+                else return "";
             }
             return myName;
         }
@@ -60,20 +62,25 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         rectTransform = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
         canvasGroup = GetComponent<CanvasGroup>();
+
+        vigourBar = GetComponent<VigourBar>();
+        benefitBarComp = GetComponent<BenefitBar>();
+        buffBoardComp = GetComponent<BuffBoard>();
     }
 
-    void OnEnable()
+    public void SetTrainingUIData(TrainingUIData data)
     {
-        StartCoroutine(InitAfterFrame());
-    }
+        if (data == null) Debug.LogError("DragToLesson 沒收到 TrainingUIData！");
 
-    private IEnumerator InitAfterFrame()
-    {
-        yield return null; // 等待所有物件完成 Start 以前的初始化，避免存取到 null 參考
+        trainingUIData = data;
 
-        teamMembers = trainingUIData.teamData.GetMembers();
-        teamTrainees = trainingUIData.teamData.GetTrainees();
-        OnEnableOrEndDrag?.Invoke(trainingUIData); // 每次重啟 UI 就更新一次，確保介面狀態正確
+        members = TrainingUIManager.Instance.GetMembers();
+        trainees = TrainingUIManager.Instance.GetTrainees();
+
+        // 傳遞該角色名稱給底下的元件進行初始化
+        vigourBar.Initialize(MyName);
+        benefitBarComp.Initialize(MyName, trainingUIData);
+        buffBoardComp.Initialize(MyName);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -127,7 +134,10 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         benefitBar.SetActive(true);
         if (currentZoneType == DropZoneType.Member) buffBoard.SetActive(true);
 
-        OnEnableOrEndDrag?.Invoke(trainingUIData); // 觸發拖曳結束事件
+        // 拖曳結束後，傳遞 TrainingUIData 給底下的元件
+        vigourBar.UpdateVigourBar(trainingUIData);
+        benefitBarComp.UpdateBenefitBar(trainingUIData);
+        buffBoardComp.UpdateBuffBoard(trainingUIData);
     }
 
     private void UpdateTeamStatus()
@@ -136,19 +146,19 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
         if (lastDropZone.gameObject.name.Contains("m"))
         {
-            if (!teamMembers.Contains(MyName))
+            if (!members.Contains(MyName))
             {
-                teamMembers.Add(MyName);
-                teamTrainees.Remove(MyName);
+                members.Add(MyName);
+                trainees.Remove(MyName);
                 currentZoneType = DropZoneType.Member;
             }
         }
         else if (lastDropZone.gameObject.name.Contains("t"))
         {
-            if (!teamTrainees.Contains(MyName))
+            if (!trainees.Contains(MyName))
             {
-                teamTrainees.Add(MyName);
-                teamMembers.Remove(MyName);
+                trainees.Add(MyName);
+                members.Remove(MyName);
                 currentZoneType = DropZoneType.Trainee;
             }
         }

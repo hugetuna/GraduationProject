@@ -1,11 +1,10 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using TMPro;
 
-/* 掛在 TrainingManager 上 */
+/* 掛在 TrainingManager 底下，分別控制三種不同的 UI */
 public class TrainingUIHandler : MonoBehaviour
 {
     public static event Action<TeamManager, TrainingUIData> OnTrainingUIClosed; // 定義訓練 UI 關閉事件
@@ -20,24 +19,18 @@ public class TrainingUIHandler : MonoBehaviour
     [SerializeField] private TextMeshProUGUI BenefitText;
     [SerializeField] private List<Image> characterImages = new(); //  UI 上的（角色）圖片插槽
     //-----------------------------------------------------------------//
-    [Header("介面所需資料")]
-    [SerializeField] private TrainingUIData trainingUIData; // 訓練 UI 的資料 ScriptableObject
-    [SerializeField] private TeamManager teamManager; // 透過 TeamManager 物件取得當前隊伍成員
-    [SerializeField] private List<Sprite> characterSprites = new(); // 角色 UI 圖片
-    private TeamData teamData; // 隊伍資料 ScriptableObject（從 trainingUIData 取得）
-    //-----------------------------------------------------------------//
     [Header("相關音效")]
     [SerializeField] private AudioClip openSound; // 開啟訓練 UI 的音效
+    //-----------------------------------------------------------------//
+    private TrainingUIData trainingUIData; // 訓練 UI 的資料 ScriptableObject
+    private TeamManager teamManager; // 透過 TeamManager 物件取得當前隊伍成員
 
     void Start()
     {
-        DoorInteraction.OnDoorInteracted += ShowTrainingUI; // 訂閱並監聽與門互動事件
+        // DoorInteraction.OnDoorInteracted += ShowTrainingUI; // 訂閱並監聽與門互動事件
         closeButton.onClick.AddListener(CloseTrainingUI); // 設定關閉按鈕的監聽事件
 
         trainingUI.SetActive(false); // 預設關閉訓練 UI
-
-        teamData = trainingUIData.teamData = ScriptableObject.CreateInstance<TeamData>();
-        teamData.Initialize(teamManager, characterSprites); // 初始化隊伍資料
     }
 
     void Update()
@@ -60,13 +53,16 @@ public class TrainingUIHandler : MonoBehaviour
         }
     }
 
-    void OnDestroy()
-    {
-        DoorInteraction.OnDoorInteracted -= ShowTrainingUI; // 取消訂閱與門互動事件
-    }
+    // void OnDestroy()
+    // {
+    //     DoorInteraction.OnDoorInteracted -= ShowTrainingUI; // 取消訂閱與門互動事件
+    // }
 
-    private void ShowTrainingUI()
+    public void ShowTrainingUI(TrainingUIData data, TeamManager tm, List<Sprite> characterSprites)
     {
+        trainingUIData = data;
+        teamManager = tm;
+
         Debug.Log("開啟訓練 UI");
         trainingUI.SetActive(true);
         AudioManager.Instance.PlaySFX(openSound);
@@ -86,11 +82,16 @@ public class TrainingUIHandler : MonoBehaviour
         }
         VigourText.text = $"耗費體力：{trainingUIData.neededVigour}"; // 設定耗費體力的 UI 文字內容
 
-        List<Sprite> sprites = teamData.GetAllCharacterSprites();
         for (int i = 0; i < characterImages.Count; i++)
         {
-            if (i < sprites.Count) characterImages[i].sprite = sprites[i];
+            if (i < characterSprites.Count) characterImages[i].sprite = characterSprites[i];
             else characterImages[i].sprite = null; // 超出範圍的圖片插槽設為空，避免報錯
+        }
+
+        DragToLesson[] dragToLessons = trainingUI.GetComponentsInChildren<DragToLesson>();
+        foreach (DragToLesson dtl in dragToLessons)
+        {
+            dtl.SetTrainingUIData(trainingUIData); // 傳遞 TrainingUIData 給底下的每個 DragToLesson 元件
         }
     }
 

@@ -1,24 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting.Dependencies.Sqlite;
 using UnityEngine;
-using UnityEngine.TextCore.Text;
 using UnityEngine.UI;
 
 public class VigourBar : MonoBehaviour
 {
     private IdolInstance characterInfo; // 該角色的數值資料
-    public IdolInstance CharacterInfo
-    {
-        get { return characterInfo; }
-    }
-    private string characterName; // 該角色名稱
-    private DragToLesson dragToLesson; // 取得該角色的 DragToLesson 參考（判斷當前拖曳區域）
+    // public IdolInstance CharacterInfo
+    // {
+    //     get { return characterInfo; }
+    // }
     private Image characterImage; // 取得該角色的圖片參考
+    private DragToLesson dragToLesson; // 取得該角色的 DragToLesson 參考（判斷當前拖曳區域）
     //-----------------------------------------------------------------//
     [Header("體力 UI")]
     [SerializeField] private Slider vigourSlider; // 該角色的體力值 UI
     [SerializeField] private Image lastVigourFill; // 在訓練區代表訓練前的體力條
+    private Image fillImage; // 表示訓練後的體力變化
     private bool isAbleToTrain = true; // 是否能進行訓練
     [SerializeField] private Material grayMaterial; // 灰階材質
 
@@ -26,12 +22,20 @@ public class VigourBar : MonoBehaviour
     {
         characterImage = GetComponent<Image>();
         dragToLesson = GetComponent<DragToLesson>();
+        fillImage = vigourSlider.fillRect.GetComponent<Image>();
     }
 
-    void Start()
+    public void Initialize(string myName)
     {
-        characterName = characterImage.sprite.name.Replace("UI_character_", ""); // 取得圖片來源名稱，並去除前綴
-        characterInfo = System.Array.Find(GlobalTeamData.IdolInstances, obj => obj.name.Contains(characterName)); // 尋找對應的角色資料
+        myName = TeamDataUtility.CleanNameOfCharacterUI(characterImage.sprite.name);
+        if(characterImage.sprite != null)
+        {
+            myName = TeamDataUtility.CleanNameOfCharacterUI(characterImage.sprite.name);
+            characterInfo = System.Array.Find(
+                TeamDataUtility.IdolInstances, obj 
+                => obj.name.Contains(myName)
+            ); // 尋找對應的角色資料
+        }
 
         vigourSlider.maxValue = characterInfo.vigourMax; // 設定體力值 UI 的最大值
         vigourSlider.value = characterInfo.vigour; // 設定體力值 UI 的當前值（結算前不會做任何實質更改）
@@ -50,20 +54,9 @@ public class VigourBar : MonoBehaviour
         barRect.offsetMax = Vector2.zero;
     }
 
-    void OnEnable()
-    {
-        DragToLesson.OnEnableOrEndDrag += UpdateVigourBar; // 訂閱拖曳結束事件    
-    }
-    
-    void OnDisable()
-    {
-        DragToLesson.OnEnableOrEndDrag -= UpdateVigourBar; // 取消訂閱拖曳結束事件    
-    }
-
     public void UpdateVigourBar(TrainingUIData trainingUIData)
     {
         // 在兩個區域間拖曳的體力條更新
-        Image fillImage = vigourSlider.fillRect.GetComponent<Image>();
         if (characterInfo.vigour < trainingUIData.neededVigour)
         {
             isAbleToTrain = false; // 體力不足無法訓練
@@ -86,10 +79,5 @@ public class VigourBar : MonoBehaviour
         {
             vigourSlider.value = characterInfo.vigour - trainingUIData.neededVigour;
         }
-    }
-
-    public IdolInstance GetCharacterInfo()
-    {
-        return characterInfo;
     }
 }

@@ -1,32 +1,31 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class BenefitBar : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI benefitText; // 顯示訓練前後的收益文字
-    private IdolInstance characterInfo; // 該角色的數值資料（從 VigourBar 取得）
+    //-----------------------------------------------------------------//
+    private IdolInstance characterInfo; // 該角色的數值資料
+    private DragToLesson dragToLesson; // 取得該角色的 DragToLesson 參考（判斷當前拖曳區域）
 
-    void Start()
+    void Awake()
     {
-        benefitText.text = "";
+        dragToLesson = GetComponent<DragToLesson>();
     }
 
-    void OnEnable()
+    public void Initialize(string myName, TrainingUIData trainingUIData)
     {
-        DragToLesson.OnEnableOrEndDrag += UpdateBenefitBar; // 訂閱拖曳結束事件    
-    }
+        characterInfo = System.Array.Find(
+            TeamDataUtility.IdolInstances, obj 
+            => obj.name.Contains(myName)
+        ); // 尋找對應的角色資料
 
-    void OnDisable()
-    {
-        DragToLesson.OnEnableOrEndDrag -= UpdateBenefitBar; // 取消訂閱拖曳結束事件    
+        UpdateBenefitBar(trainingUIData);
     }
     
-    void UpdateBenefitBar(TrainingUIData trainingUIData)
+    public void UpdateBenefitBar(TrainingUIData trainingUIData)
     {
-        VigourBar vigourBar = GetComponentInParent<VigourBar>();
-        characterInfo = vigourBar.CharacterInfo;
-
-        DragToLesson dragToLesson = GetComponentInParent<DragToLesson>();
         DropZoneType currentZoneType = dragToLesson.CurrentZoneType; // 取得當前拖放區域
         if (currentZoneType == DropZoneType.Member)
         {
