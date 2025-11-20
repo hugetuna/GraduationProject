@@ -42,6 +42,20 @@ public class DialogueManager : MonoBehaviour
     [Header("對話結束時呼叫的場景")]
     public SceneTransitionManager sceneTransferTrigger;
     public string onDialogueEndScene;
+    //單例物件生成
+    //public static DialogueManager Instance { get; private set; }
+
+    //void Awake()
+    //{
+    //    if (Instance != null && Instance != this)
+    //    {
+    //        Destroy(gameObject);
+    //        return;
+    //    }
+
+    //    Instance = this;
+    //    DontDestroyOnLoad(gameObject);
+    //}
     void Start()
     {
         //TrySetVariable<string>("playerName", "郭家豪");

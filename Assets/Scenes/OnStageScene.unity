@@ -751,6 +751,10 @@ PrefabInstance:
       propertyPath: onStageStage
       value: 
       objectReference: {fileID: 11400000, guid: 95b26892d80cf3742b7f8e1da627351f, type: 2}
+    - target: {fileID: 6814912132265877993, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: dialogueSaveData
+      value: 
+      objectReference: {fileID: 0}
     - target: {fileID: 7896774796638631959, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8.386003
@@ -1633,7 +1637,15 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2468016884640033620, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2468016884640033620, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2468016884640033620, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2468016884640033620, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
@@ -1641,12 +1653,32 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 1507968526}
     - target: {fileID: 2468016884640033620, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1507968526}
+    - target: {fileID: 2468016884640033620, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2468016884640033620, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_MethodName
       value: ResumeGame
       objectReference: {fileID: 0}
     - target: {fileID: 2468016884640033620, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: TogglePausePanel
+      objectReference: {fileID: 0}
+    - target: {fileID: 2468016884640033620, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
       value: OnStageManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2468016884640033620, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: OnStageManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2468016884640033620, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
     - target: {fileID: 2953322944042756405, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
       propertyPath: m_LocalPosition.z
