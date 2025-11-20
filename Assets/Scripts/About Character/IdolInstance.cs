@@ -37,7 +37,7 @@ public class IdolInstance : MonoBehaviour
         
     }
     //初始化
-    private void IdolSetUp()
+    public void IdolSetUp()
     {
         if (basicStatus == null)
         {

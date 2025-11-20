@@ -74,6 +74,7 @@ public class DialogueManager : MonoBehaviour
             dialogueCanvas.SetActive(false);
             backGroundCanvas.SetActive(false);
         }
+        MainCanvas= GameObject.Find("Canvas_Main");
         teamManager = FindAnyObjectByType<TeamManager>();
     }
     public void DialogueStart()
@@ -81,9 +82,9 @@ public class DialogueManager : MonoBehaviour
         //關閉玩家操作、ui顯示
         if (dialogueType==false) {
             dialogueCanvas.SetActive(true);
-            MainCanvas.SetActive(false);
+            MainCanvas?.SetActive(false);
             teamManager.teamMembers[
-            FindAnyObjectByType<TeamManager>().currentLeaderIndex].enabled = false;
+            teamManager.currentLeaderIndex].enabled = false;
         }
         inkJSONAsset = GameManager.Instance.dialogueSaveData.inkJSONAsset;
         onDialogueEndScene = GameManager.Instance.dialogueSaveData.backToSceneName;
@@ -406,10 +407,14 @@ public class DialogueManager : MonoBehaviour
     {
         if (dialogueType == true) { SceneTransitionManager.Instance.teleportByTargetSceneName(onDialogueEndScene); }
         else {
+            //如果是主場景對話結束，恢復玩家控制
             dialogueCanvas.SetActive(false);
-            MainCanvas.SetActive(true);
-            FindAnyObjectByType<TeamManager>().teamMembers[
-            FindAnyObjectByType<TeamManager>().currentLeaderIndex].enabled = true;
+            MainCanvas?.SetActive(true);
+            if (teamManager != null)
+            {
+                teamManager.teamMembers[
+            teamManager.currentLeaderIndex].enabled = true;
+            }        
         }
         onDialogueFinish?.Invoke();
         onDialogueFinish = null;

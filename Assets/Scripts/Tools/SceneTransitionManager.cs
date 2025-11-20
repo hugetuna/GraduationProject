@@ -100,11 +100,11 @@ public class SceneTransitionManager : MonoBehaviour
 
             yield return null;
         }
-        // 完成單例轉場後的額外處理
+        // 4.完成單例轉場後的額外處理
         DialogueManager.Instance.OnSceneLoaded();
-        // 4️.等待新場景完全載入（避免畫面閃爍）
+        // 5.等待新場景完全載入（避免畫面閃爍）
         yield return new WaitForSeconds(0.1f);
-        // 5️.播放淡出動畫（離開）
+        // 6.播放淡出動畫（離開）
         transitionAnimator.SetTrigger("CoverOut");
         float coverOutTime = GetAnimationClipLength("CoverOut");
         yield return new WaitForSeconds(coverOutTime > 0 ? coverOutTime : 0.5f);

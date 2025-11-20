@@ -34,10 +34,12 @@ public class PlayerControlMainWorld : MonoBehaviour
         //toolAnimations[1] = "TGrow";
         SetItemOnHandIndex(0);//重制為未持狀態
         //如果自己不是隊長就不啟動
+        if (teamManager == null) return;
         if (this != FindAnyObjectByType<TeamManager>().teamMembers[0])
         {
             this.enabled = false; // 只有第一個角色預設可動
         }
+
     }
     void Update()
     {
