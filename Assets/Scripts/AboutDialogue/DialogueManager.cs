@@ -17,6 +17,7 @@ public class DialogueManager : MonoBehaviour
     public GameObject MainCanvas;
     [Header("文本與按鈕等UI元件")]
     public GameObject dialogueCanvas;
+    public GameObject backGroundCanvas;
     public TextMeshProUGUI dialogueText;
     public Transform dialogueChoices;
     public GameObject ChoiceButtomPrefab;
@@ -40,28 +41,38 @@ public class DialogueManager : MonoBehaviour
     private bool isTyping = false;
     //對話結束時呼叫的函式
     [Header("對話結束時呼叫的場景")]
-    public SceneTransitionManager sceneTransferTrigger;
     public string onDialogueEndScene;
+    [Header("為了EventManager")]
+    public System.Action onDialogueFinish = null;
     //單例物件生成
-    //public static DialogueManager Instance { get; private set; }
-
-    //void Awake()
-    //{
-    //    if (Instance != null && Instance != this)
-    //    {
-    //        Destroy(gameObject);
-    //        return;
-    //    }
-
-    //    Instance = this;
-    //    DontDestroyOnLoad(gameObject);
-    //}
+    public static DialogueManager Instance { get; private set; }
+    void Awake()
+    {
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
     void Start()
     {
+        OnSceneLoaded();
+    }
+    public void OnSceneLoaded()
+    {
         //TrySetVariable<string>("playerName", "郭家豪");
-        if (dialogueType==true)
+        Debug.Log("DialogueManager偵測場景載入");
+        if (dialogueType == true)
         {
+            backGroundCanvas.SetActive(true);
+            dialogueCanvas.SetActive(true);
             DialogueStart();
+        }
+        else {
+            dialogueCanvas.SetActive(false);
+            backGroundCanvas.SetActive(false);
         }
         teamManager = FindAnyObjectByType<TeamManager>();
     }
@@ -393,12 +404,14 @@ public class DialogueManager : MonoBehaviour
     }
     private void OnDialougeEnd()
     {
-        if (dialogueType == true) { sceneTransferTrigger.teleportByTargetSceneName(onDialogueEndScene); }
+        if (dialogueType == true) { SceneTransitionManager.Instance.teleportByTargetSceneName(onDialogueEndScene); }
         else {
             dialogueCanvas.SetActive(false);
             MainCanvas.SetActive(true);
             FindAnyObjectByType<TeamManager>().teamMembers[
             FindAnyObjectByType<TeamManager>().currentLeaderIndex].enabled = true;
         }
+        onDialogueFinish?.Invoke();
+        onDialogueFinish = null;
     }
 }

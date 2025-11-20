@@ -63,6 +63,12 @@ public class SceneTransitionManager : MonoBehaviour
     /// </summary>
     public void LoadSceneWithTransition(string sceneName)
     {
+        // 傳到對話場景時，設定對話類型
+        if (sceneName== "Dialogue Scene") {
+            DialogueManager.Instance.dialogueType = true;
+        }else{
+            DialogueManager.Instance.dialogueType = false;
+        }
         if (!isTransitioning)
             StartCoroutine(TransitionRoutine(sceneName));
         
@@ -94,15 +100,14 @@ public class SceneTransitionManager : MonoBehaviour
 
             yield return null;
         }
-
+        // 完成單例轉場後的額外處理
+        DialogueManager.Instance.OnSceneLoaded();
         // 4️.等待新場景完全載入（避免畫面閃爍）
         yield return new WaitForSeconds(0.1f);
-
         // 5️.播放淡出動畫（離開）
         transitionAnimator.SetTrigger("CoverOut");
         float coverOutTime = GetAnimationClipLength("CoverOut");
         yield return new WaitForSeconds(coverOutTime > 0 ? coverOutTime : 0.5f);
-        
         isTransitioning = false;
     }
 

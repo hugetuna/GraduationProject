@@ -48,7 +48,15 @@ public class DayEventManager : MonoBehaviour
         if (dayEvent.applyAtWhere==ApplyAtWhere.MainWorld)
         {
             GameManager.Instance.SaveInkJSONAssetData(dayEvent.DialogueWhenTrigger);
-
+            DialogueManager.Instance.onDialogueFinish = onFinish;
+            DialogueManager.Instance.DialogueStart();
+        }
+        else if (dayEvent.applyAtWhere==ApplyAtWhere.Dialogue)
+        {
+            // 在對話中觸發事件的邏輯
+            GameManager.Instance.SaveInkJSONAssetData(dayEvent.DialogueWhenTrigger);
+            DialogueManager.Instance.onDialogueFinish = onFinish;
+            SceneTransitionManager.Instance.teleportByTargetSceneName("Dialogue Scene");
         }
     }
 }
