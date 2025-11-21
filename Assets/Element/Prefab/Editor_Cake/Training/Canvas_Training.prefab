@@ -172,6 +172,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 567dc2ac9d225234584fc0a65a5b5ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zoneType: 0
 --- !u!1 &44254795106226024
 GameObject:
   m_ObjectHideFlags: 0
@@ -380,7 +381,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &228838690086822602
@@ -648,7 +649,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &358833728510527056
@@ -1007,7 +1008,7 @@ CanvasGroup:
   m_GameObject: {fileID: 505006176426942333}
   m_Enabled: 1
   m_Alpha: 1
-  m_Interactable: 0
+  m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
 --- !u!114 &6081519510653706957
@@ -1063,7 +1064,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3dac3b3f5979044ac5dc74a75f4a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropOffset: {x: 0, y: 2, z: 0}
+  dropOffset: {x: 0, y: 4, z: 0}
   vigourSlider: {fileID: 508439351511696311}
   benefitBar: {fileID: 358833728510527056}
   buffBoard: {fileID: 3409332170478188799}
@@ -1192,6 +1193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 567dc2ac9d225234584fc0a65a5b5ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zoneType: 1
 --- !u!1 &600933350773292721
 GameObject:
   m_ObjectHideFlags: 0
@@ -1416,6 +1418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 567dc2ac9d225234584fc0a65a5b5ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zoneType: 2
 --- !u!1 &759634962969391121
 GameObject:
   m_ObjectHideFlags: 0
@@ -1504,6 +1507,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 567dc2ac9d225234584fc0a65a5b5ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zoneType: 1
 --- !u!1 &767053976857727185
 GameObject:
   m_ObjectHideFlags: 0
@@ -1839,7 +1843,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1092612396363816071
@@ -2807,7 +2811,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &1712585245671670178
@@ -3372,6 +3376,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 567dc2ac9d225234584fc0a65a5b5ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zoneType: 0
 --- !u!1 &1926831457354163150
 GameObject:
   m_ObjectHideFlags: 0
@@ -4160,6 +4165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 567dc2ac9d225234584fc0a65a5b5ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zoneType: 0
 --- !u!1 &2671405208864676319
 GameObject:
   m_ObjectHideFlags: 0
@@ -4550,6 +4556,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 567dc2ac9d225234584fc0a65a5b5ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zoneType: 3
 --- !u!1 &2905197274543027556
 GameObject:
   m_ObjectHideFlags: 0
@@ -4985,6 +4992,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 567dc2ac9d225234584fc0a65a5b5ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zoneType: 3
 --- !u!1 &3179509828412820844
 GameObject:
   m_ObjectHideFlags: 0
@@ -5118,7 +5126,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &3186215381198692772
@@ -5209,6 +5217,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 567dc2ac9d225234584fc0a65a5b5ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zoneType: 1
 --- !u!1 &3207268926706012237
 GameObject:
   m_ObjectHideFlags: 0
@@ -6041,7 +6050,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3dac3b3f5979044ac5dc74a75f4a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropOffset: {x: 0, y: 2, z: 0}
+  dropOffset: {x: 0, y: 4, z: 0}
   vigourSlider: {fileID: 3027897302133165301}
   benefitBar: {fileID: 5575301978992265179}
   buffBoard: {fileID: 7447225460824329901}
@@ -6285,7 +6294,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3dac3b3f5979044ac5dc74a75f4a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropOffset: {x: 0, y: 2, z: 0}
+  dropOffset: {x: 0, y: 4, z: 0}
   vigourSlider: {fileID: 17694658293513095}
   benefitBar: {fileID: 8130694547217180420}
   buffBoard: {fileID: 8550348175908312237}
@@ -6559,7 +6568,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &3865552095791900168
@@ -7542,7 +7551,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &4681402347999561799
@@ -7768,7 +7777,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3dac3b3f5979044ac5dc74a75f4a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropOffset: {x: 0, y: 2, z: 0}
+  dropOffset: {x: 0, y: 4, z: 0}
   vigourSlider: {fileID: 4235606431916548971}
   benefitBar: {fileID: 3440991772868324879}
   buffBoard: {fileID: 1831320218391187217}
@@ -8015,7 +8024,7 @@ CanvasGroup:
   m_GameObject: {fileID: 4927119832800138908}
   m_Enabled: 1
   m_Alpha: 1
-  m_Interactable: 0
+  m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
 --- !u!114 &7579972659949041417
@@ -8071,7 +8080,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3dac3b3f5979044ac5dc74a75f4a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropOffset: {x: 0, y: 2, z: 0}
+  dropOffset: {x: 0, y: 4, z: 0}
   vigourSlider: {fileID: 7985053129995522723}
   benefitBar: {fileID: 1132564441634860297}
   buffBoard: {fileID: 5240632533272569447}
@@ -8239,6 +8248,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 567dc2ac9d225234584fc0a65a5b5ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zoneType: 2
 --- !u!1 &5102963963531852558
 GameObject:
   m_ObjectHideFlags: 0
@@ -8463,6 +8473,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 567dc2ac9d225234584fc0a65a5b5ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zoneType: 0
 --- !u!1 &5139737746453985310
 GameObject:
   m_ObjectHideFlags: 0
@@ -9356,6 +9367,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 567dc2ac9d225234584fc0a65a5b5ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zoneType: 2
 --- !u!1 &5575301978992265179
 GameObject:
   m_ObjectHideFlags: 0
@@ -9595,6 +9607,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 567dc2ac9d225234584fc0a65a5b5ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zoneType: 3
 --- !u!1 &5798034536875356568
 GameObject:
   m_ObjectHideFlags: 0
@@ -10180,6 +10193,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 567dc2ac9d225234584fc0a65a5b5ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zoneType: 0
 --- !u!1 &6062623934010198630
 GameObject:
   m_ObjectHideFlags: 0
@@ -11054,7 +11068,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3dac3b3f5979044ac5dc74a75f4a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropOffset: {x: 0, y: 2, z: 0}
+  dropOffset: {x: 0, y: 4, z: 0}
   vigourSlider: {fileID: 5668133865458964075}
   benefitBar: {fileID: 1225581011114238722}
   buffBoard: {fileID: 1422459970246643801}
@@ -12416,7 +12430,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &7941095765884698884
@@ -12732,6 +12746,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 567dc2ac9d225234584fc0a65a5b5ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zoneType: 0
 --- !u!1 &8130694547217180420
 GameObject:
   m_ObjectHideFlags: 0
@@ -12956,7 +12971,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3dac3b3f5979044ac5dc74a75f4a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropOffset: {x: 0, y: 2, z: 0}
+  dropOffset: {x: 0, y: 4, z: 0}
   vigourSlider: {fileID: 1670193865406391407}
   benefitBar: {fileID: 8331147666539557344}
   buffBoard: {fileID: 1778627027870635544}
@@ -13053,7 +13068,7 @@ CanvasGroup:
   m_GameObject: {fileID: 8147138552776324801}
   m_Enabled: 1
   m_Alpha: 1
-  m_Interactable: 0
+  m_Interactable: 1
   m_BlocksRaycasts: 1
   m_IgnoreParentGroups: 0
 --- !u!114 &3783114727140484236
@@ -13109,7 +13124,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3dac3b3f5979044ac5dc74a75f4a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropOffset: {x: 0, y: 2, z: 0}
+  dropOffset: {x: 0, y: 4, z: 0}
   vigourSlider: {fileID: 5303529339450093809}
   benefitBar: {fileID: 2013763743161848884}
   buffBoard: {fileID: 7234528004735282209}
@@ -14331,6 +14346,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 567dc2ac9d225234584fc0a65a5b5ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zoneType: 0
 --- !u!1 &8483576311401052880
 GameObject:
   m_ObjectHideFlags: 0
@@ -14706,7 +14722,7 @@ MonoBehaviour:
   m_margin: {x: 0, y: 0, z: 0, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
-  m_hasFontAssetChanged: 1
+  m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
 --- !u!1 &8878258267974251309
@@ -14857,7 +14873,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3dac3b3f5979044ac5dc74a75f4a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dropOffset: {x: 0, y: 2, z: 0}
+  dropOffset: {x: 0, y: 4, z: 0}
   vigourSlider: {fileID: 8727260062704446912}
   benefitBar: {fileID: 4166754954964386074}
   buffBoard: {fileID: 5230857641995679937}
@@ -15161,6 +15177,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 567dc2ac9d225234584fc0a65a5b5ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zoneType: 0
 --- !u!1 &9053897706708502701
 GameObject:
   m_ObjectHideFlags: 0
@@ -15451,6 +15468,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 567dc2ac9d225234584fc0a65a5b5ef9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  zoneType: 0
 --- !u!1 &9202180620536707995
 GameObject:
   m_ObjectHideFlags: 0
