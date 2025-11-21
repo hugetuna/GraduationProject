@@ -16,6 +16,9 @@ public class SceneTransitionManager : MonoBehaviour
     [Header("轉場設定")]
     public float minimumShowTime = 1.0f; // 最少顯示 CoverIn 的時間（避免讀取太快）
     private bool isTransitioning = false;
+    [Header("為了EventManager")]
+    public System.Action onDialogueFinish = null;
+    public string waitSceneName = "";
     private void Awake()
     {
         // Singleton 模式，確保跨場景唯一存在
@@ -71,9 +74,7 @@ public class SceneTransitionManager : MonoBehaviour
         }
         if (!isTransitioning)
             StartCoroutine(TransitionRoutine(sceneName));
-        
     }
-
     private IEnumerator TransitionRoutine(string sceneName)
     {
         isTransitioning = true;
@@ -102,6 +103,14 @@ public class SceneTransitionManager : MonoBehaviour
         }
         // 4.完成單例轉場後的額外處理
         DialogueManager.Instance.OnSceneLoaded();
+        DayManager.Instance.OnSceneLoaded(sceneName);
+        // 追加檢查事件是否被達成
+        if (onDialogueFinish != null&&waitSceneName==sceneName)
+        {
+            waitSceneName = "";
+            onDialogueFinish?.Invoke();
+            onDialogueFinish = null;
+        }
         // 5.等待新場景完全載入（避免畫面閃爍）
         yield return new WaitForSeconds(0.1f);
         // 6.播放淡出動畫（離開）

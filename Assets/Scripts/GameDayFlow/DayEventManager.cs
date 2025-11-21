@@ -6,11 +6,11 @@ public class DayEventManager : MonoBehaviour
 {
     public List<DayEvent> allDayEvents; // 用來保存所有的日常事件
     private Queue<DayEvent> eventQueue = new Queue<DayEvent>();//當天需觸發的所有事件
-
     private HashSet<string> triggeredEvents = new HashSet<string>(); // 紀錄已觸發事件避免重複觸發
     // 初始化當天事件隊列
     public void InitializeDayEvents(int currentDay)
     {
+        Debug.Log($"今天是第 {currentDay} 天");
         eventQueue.Clear();
         foreach (var dayEvent in allDayEvents)
         {
@@ -45,18 +45,35 @@ public class DayEventManager : MonoBehaviour
     {
         // 根據事件的屬性執行相應的邏輯
         Debug.Log($"Triggering event: {dayEvent.eventId}");
-        if (dayEvent.applyAtWhere==ApplyAtWhere.MainWorld)
+        if (dayEvent.Type== EventType.MainWorld)
         {
             GameManager.Instance.SaveInkJSONAssetData(dayEvent.DialogueWhenTrigger);
             DialogueManager.Instance.onDialogueFinish = onFinish;
             DialogueManager.Instance.DialogueStart();
         }
-        else if (dayEvent.applyAtWhere==ApplyAtWhere.Dialogue)
+        else if (dayEvent.Type== EventType.Dialogue)
         {
             // 在對話中觸發事件的邏輯
             GameManager.Instance.SaveInkJSONAssetData(dayEvent.DialogueWhenTrigger);
             DialogueManager.Instance.onDialogueFinish = onFinish;
             SceneTransitionManager.Instance.teleportByTargetSceneName("Dialogue Scene");
+        }
+        else if (dayEvent.Type== EventType.WaitUntilSceneChange)
+        {
+            // 等待場景切換的邏輯
+            SceneTransitionManager.Instance.onDialogueFinish = onFinish;
+            SceneTransitionManager.Instance.waitSceneName= dayEvent.targetSceneName;
+        }
+        else if (dayEvent.Type== EventType.WaitUntilPlayerPosition)
+        {
+            // 等待玩家移動到指定位置的邏輯
+            var waitEventObj = new GameObject("WaitPlayerEnterAreaEvent");
+            var waitEvent = waitEventObj.AddComponent<WaitPlayerEnterAreaEvent>();
+            waitEvent.StartEvent(dayEvent.targetPlayerPositionMin, dayEvent.targetPlayerPositionMax, () =>
+            {
+                onFinish?.Invoke();
+                Destroy(waitEventObj);
+            });
         }
     }
 }

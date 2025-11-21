@@ -63,7 +63,7 @@ public class DialogueManager : MonoBehaviour
     public void OnSceneLoaded()
     {
         //TrySetVariable<string>("playerName", "郭家豪");
-        Debug.Log("DialogueManager偵測場景載入");
+        //Debug.Log("DialogueManager偵測場景載入");
         if (dialogueType == true)
         {
             backGroundCanvas.SetActive(true);
@@ -425,6 +425,6 @@ public class DialogueManager : MonoBehaviour
             }        
         }
         onDialogueFinish?.Invoke();
-        onDialogueFinish = null;
+        //onDialogueFinish = null;
     }
 }

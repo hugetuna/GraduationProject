@@ -30,9 +30,9 @@ public class SetElevatorIcon : MonoBehaviour
             {
                 if (SceneTransitionManager.Instance != null)
                     if (index == 0)
-                        SceneTransitionManager.Instance.teleportByTargetSceneName("floor_B1");
+                        SceneTransitionManager.Instance.teleportByTargetSceneName("Floor_B1");
                     else
-                        SceneTransitionManager.Instance.teleportByTargetSceneName("floor_" + index);
+                        SceneTransitionManager.Instance.teleportByTargetSceneName("Floor_" + index);
                 else
                     Debug.LogError("SceneTransitionManager.Instance 為 null！");
             });
