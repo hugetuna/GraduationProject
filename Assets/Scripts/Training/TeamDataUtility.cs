@@ -30,6 +30,6 @@ public class TeamDataUtility : MonoBehaviour
 
     public static string CleanNameOfCharacterObject(string raw) // 移除角色物件名稱中的多餘字串
     {
-        return raw.Replace("Character_", "").Replace("2.0", "");
+        return raw.Replace("Character_", "").Replace("2.0", "").Replace("(Clone)", "").Trim();
     }
 }

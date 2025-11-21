@@ -17,51 +17,58 @@ public class BenefitBar : MonoBehaviour
     public void Initialize(string myName, TrainingUIData trainingUIData)
     {
         characterInfo = System.Array.Find(
-            TeamDataUtility.IdolInstances, obj 
+            TeamDataUtility.IdolInstances, obj
             => obj.name.Contains(myName)
         ); // 尋找對應的角色資料
 
-        UpdateBenefitBar(trainingUIData);
+        // CurrentDropZone 要等到第一次拖曳後才會設定好，這裡先顯示初始數值
+        string trainingType = trainingUIData.trainingType.ToLower();
+        benefitText.text = trainingType switch
+        {
+            "dance" => characterInfo.dance.ToString(),
+            "vocal" => characterInfo.vocal.ToString(),
+            "visual" => characterInfo.visual.ToString(),
+            _ => "0"
+        };
     }
-    
+
     public void UpdateBenefitBar(TrainingUIData trainingUIData)
     {
-        DropZoneType currentZoneType = dragToLesson.CurrentZoneType; // 取得當前拖放區域
+        DropZoneType currentZoneType = dragToLesson.CurrentDropZone.zoneType; // 取得當前拖放區域
+        string trainingType = trainingUIData.trainingType.ToLower(); // 取得訓練類型
+
         if (currentZoneType == DropZoneType.Member)
         {
-            if (trainingUIData.trainingType.ToLower() == "dance")
+            benefitText.text = trainingType switch
             {
-                benefitText.text = characterInfo.dance.ToString();
-            }
-            else if (trainingUIData.trainingType.ToLower() == "vocal")
-            {
-                benefitText.text = characterInfo.vocal.ToString();
-            }
-            else if (trainingUIData.trainingType.ToLower() == "visual")
-            {
-                benefitText.text = characterInfo.visual.ToString();
-            }
+                "dance" => characterInfo.dance.ToString(),
+                "vocal" => characterInfo.vocal.ToString(),
+                "visual" => characterInfo.visual.ToString(),
+                _ => "0"
+            };
         }
-        else if (currentZoneType == DropZoneType.Trainee)
+        else
         {
-            if (trainingUIData.trainingType.ToLower() == "dance")
+            // 理論上還要再計算 buff 效果，但目前還沒實作
+            if (trainingType == "dance")
             {
+                // 先照著 buffBoard 的內容寫死 10% 的加成
                 int danceResult = trainingUIData.teacherName != "" ?
-                    characterInfo.dance + trainingUIData.withTeacherBenefit:
-                    characterInfo.dance + trainingUIData.basicBenefit;
+                    (int)(characterInfo.dance + trainingUIData.withTeacherBenefit * 0.1f) :
+                    (int)(characterInfo.dance + trainingUIData.basicBenefit * 0.1f);
                 benefitText.text = $"{characterInfo.dance}>>{danceResult}";
             }
-            else if (trainingUIData.trainingType.ToLower() == "vocal")
+            else if (trainingType == "vocal")
             {
                 int vocalResult = trainingUIData.teacherName != "" ?
-                    characterInfo.vocal + trainingUIData.withTeacherBenefit:
+                    characterInfo.vocal + trainingUIData.withTeacherBenefit :
                     characterInfo.vocal + trainingUIData.basicBenefit;
                 benefitText.text = $"{characterInfo.vocal}>>{vocalResult}";
             }
-            else if (trainingUIData.trainingType.ToLower() == "visual")
+            else if (trainingType == "visual")
             {
                 int visualResult = trainingUIData.teacherName != "" ?
-                    characterInfo.visual + trainingUIData.withTeacherBenefit:
+                    characterInfo.visual + trainingUIData.withTeacherBenefit :
                     characterInfo.visual + trainingUIData.basicBenefit;
                 benefitText.text = $"{characterInfo.visual}>>{visualResult}";
             }

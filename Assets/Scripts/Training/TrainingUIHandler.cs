@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System.Linq;
 
 /* 掛在 TrainingManager 底下，分別控制三種不同的 UI */
 public class TrainingUIHandler : MonoBehaviour
@@ -24,6 +25,7 @@ public class TrainingUIHandler : MonoBehaviour
     //-----------------------------------------------------------------//
     private TrainingUIData trainingUIData; // 訓練 UI 的資料 ScriptableObject
     private TeamManager teamManager; // 透過 TeamManager 物件取得當前隊伍成員
+    private bool isInitialized = false; // 確保訓練 UI 只初始化一次
 
     void Start()
     {
@@ -41,15 +43,6 @@ public class TrainingUIHandler : MonoBehaviour
             {
                 CloseTrainingUI();
             }
-        }
-
-        if (trainingUI.activeSelf) // 根據訓練 UI 的開啟狀態，決定是否禁用角色移動
-        {
-            UIAndPlayerInput.DisableAllPlayerInputs(); // UI 已開啟 -> 禁用所有玩家移動
-        }
-        else
-        {
-            UIAndPlayerInput.EnableAllPlayerInputs(); // UI 已關閉 -> 啟用所有玩家移動
         }
     }
 
@@ -70,8 +63,7 @@ public class TrainingUIHandler : MonoBehaviour
         TypeText.text = trainingUIData.trainingType; // 設定訓練類型的 UI 文字內容
         if (trainingUIData.teacherName != null) // 設定老師的 UI 文字內容
         {
-            // 暫時寫死為一星的 Amy 老師
-            trainingUIData.teacherName = "Amy";
+            // 暫時寫死老師的名稱和星等
             TeacherText.text = $"老師：{trainingUIData.teacherName} 星1";
             BenefitText.text = $"基本收益：{trainingUIData.withTeacherBenefit}"; // 設定基本收益的 UI 文字內容
         }
@@ -85,13 +77,68 @@ public class TrainingUIHandler : MonoBehaviour
         for (int i = 0; i < characterImages.Count; i++)
         {
             if (i < characterSprites.Count) characterImages[i].sprite = characterSprites[i];
-            else characterImages[i].sprite = null; // 超出範圍的圖片插槽設為空，避免報錯
+            else characterImages[i].sprite = null; // 超出範圍的圖片插槽設為空，避免報錯（當圖片少於插槽）
         }
 
-        DragToLesson[] dragToLessons = trainingUI.GetComponentsInChildren<DragToLesson>();
-        foreach (DragToLesson dtl in dragToLessons)
+        // 檢查角色是否在隊伍裡，把不在的（UI 物件）隱藏起來
+        CheckCharactersInTeam();
+
+        if (!isInitialized)
         {
-            dtl.SetTrainingUIData(trainingUIData); // 傳遞 TrainingUIData 給底下的每個 DragToLesson 元件
+            DragToLesson[] dragToLessons = trainingUI.GetComponentsInChildren<DragToLesson>();
+            foreach (DragToLesson dtl in dragToLessons)
+            {
+                dtl.Initialize(trainingUIData); // 傳遞 TrainingUIData 給底下的每個 DragToLesson 元件
+            }
+            isInitialized = true;
+        }
+    }
+
+    private void CheckCharactersInTeam()
+    {
+        for (int i = 0; i < characterImages.Count; i++)
+        {
+            Image img = characterImages[i];
+            if (img.sprite == null) continue;
+
+            string name = TeamDataUtility.CleanNameOfCharacterUI(img.sprite.name);
+            var state = TrainingUIManager.Instance.GetIdolState(name);
+
+            Debug.Log($"[Check] {name} state = {state}");
+
+            if(trainingUIData.trainingType.ToLower() == "dance")
+            {
+                if(state != IdolTrainingState.InTeam && state != IdolTrainingState.InDance)
+                {
+                    img.gameObject.SetActive(false);
+                }
+                else
+                {
+                    img.gameObject.SetActive(true);
+                }
+            }
+            else if(trainingUIData.trainingType.ToLower() == "vocal")
+            {
+                if(state != IdolTrainingState.InTeam && state != IdolTrainingState.InVocal)
+                {
+                    img.gameObject.SetActive(false);
+                }
+                else
+                {
+                    img.gameObject.SetActive(true);
+                }
+            }
+            else if(trainingUIData.trainingType.ToLower() == "visual")
+            {
+                if(state != IdolTrainingState.InTeam && state != IdolTrainingState.InVisual)
+                {
+                    img.gameObject.SetActive(false);
+                }
+                else
+                {
+                    img.gameObject.SetActive(true);
+                }
+            }
         }
     }
 

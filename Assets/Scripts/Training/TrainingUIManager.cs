@@ -3,6 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
+public enum IdolTrainingState
+{
+    InTeam,
+    InDance,
+    InVocal,
+    InVisual
+}
+
 /* 掛在 TrainingManager 上，統一管理三種不同的 UI（Singleton） */
 public class TrainingUIManager : MonoBehaviour
 {
@@ -12,9 +20,8 @@ public class TrainingUIManager : MonoBehaviour
     private TrainingUIHandler current = null; // 目前開著的 UI
     //-----------------------------------------------------------------//
     [SerializeField] private TeamManager teamManager;
-    private List<string> members = new(); // 儲存當前隊伍成員
-    private List<string> trainees = new(); // 儲存當前訓練成員
     [SerializeField] private List<Sprite> characterSprites = new(); // 角色 UI 圖片
+    private Dictionary<string, IdolTrainingState> characterStates = new(); // 角色名稱＆訓練狀態對應表
     // 目前還沒有選角功能，不必特別照隊伍成員決定用哪些圖片
     
 
@@ -35,12 +42,14 @@ public class TrainingUIManager : MonoBehaviour
 
     public void InitializeTeamData()
     {
-        // 初始化當前隊伍成員
-        members = teamManager.teamMembers
-            .Select(m => TeamDataUtility.CleanNameOfCharacterObject(m.name))
-            .ToList();
+        characterStates.Clear();
 
-        trainees.Clear(); // 一開始沒有訓練成員
+        // 預設所有角色都在隊伍裡
+        foreach (var m in teamManager.teamMembers)
+        {
+            string id = TeamDataUtility.CleanNameOfCharacterObject(m.name);
+            characterStates[id] = IdolTrainingState.InTeam; 
+        }
     }
 
     void OnDestroy()
@@ -53,58 +62,70 @@ public class TrainingUIManager : MonoBehaviour
     private void OpenOneUI(TrainingUIData data)
     {
         string type = data.trainingType.ToLower();
-        TrainingUIHandler ui; // 預計要打開的訓練 UI
 
-        switch (type)
+        TrainingUIHandler ui = type switch // 預計要打開的 UI
         {
-            case "dance":
-                ui = trainingUIHandlers[0];
-                break;
-            case "vocal":
-                ui = trainingUIHandlers[1];
-                break;
-            case "visual":
-                ui = trainingUIHandlers[2];
-                break;
-            default:
-                ui = null;
-                break;
+            "dance" => trainingUIHandlers[0],
+            "vocal" => trainingUIHandlers[1],
+            "visual" => trainingUIHandlers[2],
+            _ => null
+        };
+
+        if(ui == null) {
+            Debug.LogError("找不到對應的 TrainingUIHandler");
+            return;
         }
 
         current = ui;
         ui.ShowTrainingUI(data, teamManager, characterSprites);
+
+        UIAndPlayerInput.DisableAllPlayerInputs(); // UI 已開啟 -> 禁用所有玩家移動
     }
 
     private void OneOneUIClosed(TeamManager team, TrainingUIData data)
     {
-        current = null; // 目前沒有任何 UI 開著
         // 雖然這個事件有兩個引數，但這邊剛好不會用到呢
+
+        current = null; // 目前沒有任何 UI 開著
+        UIAndPlayerInput.EnableAllPlayerInputs(); // UI 已關閉 -> 啟用所有玩家移動
     }
 
-    // 取得當前隊伍成員
-    public List<string> GetMembers() => members;
-
-    // 取得當前訓練成員
-    public List<string> GetTrainees() => trainees;
-
-    // 新增訓練成員（將其移出隊伍）
-    public void AddTrainee(string name)
+    public IdolTrainingState GetIdolState(string name) // 根據角色名取得其訓練狀態
     {
-        if (!trainees.Contains(name))
-        {
-            trainees.Add(name);
-            members.Remove(name);
-        }
+        return characterStates.ContainsKey(name)
+            ? characterStates[name]
+            : IdolTrainingState.InTeam;
     }
 
-    // 移除訓練成員（將其移回隊伍）
-    public void RemoveTrainee(string name)
+    public List<string> GetMembers() // 取得目前隊伍成員清單
     {
-        if (trainees.Contains(name))
-        {
-            trainees.Remove(name);
-            members.Add(name);
-        }
+        return characterStates
+            .Where(x => x.Value == IdolTrainingState.InTeam)
+            .Select(x => x.Key)
+            .ToList();
+    }
+
+    public List<string> GetTrainees() // 取得目前所有訓練角色清單
+    {
+        return characterStates
+            .Where(x => x.Value != IdolTrainingState.InTeam)
+            .Select(x => x.Key)
+            .ToList();
+    }
+
+    public List<string> GetTrainees(IdolTrainingState room) // 取得目前在特定訓練室的角色清單
+    {
+        return characterStates
+            .Where(x => x.Value == room)
+            .Select(x => x.Key)
+            .ToList();
+    }
+
+    public void SetIdolState(string id, IdolTrainingState state) // 設定角色的訓練狀態
+    {
+        if (!characterStates.ContainsKey(id)) return;
+
+        characterStates[id] = state;
     }
 }
 

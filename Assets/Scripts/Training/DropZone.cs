@@ -1,29 +1,58 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+public enum DropZoneType
+{
+    Member, // 隊伍區域
+    Dance,  // 舞蹈訓練室
+    Vocal,  // 歌唱訓練室
+    Visual  // 表現力訓練室
+}
+
 public class DropZone : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    public static DropZone currentDragZone;
+    public DropZoneType zoneType; // 直接在 Inspector 設定即可
+    //-----------------------------------------------------------------//
+    private RectTransform myRect;
+    public RectTransform MyRect => myRect;
 
-    private RectTransform myPos;
-
-    private void Start()
+    void Awake()
     {
-        myPos = GetComponent<RectTransform>();
+        myRect = GetComponent<RectTransform>();
     }
 
-    public void OnPointerEnter(PointerEventData eventData) // 當滑鼠將角色拖曳過來
+    // 進入區域時，通知拖曳物件
+    public void OnPointerEnter(PointerEventData eventData)
     {
-        currentDragZone = this;
+        // 基本檢查
+        if (eventData == null) return;
+
+        var draggedObject = eventData.pointerDrag;
+        if (draggedObject == null) return;
+
+        // 重點設定
+        var drag = draggedObject.GetComponent<DragToLesson>();
+        if (drag != null)
+        {
+            drag.CurrentDropZone = this;
+        }
     }
 
-    public void OnPointerExit(PointerEventData eventData) // 當滑鼠將角色拖曳離開
+    // 離開區域時，清空拖曳物件的參考
+    public void OnPointerExit(PointerEventData eventData)
     {
-        if (currentDragZone == this) currentDragZone = null;
-    }
+        // 基本檢查
+        if (eventData == null) return;
 
-    public RectTransform GetMyPos()
-    {
-        return myPos;
+        var draggedObject = eventData.pointerDrag;
+        if (draggedObject == null) return;
+
+        // 重點設定
+        var drag = draggedObject.GetComponent<DragToLesson>();
+        if (drag != null && drag.CurrentDropZone == this)
+        {
+            drag.CurrentDropZone = null;
+        }
     }
 }
+

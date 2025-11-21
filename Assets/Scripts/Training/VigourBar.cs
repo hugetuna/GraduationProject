@@ -27,10 +27,8 @@ public class VigourBar : MonoBehaviour
 
     public void Initialize(string myName)
     {
-        myName = TeamDataUtility.CleanNameOfCharacterUI(characterImage.sprite.name);
         if(characterImage.sprite != null)
         {
-            myName = TeamDataUtility.CleanNameOfCharacterUI(characterImage.sprite.name);
             characterInfo = System.Array.Find(
                 TeamDataUtility.IdolInstances, obj 
                 => obj.name.Contains(myName)
@@ -60,22 +58,24 @@ public class VigourBar : MonoBehaviour
         if (characterInfo.vigour < trainingUIData.neededVigour)
         {
             isAbleToTrain = false; // 體力不足無法訓練
+            characterImage.GetComponent<CanvasGroup>().interactable = false;
             characterImage.material = grayMaterial; // 使用灰階材質
             fillImage.color = new Color32(240, 58, 106, 255); // 將不足以訓練的體力設成桃紅色
         }
         else
         {
             isAbleToTrain = true; // 有足夠體力進行訓練
+            characterImage.GetComponent<CanvasGroup>().interactable = true;
             characterImage.material = null;
             fillImage.color = new Color32(214, 189, 255, 255);
         }
 
-        DropZoneType currentZoneType = dragToLesson.CurrentZoneType; // 取得當前拖放區域名稱
+        DropZoneType currentZoneType = dragToLesson.CurrentDropZone.zoneType; // 取得當前拖放區域名稱
         if (currentZoneType == DropZoneType.Member)
         {
             vigourSlider.value = characterInfo.vigour;
         }
-        else if (currentZoneType == DropZoneType.Trainee && isAbleToTrain)
+        else if (currentZoneType != DropZoneType.Member && isAbleToTrain)
         {
             vigourSlider.value = characterInfo.vigour - trainingUIData.neededVigour;
         }
