@@ -1,31 +1,30 @@
-哈囉你好嗎 #speaker: Capital
-衷心感謝 #speaker: Player
-珍重再見 #speaker: Capital
-* 期待再相逢 #speaker: Player
-  -> Expectation
-* 拒絕再相逢 #speaker: Player
-  -> Rejection
-* 有緣再相逢 #speaker: Player
-  -> Fate
+第一天工作還好嗎? #speaker: Capital
+他們就交給你了，要好好對他們喔>.< #speaker: Capital
+畢竟這也關係到你的工作! #speaker: Capital
+* 我已經想辭職了... #speaker: Player
+  -> A
+* 老闆你怎麼有我的聯繫方式... #speaker: Player
+  -> B
+* 當然!我會培養出最閃亮的偶像的! #speaker: Player
+  -> C
 
-=== Expectation ===
-哇你唱對了 #speaker: Capital
-請繼續你的表演 #speaker: Capital
-找不到一句 適合的話對你訴說 #speaker: Player
-讓你接受我 接受我 接受我 從今以後 #speaker: Player
+=== A ===
+沒辦法喔~你當初沒有好好看合約對吧~ #speaker: Capital
+欸???? #speaker: Player
+我們合約裡有規定最低服務年限喔~#speaker: Capital
+要離職的話要付我違約金，嘿嘿#speaker: Capital
+哇... #speaker: Player
 -> END
 
-=== Rejection ===
-你唱錯了 #speaker: Capital
-而且也錯得太過分了 #speaker: Capital
-我們之間就到此為止吧 #speaker: Capital
-非常抱歉 #speaker: Player
+=== B ===
+因為你現在在用的是公司的電腦 #speaker: Capital
+喔喔!對喔!確實 #speaker: Player
+... #speaker: Capital
 -> END
 
-=== Fate ===
-雖然你唱錯了，但還是挺有創意的 #speaker: Capital
-所以我們有緣嗎？ #speaker: Player
-沒有，請你加油 #speaker: Capital
-好吧 #speaker: Player
+=== C ===
+很有幹勁嘛，我們公司的未來就看你的了 #speaker: Capital
+我一定會讓他們出道的#speaker: Player
+好的，加油加油! #speaker: Capital
 -> END
 

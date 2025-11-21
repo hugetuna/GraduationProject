@@ -1,9 +1,9 @@
 
-#speaker:Manager #bgm:RickRoll #background:Street
+#speaker:Manager #background:Street
 ......
-#speaker:Manager #font:Big #font:Bold #font:Shake
+#speaker:Manager 
 今天要去新的公司...
-#speaker:Manager #font:Normal 
+#speaker:Manager 
 有點緊張呢，已經三年沒正式工作了
 #speaker:Manager 
 上一份工作...
@@ -14,16 +14,18 @@
 #speaker:Manager 
 （不只遞出的履歷全都沒有消息，身邊還出現了奇怪的東西）
 #speaker:Manager #background:Street
+#font:Shake
 （別想了!）
 #speaker:Manager
 這三年都靠著兼職艱難地撐過，好不容易有公司願意雇用我，一定要好好努力
 #speaker:Manager
 雖然環境好像不怎麼好就是了...
 #speaker:Empty #background:Office
-(敲敲門)
-#speaker:Boss #background:Office
+#sfx:knock
+(叩叩)
+#speaker:Boss #background:Office #font:Big #font:Bold
 請進!!!!!!!!!!!!!
-#speaker:Boss #background:Office
+#speaker:Boss #background:Office #font:Normal
 你好呀新來的!正式向你自我介紹，我是這間小小事務所「Star Sprout」的老闆，請多多指教！
 #speaker:Manager
 (這個老闆...好不靠譜的感覺...)
@@ -43,13 +45,15 @@
 
 ===IDOLPACT===
 #speaker:Boss
-嗯......我是這麼說的嗎？哈哈哈，可能是我記錯了。但IDOL PACT這名字聽起來就不會紅(小聲嘀咕)
+嗯......我是這麼說的嗎？哈哈哈，可能是我記錯了。但IDOL PACT這名字聽起來就不會紅
+#speaker:Boss
 咳咳，我們回到正題
 ->Main
 
 ===FIRERA===
 #speaker:Boss
-嗯......我是這麼說的嗎？哈哈哈，可能是我記錯了。但FIRERA這名字聽起來就不會紅(小聲嘀咕)
+嗯......我是這麼說的嗎？哈哈哈，可能是我記錯了。但FIRERA這名字聽起來就不會紅
+#speaker:Boss
 咳咳，我們回到正題
 ->Main
 ===Main===
@@ -63,10 +67,12 @@
 在前幾期的節目當中，有些一開始毫不起眼的團體，卻一步步累積實力與人氣，最後成為成功出道的黑馬
 #speaker:Boss
 這對我們這種小公司來說可是一根救命稻草!
+#speaker:Boss
 我家事務所的孩子們，說不定也能變得像那些女孩一樣
 #speaker:Boss
 所以……雖然這裡的財務狀況相當吃緊，面臨的競爭也更加激烈，但我們已經決定孤注一擲，把整個公司都押在這次選秀上了!
 #speaker:Manager
+#font:Shake
 (欸!?等一下，這個情況是不是不太妙???)
 #speaker:Boss
 這就是我們聘請你的原因，我們需要你帶領公司的3位練習生組成一個團隊參賽獲得冠軍，要是這團偶像再沒辦法出道的話，我們公司就要倒閉了喔！

@@ -16,9 +16,11 @@ public class OnStageManager : MonoBehaviour
     public SpriteRenderer backgroundRenderer;
     [Header("關卡開始與結束旗標")]
     public bool gameStarted = false;
+    public bool gamePaused = false;
     public bool gameEnded = false;
     public GameObject gameStartUIPanel;
     public GameObject gameOngoingUIPanel;
+    public GameObject gamePauseUIPanel;
     public GameObject gameEndUIPanel;
     public GameObject Monitor;
     //public bool gamePaused = false;
@@ -93,7 +95,7 @@ public class OnStageManager : MonoBehaviour
     }
     private void Update()
     {
-        if (!gameStarted || gameEnded) return;
+        if (!gameStarted || gameEnded||gamePaused) return;
         // 每秒更新 roundTimer
         roundTimer += Time.deltaTime;
         timerFillImg.fillAmount = roundTimer / currentStageData.secPerRound;
@@ -226,6 +228,32 @@ public class OnStageManager : MonoBehaviour
         // 顯示描述（可以連接到 UI）
         Debug.Log($"載入關卡：{stageData.stageName} - {stageData.description}");
     }
+    public void PauseGame()
+    {
+        if (gamePaused || !gameStarted || gameEnded) return;
+        gamePaused = true;
+        Time.timeScale = 0f;        // 暫停所有 Update-based 動畫、計時
+        // 停止 UI 互動誤觸（可選）
+        EventSystem.current.sendNavigationEvents = false;
+    }
+    public void ResumeGame()
+    {
+        if (!gamePaused) return;
+        gamePaused = false;
+        Time.timeScale = 1f;
+        EventSystem.current.sendNavigationEvents = true;
+    }
+    public void TogglePausePanel()
+    {
+        if (gamePaused)
+        {
+            gamePauseUIPanel.SetActive(true);
+        }
+        else
+        {
+            gamePauseUIPanel.SetActive(false);
+        }
+    }
     public void GameEnd()
     {
         gameStarted = false;
@@ -239,7 +267,7 @@ public class OnStageManager : MonoBehaviour
     public void EndAndLeave()
     {
         //TODO:用關卡資料動態回歸場景
-        gameObject.GetComponent<SceneTransitionManager>().teleportByTargetSceneName(currentStageData.nextSceneName);
+        SceneTransitionManager.Instance.teleportByTargetSceneName(currentStageData.nextSceneName);
     }
     
     //洗牌(使用Fisher-Yates Shuffle 算法)
@@ -298,7 +326,7 @@ public class OnStageManager : MonoBehaviour
         if (DrawCards(1))
         {
             drawChance--;
-            //drawChanceText.text = drawChance.ToString();
+            if(drawChance<0) drawChance=0;
             AudioManager.Instance.PlaySFX(drawCardSFX);
             UpdateDrawChanceUI();
             Debug.Log($"成功抽牌，剩餘抽牌權{drawChance}");

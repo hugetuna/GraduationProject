@@ -476,6 +476,17 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5c192d334a8059349af25569831e7ed3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1289467868 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 6814912132265877993, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+  m_PrefabInstance: {fileID: 1828934343}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 035815e763385774192e4e8019f26671, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1483280294
 GameObject:
   m_ObjectHideFlags: 0
@@ -554,6 +565,67 @@ MonoBehaviour:
   m_DeselectOnBackgroundClick: 1
   m_PointerBehavior: 0
   m_CursorLockBehavior: 0
+--- !u!1001 &1512321928
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 6351769211698898940, guid: b7d5987cdaab6274a996b3366f323931, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 975.39777
+      objectReference: {fileID: 0}
+    - target: {fileID: 6351769211698898940, guid: b7d5987cdaab6274a996b3366f323931, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 524.4139
+      objectReference: {fileID: 0}
+    - target: {fileID: 6351769211698898940, guid: b7d5987cdaab6274a996b3366f323931, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 108.5529
+      objectReference: {fileID: 0}
+    - target: {fileID: 6351769211698898940, guid: b7d5987cdaab6274a996b3366f323931, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6351769211698898940, guid: b7d5987cdaab6274a996b3366f323931, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6351769211698898940, guid: b7d5987cdaab6274a996b3366f323931, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6351769211698898940, guid: b7d5987cdaab6274a996b3366f323931, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6351769211698898940, guid: b7d5987cdaab6274a996b3366f323931, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6351769211698898940, guid: b7d5987cdaab6274a996b3366f323931, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6351769211698898940, guid: b7d5987cdaab6274a996b3366f323931, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6818318229001809294, guid: b7d5987cdaab6274a996b3366f323931, type: 3}
+      propertyPath: dialogueType
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8577641657372293939, guid: b7d5987cdaab6274a996b3366f323931, type: 3}
+      propertyPath: m_Name
+      value: DialogueManager
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents: []
+  m_SourcePrefab: {fileID: 100100000, guid: b7d5987cdaab6274a996b3366f323931, type: 3}
 --- !u!1 &1614459988
 GameObject:
   m_ObjectHideFlags: 0
@@ -1083,6 +1155,18 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
+      - m_Target: {fileID: 1289467868}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
+        m_MethodName: SaveInkJSONAssetData
+        m_Mode: 2
+        m_Arguments:
+          m_ObjectArgument: {fileID: 11400000, guid: 4b55e6358e358654e9a02fa616643ebb, type: 2}
+          m_ObjectArgumentAssemblyTypeName: DialogueSaveData, Assembly-CSharp
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
       - m_Target: {fileID: 1250809666}
         m_TargetAssemblyTypeName: SceneTransitionManager, Assembly-CSharp
         m_MethodName: teleportByTargetSceneName
@@ -1092,7 +1176,7 @@ MonoBehaviour:
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: Floor_1
+          m_StringArgument: Dialogue Scene
           m_BoolArgument: 0
         m_CallState: 2
 --- !u!114 &2077348788
@@ -1219,3 +1303,4 @@ SceneRoots:
   - {fileID: 1828934343}
   - {fileID: 1204432112}
   - {fileID: 548616472}
+  - {fileID: 1512321928}

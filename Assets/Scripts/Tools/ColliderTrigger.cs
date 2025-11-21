@@ -10,7 +10,8 @@ public class ColliderTrigger : MonoBehaviour
     //傳送用
     public bool isTP;
     public string targetSceneName;
-
+    public DialogueSaveData dialogueToTrigger;
+    public StageAttribute stageToTrigger;
     private void OnTriggerEnter(Collider other)
     {
         Debug.Log("傳送!");
@@ -19,6 +20,8 @@ public class ColliderTrigger : MonoBehaviour
             Event.Invoke();
             if (isTP)
             {
+                if (dialogueToTrigger != null) GameManager.Instance.SaveInkJSONAssetData(dialogueToTrigger);
+                if (stageToTrigger != null) GameManager.Instance.SaveStageAttribute(stageToTrigger);
                 SceneTransitionManager.Instance.teleportByTargetSceneName(targetSceneName);
             }
         }

@@ -1,44 +1,32 @@
 你好 #speaker: Friend
+
 初次見面 #speaker: Friend
-你好啊 #speaker: Player
-很高興認識你 #speaker: Player
-我們要不要找時間一起吃個飯？ #speaker: Friend
-沒問題，你想吃什麼？ #speaker: Player
-這個嘛……交給你選吧，你喜歡吃什麼？ #speaker: Friend
-* 台式小吃 #speaker: Player
-  -> Taiwanese_Food
-* 日式料理 #speaker: Player
-  -> Japanese_Food
-* 美式餐點 #speaker: Player
-  -> American_Food
 
-=== Taiwanese_Food ===
-你想吃哪種台式小吃？ #speaker: Friend
-* 滷肉飯 #speaker: Player
--> End_Section
-* 蚵仔麵線 #speaker: Player
--> End_Section
-* 雞排加珍奶 #speaker: Player
--> End_Section
+您好?您是??? #speaker: Player
 
-=== Japanese_Food ===
-你想吃哪種日式料理？ #speaker: Friend
-* 拉麵 #speaker: Player
--> End_Section
-* 壽司 #speaker: Player
--> End_Section
-* 丼飯 #speaker: Player
--> End_Section
+你就是那個新來的對吧?經紀人的那個 #speaker: Friend
 
-=== American_Food ===
-你想吃哪種美式餐點？ #speaker: Friend
-* 漢堡 #speaker: Player
--> End_Section
-* 牛排 #speaker: Player
--> End_Section
-* 早午餐 #speaker: Player
--> End_Section
+我是這間公司資歷最老的員工喔!#speaker: Friend
+
+啊!前輩好 #speaker: Player
+
+不用這麼拘謹啦，我只是比你多待了好幾年而已#speaker: Friend
+
+你有什麼問題都可以問我，我可是這裡的萬事通#speaker: Friend
+
+喔喔喔好可靠! #speaker: Player
+
+想問一下前輩是在哪個部門工作>< #speaker: Player
+之後說不定會有合作麻煩到前輩 #speaker: Player
+
+啊啊，我是外聘來打掃的#speaker: Friend
+
+欸?#speaker: Player
+
+怎樣?外聘也算員工吧#speaker: Friend
+
+呃...啊啊..是...#speaker: Player
+-> END
 
 === End_Section ===
-聽起來很讚，那就吃這個吧！ #speaker: Friend
 -> END
