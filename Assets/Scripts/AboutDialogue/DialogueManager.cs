@@ -100,7 +100,7 @@ public class DialogueManager : MonoBehaviour
     //推進對話
     public void ContinueStory() {
 
-        if (story.canContinue)
+        if (story.canContinue|| isTyping == true)
         {
             if (isTyping == true)
             {
@@ -282,6 +282,10 @@ public class DialogueManager : MonoBehaviour
                 AudioManager.Instance.PlaySFX(audioClip);
             }
         }
+        else if(string.IsNullOrEmpty(sfxTag) && dialogueType == true)
+        {
+             AudioManager.Instance.StopSFX();
+        }
         //更換當前背景圖
         if (!string.IsNullOrEmpty(backgroundTag) && dialogueType == true)
         {
@@ -402,6 +406,10 @@ public class DialogueManager : MonoBehaviour
             return true;
         }
         return false;
+    }
+    public void Skip()
+    {
+        OnDialougeEnd();
     }
     private void OnDialougeEnd()
     {
