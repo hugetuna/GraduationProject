@@ -58,6 +58,22 @@ public class DayEventManager : MonoBehaviour
             DialogueManager.Instance.onDialogueFinish = onFinish;
             SceneTransitionManager.Instance.teleportByTargetSceneName("Dialogue Scene");
         }
+        else if (dayEvent.Type == EventType.Teleport)
+        {
+            // 傳送玩家到指定場景的邏輯
+            SceneTransitionManager.Instance.onDialogueFinish = onFinish;
+            SceneTransitionManager.Instance.teleportByTargetSceneName(dayEvent.targetSceneName);
+        }
+        else if (dayEvent.Type == EventType.ShowUIAndWaitExit)
+        {
+            // 顯示UI並等待玩家關閉的邏輯
+            GameObject uiInstance = Instantiate(dayEvent.UIToShow);
+            ShowUIAndWaitExit showUIAndWaitExit = uiInstance.GetComponent<ShowUIAndWaitExit>();
+            showUIAndWaitExit.StartEvent(() => { 
+                onFinish?.Invoke();
+                Destroy(uiInstance);
+            });
+        }
         else if (dayEvent.Type== EventType.WaitUntilSceneChange)
         {
             // 等待場景切換的邏輯

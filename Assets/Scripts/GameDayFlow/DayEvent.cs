@@ -6,6 +6,8 @@ public enum EventType
 {
     MainWorld,
     Dialogue,
+    Teleport,
+    ShowUIAndWaitExit,
     WaitUntilSceneChange,
     WaitUntilPlayerPosition
 }
@@ -18,7 +20,9 @@ public class DayEvent : ScriptableObject
     public DialogueSaveData DialogueWhenTrigger;//觸發的對話劇本
     public bool onlyTriggerOnce = true;// 教學 / 劇情只跑一次
     [Header("特定事件需要的參數")]
+    public GameObject UIToShow;//若ShowUIAndWaitExit->顯示的UI物件
     public string targetSceneName;//若WaitUntilSceneChange->等待傳送至目標場景名稱
+                                  //若Teleport->傳送至目標場景名稱
     public Vector3 targetPlayerPositionMin;//若WaitUntilPlayerPosition->等待玩家移動至目標區間
     public Vector3 targetPlayerPositionMax;
     [TextArea]

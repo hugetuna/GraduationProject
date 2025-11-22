@@ -25,13 +25,19 @@ public class SetElevatorIcon : MonoBehaviour
         {
             int index = i; // 捕獲當前的索引值
             UnityEvent unityEvent = new UnityEvent();
+            if (DayManager.Instance.date == 1)//第一天禁止進入B1，封鎖按鈕
+            {
+                buttons[0].interactable = false;
+            }
             buttons[i].onClick.RemoveAllListeners();
             buttons[i].onClick.AddListener(() =>
             {
                 if (SceneTransitionManager.Instance != null)
                     if (index == 0)
+                    {
                         SceneTransitionManager.Instance.teleportByTargetSceneName("Floor_B1");
-                    else
+                    }   
+                else
                         SceneTransitionManager.Instance.teleportByTargetSceneName("Floor_" + index);
                 else
                     Debug.LogError("SceneTransitionManager.Instance 為 null！");

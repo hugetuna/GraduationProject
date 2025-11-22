@@ -16,7 +16,11 @@ public class DayManager : MonoBehaviour
     }
     public void OnSceneLoaded(string SceneName)
     {
-        if (IsInStartOfDay==false&&SceneName=="Floor_4")
+        if (IsInStartOfDay==false&&SceneName=="Floor_1")
+        {
+            StartDay();
+        }
+        else if (SceneName == "Floor_4"&&date == 0)
         {
             StartDay();
         }
