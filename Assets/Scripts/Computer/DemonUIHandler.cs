@@ -60,7 +60,10 @@ public class DemonUIHandler : MonoBehaviour
     {
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
-        if (Physics.Raycast(ray, out RaycastHit hit))
+        // 排除特定 Layer
+        int mask = ~LayerMask.GetMask("Ignore Raycast");
+
+        if (Physics.Raycast(ray, out RaycastHit hit, 1000f, mask))
         {
             return hit.transform == target || hit.transform.IsChildOf(target);
         }
