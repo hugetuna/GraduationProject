@@ -43,7 +43,7 @@ public class UseItem : MonoBehaviour
             int front = memberName.IndexOf("_");
             int end = memberName.IndexOf("2");
             memberName = memberName.Substring(front + 1, end - front - 1);
-            Debug.Log("隊伍成員名稱：" + memberName);
+            //Debug.Log("隊伍成員名稱：" + memberName);
             dropdown.options.Add(new TMP_Dropdown.OptionData("給 " + memberName));
         }
         dropdown.value = 0; // 預設選擇第一個選項

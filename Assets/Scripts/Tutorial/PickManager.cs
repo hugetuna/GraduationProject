@@ -25,6 +25,8 @@ public class PickManager : MonoBehaviour
     public List<GameObject> FileList = new List<GameObject>();
     public Button confirmButton;
     public TextMeshProUGUI countText;
+    [Header("設定傳送對話")]
+    public DialogueSaveData DialogueSaveData;
     void Start()
     {
         for (int i = 0; i < PickIdolPrefabs.Count; i++)
@@ -102,7 +104,8 @@ public class PickManager : MonoBehaviour
                 }
             }
             //直接進入主場景，SceneTransitionManager會處理好場景轉換與資料保存
-            SceneTransitionManager.Instance.teleportByTargetSceneName("Floor_1");
+            GameManager.Instance.SaveInkJSONAssetData(DialogueSaveData);
+            SceneTransitionManager.Instance.teleportByTargetSceneName("Dialogue Scene");
         }
     }
 }

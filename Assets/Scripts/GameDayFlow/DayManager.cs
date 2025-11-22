@@ -4,19 +4,33 @@ using UnityEngine;
 
 public class DayManager : MonoBehaviour
 {
-
-    public static int date = 1; // 靜態變數，保存遊戲中的日期
+    public static DayManager Instance;
+    public int date = 0; //保存遊戲中的日期
+    public DayEventManager dayEventManager;
+    public bool IsInStartOfDay = false;//是否處於新一天開始的階段
+    private void Awake()
+    {
+        if (Instance == null) Instance = this;
+        else { Destroy(gameObject); return; }
+        DontDestroyOnLoad(gameObject);
+    }
+    public void OnSceneLoaded(string SceneName)
+    {
+        if (IsInStartOfDay==false&&SceneName=="Floor_4")
+        {
+            StartDay();
+        }
+    }
     // 用來更動日期的函式
-    public void ChangeDay()
+    public void StartDay()
     {
+        IsInStartOfDay = true;
         date++;
-        Debug.Log($"今天是第 {date} 天");
+        dayEventManager.InitializeDayEvents(date);
+        dayEventManager.TriggerNextEvent();
     }
-
-    // 可以在開始遊戲時初始化，或每次遊戲結束時進行保存
-    void Start()
+    public void EndDay()
     {
-        // 初始化日期，若需要可以改成從保存中讀取
-        date = 1;
-    }
+        IsInStartOfDay = false;
+    }  
 }

@@ -10,6 +10,7 @@ public class AudioManager : MonoBehaviour
     public int poolSize = 10;
     public AudioSource audioSourcePrefab;
     public GameObject Music;
+    public List<AudioSource> playingSFXs;
     private Queue<AudioSource> sfxPool;
 
     [Header("全域音效音量")]
@@ -49,9 +50,27 @@ public class AudioManager : MonoBehaviour
         src.clip = clip;
         src.volume = volume * sfxVolume * setVolume;
         src.Play();
-
+        playingSFXs.Add(src);
         // 播完自動放回池中
         StartCoroutine(ReturnToPool(src, clip.length));
+    }
+    // 停止所有音效
+    public void StopSFX()
+    {
+        // 建立一個臨時列表來處理所有正在播放的音源
+        List<AudioSource> stoppedSources = new List<AudioSource>(playingSFXs);
+
+        // 清空 playingSFXs 列表，這是關鍵步驟！
+        // 這樣即使 ReturnToPool 協程完成，它也找不到該音源來移除。
+        playingSFXs.Clear();
+
+        // 將每個音源停止並放回池中
+        foreach (var src in stoppedSources)
+        {
+            // 停止播放
+            src.Stop();
+            sfxPool.Enqueue(src);
+        }
     }
     // 設定背景音樂
     public void SetMusic(AudioClip clip, float setVolume = 1f)
@@ -72,7 +91,12 @@ public class AudioManager : MonoBehaviour
     private IEnumerator ReturnToPool(AudioSource src, float delay)
     {
         yield return new WaitForSeconds(delay);
-        sfxPool.Enqueue(src);
+        if (playingSFXs.Contains(src))
+        {
+            playingSFXs.Remove(src);
+            src.Stop(); // 預防性停止
+            sfxPool.Enqueue(src);
+        }
     }
 }
 

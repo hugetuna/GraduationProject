@@ -13,6 +13,7 @@ public class TrainingUIHandler : MonoBehaviour
     [Header("訓練 UI 元素")]
     [SerializeField] private GameObject trainingUI; // 直接使用場景中的，不必另外生成
     //-----------------------------------------------------------------//
+    [SerializeField] private Button panelBackground; // 點擊背景關閉 UI 的按鈕
     [SerializeField] private Button closeButton; // 關閉 UI 的叉叉按鈕
     [SerializeField] private TextMeshProUGUI TypeText;
     [SerializeField] private TextMeshProUGUI TeacherText;
@@ -31,19 +32,9 @@ public class TrainingUIHandler : MonoBehaviour
     {
         // DoorInteraction.OnDoorInteracted += ShowTrainingUI; // 訂閱並監聽與門互動事件
         closeButton.onClick.AddListener(CloseTrainingUI); // 設定關閉按鈕的監聽事件
+        panelBackground.onClick.AddListener(CloseTrainingUI); // 設定背景按鈕的監聽事件
 
         trainingUI.SetActive(false); // 預設關閉訓練 UI
-    }
-
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0)) // 點擊非 UI 區域時關閉 UI
-        {
-            if (!UIAndPlayerInput.IsCursorClickUIObject() && trainingUI.activeSelf)
-            {
-                CloseTrainingUI();
-            }
-        }
     }
 
     // void OnDestroy()

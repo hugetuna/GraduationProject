@@ -63,7 +63,7 @@ public class DialogueManager : MonoBehaviour
     public void OnSceneLoaded()
     {
         //TrySetVariable<string>("playerName", "郭家豪");
-        Debug.Log("DialogueManager偵測場景載入");
+        //Debug.Log("DialogueManager偵測場景載入");
         if (dialogueType == true)
         {
             backGroundCanvas.SetActive(true);
@@ -100,7 +100,7 @@ public class DialogueManager : MonoBehaviour
     //推進對話
     public void ContinueStory() {
 
-        if (story.canContinue)
+        if (story.canContinue|| isTyping == true)
         {
             if (isTyping == true)
             {
@@ -282,6 +282,10 @@ public class DialogueManager : MonoBehaviour
                 AudioManager.Instance.PlaySFX(audioClip);
             }
         }
+        else if(string.IsNullOrEmpty(sfxTag) && dialogueType == true)
+        {
+             AudioManager.Instance.StopSFX();
+        }
         //更換當前背景圖
         if (!string.IsNullOrEmpty(backgroundTag) && dialogueType == true)
         {
@@ -403,6 +407,10 @@ public class DialogueManager : MonoBehaviour
         }
         return false;
     }
+    public void Skip()
+    {
+        OnDialougeEnd();
+    }
     private void OnDialougeEnd()
     {
         if (dialogueType == true) { SceneTransitionManager.Instance.teleportByTargetSceneName(onDialogueEndScene); }
@@ -417,6 +425,6 @@ public class DialogueManager : MonoBehaviour
             }        
         }
         onDialogueFinish?.Invoke();
-        onDialogueFinish = null;
+        //onDialogueFinish = null;
     }
 }
