@@ -48,6 +48,7 @@ public class TrainingUIHandler : MonoBehaviour
         teamManager = tm;
 
         Debug.Log("開啟訓練 UI");
+        UIAndPlayerInput.DisableAllPlayerInputs(); // 禁用所有玩家的輸入系統
         trainingUI.SetActive(true);
         AudioManager.Instance.PlaySFX(openSound);
 
@@ -136,6 +137,7 @@ public class TrainingUIHandler : MonoBehaviour
     private void CloseTrainingUI()
     {
         Debug.Log("關閉訓練 UI");
+        UIAndPlayerInput.EnableAllPlayerInputs(); // 啟用所有玩家的輸入系統
         trainingUI.SetActive(false);
         OnTrainingUIClosed?.Invoke(teamManager, trainingUIData); // 觸發訓練 UI 關閉事件
     }

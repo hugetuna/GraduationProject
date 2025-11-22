@@ -23,7 +23,7 @@ public class DemonPetAnimation : MonoBehaviour
     [Header("活動範圍設定")]
     [SerializeField] private Collider[] movementVolumes; // 用來限制移動範圍的 Invisible Volume
     [SerializeField] private float flyMinY = 5.2f;
-    private float rotationAngle = 39.857f; // UI 平面傾斜角度
+    [SerializeField] private float rotationAngle = 39.857f; // UI 平面傾斜角度
     //-----------------------------------------------------------------//
     private Dictionary<int, string> actionTriggers = new()
     {
@@ -51,7 +51,7 @@ public class DemonPetAnimation : MonoBehaviour
         {
             // 等待一段隨機時間
             float waitTime = Random.Range(minWait, maxWait);
-            Debug.Log($"等待 {waitTime:F1} 秒後觸發動作");
+            // Debug.Log($"等待 {waitTime:F1} 秒後觸發動作");
             yield return new WaitForSeconds(waitTime);
 
             // 根據位置範圍決定可用動作

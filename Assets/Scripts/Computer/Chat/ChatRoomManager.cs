@@ -16,6 +16,11 @@ public class ChatRoomManager : MonoBehaviour
     private ChatBubbleManager chatBubbleManager;
     private UserRuntime currentUserRuntime = null; // 目前正在聊天的用戶（動態資料）
     private bool waitingForChoice = false; // 是否正在等待玩家選擇
+    //-----------------------------------------------------------------//
+    [Tooltip("聊天間隔")]
+    [SerializeField] private float firstLineDelay = 1.0f;
+    [SerializeField] private float autoPlayInterval = 5.0f;
+    private Coroutine continueCoroutine = null; // 記錄 Coroutine 以方便取消
 
     void Awake()
     {
@@ -28,26 +33,24 @@ public class ChatRoomManager : MonoBehaviour
         chatBubbleManager = ChatBubbleManager.Instance;
     }
 
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.Z) && !waitingForChoice)
-        {
-            if (currentUserRuntime == null)
-            {
-                Debug.LogWarning("缺少聊天對象，無法繼續對話");
-                return;
-            }
-            ContinueStory(); // 按下 Z 鍵時繼續對話
-        }
-    }
+    // void Update()
+    // {
+    //     if (Input.GetKeyDown(KeyCode.Z) && !waitingForChoice)
+    //     {
+    //         if (currentUserRuntime == null)
+    //         {
+    //             Debug.LogWarning("缺少聊天對象，無法繼續對話");
+    //             return;
+    //         }
+    //         ContinueStory(); // 按下 Z 鍵時繼續對話
+    //     }
+    // }
 
     public void StartChatting(UserRuntime userRuntime)
     {
-        // 儲存舊用戶的狀態
+        // 儲存舊用戶狀態
         if (currentUserRuntime != null)
-        {
             currentUserRuntime.SaveState();
-        }
 
         // 確認是否切換了不同用戶
         bool isSwitchingUser = currentUserRuntime == null ||
@@ -62,74 +65,97 @@ public class ChatRoomManager : MonoBehaviour
         {
             chatBubbleManager.ClearAllBubbles();
             chatBubbleManager.RebuildFromHistory(currentUserRuntime.chatHistory);
+
+            // 切換用戶時第一句延遲
+            if (continueCoroutine != null) StopCoroutine(continueCoroutine);
+            continueCoroutine = StartCoroutine(ContinueStoryCoroutine());
+        }
+        else
+        {
+            // 直接繼續故事
+            if (continueCoroutine != null) StopCoroutine(continueCoroutine);
+            continueCoroutine = StartCoroutine(ContinueStoryCoroutine());
         }
 
         waitingForChoice = false;
     }
 
-    private void ContinueStory()
+    private IEnumerator ContinueStoryCoroutine()
     {
-        // 清空所有按鈕文字並關閉互動
-        foreach (var button in respondButtons)
+        Story story = currentUserRuntime.story; // 取得對話物件
+
+        // 剛切換到特定頁面的第一句延遲
+        if (firstLineDelay > 0f)
+            yield return new WaitForSeconds(firstLineDelay);
+
+        while (true)
         {
-            button.interactable = false;
-            button.GetComponentInChildren<TextMeshProUGUI>().text = "";
-        }
-
-        // 若故事尚未結束，就繼續顯示對話
-        Story story = currentUserRuntime.story;
-        if (story.canContinue)
-        {
-            string text = story.Continue().Trim();
-
-            bool isPlayer = false;
-            string speaker = "";
-
-            // 處理 Ink 內的 tags
-            foreach (var tag in story.currentTags)
+            // 清空所有按鈕文字並關閉互動
+            foreach (var button in respondButtons)
             {
-                var parts = tag.Split(':'); // tag 格式為「key: value」
-                if (parts.Length == 2)
+                button.interactable = false;
+                button.GetComponentInChildren<TextMeshProUGUI>().text = "";
+            }
+
+            // 若故事尚未結束，就顯示對話
+            if (story.canContinue)
+            {
+                string text = story.Continue().Trim();
+
+                bool isPlayer = false;
+                string speaker = "";
+
+                foreach (var tag in story.currentTags)
                 {
-                    string key = parts[0].Trim().ToLower();
-                    string value = parts[1].Trim().ToLower();
+                    var parts = tag.Split(':');
+                    if (parts.Length == 2)
+                    {
+                        string key = parts[0].Trim().ToLower();
+                        string value = parts[1].Trim().ToLower();
 
-                    if (key == "speaker" && value == "player") isPlayer = true;
-                    if (key == "speaker") speaker = value;
+                        if (key == "speaker" && value == "player") isPlayer = true;
+                        if (key == "speaker") speaker = value;
+                    }
                 }
+
+                chatBubbleManager.AddBubble(text, isPlayer);
+                currentUserRuntime.chatHistory.Add((text, isPlayer));
+
+                // 自動播放下一句
+                yield return new WaitForSeconds(autoPlayInterval);
             }
-
-            // 顯示並儲存當前對話
-            chatBubbleManager.AddBubble(text, isPlayer);
-            currentUserRuntime.chatHistory.Add((text, isPlayer));
-
-            // 自動播放：再次呼叫 ContinueStory() 直到遇到選項或故事結束
-            // if (!waitingForChoice) Invoke(nameof(ContinueStory), 0.1f);
-        }
-        // 若遇到選項則啟用按鈕
-        else if (story.currentChoices.Count > 0)
-        {
-            waitingForChoice = true;
-
-            for (int i = 0; i < story.currentChoices.Count; i++)
+            else if (story.currentChoices.Count > 0)
             {
-                var choice = story.currentChoices[i];
-                var button = respondButtons[i];
+                // 遇到選項就停止 Coroutine
+                waitingForChoice = true;
 
-                button.interactable = true;
-                button.GetComponentInChildren<TextMeshProUGUI>().text = choice.text.Trim();
+                for (int i = 0; i < story.currentChoices.Count; i++)
+                {
+                    var choice = story.currentChoices[i];
+                    var button = respondButtons[i];
 
-                button.onClick.RemoveAllListeners();
-                int choiceIndex = i;
-                button.onClick.AddListener(() => ChooseOption(choiceIndex));
+                    button.interactable = true;
+                    button.GetComponentInChildren<TextMeshProUGUI>().text = choice.text.Trim();
+
+                    button.onClick.RemoveAllListeners();
+                    int choiceIndex = i;
+                    button.onClick.AddListener(() =>
+                    {
+                        ChooseOption(choiceIndex);
+                        // 選完後自動繼續故事
+                        if (continueCoroutine != null) StopCoroutine(continueCoroutine);
+                        continueCoroutine = StartCoroutine(ContinueStoryCoroutine());
+                    });
+                }
+
+                yield break; // 停止 Coroutine 等待玩家選擇
+            }
+            else
+            {
+                // 故事完全結束
+                yield break;
             }
         }
-        // 故事完全結束
-        // else
-        // {
-        //     chatBubbleManager.AddBubble("END", false);
-        //     currentUserRuntime.chatHistory.Add(("END", false));
-        // }
     }
 
     private void ChooseOption(int index) // 選完選項的後續處理
@@ -145,6 +171,5 @@ public class ChatRoomManager : MonoBehaviour
         }
 
         currentUserRuntime.story.ChooseChoiceIndex(index);
-        ContinueStory();
     }
 }

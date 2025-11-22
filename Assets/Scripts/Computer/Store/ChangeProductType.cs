@@ -14,6 +14,7 @@ public class ChangeProductType : MonoBehaviour
     public List<GameObject> productTypePages = new();
     public Sprite activeBtnImg;
     public Sprite normalBtnImg;
+    public ScrollRect productScrollRect;
     private int currentIndex = 0; // 當前選中的按鈕索引
 
     void Start()
@@ -28,7 +29,10 @@ public class ChangeProductType : MonoBehaviour
         // 預設顯示第一個分類頁面，其他先隱藏
         for(int i = 0; i < productTypePages.Count; i++)
         {
-            if (i == 0) productTypePages[i].SetActive(true);
+            if (i == 0){
+                productTypePages[i].SetActive(true);
+                productScrollRect.content = productTypePages[i].GetComponent<RectTransform>();
+            }
             else productTypePages[i].SetActive(false);
         }
     }
@@ -56,21 +60,25 @@ public class ChangeProductType : MonoBehaviour
         if (clickedButton == productTypeButtons[0])
         {
             productTypePages[0].SetActive(true);
+            productScrollRect.content = productTypePages[0].GetComponent<RectTransform>();
             currentIndex = 0; // 更新當前索引
         }
         else if (clickedButton == productTypeButtons[1])
         {
             productTypePages[1].SetActive(true);
+            productScrollRect.content = productTypePages[1].GetComponent<RectTransform>();
             currentIndex = 1; // 更新當前索引
         }
         else if (clickedButton == productTypeButtons[2])
         {
             productTypePages[2].SetActive(true);
+            productScrollRect.content = productTypePages[2].GetComponent<RectTransform>();
             currentIndex = 2; // 更新當前索引
         }
         else if (clickedButton == productTypeButtons[3])
         {
             productTypePages[3].SetActive(true);
+            productScrollRect.content = productTypePages[3].GetComponent<RectTransform>();
             currentIndex = 3; // 更新當前索引
         }
     }
