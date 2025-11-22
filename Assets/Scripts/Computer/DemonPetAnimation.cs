@@ -23,7 +23,7 @@ public class DemonPetAnimation : MonoBehaviour
     [Header("活動範圍設定")]
     [SerializeField] private Collider[] movementVolumes; // 用來限制移動範圍的 Invisible Volume
     [SerializeField] private float flyMinY = 5.2f;
-    private float rotationAngle = 39.857f; // UI 平面傾斜角度
+    [SerializeField] private float rotationAngle = 39.857f; // UI 平面傾斜角度
     //-----------------------------------------------------------------//
     private Dictionary<int, string> actionTriggers = new()
     {

@@ -10,85 +10,53 @@ public class PackUIHandler : MonoBehaviour
 {
     public GameObject packUI; // 背包 UI
     public Button packButton; // 背包按鈕
-    //-----------------------------------------------------------------//
-    public TeamManager teamManager; // 透過 TeamManager 物件取得當前隊伍成員
-    private List<PlayerControlMainWorld> teamMembers = new(); // 記錄取得的隊伍成員
-    private List<PlayerInput> playerInputs = new(); // 玩家輸入系統
+    public Button closeButton; // 關閉背包按鈕
+    public Button panelBackground; // 點擊背景關閉 UI 的按鈕
     //-----------------------------------------------------------------//
     public AudioClip openPackSound;
-    private AudioSource audioSource;
 
-    void Awake()
-    {
-        audioSource = GetComponent<AudioSource>();
-    }
     void Start()
     {
         packUI.SetActive(false); // 初始化背包 UI 狀態
+        
         packButton.onClick.AddListener(OpenPackUI); // 設置按鈕點擊事件
-
-        teamMembers = teamManager.teamMembers; // 獲取當前隊伍成員
-        foreach (PlayerControlMainWorld member in teamMembers)
-        {
-            if (member.TryGetComponent<PlayerInput>(out var playerInput))
-            {
-                playerInputs.Add(playerInput); // 收集所有玩家的輸入系統
-            }
-        }
-    }
-
-    void Update()
-    {
-        if (packUI.activeSelf && Input.GetMouseButtonDown(0)) // 檢查滑鼠左鍵是否被按下
-        {
-            if (!IsCursorClickUIObject()) // 點擊非 UI 區域時關閉 UI
-            {
-                Debug.Log("關閉背包 UI");
-                packUI.SetActive(false);
-            }
-        }
-
-        // 檢查背包 UI 是否開啟，並根據狀態啟用或禁用背包按鈕＆角色移動
-        if (!packUI.activeSelf)
-        {
-            // packButton.interactable = true; // 啟用背包按鈕
-            foreach (PlayerInput input in playerInputs)
-            {
-                input.enabled = true; // 啟用所有玩家的輸入系統
-            }
-        }
-        else
-        {
-            // packButton.interactable = false; // 禁用背包按鈕
-            foreach (PlayerInput input in playerInputs)
-            {
-                input.enabled = false; // 禁用所有玩家的輸入系統
-            }
-        }
+        closeButton.onClick.AddListener(ClosePackUI);
+        panelBackground.onClick.AddListener(ClosePackUI);
     }
 
     private void OpenPackUI()
     {
         if (!packUI.activeSelf) // 如果背包 UI 未開啟，則打開它
         {
-            packUI.SetActive(true); 
-            audioSource.PlayOneShot(openPackSound); // 播放音效
+            UIAndPlayerInput.DisableAllPlayerInputs(); // 禁用所有玩家的輸入系統
+            packUI.SetActive(true);
+            AudioManager.Instance.PlaySFX(openPackSound); // 播放音效
         }
     }
 
-    private bool IsCursorClickUIObject()
+    public void ClosePackUI() // 使用 UI 上的叉叉關閉 UI
     {
-        // 根據當前操作，設定滑鼠或觸控位置
-        PointerEventData eventData = new(EventSystem.current)
-        {
-            position = Input.mousePosition
-        };
-
-        // RaycastAll 會從 eventData 中的滑鼠位置發射一條射線，檢測所有碰撞的 UI 元素
-        // 符合條件的 UI 元素會被加到 raycastResults 清單中
-        var raycastResults = new List<RaycastResult>();
-        EventSystem.current.RaycastAll(eventData, raycastResults);
-
-        return raycastResults.Count > 0;
+        Debug.Log("關閉 UI");
+        // ResetPackUI();
+        UIAndPlayerInput.EnableAllPlayerInputs(); // 啟用所有玩家的輸入系統
+        packUI.SetActive(false);
     }
+
+    // private void ResetPackUI()
+    // {
+    //     // 重置背包內的道具資訊顯示
+    //     ItemInfoUI itemInfoUI = packUI.GetComponentInChildren<ItemInfoUI>();
+    //     UseItem useItem = packUI.GetComponentInChildren<UseItem>();
+    //     ChangeTypeUI changeTypeUI = packUI.GetComponentInChildren<ChangeTypeUI>();
+    //     if (itemInfoUI != null && useItem != null)
+    //     {
+    //         itemInfoUI.ResetItemInfo();
+    //         useItem.ResetDropdown();
+    //         changeTypeUI.ResetTypeUI();
+    //     }
+    //     else
+    //     {
+    //         Debug.Log("背包 UI 重置失敗");
+    //     }
+    // }
 }

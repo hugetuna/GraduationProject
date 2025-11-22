@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using System;
 using UnityEngine.UI;
 
 /* 掛在 UIManager 等物件上，不得掛在 UI（視窗）本身 */
@@ -18,6 +19,8 @@ public class DesktopUIHandler : MonoBehaviour
     //-----------------------------------------------------------------//
     [Header("相關音效")]
     [SerializeField] private AudioClip turnOnSound;
+    //-----------------------------------------------------------------//
+    public static event Action OnDesktopUIClosed; // 關閉桌面 UI 事件
 
     void Awake()
     {
@@ -28,6 +31,7 @@ public class DesktopUIHandler : MonoBehaviour
     void Start()
     {
         desktopUI.SetActive(false); // 初始隱藏桌面 UI
+
         ComputerInteraction.OnComputerInteracted += ShowDesktopUI; // 訂閱並監聽與電腦互動事件
         powerButton.onClick.AddListener(TurnOffComputer); // 設置關機按鈕點擊事件
     }
@@ -59,6 +63,8 @@ public class DesktopUIHandler : MonoBehaviour
 
         startMenu.SetActive(false); // 關閉開始選單
         desktopUI.SetActive(false); // 關閉電腦桌面 UI
+
+        OnDesktopUIClosed?.Invoke(); // 觸發關閉桌面 UI 事件
 
         // 切換成透視投影
         Camera.main.orthographic = false;
