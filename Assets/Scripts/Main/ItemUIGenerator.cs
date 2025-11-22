@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class ItemUIGenerator : MonoBehaviour
 {
     public ResourceManager resourceManager; // 資源管理器，用於獲取道具清單
-    private List<ItemStack> itemList = new(); // 儲存道具資訊的清單
+    [SerializeField] private List<ItemStack> itemList = new(); // 儲存道具資訊的清單
     //-----------------------------------------------------------------//
     public GameObject itemPrefab; // 用於生成道具項目的預製件
     public Transform consumableContent; // 用於放置生成的道具物件的容器（消耗品）
@@ -18,7 +18,8 @@ public class ItemUIGenerator : MonoBehaviour
 
     void Start()
     {
-        itemList = resourceManager.items; // 從資源管理器獲取道具清單
+        // itemList = resourceManager.items; // 從資源管理器獲取道具清單
+        // ...但因為 GameManager 似乎會重置我事先設定好的資料，只好自己指派
         foreach (ItemStack itemStack in itemList) // 按清單生成初始的道具項目
         {
             // 生成道具並為其分門別類
