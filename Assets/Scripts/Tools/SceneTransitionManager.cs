@@ -19,6 +19,8 @@ public class SceneTransitionManager : MonoBehaviour
     [Header("為了EventManager")]
     public System.Action onDialogueFinish = null;
     public string waitSceneName = "";
+    [Header("背景音樂")]
+    public AudioClip b1;
     private void Awake()
     {
         // Singleton 模式，確保跨場景唯一存在
@@ -118,6 +120,9 @@ public class SceneTransitionManager : MonoBehaviour
         float coverOutTime = GetAnimationClipLength("CoverOut");
         yield return new WaitForSeconds(coverOutTime > 0 ? coverOutTime : 0.5f);
         isTransitioning = false;
+        // 7. 處理背景音樂 by Cake
+        AudioManager.Instance.StopMusic(); // 停止當前音樂
+        if(sceneName.ToLower().Contains("b1")) AudioManager.Instance.SetMusic(b1); // 播放新場景的背景音樂
     }
 
     //取得動畫片段長度
