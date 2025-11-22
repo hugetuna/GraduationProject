@@ -23,8 +23,8 @@ public class FansItem : Item
     }
     public override void Use(IdolInstance target)
     {
-        ResourceManager resourceManager = FindObjectOfType<ResourceManager>();
-        TeamManager teamManager = FindObjectOfType<TeamManager>();
+        ResourceManager resourceManager = FindAnyObjectByType<ResourceManager>();
+        TeamManager teamManager = FindAnyObjectByType<TeamManager>();
         if (harvester == IdolWho.none)
         {
             Debug.LogError("找不到 IdolInstance！");

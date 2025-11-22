@@ -22,6 +22,9 @@ public class PlayerControlMainWorld : MonoBehaviour
     public bool faceDirection = false;//true面向右，false面相左
     public float moveSpeed = 1f;
     public Transform Bone;
+    //互動事件參數
+    public System.Action onInteractionFinish;
+    public string waitInteractionKey;
     //設定初始可操作角色
     void Start()
     {
@@ -39,7 +42,15 @@ public class PlayerControlMainWorld : MonoBehaviour
         {
             this.enabled = false; // 只有第一個角色預設可動
         }
-
+        //偵測是否處於等待互動事件狀態
+        if (DayManager.Instance.dayEventManager.isWaitingForInteract==true)
+        {
+            waitInteractionKey = DayManager.Instance.dayEventManager.interactObjectKey;
+            onInteractionFinish =() =>
+            {
+                DayManager.Instance.dayEventManager.TriggerNextEvent();
+            };
+        }
     }
     void Update()
     {
@@ -152,13 +163,19 @@ public class PlayerControlMainWorld : MonoBehaviour
                 if (interactable != null)
                 {
                     // **撥放動畫**
-                    if (interactable.InteractionKey!=null)
+                    if (interactable.InteractionKey== "TGrow")
                     {
                         animator.SetTrigger(interactable.InteractionKey);
                         StartCoroutine(InteractionAnimation(GetAnimationLength(toolAnimationName[interactable.InteractionKey])));
                     }
                     interactable.Interact(itemOnHandIndex);
                     Debug.Log("與 " + hit.gameObject.name + "互動");
+                    if (interactable.InteractionKey == waitInteractionKey)
+                    {
+                        waitInteractionKey = null;
+                        onInteractionFinish?.Invoke();
+                        onInteractionFinish = null;
+                    }
                     return; // 只與最近的物件互動
                 }
             }

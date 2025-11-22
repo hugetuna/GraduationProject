@@ -7,10 +7,15 @@ public class DayEventManager : MonoBehaviour
     public List<DayEvent> allDayEvents; // 用來保存所有的日常事件
     private Queue<DayEvent> eventQueue = new Queue<DayEvent>();//當天需觸發的所有事件
     private HashSet<string> triggeredEvents = new HashSet<string>(); // 紀錄已觸發事件避免重複觸發
+    public int EventedNumberToday =0;
+    [Header("紀錄互動事件所需的參數")]
+    public bool isWaitingForInteract=false;
+    public string interactObjectKey;
     // 初始化當天事件隊列
     public void InitializeDayEvents(int currentDay)
     {
         Debug.Log($"今天是第 {currentDay} 天");
+        EventedNumberToday = 0;
         eventQueue.Clear();
         foreach (var dayEvent in allDayEvents)
         {
@@ -36,6 +41,7 @@ public class DayEventManager : MonoBehaviour
             TriggerNextEvent(); // 繼續觸發下一個事件
             return;
         }
+        EventedNumberToday++;
         RunEvent(ev, () => {
             TriggerNextEvent();
         });
@@ -90,6 +96,25 @@ public class DayEventManager : MonoBehaviour
                 onFinish?.Invoke();
                 Destroy(waitEventObj);
             });
+        }
+        else if (dayEvent.Type== EventType.WaitUntilInteractWithObject)
+        {
+            // 等待玩家與指定物件互動的邏輯
+            isWaitingForInteract = true;
+            interactObjectKey = dayEvent.interactableObjectKey;
+            TeamManager teamManager = FindAnyObjectByType<TeamManager>();
+            if (teamManager != null)
+            {
+                foreach (var member in teamManager.teamMembers)
+                {
+                    member.waitInteractionKey= interactObjectKey;
+                    member.onInteractionFinish = () =>
+                    {
+                        isWaitingForInteract = false;
+                        onFinish?.Invoke();
+                    };
+                }
+            }
         }
     }
 }

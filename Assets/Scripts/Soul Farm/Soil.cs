@@ -96,6 +96,13 @@ public class Soil : MonoBehaviour, IInteractable
         {
             TurnTheSoil();
             AudioManager.Instance.PlaySFX(audio_TurnTheSoil);
+            //新手教學的特殊事件處理
+            if (DayManager.Instance.date==2&&DayManager.Instance.dayEventManager.EventedNumberToday==5)
+            {
+                TurnTheSoil();
+                PlantSeed(1);
+                seedOnThisSoil.Grown(3);
+            }
         }
         //未處於種植狀態且可種植->種植
         else if (isPlanting == false && isPlantable == true)
@@ -121,9 +128,16 @@ public class Soil : MonoBehaviour, IInteractable
             //最終值算法(暫定)->種植值+魅力-80~種植值+魅力+30
             int finalSeedRewardPoint = Random.Range(seedRewardPoint - 80 + leader.charm, seedRewardPoint + 30 + leader.charm);
             Debug.Log(finalSeedRewardPoint);
-            resourceManager.AddItem(soilManager.RollFansItem(finalSeedRewardPoint, leader.idolIndex));
+            FansItem newFan = soilManager.RollFansItem(finalSeedRewardPoint, leader.idolIndex);
+            resourceManager.AddItem(newFan);
             isPlanting = false;
             isPlantable = false;
+            //新手教學的特殊事件處理
+            if (DayManager.Instance.date == 2 && DayManager.Instance.dayEventManager.EventedNumberToday == 7)
+            {
+                newFan.SetPriceType(PriceType.Fans);
+                newFan.Use(leader);
+            }
             Destroy(seedOnThisSoil.gameObject);
         }
     } 
