@@ -51,7 +51,7 @@ public class DemonPetAnimation : MonoBehaviour
         {
             // 等待一段隨機時間
             float waitTime = Random.Range(minWait, maxWait);
-            Debug.Log($"等待 {waitTime:F1} 秒後觸發動作");
+            // Debug.Log($"等待 {waitTime:F1} 秒後觸發動作");
             yield return new WaitForSeconds(waitTime);
 
             // 根據位置範圍決定可用動作

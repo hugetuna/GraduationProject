@@ -18,8 +18,18 @@ public class ProductUIGenerator : MonoBehaviour
         // 從無處獲取商品清單
         foreach (Product product in productList) // 按清單生成初始的商品項目
         {
-            // 生成商品並分類...然而現在還沒有分類
-            GameObject productObject = Instantiate(productPrefab, productContent[0]); // "Wrapper" + Card
+            // 生成商品並分類...然而現在只有兩個分類（消耗品 vs. 裝備）
+            GameObject productObject = null;
+            
+            if(product.item.itemType == ItemType.Consumable)
+            {
+                productObject = Instantiate(productPrefab, productContent[0]); // "Wrapper" + Card
+            }
+            else if(product.item.itemType == ItemType.Equipment)
+            {
+                productObject = Instantiate(productPrefab, productContent[1]); // "Wrapper" + Card
+            }
+            
             if (productObject == null)
             {
                 Debug.Log("商品卡片生成失敗！");
