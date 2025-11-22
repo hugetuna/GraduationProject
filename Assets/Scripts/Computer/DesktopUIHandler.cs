@@ -1,18 +1,23 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
 
 /* 掛在 UIManager 等物件上，不得掛在 UI（視窗）本身 */
 public class DesktopUIHandler : MonoBehaviour
 {
-    [Tooltip("桌面 UI —— 與電腦互動可開啟電腦介面")]
+    [Header("電腦桌面與其底下 UI")]
     public GameObject desktopUI;
+    [SerializeField] private Button powerButton;
+    [SerializeField] private GameObject startMenu;
     //-----------------------------------------------------------------//
-    [Tooltip("用來取得當前隊伍成員，並在介面開啟時停用角色控制")]
+    [Header("角色控制")]
     public TeamManager teamManager; // 透過 TeamManager 物件取得當前隊伍成員
     private List<PlayerControlMainWorld> teamMembers = new(); // 記錄取得的隊伍成員
     private List<PlayerInput> playerInputs = new(); // 玩家輸入系統
+    //-----------------------------------------------------------------//
+    [Header("相關音效")]
+    [SerializeField] private AudioClip turnOnSound;
 
     void Awake()
     {
@@ -24,15 +29,7 @@ public class DesktopUIHandler : MonoBehaviour
     {
         desktopUI.SetActive(false); // 初始隱藏桌面 UI
         ComputerInteraction.OnComputerInteracted += ShowDesktopUI; // 訂閱並監聽與電腦互動事件
-
-        teamMembers = teamManager.teamMembers; // 獲取當前隊伍成員
-        foreach (PlayerControlMainWorld member in teamMembers)
-        {
-            if (member.TryGetComponent<PlayerInput>(out var playerInput))
-            {
-                playerInputs.Add(playerInput); // 收集所有玩家的輸入系統
-            }
-        }
+        powerButton.onClick.AddListener(TurnOffComputer); // 設置關機按鈕點擊事件
     }
 
     void OnDestroy()
@@ -40,30 +37,36 @@ public class DesktopUIHandler : MonoBehaviour
         ComputerInteraction.OnComputerInteracted -= ShowDesktopUI; // 取消訂閱與電腦互動事件
     }
 
-    void Update()
+    private void ShowDesktopUI()
     {
-        if (desktopUI.activeSelf)
+        UIAndPlayerInput.DisableAllPlayerInputs(); // 禁用所有玩家的輸入系統
+
+        desktopUI.SetActive(true); // 顯示桌面 UI
+        AudioManager.Instance.PlaySFX(turnOnSound); // 播放開機音效
+        
+        Camera.main.orthographic = true; // 切換成平行投影
+
+        teamMembers = teamManager.teamMembers; // 獲取當前隊伍成員
+        foreach (PlayerControlMainWorld member in teamMembers)
         {
-            foreach (PlayerInput input in playerInputs)
-            {
-                input.enabled = false; // 禁用所有玩家的輸入系統
-            }
-        }
-        else
-        {
-            foreach (PlayerInput input in playerInputs)
-            {
-                input.enabled = true; // 啟用所有玩家的輸入系統
-            }
+            member.gameObject.SetActive(false); // 隱藏角色避免遮擋 UI
         }
     }
 
-    private void ShowDesktopUI()
+    private void TurnOffComputer()
     {
-        desktopUI.SetActive(true); // 顯示桌面 UI
-        Camera cam = GetComponent<Camera>();
+        UIAndPlayerInput.EnableAllPlayerInputs(); // 啟用所有玩家的輸入系統
 
-        // 切換成平行投影
-        Camera.main.orthographic = true;
+        startMenu.SetActive(false); // 關閉開始選單
+        desktopUI.SetActive(false); // 關閉電腦桌面 UI
+
+        // 切換成透視投影
+        Camera.main.orthographic = false;
+
+        teamMembers = teamManager.teamMembers; // 獲取當前隊伍成員
+        foreach (PlayerControlMainWorld member in teamMembers)
+        {
+            member.gameObject.SetActive(true); // 正常顯示角色
+        }
     }
 }

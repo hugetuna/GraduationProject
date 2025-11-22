@@ -13,6 +13,7 @@ public class DemonUIHandler : MonoBehaviour
     private Transform demonPetTransform;
     [SerializeField] private GameObject demonUI; // 惡魔頁面（可透過點擊惡魔桌寵開啟）
     [SerializeField] private Button byeButton; // 退出惡魔頁面的按鈕【沒事】
+    [SerializeField] private AudioClip clickDemonSound; // 點擊惡魔桌寵的音效
 
     void Awake()
     {
@@ -45,6 +46,7 @@ public class DemonUIHandler : MonoBehaviour
         Debug.Log("點擊了惡魔桌寵");
         demonPet.SetActive(false); // 隱藏惡魔桌寵
         demonUI.SetActive(true); // 顯示惡魔頁面（預設就在圖層最前面）
+        AudioManager.Instance.PlaySFX(clickDemonSound, 0.5f); // 播放音效
     }
 
     public void OnByeButtonClick()
