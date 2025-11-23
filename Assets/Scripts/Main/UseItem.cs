@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
+using System.Linq;
 
 /* 掛在背包頁面的使用按鈕上，按下按鈕時會使用選擇的道具在特定角色上 */
 [DefaultExecutionOrder(0)]
@@ -16,7 +17,7 @@ public class UseItem : MonoBehaviour
     [SerializeField]
     private List<PlayerControlMainWorld> teamMembers = new(); // 記錄取得的隊伍成員
     //-----------------------------------------------------------------//
-    private IdolInstance[] idolInstance; // 存放偶像資料參考
+    private IdolInstance[] idolInstances; // 存放偶像資料參考
     private IdolInstance itemUser; // 使用道具的角色
     public ItemInfoUI itemInfoUI; // 用於獲取欲使用的道具資訊
     //-----------------------------------------------------------------//
@@ -57,7 +58,7 @@ public class UseItem : MonoBehaviour
         GetComponent<Button>().onClick.AddListener(OnUseItem);
 
         // 獲取場景中所有具備 IdolInstance 的物件
-        idolInstance = FindObjectsByType<IdolInstance>(FindObjectsSortMode.None);
+        idolInstances = TeamDataUtility.IdolInstances.Values.ToArray();
     }
 
     private void OnDropdownValueChanged(int index)
@@ -74,11 +75,11 @@ public class UseItem : MonoBehaviour
         else if (selectedCharacterName == "Karo") characterIndex = IdolWho.Karo;
         else if (selectedCharacterName == "Sirius") characterIndex = IdolWho.Sirius;
 
-        for (int i = 0; i < idolInstance.Length; i++) // 確保不會超出陣列範圍
+        for (int i = 0; i < idolInstances.Length; i++) // 確保不會超出陣列範圍
         {
-            if (idolInstance[i].idolIndex == characterIndex) // 找到對應的偶像資料
+            if (idolInstances[i].idolIndex == characterIndex) // 找到對應的偶像資料
             {
-                itemUser = idolInstance[i]; // 設定角色資訊
+                itemUser = idolInstances[i]; // 設定角色資訊
                 break; // 找到後跳出迴圈
             }
         }
