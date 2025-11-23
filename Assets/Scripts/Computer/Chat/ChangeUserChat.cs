@@ -38,6 +38,11 @@ public class ChangeUserChat : MonoBehaviour
             userRuntime = new UserRuntime() { user = user };
             chatSaveData.users[user] = userRuntime;
         }
+
+        // 備份 chatSaveData 的變動
+        GameManager.Instance.SaveChatData(chatSaveData); 
+
+        // 切換用戶的前置作業完成，正式開始聊天
         ChatRoomManager.Instance.StartChatting(userRuntime);
     }
 }

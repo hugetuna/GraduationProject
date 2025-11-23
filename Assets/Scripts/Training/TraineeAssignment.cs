@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 
-/* 掛在 TrainingManager 上 */
+/* 掛在 TrainingManager 上，負責指派訓練成員並備份資料 */
 public class TraineeAssignment : MonoBehaviour
 {
     private List<string> trainees = new();
@@ -24,8 +24,12 @@ public class TraineeAssignment : MonoBehaviour
     {
         List<PlayerControlMainWorld> teamMembers = tm.teamMembers;
 
-        // 先將之前隱藏的角色顯示出來 
-        foreach (var character in disappearCharacters) character.SetActive(true);
+        // 將隱藏的角色都顯示出來 
+        foreach (var character in teamMembers){
+            character.gameObject.SetActive(true);
+            var name = TeamDataUtility.CleanNameOfCharacterObject(character.name);
+            UpdateTrainRecord(name, isActive: true); // 重設跨場景角色啟用狀態
+        }
         disappearCharacters.Clear(); // 清空上一次的列表 
 
         // 取得目前 trainees 
@@ -50,24 +54,32 @@ public class TraineeAssignment : MonoBehaviour
         // 遍歷 trainees 以進行訓練指派 
         foreach (string trainee in trainees)
         {
-            IdolInstance idolInstance = System.Array.Find(
-                TeamDataUtility.IdolInstances,
-                obj => obj.name.Contains(trainee)
-            );
+            IdolInstance idolInstance = TeamDataUtility.IdolInstances[trainee];
             if (idolInstance == null)
             {
                 Debug.Log($"找不到欲訓練的角色 {trainee}");
                 continue;
             }
 
-            // 這裡還不會真的加角色數值 
-            // float bonus = string.IsNullOrEmpty(data.teacherName) ? data.basicBenefit : data.withTeacherBenefit;
-            // switch (data.trainingType)
-            // {
-            //     case "Dance": idolInstance.dance += (int)(bonus * idolInstance.daTrainingBonus); break;
-            //     case "Vocal": idolInstance.vocal += (int)(bonus * idolInstance.voTrainingBonus); break;
-            //     case "Visual": idolInstance.visual += (int)(bonus * idolInstance.viTrainingBonus); break;
-            // }
+            // 同步更新 IdolInstance 的 trainRecord（備份用，還不會真增減角色數值）
+            float bonus = string.IsNullOrEmpty(data.teacherName) ? data.basicBenefit : data.withTeacherBenefit;
+            int benefit = 0;
+            switch (data.trainingType)
+            {
+                case "Dance":
+                    benefit = (int)(bonus * idolInstance.daTrainingBonus);
+                    UpdateTrainRecord(trainee, dance: benefit);
+                    break;
+                case "Vocal":
+                    benefit = (int)(bonus * idolInstance.voTrainingBonus);
+                    UpdateTrainRecord(trainee, vocal: benefit);
+                    break;
+                case "Visual":
+                    benefit = (int)(bonus * idolInstance.viTrainingBonus);
+                    UpdateTrainRecord(trainee, visual: benefit);
+                    break;
+            }
+            UpdateTrainRecord(trainee, vigour: data.neededVigour, isActive: false);
 
             // 隱藏隊伍中去訓練的角色 
             var character = idolInstance.gameObject;
@@ -76,10 +88,30 @@ public class TraineeAssignment : MonoBehaviour
         }
 
         // 更新成員們的 positionInTeam 
-        for (int i = 0; i < teamMembers.Count; i++)
-        {
-            var idol = teamMembers[i].GetComponent<IdolInstance>();
-            idol.positionInTeam = i;
-        }
+        // for (int i = 0; i < teamMembers.Count; i++)
+        // {
+        //     var idol = teamMembers[i].GetComponent<IdolInstance>();
+        //     idol.positionInTeam = i;
+        // }
+    }
+
+    // 在指派訓練成員的同時備份狀態變化
+    public static void UpdateTrainRecord(string name, IdolTrainingState state = IdolTrainingState.None,
+                                    Vector2? position = null,
+                                    int? vigour = null,
+                                    int? dance = null,
+                                    int? vocal = null,
+                                    int? visual = null,
+                                    bool? isActive = null)
+    {
+        var idol = TeamDataUtility.IdolInstances[name];
+
+        if (state != IdolTrainingState.None) idol.state = state;
+        if (position != null) idol.positionInTrainingUI = position.Value;
+        if (vigour != null) idol.vigourCost = vigour.Value;
+        if (dance != null) idol.danceExp = dance.Value;
+        if (vocal != null) idol.vocalExp = vocal.Value;
+        if (visual != null) idol.visualExp = visual.Value;
+        if (isActive != null) idol.isActive = isActive.Value;
     }
 }

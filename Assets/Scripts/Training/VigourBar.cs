@@ -29,10 +29,7 @@ public class VigourBar : MonoBehaviour
     {
         if(characterImage.sprite != null)
         {
-            characterInfo = System.Array.Find(
-                TeamDataUtility.IdolInstances, obj 
-                => obj.name.Contains(myName)
-            ); // 尋找對應的角色資料
+            characterInfo = TeamDataUtility.IdolInstances[myName]; // 尋找對應的角色資料
         }
 
         vigourSlider.maxValue = characterInfo.vigourMax; // 設定體力值 UI 的最大值

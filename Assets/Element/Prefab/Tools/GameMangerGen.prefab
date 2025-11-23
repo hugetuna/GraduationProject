@@ -75,7 +75,8 @@ MonoBehaviour:
     daysGrown: 0
     currentRewardPoint: 0
   idolDataList:
-  - idolIndex: 0
+  - positionInTeam: 0
+    idolIndex: 0
     basicStatus: {fileID: 11400000, guid: d15161467c084e1429c3155b5d36be6d, type: 2}
     vocal: 0
     dance: 0
@@ -91,7 +92,10 @@ MonoBehaviour:
     fans: 0
     bondWithP: 0
     BHaveSetUp: 0
-  - idolIndex: 1
+    basicTrainRecord: {fileID: 11400000, guid: d3a131f41f6629544a1ec71dfd859083, type: 2}
+    isActive: 1
+  - positionInTeam: 1
+    idolIndex: 1
     basicStatus: {fileID: 11400000, guid: a8b952e84e0073849a2d817947bb270c, type: 2}
     vocal: 0
     dance: 0
@@ -107,7 +111,10 @@ MonoBehaviour:
     fans: 0
     bondWithP: 0
     BHaveSetUp: 0
-  - idolIndex: 2
+    basicTrainRecord: {fileID: 11400000, guid: d3a131f41f6629544a1ec71dfd859083, type: 2}
+    isActive: 1
+  - positionInTeam: 2
+    idolIndex: 2
     basicStatus: {fileID: 11400000, guid: e14ab52a0b03c89419a4e9a8c75d38ed, type: 2}
     vocal: 0
     dance: 0
@@ -123,6 +130,10 @@ MonoBehaviour:
     fans: 0
     bondWithP: 0
     BHaveSetUp: 0
+    basicTrainRecord: {fileID: 11400000, guid: d3a131f41f6629544a1ec71dfd859083, type: 2}
+    isActive: 1
+  dialogueSaveData: {fileID: 11400000, guid: 71e85a0e4a2b506489970227b14ca3ed, type: 2}
+  onStageStage: {fileID: 0}
   ResourceData:
     Money: 0
     MoneyBonus: 1
@@ -139,6 +150,8 @@ MonoBehaviour:
       idolB: {fileID: 0}
       bondValue: 0
     items: []
+  chatSaveData: {fileID: 0}
+  isElevatorUsedToday: 0
 --- !u!114 &7615355056145143729
 MonoBehaviour:
   m_ObjectHideFlags: 0

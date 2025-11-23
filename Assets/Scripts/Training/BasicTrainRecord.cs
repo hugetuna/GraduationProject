@@ -1,0 +1,15 @@
+using System.Collections;
+using System.Collections.Generic;
+using UnityEngine;
+
+[CreateAssetMenu(fileName = "BasicTrainRecord", menuName = "Training/BasicTrainRecord")]
+
+public class BasicTrainRecord : ScriptableObject
+{
+    public IdolTrainingState state = IdolTrainingState.InTeam; // 在隊伍或者特定訓練室
+    public Vector2 position = Vector2.zero; // 代表圖片在訓練 UI 的位置
+    public int vigourCost = 0; // 體力消耗
+    public int danceExp = 0; // 舞蹈收益
+    public int vocalExp = 0; // 歌唱收益
+    public int visualExp = 0; // 表現力收益
+}

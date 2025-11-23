@@ -16,10 +16,7 @@ public class BenefitBar : MonoBehaviour
 
     public void Initialize(string myName, TrainingUIData trainingUIData)
     {
-        characterInfo = System.Array.Find(
-            TeamDataUtility.IdolInstances, obj
-            => obj.name.Contains(myName)
-        ); // 尋找對應的角色資料
+        characterInfo = TeamDataUtility.IdolInstances[myName]; // 尋找對應的角色資料
 
         // CurrentDropZone 要等到第一次拖曳後才會設定好，這裡先顯示初始數值
         string trainingType = trainingUIData.trainingType.ToLower();

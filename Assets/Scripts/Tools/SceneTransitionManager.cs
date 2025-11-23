@@ -48,7 +48,10 @@ public class SceneTransitionManager : MonoBehaviour
             GameManager.Instance.SaveSoilData(new List<Soil>(allSoils));
         }
         //儲存偶像資料
-        IdolInstance[] allIdolInstances = FindObjectsByType<IdolInstance>(FindObjectsSortMode.None);
+        IdolInstance[] allIdolInstances = FindObjectsByType<IdolInstance>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None
+        );
         if (allIdolInstances.Length != 0)
         {
             var sortedIdols = allIdolInstances.OrderBy(i => i.positionInTeam).ToList();

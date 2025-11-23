@@ -1,16 +1,16 @@
 using UnityEngine;
+using System.Collections.Generic;
+using System.Linq;
 
 /* 提供隊伍相關的資料存取，不用特別掛在什麼地方 */
 public class TeamDataUtility : MonoBehaviour
 {
-    private static IdolInstance[] idolInstances = null;
-
-    public static IdolInstance[] IdolInstances
+    private static Dictionary<string, IdolInstance> idolInstances = new();
+    public static Dictionary<string, IdolInstance> IdolInstances
     {
         get
         {
-            // 如果陣列不存在或裡面物件被刪掉，就刷新
-            if (idolInstances == null)
+            if (idolInstances.Count == 0 || idolInstances.Values.Any(input => input == null))
             {
                 RefreshIdolInstances();
             }
@@ -20,7 +20,9 @@ public class TeamDataUtility : MonoBehaviour
 
     public static void RefreshIdolInstances()
     {
-        idolInstances = FindObjectsByType<IdolInstance>(FindObjectsSortMode.None);
+        var instances = FindObjectsByType<IdolInstance>(FindObjectsInactive.Include, FindObjectsSortMode.None);
+        idolInstances = instances.ToDictionary(i => CleanNameOfCharacterObject(i.name), i => i);
+        Debug.Log($"刷新 IdolInstances，共 {idolInstances.Count} 個角色");
     }
 
     public static string CleanNameOfCharacterUI(string raw) // 移除角色 UI 圖片檔名中的多餘字串

@@ -13,7 +13,7 @@ public class GameManager : MonoBehaviour
     public StageAttribute onStageStage;
     public ResourceSaveData ResourceData;
     public ChatSaveData chatSaveData;
-    public bool isElevatorUsedToday=false;
+    public bool isElevatorUsedToday = false;
 
     //單例物件生成
     void Awake()
@@ -58,8 +58,9 @@ public class GameManager : MonoBehaviour
         {
             var data = new IdolSaveData
             {
+                positionInTeam = idol.positionInTeam,
                 basicStatus = idol.basicStatus,
-                idolIndex=idol.idolIndex,
+                idolIndex = idol.idolIndex,
                 vocal = idol.vocal,
                 dance = idol.dance,
                 visual = idol.visual,
@@ -67,13 +68,21 @@ public class GameManager : MonoBehaviour
                 daTrainingBonus = idol.daTrainingBonus,
                 viTrainingBonus = idol.viTrainingBonus,
                 charm = idol.charm,
-                charmInCount=idol.charmInCount,
-                performance=idol.performance,
-                vigour= idol.vigour,
-                vigourMax=idol.vigourMax,
-                fans= idol.fans,
-                bondWithP= idol.bondWithP,
-                BHaveSetUp=true
+                charmInCount = idol.charmInCount,
+                performance = idol.performance,
+                vigour = idol.vigour,
+                vigourMax = idol.vigourMax,
+                fans = idol.fans,
+                bondWithP = idol.bondWithP,
+                BHaveSetUp = true,
+                basicTrainRecord = idol.BasicTrainRecord,
+                state = idol.state,
+                positionInTrainingUI = idol.positionInTrainingUI,
+                vigourCost = idol.vigourCost,
+                danceExp = idol.danceExp,
+                vocalExp = idol.vocalExp,
+                visualExp = idol.visualExp,
+                isActive = idol.isActive
             };
             idolDataList.Add(data);
         }
@@ -81,7 +90,7 @@ public class GameManager : MonoBehaviour
     //保存劇情文本(方便轉場時直接使用)
     public void SaveInkJSONAssetData(DialogueSaveData data)
     {
-        dialogueSaveData=data;
+        dialogueSaveData = data;
     }
     //保存舞台資料(方便轉場時直接使用)
     public void SaveStageAttribute(StageAttribute data)

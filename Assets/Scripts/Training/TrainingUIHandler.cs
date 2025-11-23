@@ -68,11 +68,14 @@ public class TrainingUIHandler : MonoBehaviour
 
         for (int i = 0; i < characterImages.Count; i++)
         {
-            if (i < characterSprites.Count) characterImages[i].sprite = characterSprites[i];
+            if (i < characterSprites.Count)
+            {
+                characterImages[i].sprite = characterSprites[i];
+            }
             else characterImages[i].sprite = null; // 超出範圍的圖片插槽設為空，避免報錯（當圖片少於插槽）
         }
 
-        // 檢查角色是否在隊伍裡，把不在的（UI 物件）隱藏起來
+        // 檢查角色在訓練 UI 裡的位置，把不在隊伍裡的（UI 物件）隱藏起來
         CheckCharactersInTeam();
 
         if (!isInitialized)
@@ -96,11 +99,11 @@ public class TrainingUIHandler : MonoBehaviour
             string name = TeamDataUtility.CleanNameOfCharacterUI(img.sprite.name);
             var state = TrainingUIManager.Instance.GetIdolState(name);
 
-            Debug.Log($"[Check] {name} state = {state}");
+            // Debug.Log($"[Check] {name} state = {state}");
 
-            if(trainingUIData.trainingType.ToLower() == "dance")
+            if (trainingUIData.trainingType.ToLower() == "dance")
             {
-                if(state != IdolTrainingState.InTeam && state != IdolTrainingState.InDance)
+                if (state != IdolTrainingState.InTeam && state != IdolTrainingState.InDance)
                 {
                     img.gameObject.SetActive(false);
                 }
@@ -109,9 +112,9 @@ public class TrainingUIHandler : MonoBehaviour
                     img.gameObject.SetActive(true);
                 }
             }
-            else if(trainingUIData.trainingType.ToLower() == "vocal")
+            else if (trainingUIData.trainingType.ToLower() == "vocal")
             {
-                if(state != IdolTrainingState.InTeam && state != IdolTrainingState.InVocal)
+                if (state != IdolTrainingState.InTeam && state != IdolTrainingState.InVocal)
                 {
                     img.gameObject.SetActive(false);
                 }
@@ -120,9 +123,9 @@ public class TrainingUIHandler : MonoBehaviour
                     img.gameObject.SetActive(true);
                 }
             }
-            else if(trainingUIData.trainingType.ToLower() == "visual")
+            else if (trainingUIData.trainingType.ToLower() == "visual")
             {
-                if(state != IdolTrainingState.InTeam && state != IdolTrainingState.InVisual)
+                if (state != IdolTrainingState.InTeam && state != IdolTrainingState.InVisual)
                 {
                     img.gameObject.SetActive(false);
                 }
@@ -130,6 +133,13 @@ public class TrainingUIHandler : MonoBehaviour
                 {
                     img.gameObject.SetActive(true);
                 }
+            }
+
+            // 跨場景專用：還原角色在訓練 UI 裡的位置
+            Vector2 position = TeamDataUtility.IdolInstances[name].positionInTrainingUI;
+            if (position != Vector2.zero) 
+            {
+                img.transform.localPosition = position;
             }
         }
     }
