@@ -106,6 +106,7 @@ public class SceneTransitionManager : MonoBehaviour
         }
         // 4.完成單例轉場後的額外處理
         DialogueManager.Instance.OnSceneLoaded();
+        ResourceManager.Instance.OnSceneLoaded();
         DayManager.Instance.OnSceneLoaded(sceneName);
         // 追加檢查事件是否被達成
         if (onDialogueFinish != null&&waitSceneName==sceneName)

@@ -10,6 +10,12 @@ public class MainCanvasSetter : MonoBehaviour
     public GameObject resourceUI;
     void Start()
     {
+        for (int i = 0; i < CharacterStatusUIs.Count; i++)
+        {
+            SetStatusBar statusBar = CharacterStatusUIs[i].GetComponent<SetStatusBar>();
+            statusBar.setIdolInstance(i);
+        }
+        setResourceUI();
         setStatusBar();
     }
     public void setStatusBar()
@@ -17,7 +23,12 @@ public class MainCanvasSetter : MonoBehaviour
         for (int i = 0; i < CharacterStatusUIs.Count; i++)
         {
             SetStatusBar statusBar = CharacterStatusUIs[i].GetComponent<SetStatusBar>();
-            statusBar.setByTeamManager(i);
+            statusBar.setByIdolInstance();
         }
+    }
+    public void setResourceUI()
+    {
+        ResourceStatusSetter resourceStatusSetter = resourceUI.GetComponent<ResourceStatusSetter>();
+        resourceStatusSetter.setByResourceAndDay();
     }
 }

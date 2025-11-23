@@ -41,7 +41,6 @@ public class FansItem : Item
                     effects[(int)priceType].Apply(whoToApply, resourceManager);
                 }
             }
-            Debug.LogError("找不到正確的 IdolInstance！");
         }
         else
         {

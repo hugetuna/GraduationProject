@@ -720,7 +720,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 9, y: 23}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2245493191904473126
 CanvasRenderer:
@@ -750,7 +750,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 37c8156fe91c5e64bb29c415fd4d151e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1fd74b4bd3c30864685234fc1f899207, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -870,7 +870,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 9, y: 23}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7710264112378437719
 CanvasRenderer:
@@ -900,7 +900,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 37c8156fe91c5e64bb29c415fd4d151e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1fd74b4bd3c30864685234fc1f899207, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -2051,6 +2051,7 @@ MonoBehaviour:
   DaNum: {fileID: 5770903633959874243}
   ViNum: {fileID: 5448855742423115130}
   VigorBar: {fileID: 141552295306089289}
+  idol: {fileID: 0}
   teamManager: {fileID: 0}
 --- !u!1 &2210623172553920493
 GameObject:
@@ -2223,7 +2224,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 9, y: 23}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3451654391024973338
 CanvasRenderer:
@@ -2253,7 +2254,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 37c8156fe91c5e64bb29c415fd4d151e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cd5f76631c617f944a6d9aa7d6937d01, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3071,7 +3072,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 9, y: 23}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3760788405684044111
 CanvasRenderer:
@@ -3101,7 +3102,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 37c8156fe91c5e64bb29c415fd4d151e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9da765fa21553bc47bca789f674d6bc1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3184,7 +3185,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 9, y: 23}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &6709633763484323788
 CanvasRenderer:
@@ -3214,7 +3215,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 37c8156fe91c5e64bb29c415fd4d151e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9da765fa21553bc47bca789f674d6bc1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -4377,6 +4378,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 5412880329796076567}
+  - component: {fileID: 8937479741333756685}
   m_Layer: 5
   m_Name: ResourceStatus
   m_TagString: Untagged
@@ -4409,6 +4411,22 @@ RectTransform:
   m_AnchoredPosition: {x: 60, y: 110}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8937479741333756685
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5248133940907172841}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d7b857b29414d4d469bc75b04ebf3e67, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Date: {fileID: 2683950653055903616}
+  DayCountDown: {fileID: 2769038774616110646}
+  MoneyCount: {fileID: 1200110097820480389}
+  WeatherIcon: {fileID: 2505683810294126006}
 --- !u!1 &5296779211557596741
 GameObject:
   m_ObjectHideFlags: 0
@@ -4805,7 +4823,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 9, y: 23}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2752099658550053053
 CanvasRenderer:
@@ -4835,7 +4853,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 37c8156fe91c5e64bb29c415fd4d151e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 9da765fa21553bc47bca789f674d6bc1, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5016,7 +5034,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 9, y: 23}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1942559240761467303
 CanvasRenderer:
@@ -5046,7 +5064,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 37c8156fe91c5e64bb29c415fd4d151e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 1fd74b4bd3c30864685234fc1f899207, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -5324,6 +5342,7 @@ MonoBehaviour:
   DaNum: {fileID: 2566612623006703112}
   ViNum: {fileID: 6584558305845718632}
   VigorBar: {fileID: 7359876997246205954}
+  idol: {fileID: 0}
   teamManager: {fileID: 0}
 --- !u!1 &6193823551546506952
 GameObject:
@@ -6254,7 +6273,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 9, y: 23}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8920760623502361719
 CanvasRenderer:
@@ -6284,7 +6303,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 37c8156fe91c5e64bb29c415fd4d151e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cd5f76631c617f944a6d9aa7d6937d01, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6329,7 +6348,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 9, y: 23}
+  m_SizeDelta: {x: 20, y: 20}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &7598112031570287148
 CanvasRenderer:
@@ -6359,7 +6378,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 21300000, guid: 37c8156fe91c5e64bb29c415fd4d151e, type: 3}
+  m_Sprite: {fileID: 21300000, guid: cd5f76631c617f944a6d9aa7d6937d01, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -6662,6 +6681,7 @@ MonoBehaviour:
   DaNum: {fileID: 37233038448709758}
   ViNum: {fileID: 8786962022274331711}
   VigorBar: {fileID: 1370485566934008474}
+  idol: {fileID: 0}
   teamManager: {fileID: 0}
 --- !u!1 &8875765951209178572
 GameObject:
@@ -7198,6 +7218,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 1632872892594467938}
     m_Modifications:
+    - target: {fileID: 530101894371948639, guid: 884369892c56394438611710b2d0e435, type: 3}
+      propertyPath: m_Size
+      value: 0.4000001
+      objectReference: {fileID: 0}
+    - target: {fileID: 530101894371948639, guid: 884369892c56394438611710b2d0e435, type: 3}
+      propertyPath: m_Value
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 1263936282762706358, guid: 884369892c56394438611710b2d0e435, type: 3}
       propertyPath: itemList.Array.data[4].quantity
       value: 1
@@ -7228,7 +7256,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3735165845238526724, guid: 884369892c56394438611710b2d0e435, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 0
+      value: -0.000030517578
       objectReference: {fileID: 0}
     - target: {fileID: 4805060353791888109, guid: 884369892c56394438611710b2d0e435, type: 3}
       propertyPath: m_Pivot.x

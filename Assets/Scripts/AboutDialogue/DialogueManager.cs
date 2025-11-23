@@ -425,6 +425,6 @@ public class DialogueManager : MonoBehaviour
             }        
         }
         onDialogueFinish?.Invoke();
-        //onDialogueFinish = null;
+        onDialogueFinish = null;
     }
 }

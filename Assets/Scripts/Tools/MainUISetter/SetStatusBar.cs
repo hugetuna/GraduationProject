@@ -14,12 +14,17 @@ public class SetStatusBar : MonoBehaviour
     public TextMeshProUGUI DaNum;
     public TextMeshProUGUI ViNum;
     public Image VigorBar;
+    //儲存隊伍成員
+    [SerializeField]
+    private IdolInstance idol = null;
     public TeamManager teamManager;
-    public void setByTeamManager(int memberNum)
+    public void setIdolInstance(int memberNum)
     {
-        teamManager= FindAnyObjectByType<TeamManager>();
-        if (teamManager == null) return;
-        IdolInstance idol = teamManager.teamMembers[memberNum].GetComponent<IdolInstance>();
+        teamManager = FindAnyObjectByType<TeamManager>();
+        idol = teamManager.teamMembers[memberNum].GetComponent<IdolInstance>();
+    }
+    public void setByIdolInstance()
+    {
         Head.sprite = HeadList[(int)idol.idolIndex];
         Name.text = idol.basicStatus.idolName;
         Fans.text = idol.fans.ToString();

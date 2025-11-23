@@ -17,14 +17,28 @@ public struct ItemStack
 }
 public class ResourceManager : MonoBehaviour
 {
-    private int Money=0;
+    public static ResourceManager Instance;
+
+    public int Money=0;
     public float MoneyBonus=1f;//賺錢倍率
     public BondData bondAB;//列表中，A與B的羈絆值，以下同
     public BondData bondBC;
     public BondData bondCA;
     public List<IdolInstance> idolsPicked;//選進隊伍的三名偶像
     public List<ItemStack> items = new List<ItemStack>();
-    void Start()
+    private void Awake()
+    {
+        if (Instance == null)
+        {
+            Instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
+        else
+        {
+            Destroy(gameObject);
+        }
+    }
+    public void OnSceneLoaded()
     {
         SetupResourceFromGameManager();
     }
@@ -47,6 +61,7 @@ public class ResourceManager : MonoBehaviour
     public void GainMoney(int gain)
     {
         Money += (int)(gain * MoneyBonus);
+        FindAnyObjectByType<MainCanvasSetter>().setResourceUI();
     }
     public void SpendMoney(int spend)
     {

@@ -5,6 +5,7 @@ using UnityEngine;
 public class DayManager : MonoBehaviour
 {
     public static DayManager Instance;
+    public int chapter = 0; //保存遊戲中的章節
     public int date = 0; //保存遊戲中的日期
     public DayEventManager dayEventManager;
     public bool IsInStartOfDay = false;//是否處於新一天開始的階段

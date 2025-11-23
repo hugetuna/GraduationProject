@@ -77,6 +77,20 @@ public class IdolInstance : MonoBehaviour
         bondWithP=data.bondWithP;//與玩家的羈絆
         BHaveSetUp = data.BHaveSetUp;
     }
+    public bool costVigour(int Amount)
+    {
+        if (vigour - Amount >= 0)
+        {
+            vigour -= Amount;
+            MainCanvasSetter mainCanvasSetter = FindAnyObjectByType<MainCanvasSetter>();
+            mainCanvasSetter.setStatusBar();
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     //每天結束時必須重製全員暫時狀態
     public void ResetTemporaryEffect()
     {
