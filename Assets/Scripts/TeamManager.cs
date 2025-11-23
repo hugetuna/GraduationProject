@@ -38,8 +38,10 @@ public class TeamManager : MonoBehaviour
             var idolAbility = idol.GetComponent<IdolInstance>();
             //手動把資料填回去
             idolAbility.LoadData(data);
-            idolAbility.positionInTeam = i;
+            //idolAbility.positionInTeam = i;
             teamMembers.Add(idol.GetComponent<PlayerControlMainWorld>());
+            //同步跨場景角色啟用/隱藏
+            idol.SetActive(idolAbility.isActive);
         }
     }
     // 角色切換(+1為下一個-1為上一個)

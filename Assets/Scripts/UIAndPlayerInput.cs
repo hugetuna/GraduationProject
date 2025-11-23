@@ -16,8 +16,18 @@ public class UIAndPlayerInput : MonoBehaviour
         playerInputs.AddRange(inputs);
     }
 
+    public static void RefreshPlayerInputs() // 換場景後重新抓取
+    {
+        playerInputs.Clear();
+
+        PlayerInput[] inputs = FindObjectsByType<PlayerInput>(FindObjectsSortMode.None);
+        playerInputs.AddRange(inputs);
+    }
+
     public static void EnableAllPlayerInputs()
     {
+        if (playerInputs.Exists(input => input == null)) RefreshPlayerInputs();
+
         foreach (PlayerInput input in playerInputs)
         {
             input.enabled = true; // 啟用所有玩家的輸入系統
@@ -26,6 +36,8 @@ public class UIAndPlayerInput : MonoBehaviour
 
     public static void DisableAllPlayerInputs()
     {
+        if (playerInputs.Exists(input => input == null)) RefreshPlayerInputs();
+
         foreach (PlayerInput input in playerInputs)
         {
             input.enabled = false; // 禁用所有玩家的輸入系統

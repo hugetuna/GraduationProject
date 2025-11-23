@@ -4,6 +4,8 @@ using UnityEngine;
 [System.Serializable]
 public class IdolSaveData
 {
+    // 站位編號
+    public int positionInTeam;
     //標示身分
     public IdolWho idolIndex;
     public Idols basicStatus;
@@ -25,4 +27,14 @@ public class IdolSaveData
     public int bondWithP;//與玩家的羈絆
     //使否初始化過
     public bool BHaveSetUp;
+
+    // 訓練記錄
+    public BasicTrainRecord basicTrainRecord; // 初始值存放地
+    public IdolTrainingState state; // 在隊伍或者特定訓練室
+    public Vector2 positionInTrainingUI; // 代表圖片在訓練 UI 的位置
+    public int vigourCost; // 體力消耗
+    public int danceExp; // 舞蹈收益
+    public int vocalExp; // 歌唱收益
+    public int visualExp; // 表現力收益
+    public bool isActive;
 }

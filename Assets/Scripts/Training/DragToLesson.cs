@@ -73,6 +73,11 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         vigourBar.Initialize(MyName);
         benefitBarComp.Initialize(MyName, trainingUIData);
         buffBoardComp.Initialize(MyName);
+
+        // 確保換場景後 UI 不會跑掉
+        var state = TrainingUIManager.Instance.GetIdolState(MyName);
+        if (state == IdolTrainingState.InTeam) buffBoard.SetActive(true);
+        else buffBoard.SetActive(false);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -136,6 +141,9 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             currentZoneType = DropZoneType.Member;
         }
         UpdateTeamStatus(currentZoneType);
+
+        // 同步更新 IdolInstance 的 trainRecord（備份用）
+        TraineeAssignment.UpdateTrainRecord(MyName, position: rectTransform.anchoredPosition);
 
         // 結束拖曳時，顯示角色底下的 UI 元素
         vigourSlider.gameObject.SetActive(true);

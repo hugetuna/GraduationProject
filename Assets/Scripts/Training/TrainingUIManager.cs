@@ -8,7 +8,8 @@ public enum IdolTrainingState
     InTeam,
     InDance,
     InVocal,
-    InVisual
+    InVisual,
+    None
 }
 
 /* 掛在 TrainingManager 上，統一管理三種不同的 UI（Singleton） */
@@ -22,8 +23,9 @@ public class TrainingUIManager : MonoBehaviour
     [SerializeField] private TeamManager teamManager;
     [SerializeField] private List<Sprite> characterSprites = new(); // 角色 UI 圖片
     private Dictionary<string, IdolTrainingState> characterStates = new(); // 角色名稱＆訓練狀態對應表
+    private bool isInitialized = false;
     // 目前還沒有選角功能，不必特別照隊伍成員決定用哪些圖片
-    
+
 
     void Awake()
     {
@@ -33,8 +35,6 @@ public class TrainingUIManager : MonoBehaviour
 
     void Start()
     {
-        InitializeTeamData();
-
         // 訂閱訓練 UI 的開關事件
         DoorInteraction.OnDoorInteracted += OpenOneUI;
         TrainingUIHandler.OnTrainingUIClosed += OneOneUIClosed;
@@ -44,11 +44,19 @@ public class TrainingUIManager : MonoBehaviour
     {
         characterStates.Clear();
 
-        // 預設所有角色都在隊伍裡
-        foreach (var m in teamManager.teamMembers)
+        // 設定角色的初始訓練狀態（也考慮了跨場景的情形）
+        foreach (var member in teamManager.teamMembers)
         {
-            string id = TeamDataUtility.CleanNameOfCharacterObject(m.name);
-            characterStates[id] = IdolTrainingState.InTeam; 
+            if (member == null) continue;
+
+            // 將物件名稱轉成 ID
+            string id = TeamDataUtility.CleanNameOfCharacterObject(member.name);
+
+            IdolInstance instance = member.GetComponent<IdolInstance>();
+            if (instance == null) continue;
+
+            // 直接覆蓋即可，Dictionary 本身會自動新增或更新
+            characterStates[id] = instance.state;
         }
     }
 
@@ -61,6 +69,12 @@ public class TrainingUIManager : MonoBehaviour
 
     private void OpenOneUI(TrainingUIData data)
     {
+        if (isInitialized == false)
+        {
+            InitializeTeamData();
+            isInitialized = true;
+        }
+
         string type = data.trainingType.ToLower();
 
         TrainingUIHandler ui = type switch // 預計要打開的 UI
@@ -71,7 +85,8 @@ public class TrainingUIManager : MonoBehaviour
             _ => null
         };
 
-        if(ui == null) {
+        if (ui == null)
+        {
             Debug.LogError("找不到對應的 TrainingUIHandler");
             return;
         }
@@ -121,11 +136,13 @@ public class TrainingUIManager : MonoBehaviour
             .ToList();
     }
 
-    public void SetIdolState(string id, IdolTrainingState state) // 設定角色的訓練狀態
+    public void SetIdolState(string name, IdolTrainingState state) // 設定角色的訓練狀態
     {
-        if (!characterStates.ContainsKey(id)) return;
+        if (!characterStates.ContainsKey(name)) characterStates.Add(name, state);
+        else characterStates[name] = state;
 
-        characterStates[id] = state;
+        // 同步更新 IdolInstance 的 trainRecord（備份用）
+        TraineeAssignment.UpdateTrainRecord(name, state);
     }
 }
 
