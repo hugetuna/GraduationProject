@@ -2,7 +2,7 @@
 喔？這樣啊，真是不錯的選擇。那麼就馬上讓你們初次見面吧！
 
 #speaker:Manager
-欸……？這麼突然？
+欸...？這麼突然？
 
 #speaker:Boss #sfx:Prrr
 ...
@@ -21,7 +21,7 @@
 哈囉！！！我們來了！！！
 
 #speaker:Karo
-欸？等一下，你跑太快了……老闆還沒說可以進去……
+欸？等一下，你跑太快了...老闆還沒說可以進去...
 
 #speaker:Kuma 
 #Tachie1_Character:Kuma 
@@ -30,21 +30,21 @@
 #speaker:Sirius
 #Tachie1_Move:((-500,0),0.5)
 #Tachie2_Character:Sirius 
-……唉。
+...唉。
 
 #speaker:Karo
 #Tachie2_Move:((500,0),0.5)
 #Tachie3_Character:Karo 
 #Tachie3_Emotion:Angry
 #emotion:Angry
-……唉。
+...唉。
 
 #speaker:Boss
 #Tachie3_Character:Karo 
 沒錯喔。這位，就是之後帶你們三個的人。
 
 #speaker:Manager
-啊、那個……大家好，初次見面……
+啊、那個...大家好，初次見面...
 
 #speaker:Kuma
 #Tachie1_Character:Kuma 
@@ -98,7 +98,7 @@
 ——從今天起，我會負責你們三個的訓練、宣傳與所有活動。
 
 #speaker:Manager
-我們一起，目標出道吧！
+我們一起，目標出道吧。
 
 #speaker:Kuma
 #Tachie1_Emotion:Laugh #Tachie1_Behavior:Shake
@@ -113,7 +113,7 @@
 #speaker:Sirius
 #Tachie2_Emotion:Talk
 #emotion:Talk
-……可以回練習室了嗎?
+...可以回練習室了嗎?
 
 #speaker:Boss
-總之，你們先去看看公司吧
+總之，你們先去看看公司吧。

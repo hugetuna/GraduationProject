@@ -9,7 +9,7 @@
 #speaker:Manager#sfx:Lie
 ...
 #speaker:Manager
-突然馬上就要帶團體，還跑上跑下的熟悉公司跟工作流程
+突然馬上就要帶團體，還跑上跑下的熟悉公司跟工作流程。
 #speaker:Manager
 腿都快不是我的了...
 
@@ -26,21 +26,21 @@
 #speaker:Empty #font:Shake
 (震動)
 #speaker:Manager
-……欸？地震嗎？不要啊我現在不想動——
+...欸？地震嗎？不要啊我現在不想動——
 
 #speaker:Akuma #sfx:AkumaAppear
 #Tachie1_Character:Akuma #Tachie1_Behavior:Shake
-嘻嘻嘻～～～我～～回～～來～～了～～！
+嘻嘻嘻~~~我~回~來~了~！
 
 #speaker:Manager
-……什麼嘛是你喔？別嚇我啊我現在很累！
+...什麼嘛是你喔?別嚇我啊我現在很累!
 
 #speaker:Akuma
 我有看到喔~  
 #speaker:Akuma
 你又與「偶像」扯上關係了呢~  
 #speaker:Akuma
-真是群不錯的孩子們呢~很有潛力 
+真是群不錯的孩子們呢~很有潛力。 
 
 #speaker:Manager
 潛力有是有，時間上來不來的及難說啊...
@@ -52,13 +52,12 @@
 #speaker:Manager
 雖然不想承認，但依我看大概會吧...
 #speaker:Manager
-今天才組成的團體要去挑戰幾天後的初選什麼的...練習時間遠遠不夠啊
+今天才組成的團體要去挑戰幾天後的海選什麼的...練習時間遠遠不夠啊!
 
 #speaker:Akuma
 ...?
 #speaker:Akuma
 你原本打算光靠練習?
-
 #speaker:Manager
 呃...對啊...?
 #speaker:Manager
@@ -70,7 +69,7 @@
 #speaker:Akuma
 你打算光靠努力？光靠練習？光靠羈絆？  
 #speaker:Akuma
-你們會在 Neo Polaris 直接被埋掉**！
+你們會在 Neo Polaris 直接被埋掉！
 
 #speaker:Manager
 ...也還是有一點可能的吧...
@@ -78,17 +77,16 @@
 #speaker:Akuma
 呵呵呵呵呵呵
 #speaker:Akuma
-你看喔～在那種閃閃發光的舞台上——  
+你看喔~在那種閃閃發光的舞台上——  
 #speaker:Akuma
-可愛？不夠。  
+可愛?不夠。
 #speaker:Akuma
-實力？大家都有。  
+實力?大家都有。  
 #speaker:Akuma
-正常努力？呵呵呵呵呵呵呵。
+正常努力?呵呵呵呵呵呵呵。
 
 #speaker:Manager
 笑的太誇張了吧
-
 #speaker:Akuma
 ...  
 #speaker:Akuma

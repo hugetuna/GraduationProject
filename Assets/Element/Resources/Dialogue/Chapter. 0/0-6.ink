@@ -1,15 +1,15 @@
 #speaker:Kuma #background:DressingRoom #sfx:Talk
 #Tachie1_Character:Kuma
-嗚哇哇哇哇!這是!後台休息室!  
+嗚哇哇哇哇！這是！後台休息室！  
 #speaker:Kuma
-剛剛也看到超多人的，我的心臟已經開始在狂跳了!!!
+剛剛也看到超多人的，我的心臟已經開始在狂跳了！！！
 
 #speaker:Karo
 #Tachie1_Move:((-500,0),0.5)
 #Tachie3_Character:Karo 
 #Tachie3_Emotion:Talk
 #emotion:Talk
-冷靜點!小熊。深呼吸!
+冷靜點！小熊。深呼吸！
 #speaker:Karo
 #emotion:Talk
 ...我也需要深呼吸。
@@ -26,7 +26,7 @@
 #Tachie1_Character:Kuma 
 #Tachie1_Emotion:Talk
 #emotion:Talk
-西莉絲你還好嗎?手在抖喔?
+西莉絲你還好嗎？手在抖喔？
 
 #speaker:Sirius
 #Tachie1_Character:Kuma 

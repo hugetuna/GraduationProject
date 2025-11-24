@@ -34,7 +34,7 @@
 #Tachie3_Character:Karo
 #Tachie3_Emotion:Talk
 #emotion:Talk
-（深呼吸）呼……我已經很多年沒站在這種舞台等結果了。
+呼...已經很多年沒站在這種舞台等結果了。
 
 #speaker:Sirius
 #Tachie3_Character:Karo
@@ -49,7 +49,7 @@
 #Tachie1_Emotion:Talk
 #Tachie1_Behavior:Shake
 #emotion:Talk
-嗚哇你的臉色超差??西莉絲你還好嗎!?
+嗚哇你的臉色超差？？西莉絲你還好嗎！？
 
 #speaker:Sirius
 #Tachie2_Character:Sirius 
