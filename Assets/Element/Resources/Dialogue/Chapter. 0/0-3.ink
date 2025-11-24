@@ -1,5 +1,5 @@
 
-#speaker:Manager #background:MyRoom #AkumaTheme
+#speaker:Manager #background:MyRoom #bgm:AkumaTheme
 ...呼——  
 #speaker:Manager
 第一天上班也太累了吧。  
