@@ -100,7 +100,6 @@ public class TrainingUIManager : MonoBehaviour
     private void OneOneUIClosed(TeamManager team, TrainingUIData data)
     {
         // 雖然這個事件有兩個引數，但這邊剛好不會用到呢
-
         current = null; // 目前沒有任何 UI 開著
         UIAndPlayerInput.EnableAllPlayerInputs(); // UI 已關閉 -> 啟用所有玩家移動
     }

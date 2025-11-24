@@ -21,7 +21,14 @@ public class SetStatusBar : MonoBehaviour
     public void setIdolInstance(int memberNum)
     {
         teamManager = FindAnyObjectByType<TeamManager>();
-        idol = teamManager.teamMembers[memberNum].GetComponent<IdolInstance>();
+        if (teamManager.teamMembers.Count > memberNum)
+        {
+            idol = teamManager.teamMembers[memberNum].GetComponent<IdolInstance>();
+        }
+        else
+        {
+            idol=teamManager.busyMembers[memberNum - teamManager.teamMembers.Count].GetComponent<IdolInstance>();
+        }
     }
     public void setByIdolInstance()
     {

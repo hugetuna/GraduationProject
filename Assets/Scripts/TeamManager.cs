@@ -7,6 +7,7 @@ using UnityEngine.InputSystem;
 public class TeamManager : MonoBehaviour
 {
     public List<PlayerControlMainWorld> teamMembers = new List<PlayerControlMainWorld>(); // 隊員列表
+    public List<PlayerControlMainWorld> busyMembers = new List<PlayerControlMainWorld>(); // 忙碌中的隊員列表
     public List<GameObject> allIdols= new List<GameObject>();//全角色列表
     public int currentLeaderIndex = 0; // 當前操縱角色索引
     public float followDistance = 3f; // 角色之間的距離
@@ -39,9 +40,55 @@ public class TeamManager : MonoBehaviour
             //手動把資料填回去
             idolAbility.LoadData(data);
             //idolAbility.positionInTeam = i;
-            teamMembers.Add(idol.GetComponent<PlayerControlMainWorld>());
+            if(idolAbility.state== IdolTrainingState.InTeam)
+            {
+                teamMembers.Add(idol.GetComponent<PlayerControlMainWorld>());
+            }
+            else
+            {
+                busyMembers.Add(idol.GetComponent<PlayerControlMainWorld>());
+            }
             //同步跨場景角色啟用/隱藏
             idol.SetActive(idolAbility.isActive);
+        }
+        //初始化位置編號
+        SetUpTeamPosition();
+    }
+    public void AddBusyMember(PlayerControlMainWorld member)
+    {
+        if (teamMembers.Contains(member)&&!!busyMembers.Contains(member))
+        {
+            //移動到忙碌列表
+            busyMembers.Add(member);
+            teamMembers.Remove(member);
+            //如果是隊長，切換隊長並重洗位置編號
+            if (teamMembers.Count > 0 && currentLeaderIndex >= teamMembers.Count)
+            {
+                currentLeaderIndex = 0;
+                SetUpTeamPosition();
+            }
+        }
+    }
+    public void RemoveBusyMember(PlayerControlMainWorld member)
+    {
+        if (busyMembers.Contains(member)&& !teamMembers.Contains(member))
+        {
+            busyMembers.Remove(member);
+            teamMembers.Add(member);
+            currentLeaderIndex = 0;
+            //重洗位置編號
+            SetUpTeamPosition();
+        }
+    }
+    public void SetUpTeamPosition()
+    {
+        for (int i = 0; i < teamMembers.Count; i++)
+        {
+            teamMembers[(currentLeaderIndex + i) % teamMembers.Count].GetComponent<IdolInstance>().positionInTeam = i;
+        }
+        for (int i = 0; i < busyMembers.Count; i++)
+        {
+            busyMembers[i].GetComponent<IdolInstance>().positionInTeam = i+ teamMembers.Count;//忙碌隊員編號接在隊伍後面
         }
     }
     // 角色切換(+1為下一個-1為上一個)
@@ -66,10 +113,7 @@ public class TeamManager : MonoBehaviour
         // 啟動移動協程，讓兩個角色互換位置
         StartCoroutine(SwapPositionSmoothly(teamMembers[previousLeaderIndex], teamMembers[currentLeaderIndex], previousLeaderPos, newLeaderPos));
         //交換站位編號
-        for (int i = 0; i < teamMembers.Count; i++)
-        {
-            teamMembers[(currentLeaderIndex+i)%3].GetComponent<IdolInstance>().positionInTeam = i;
-        }
+        SetUpTeamPosition();
         Debug.Log("當前主控角色：" + teamMembers[currentLeaderIndex].gameObject.name+ direction);
         
     }
@@ -81,7 +125,6 @@ public class TeamManager : MonoBehaviour
         //獲取兩人的動畫
         Animator oldLeaderAnim = oldLeader.GetComponent<Animator>();
         Animator newLeaderAnim = newLeader.GetComponent<Animator>();
-
         while (elapsedTime < duration)
         {
             // 讓原隊長仍然可以更新動畫
@@ -99,7 +142,6 @@ public class TeamManager : MonoBehaviour
 
             yield return null;
         }
-
         // 確保最後停下來
         oldLeader.transform.position = newPos;
         newLeader.transform.position = oldPos;
@@ -186,52 +228,6 @@ public class TeamManager : MonoBehaviour
             }
         }
     }
-    //兩個修改渲染透明度的函式
-    //public void SetTransparent(PlayerControlMainWorld obj)
-    //{
-    //    var renderers = obj.GetComponentsInChildren<Renderer>();
-    //    foreach (var renderer in renderers)
-    //    {
-    //        foreach (Material mat in renderer.materials)
-    //        {
-    //            mat.SetFloat("_Mode", 2); // Fade
-    //            mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.SrcAlpha);
-    //            mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.OneMinusSrcAlpha);
-    //            mat.SetInt("_ZWrite", 0);
-    //            mat.DisableKeyword("_ALPHATEST_ON");
-    //            mat.EnableKeyword("_ALPHABLEND_ON");
-    //            mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-    //            mat.renderQueue = 3000;
-
-    //            Color color = mat.color;
-    //            color.a = 0.3f;
-    //            mat.color = color;
-    //        }
-    //    }
-    //}
-    //public void SetOpaque(PlayerControlMainWorld obj)
-    //{
-    //    var renderers = obj.GetComponentsInChildren<Renderer>();
-    //    foreach (var renderer in renderers)
-    //    {
-    //        foreach (Material mat in renderer.materials)
-    //        {
-    //            mat.SetFloat("_Mode", 0); // Opaque
-    //            mat.SetInt("_SrcBlend", (int)UnityEngine.Rendering.BlendMode.One);
-    //            mat.SetInt("_DstBlend", (int)UnityEngine.Rendering.BlendMode.Zero);
-    //            mat.SetInt("_ZWrite", 1);
-    //            mat.DisableKeyword("_ALPHATEST_ON");
-    //            mat.DisableKeyword("_ALPHABLEND_ON");
-    //            mat.DisableKeyword("_ALPHAPREMULTIPLY_ON");
-    //            mat.renderQueue = -1;
-
-    //            Color color = mat.color;
-    //            color.a = 1f;
-    //            mat.color = color;
-    //        }
-    //    }
-    //}
-
     //同步播放待機動畫(以隊長時間為準)
     void SyncIdleAnimation()
     {
