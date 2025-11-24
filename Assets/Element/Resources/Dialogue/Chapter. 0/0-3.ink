@@ -1,5 +1,5 @@
 
-#speaker:Manager #background:MyRoom
+#speaker:Manager #background:MyRoom #AkumaTheme
 ...呼——  
 #speaker:Manager
 第一天上班也太累了吧。  
@@ -37,7 +37,7 @@
 
 #speaker:Akuma
 我有看到喔～
-#speaker:Akuma
+#speaker:Akuma #sfx:Whistling1
 你又與「偶像」扯上關係了呢～  
 #speaker:Akuma
 真是群不錯的孩子們呢～很有潛力。 

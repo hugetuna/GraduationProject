@@ -1,4 +1,4 @@
-#speaker:Boss #background:Office
+#speaker:Boss #background:Office #bgm:Daily
 喔？這樣啊，真是不錯的選擇。那麼就馬上讓你們初次見面吧！
 
 #speaker:Manager

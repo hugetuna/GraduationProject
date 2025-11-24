@@ -1,4 +1,4 @@
-#speaker:Empty
+#speaker:Empty #sfx:AkumaMagic
 （眼前一道光閃過）
 #speaker:Empty
 （壺內微微發著光，剛種下的種子在一瞬間內瘋狂增長）
@@ -16,7 +16,7 @@
 嘿嘿，我剛剛給你的都是一些沒什麼價值的「種子」，只需要一天就能熟成
 #speaker:Akuma
 而且為了讓第一次培養的你親眼看到效果...
-#speaker:Akuma
+#speaker:Akuma #sfx:Whistling2
 我已經幫你把「一天份的成長時間」直接加速完成了☆
 
 #speaker:Manager

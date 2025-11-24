@@ -56,7 +56,7 @@
 #speaker:Manager
 ...蛤？怎麼...？
 
-#speaker:Empty
+#speaker:Empty #sfx:Message
 （通知列開始瘋狂跳動。）
 
 #speaker:Manager
@@ -64,7 +64,7 @@
 #speaker:Manager
 怎麼突然多了...這麼多！？
 
-#speaker:Akuma
+#speaker:Akuma #sfx:Whistling1
 噹噹～！恭喜你！
 #speaker:Akuma
 你剛剛收的那一批靈魂，已經全部轉換成粉絲啦～
@@ -86,5 +86,5 @@
 
 #speaker:Akuma
 嘻嘻——
-#speaker:Akuma
+#speaker:Akuma #sfx:Whistling2
 可能吧？總之我會用我的方式幫你，其他你就自己定奪囉～
