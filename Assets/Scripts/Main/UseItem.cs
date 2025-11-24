@@ -35,7 +35,7 @@ public class UseItem : MonoBehaviour
         // 根據目前隊伍成員決定下拉選單的選項
         dropdown.options.Clear(); // 清空原有選項
 
-        teamMembers = teamManager.teamMembers;
+        teamMembers = teamManager.allIdols.Select(go => go.GetComponent<PlayerControlMainWorld>()).ToList();
 
         for (int i = 0; i < teamMembers.Count; i++) // 確保不會超出陣列範圍
         {

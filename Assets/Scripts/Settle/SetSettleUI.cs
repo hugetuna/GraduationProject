@@ -36,8 +36,8 @@ public class SetSettleUI : MonoBehaviour
         // 呼叫角色顯示
         foreach(GameObject character in characters)
         {
-            int index = characters.IndexOf(character);
-            IdolInstance idol = teamManager.teamMembers[index].GetComponent<IdolInstance>();
+            int charIndex = characters.IndexOf(character);
+            IdolInstance idol = teamManager.allIdols[charIndex].GetComponent<IdolInstance>();
 
             character.GetComponent<SetCharacterUI>().ShowCharacterBenefits(
                 headSprites[(int)idol.idolIndex],

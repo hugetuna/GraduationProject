@@ -45,7 +45,7 @@ public class TrainingUIManager : MonoBehaviour
         characterStates.Clear();
 
         // 設定角色的初始訓練狀態（也考慮了跨場景的情形）
-        foreach (var member in teamManager.teamMembers)
+        foreach (var member in teamManager.allIdols)
         {
             if (member == null) continue;
 

@@ -22,13 +22,14 @@ public class TraineeAssignment : MonoBehaviour
 
     public void AssignTrainees(TeamManager tm, TrainingUIData data) // 指派訓練成員的函式 
     {
+        List<GameObject> allIdols = tm.allIdols.Select(go => go).ToList();
         List<PlayerControlMainWorld> teamMembers = tm.teamMembers;
 
-        foreach (var member in teamMembers){
-            member.gameObject.SetActive(true); // 將隱藏的角色都顯示出來 
-            tm.RemoveBusyMember(member); // 從忙碌成員列表移除
+        foreach (var idol in allIdols){
+            idol.SetActive(true); // 將隱藏的角色都顯示出來 
+            tm.RemoveBusyMember(idol.GetComponent<PlayerControlMainWorld>()); // 從忙碌成員列表移除
 
-            var name = TeamDataUtility.CleanNameOfCharacterObject(member.name);
+            var name = TeamDataUtility.CleanNameOfCharacterObject(idol.name);
             UpdateTrainRecord(name, isActive: true); // 重設跨場景角色啟用狀態
         }
         disappearCharacters.Clear(); // 清空上一次的列表 
