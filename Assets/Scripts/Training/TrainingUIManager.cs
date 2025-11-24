@@ -45,18 +45,12 @@ public class TrainingUIManager : MonoBehaviour
         characterStates.Clear();
 
         // 設定角色的初始訓練狀態（也考慮了跨場景的情形）
-        foreach (var member in teamManager.allIdols)
+        foreach (var dict in TeamDataUtility.IdolInstances)
         {
-            if (member == null) continue;
-
-            // 將物件名稱轉成 ID
-            string id = TeamDataUtility.CleanNameOfCharacterObject(member.name);
-
-            IdolInstance instance = member.GetComponent<IdolInstance>();
-            if (instance == null) continue;
+            if (dict.Value == null || dict.Key == null) continue;
 
             // 直接覆蓋即可，Dictionary 本身會自動新增或更新
-            characterStates[id] = instance.state;
+            characterStates[dict.Key] = dict.Value.state;
         }
     }
 

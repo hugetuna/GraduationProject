@@ -22,15 +22,10 @@ public class TraineeAssignment : MonoBehaviour
 
     public void AssignTrainees(TeamManager tm, TrainingUIData data) // 指派訓練成員的函式 
     {
-        List<GameObject> allIdols = tm.allIdols.Select(go => go).ToList();
-        List<PlayerControlMainWorld> teamMembers = tm.teamMembers;
-
-        foreach (var idol in allIdols){
+        foreach (var idol in TeamDataUtility.IdolInstances.Values.Select(i => i.gameObject)){
             idol.SetActive(true); // 將隱藏的角色都顯示出來 
             tm.RemoveBusyMember(idol.GetComponent<PlayerControlMainWorld>()); // 從忙碌成員列表移除
-
-            var name = TeamDataUtility.CleanNameOfCharacterObject(idol.name);
-            UpdateTrainRecord(name, isActive: true); // 重設跨場景角色啟用狀態
+            UpdateTrainRecord(idol.name, isActive: true); // 重設跨場景角色啟用狀態
         }
         disappearCharacters.Clear(); // 清空上一次的列表 
 
@@ -38,14 +33,14 @@ public class TraineeAssignment : MonoBehaviour
         trainees = TrainingUIManager.Instance.GetTrainees();
         Debug.Log("指派訓練成員: " + string.Join(", ", trainees));
         if (trainees.Count == 0) return;
-        if (trainees.Count == teamMembers.Count)
+        if (trainees.Count == tm.teamMembers.Count)
         {
             Debug.LogWarning("無法全部成員同時訓練，至少保留一名成員在隊伍中！");
             return;
         }
 
         // 處理隊長 
-        var leader = teamMembers[tm.currentLeaderIndex];
+        var leader = tm.teamMembers[tm.currentLeaderIndex];
         bool leaderInTrainees = trainees.Any(t => leader.name.Contains(t));
         if (leaderInTrainees && tm.teamMembers.Count > 1)
         {
