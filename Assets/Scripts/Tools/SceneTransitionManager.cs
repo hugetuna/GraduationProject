@@ -126,7 +126,6 @@ public class SceneTransitionManager : MonoBehaviour
         yield return new WaitForSeconds(coverOutTime > 0 ? coverOutTime : 0.5f);
         isTransitioning = false;
         // 7. 處理背景音樂 by Cake
-        AudioManager.Instance.StopMusic(); // 停止當前音樂
         // 播放新場景的背景音樂
         string sceneNameLower = sceneName.ToLower();
         if(sceneNameLower.Contains("b1")) AudioManager.Instance.SetMusic(b1); 

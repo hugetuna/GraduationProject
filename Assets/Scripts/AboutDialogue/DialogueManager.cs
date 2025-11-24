@@ -265,6 +265,7 @@ public class DialogueManager : MonoBehaviour
             if (bgmTag == "Stop")
             {
                 AudioManager.Instance.StopMusic();
+                Debug.Log("停止BGM");
                 return;
             }
             AudioClip audioClip = bgmFiles.Find(bgm => bgm.BGMName == bgmTag)?.audioClip;
