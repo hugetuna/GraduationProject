@@ -153,6 +153,7 @@ public class ChatRoomManager : MonoBehaviour
             else
             {
                 // 故事完全結束
+                chatBubbleManager.AddBubble("*此次對話已結束*", false);
                 yield break;
             }
         }

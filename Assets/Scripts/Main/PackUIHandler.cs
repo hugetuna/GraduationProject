@@ -30,6 +30,7 @@ public class PackUIHandler : MonoBehaviour
         {
             UIAndPlayerInput.DisableAllPlayerInputs(); // 禁用所有玩家的輸入系統
             packUI.SetActive(true);
+            packUI.GetComponent<ItemUIGenerator>().RefreshPackUI(); // 刷新背包 UI 顯示
             AudioManager.Instance.PlaySFX(openPackSound); // 播放音效
         }
     }

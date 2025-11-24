@@ -6,7 +6,7 @@ using UnityEngine.UI;
 /* 掛在背包頁面根部，主要用來生成會放在 ScrollView 的道具項目 UI */
 public class ItemUIGenerator : MonoBehaviour
 {
-    public ResourceManager resourceManager; // 資源管理器，用於獲取道具清單
+    private ResourceManager resourceManager; // 資源管理器，用於獲取道具清單
     [SerializeField] private List<ItemStack> itemList = new(); // 儲存道具資訊的清單
     //-----------------------------------------------------------------//
     public GameObject itemPrefab; // 用於生成道具項目的預製件
@@ -16,10 +16,13 @@ public class ItemUIGenerator : MonoBehaviour
     //-----------------------------------------------------------------//
     public ItemInfoUI itemInfoUI; // 使生成的道具項目能夠與詳細資訊的腳本連接
 
-    void Start()
+    public void RefreshPackUI()
     {
-        // itemList = resourceManager.items; // 從資源管理器獲取道具清單
-        // ...但因為 GameManager 似乎會重置我事先設定好的資料，只好自己指派
+        ClearAllItems();  // 避免重複生成 -> 僅限（少量道具）測試用
+
+        resourceManager = ResourceManager.Instance;
+        itemList = resourceManager.items; // 從資源管理器獲取道具清單
+
         foreach (ItemStack itemStack in itemList) // 按清單生成初始的道具項目
         {
             // 生成道具並為其分門別類
@@ -55,6 +58,20 @@ public class ItemUIGenerator : MonoBehaviour
             SetItemUI setItemUI = inside.GetComponent<SetItemUI>();
             setItemUI.item = itemStack.item;
             setItemUI.quantity = itemStack.quantity;
+        }
+
+        void ClearAllItems()
+        {
+            foreach (Transform child in consumableContent)
+                Destroy(child.gameObject);
+
+            foreach (Transform child in fansContent)
+                Destroy(child.gameObject);
+
+            foreach (Transform child in equipContent)
+                Destroy(child.gameObject);
+
+            itemInfoUI.itemButtons.Clear();
         }
     }
 }
