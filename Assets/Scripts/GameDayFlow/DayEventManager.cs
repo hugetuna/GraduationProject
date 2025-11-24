@@ -5,7 +5,7 @@ using UnityEngine;
 public class DayEventManager : MonoBehaviour
 {
     public List<DayEvent> allDayEvents; // 用來保存所有的日常事件
-    private Queue<DayEvent> eventQueue = new Queue<DayEvent>();//當天需觸發的所有事件
+    public Queue<DayEvent> eventQueue = new Queue<DayEvent>();//當天需觸發的所有事件
     private HashSet<string> triggeredEvents = new HashSet<string>(); // 紀錄已觸發事件避免重複觸發
     public int EventedNumberToday =0;
     [Header("紀錄互動事件所需的參數")]

@@ -10,7 +10,9 @@ public enum EventType
     ShowUIAndWaitExit,
     WaitUntilSceneChange,
     WaitUntilPlayerPosition,
-    WaitUntilInteractWithObject
+    WaitUntilInteractWithObject,
+    WaitForSeconds,
+    AfterDayEnd
 }
 [CreateAssetMenu(menuName = "DayFlow/Day Event")]
 public class DayEvent : ScriptableObject

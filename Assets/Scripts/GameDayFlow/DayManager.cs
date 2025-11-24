@@ -37,7 +37,7 @@ public class DayManager : MonoBehaviour
     public void EndDay()
     {
         // 訓練結算（先這樣，以後說不定會再改）
-        foreach(var idol in TeamDataUtility.IdolInstances.Values)
+        foreach (var idol in TeamDataUtility.IdolInstances.Values)
         {
             idol.SettleTrainRecord();
         }
