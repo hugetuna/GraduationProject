@@ -99,9 +99,7 @@ public class Soil : MonoBehaviour, IInteractable
             //新手教學的特殊事件處理
             if (DayManager.Instance.date==2&&DayManager.Instance.dayEventManager.EventedNumberToday==5)
             {
-                TurnTheSoil();
-                PlantSeed(1);
-                seedOnThisSoil.Grown(3);
+                StartCoroutine(TutorialAnimator());
             }
         }
         //未處於種植狀態且可種植->種植
@@ -140,5 +138,14 @@ public class Soil : MonoBehaviour, IInteractable
             }
             Destroy(seedOnThisSoil.gameObject);
         }
-    } 
+    }
+    private IEnumerator TutorialAnimator()
+    {
+        pot.SetActive(false); 
+        TurnTheSoil();
+        PlantSeed(1);
+        seedOnThisSoil.Grown(0);
+        yield return new WaitForSeconds(2f);
+        seedOnThisSoil.Grown(3);
+    }
 }

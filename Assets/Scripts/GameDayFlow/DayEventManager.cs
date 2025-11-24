@@ -174,11 +174,7 @@ public class DayEventManager : MonoBehaviour
             teamManager.teamMembers[
                 teamManager.currentLeaderIndex].enabled = false;
         }
-        float timer = 0f;
-        while (timer <= sec) {
-            timer += Time.deltaTime;
-            yield return null;
-        }
+        yield return new WaitForSeconds(sec);
         if (teamManager != null)
         {
             teamManager = FindAnyObjectByType<TeamManager>();
