@@ -1,5 +1,5 @@
 
-#speaker:Manager #background:Street
+#speaker:Manager #background:Street #bgm:Daily
 ......
 #speaker:Manager 
 今天要去新的公司...
