@@ -83,7 +83,7 @@ public class TraineeAssignment : MonoBehaviour
             // 隱藏隊伍中去訓練的角色 
             var character = idolInstance.gameObject;
             disappearCharacters.Add(character);
-            tm.RemoveBusyMember(character.GetComponent<PlayerControlMainWorld>()); // 從忙碌成員列表移除
+            tm.AddBusyMember(character.GetComponent<PlayerControlMainWorld>()); // 加入忙碌成員列表
             character.SetActive(false);
         }
 

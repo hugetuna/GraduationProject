@@ -1,5 +1,5 @@
 #speaker:Empty #bgm:StarlightParade
-#background:NormalStage #sfx:Kansei
+#background:CGKKS #sfx:Kansei
 （舞台上的熱量一陣陣傳來）
 #speaker:Manager
 ...好亮。她們真的...在發光。
