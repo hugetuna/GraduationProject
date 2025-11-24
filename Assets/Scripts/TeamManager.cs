@@ -8,7 +8,7 @@ public class TeamManager : MonoBehaviour
 {
     public List<PlayerControlMainWorld> teamMembers = new List<PlayerControlMainWorld>(); // 隊員列表
     public List<PlayerControlMainWorld> busyMembers = new List<PlayerControlMainWorld>(); // 忙碌中的隊員列表
-    public List<GameObject> allIdols= new List<GameObject>();//全角色列表
+    public List<GameObject> allIdols = new List<GameObject>();//全角色列表
     public int currentLeaderIndex = 0; // 當前操縱角色索引
     public float followDistance = 3f; // 角色之間的距離
     public float followSpeed = 5f; // 角色跟隨速度
@@ -40,7 +40,7 @@ public class TeamManager : MonoBehaviour
             //手動把資料填回去
             idolAbility.LoadData(data);
             //idolAbility.positionInTeam = i;
-            if(idolAbility.state== IdolTrainingState.InTeam)
+            if (idolAbility.state == IdolTrainingState.InTeam)
             {
                 teamMembers.Add(idol.GetComponent<PlayerControlMainWorld>());
             }
@@ -48,32 +48,59 @@ public class TeamManager : MonoBehaviour
             {
                 busyMembers.Add(idol.GetComponent<PlayerControlMainWorld>());
             }
+            idol.SetActive(idolAbility.isActive);
         }
         //初始化位置編號
         SetUpTeamPosition();
     }
     public void AddBusyMember(PlayerControlMainWorld member)
     {
-        if (teamMembers.Contains(member)&&!!busyMembers.Contains(member))
+        if (teamMembers.Contains(member) && !busyMembers.Contains(member))
         {
-            //移動到忙碌列表
+            // //移動到忙碌列表
+            // busyMembers.Add(member);
+            // teamMembers.Remove(member);
+            // //如果是隊長，切換隊長並重洗位置編號
+            // if (teamMembers.Count > 0 && currentLeaderIndex >= teamMembers.Count)
+            // {
+            //     currentLeaderIndex = 0;
+            //     SetUpTeamPosition();
+            // }
+
+            // 判斷是否是隊長
+            bool wasLeader = (member == teamMembers[currentLeaderIndex]);
+
+            // 移動到忙碌列表
             busyMembers.Add(member);
             teamMembers.Remove(member);
-            //如果是隊長，切換隊長並重洗位置編號
-            if (teamMembers.Count > 0 && currentLeaderIndex >= teamMembers.Count)
+
+            // 如果移除的是隊長，就要換新隊長
+            if (wasLeader && teamMembers.Count > 0)
             {
                 currentLeaderIndex = 0;
+                //封鎖隊長外的PlayerControlMainWorld
+                for (int i = 0; i < teamMembers.Count; i++)
+                {
+                    bool isLeader = (i == currentLeaderIndex);
+                    teamMembers[i].GetComponent<PlayerControlMainWorld>().enabled = isLeader;
+                }
                 SetUpTeamPosition();
             }
         }
     }
     public void RemoveBusyMember(PlayerControlMainWorld member)
     {
-        if (busyMembers.Contains(member)&& !teamMembers.Contains(member))
+        if (busyMembers.Contains(member) && !teamMembers.Contains(member))
         {
             busyMembers.Remove(member);
             teamMembers.Add(member);
             currentLeaderIndex = 0;
+            //封鎖隊長外的PlayerControlMainWorld
+            for (int i = 0; i < teamMembers.Count; i++)
+            {
+                bool isLeader = (i == currentLeaderIndex);
+                teamMembers[i].GetComponent<PlayerControlMainWorld>().enabled = isLeader;
+            }
             //重洗位置編號
             SetUpTeamPosition();
         }
@@ -86,7 +113,7 @@ public class TeamManager : MonoBehaviour
         }
         for (int i = 0; i < busyMembers.Count; i++)
         {
-            busyMembers[i].GetComponent<IdolInstance>().positionInTeam = i+ teamMembers.Count;//忙碌隊員編號接在隊伍後面
+            busyMembers[i].GetComponent<IdolInstance>().positionInTeam = i + teamMembers.Count;//忙碌隊員編號接在隊伍後面
         }
     }
     // 角色切換(+1為下一個-1為上一個)
@@ -112,8 +139,8 @@ public class TeamManager : MonoBehaviour
         StartCoroutine(SwapPositionSmoothly(teamMembers[previousLeaderIndex], teamMembers[currentLeaderIndex], previousLeaderPos, newLeaderPos));
         //交換站位編號
         SetUpTeamPosition();
-        Debug.Log("當前主控角色：" + teamMembers[currentLeaderIndex].gameObject.name+ direction);
-        
+        Debug.Log("當前主控角色：" + teamMembers[currentLeaderIndex].gameObject.name + direction);
+
     }
     // 讓兩個角色平滑走到彼此的位置
     private IEnumerator SwapPositionSmoothly(PlayerControlMainWorld oldLeader, PlayerControlMainWorld newLeader, Vector3 oldPos, Vector3 newPos)
@@ -148,7 +175,7 @@ public class TeamManager : MonoBehaviour
         if (newLeaderAnim) newLeaderAnim.SetFloat("Speed", 0);
         // 延遲 0.1 秒後，確保新隊長啟用，舊隊長禁用
         yield return new WaitForSeconds(0.1f);
-        
+
         isSwitchingLeader = false;
         StartCoroutine(ResumeFollowAfterDelay(0.1f));
     }
@@ -177,7 +204,7 @@ public class TeamManager : MonoBehaviour
                 //向下輪轉兩個隊員
                 else if ((currentLeaderIndex + 2 + teamMembers.Count) % teamMembers.Count == i)
                 {
-                    targetPos = leaderPos - (leaderPos - teamMembers[i].transform.position).normalized * Mathf.Min(followDistance*2, (leaderPos - teamMembers[i].transform.position).magnitude);
+                    targetPos = leaderPos - (leaderPos - teamMembers[i].transform.position).normalized * Mathf.Min(followDistance * 2, (leaderPos - teamMembers[i].transform.position).magnitude);
                 }
                 else
                 {
@@ -211,11 +238,12 @@ public class TeamManager : MonoBehaviour
                 float directionThreshold = 0.2f; // 只有當方向變化超過這個閾值時，才會翻轉
                 if (moveDirection)
                 {
-                    if((targetPos - teamMembers[i].transform.position).x >= directionThreshold)
+                    if ((targetPos - teamMembers[i].transform.position).x >= directionThreshold)
                     {
                         teamMembers[i].Bone.transform.rotation = Quaternion.Euler(-45, 180, 0); // 朝右
                     }
-                }else
+                }
+                else
                 {
                     if ((targetPos - teamMembers[i].transform.position).x <= directionThreshold)
                     {
@@ -247,7 +275,7 @@ public class TeamManager : MonoBehaviour
                     }
                 }
             }
-        }    
+        }
     }
     //更換渲染排序方式
     void UpdateSortingOrder()

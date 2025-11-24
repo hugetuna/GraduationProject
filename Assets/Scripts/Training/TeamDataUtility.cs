@@ -18,11 +18,27 @@ public class TeamDataUtility : MonoBehaviour
         }
     }
 
+    public static List<IdolInstance> IdolList
+    {
+        get
+        {
+            return IdolInstances.Values.ToList();
+        }
+    }
+
+    public static List<GameObject> IdolObjects
+    {
+        get
+        {
+            return IdolInstances.Values.Select(i => i.gameObject).ToList();
+        }
+    }
+
     public static void RefreshIdolInstances()
     {
         var instances = FindObjectsByType<IdolInstance>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         idolInstances = instances.ToDictionary(i => CleanNameOfCharacterObject(i.name), i => i);
-        //Debug.Log($"刷新 IdolInstances，共 {idolInstances.Count} 個角色");
+        Debug.Log($"刷新 IdolInstances，共 {idolInstances.Count} 個角色");
     }
 
     public static string CleanNameOfCharacterUI(string raw) // 移除角色 UI 圖片檔名中的多餘字串

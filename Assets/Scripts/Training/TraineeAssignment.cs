@@ -22,9 +22,9 @@ public class TraineeAssignment : MonoBehaviour
 
     public void AssignTrainees(TeamManager tm, TrainingUIData data) // 指派訓練成員的函式 
     {
-        foreach (var idol in TeamDataUtility.IdolInstances.Values.Select(i => i.gameObject)){
-            idol.SetActive(true); // 將隱藏的角色都顯示出來 
+        foreach (var idol in TeamDataUtility.IdolObjects){
             tm.RemoveBusyMember(idol.GetComponent<PlayerControlMainWorld>()); // 從忙碌成員列表移除
+            idol.SetActive(true); // 將隱藏的角色都顯示出來 
 
             string name = TeamDataUtility.CleanNameOfCharacterObject(idol.name);
             UpdateTrainRecord(name, isActive: true); // 重設跨場景角色啟用狀態
@@ -42,18 +42,21 @@ public class TraineeAssignment : MonoBehaviour
         }
 
         // 處理隊長 
-        var leader = tm.teamMembers[tm.currentLeaderIndex];
-        bool leaderInTrainees = trainees.Any(t => leader.name.Contains(t));
-        if (leaderInTrainees && tm.teamMembers.Count > 1)
-        {
-            // 若派隊長去訓練，且隊伍人數大於 1，則更換隊長
-            tm.SwitchLeader(1);
-        }
+        // var leader = tm.teamMembers[tm.currentLeaderIndex];
+        // bool leaderInTrainees = trainees.Any(t => leader.name.Contains(t));
+        // if (leaderInTrainees && tm.teamMembers.Count > 1)
+        // {
+        //     // 若派隊長去訓練，且隊伍人數大於 1，則更換隊長
+        //     tm.SwitchLeader(1);
+        // }
 
         // 遍歷 trainees 以進行訓練指派 
         foreach (string trainee in trainees)
         {
             IdolInstance idolInstance = TeamDataUtility.IdolInstances[trainee];
+            GameObject idolObject = idolInstance.gameObject;
+            PlayerControlMainWorld idolControl = idolObject.GetComponent<PlayerControlMainWorld>();
+            
             if (idolInstance == null)
             {
                 Debug.Log($"找不到欲訓練的角色 {trainee}");
@@ -81,10 +84,11 @@ public class TraineeAssignment : MonoBehaviour
             UpdateTrainRecord(trainee, vigourCost: data.neededVigour, isActive: false);
 
             // 隱藏隊伍中去訓練的角色 
-            var character = idolInstance.gameObject;
-            disappearCharacters.Add(character);
-            tm.AddBusyMember(character.GetComponent<PlayerControlMainWorld>()); // 加入忙碌成員列表
-            character.SetActive(false);
+            Debug.Log($"隱藏訓練成員: {idolControl}");
+            tm.AddBusyMember(idolControl);
+            
+            disappearCharacters.Add(idolObject);
+            idolObject.SetActive(false);
         }
 
         // 更新成員們的 positionInTeam 

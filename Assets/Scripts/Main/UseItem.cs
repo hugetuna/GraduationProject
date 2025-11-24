@@ -82,6 +82,11 @@ public class UseItem : MonoBehaviour
 
         // 欲使用的道具（可從 itemInfoUI 獲取）
         Item item = itemInfoUI.selectedItem;
+        if(item == null)
+        {
+            Debug.LogWarning("未選擇任何道具，無法使用！");
+            return;
+        }
 
         // 使用道具
         if (item.itemType == ItemType.Consumable)
