@@ -154,6 +154,6 @@ public class IdolInstance : MonoBehaviour
         danceExp = BasicTrainRecord.danceExp;
         vocalExp = BasicTrainRecord.vocalExp;
         visualExp = BasicTrainRecord.visualExp;
-        // isActive = true;
+        isActive = true;
     }
 }
