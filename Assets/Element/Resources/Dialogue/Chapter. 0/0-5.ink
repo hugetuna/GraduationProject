@@ -1,9 +1,9 @@
 #speaker:Empty
-電梯來到了地下一樓...
+（電梯來到了地下一樓）
 #speaker:Empty
-映入眼簾的，不是常見的儲藏室或停車場
+（映入眼簾的，不是常見的儲藏室或停車場）
 #speaker:Empty
-而是...一片漆黑的舞台...
+（而是...一片漆黑的舞台...）
 
 #speaker:Manager
 ...？雖然沒來過，但這裡之前絕對不長這樣。
@@ -33,7 +33,7 @@
 #speaker:Manager
 ...你這樣講更恐怖了。
 
-#speaker:Akuma
+#speaker:Akuma　#sfx:Whistling1
 嘻嘻，由我提供「我特別蒐集的的夢幻靈魂」作為「種子」。
 #speaker:Akuma
 你只要讓偶像們「照顧靈魂」，餵點情感、努力、目標之類的東西...
@@ -72,5 +72,5 @@
 快點～我還幫你準備了小驚喜喔！
 #speaker:Manager
 蛤？
-#speaker:Akuma
+#speaker:Akuma #sfx:Whistling2
 「新·手·大·禮·包」，你等下就知道了啦～

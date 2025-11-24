@@ -9,7 +9,8 @@
 蛤！？你怎麼跟到公司來了？
 
 #speaker:Akuma
-嘻嘻嘻，當然是為了昨天說的那件事啊～
+嘻嘻嘻，當然是為了昨天說的那件事啊～4
+#speaker:Akuma #sfx:Whistling1
 跟我來吧～讓你好好看看我的力量！
 
 #speaker:Manager
@@ -21,6 +22,6 @@
 #speaker:Manager
 地下室是我們公司的嗎...？
 
-#speaker:Akuma
+#speaker:Akuma #sfx:Whistling2
 現在是☆
 

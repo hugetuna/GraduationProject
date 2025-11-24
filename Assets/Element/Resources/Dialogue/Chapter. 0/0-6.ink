@@ -1,4 +1,4 @@
-#speaker:Kuma #background:DressingRoom #sfx:Talk
+#speaker:Kuma #background:DressingRoom #sfx:Talk #bgm:Nervous
 #Tachie1_Character:Kuma
 嗚哇哇哇哇！這是！後台休息室！  
 #speaker:Kuma

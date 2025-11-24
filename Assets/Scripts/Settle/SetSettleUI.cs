@@ -34,10 +34,14 @@ public class SetSettleUI : MonoBehaviour
         }
 
         // 呼叫角色顯示
+        IdolInstance[] idolInstances = TeamDataUtility.IdolInstances.Values.ToArray();
+        // 強制排序，確保顯示順序一致（雖然很怪但先這樣寫）
+        IdolInstance[] sortedIdolInstances = idolInstances.OrderBy(idol => (int)idol.idolIndex).ToArray();
+
         foreach(GameObject character in characters)
         {
-            int index = characters.IndexOf(character);
-            IdolInstance idol = teamManager.teamMembers[index].GetComponent<IdolInstance>();
+            int charIndex = characters.IndexOf(character);
+            IdolInstance idol = sortedIdolInstances[charIndex];
 
             character.GetComponent<SetCharacterUI>().ShowCharacterBenefits(
                 headSprites[(int)idol.idolIndex],

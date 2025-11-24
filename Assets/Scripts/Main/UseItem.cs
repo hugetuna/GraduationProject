@@ -35,15 +35,14 @@ public class UseItem : MonoBehaviour
         // 根據目前隊伍成員決定下拉選單的選項
         dropdown.options.Clear(); // 清空原有選項
 
-        teamMembers = teamManager.teamMembers;
+        idolInstances = TeamDataUtility.IdolInstances.Values.ToArray();
+        // 強制排序，確保顯示順序一致（雖然很怪但先這樣寫）
+        IdolInstance[] sortedIdolInstances = idolInstances.OrderBy(idol => (int)idol.idolIndex).ToArray();
+        teamMembers = sortedIdolInstances.Select(go => go.GetComponent<PlayerControlMainWorld>()).ToList();
 
         for (int i = 0; i < teamMembers.Count; i++) // 確保不會超出陣列範圍
         {
-            string memberName = teamMembers[i].name; // 取得隊伍成員名稱
-            // 去除前後綴（只剩名字）
-            int front = memberName.IndexOf("_");
-            int end = memberName.IndexOf("2");
-            memberName = memberName.Substring(front + 1, end - front - 1);
+            string memberName = TeamDataUtility.CleanNameOfCharacterObject(teamMembers[i].name); // 取得隊伍成員名稱
             //Debug.Log("隊伍成員名稱：" + memberName);
             dropdown.options.Add(new TMP_Dropdown.OptionData("給 " + memberName));
         }
@@ -56,9 +55,6 @@ public class UseItem : MonoBehaviour
 
         // 設定按鈕的事件監聽器
         GetComponent<Button>().onClick.AddListener(OnUseItem);
-
-        // 獲取場景中所有具備 IdolInstance 的物件
-        idolInstances = TeamDataUtility.IdolInstances.Values.ToArray();
     }
 
     private void OnDropdownValueChanged(int index)

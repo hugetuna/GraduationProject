@@ -39,7 +39,6 @@ public class CartController : MonoBehaviour
     private int totalPrice = 0; // 購物車總價
     [SerializeField] private TextMeshProUGUI moneyText; // 玩家持有金錢文字
     public AudioClip checkBillSound;
-    private AudioSource audioSource;
     public static event Action OnPurchaseSuccess; // 購買成功的事件
 
 
@@ -48,9 +47,6 @@ public class CartController : MonoBehaviour
     {
         if (Instance == null) Instance = this; // 保持單一實例
         else Destroy(gameObject); // 刪除多餘實例
-
-        audioSource = gameObject.AddComponent<AudioSource>();
-        // audioSource.clip = checkBillSound; 只有使用 audioSource.Play() 才須設定
     }
 
     void Start()
@@ -135,7 +131,7 @@ public class CartController : MonoBehaviour
 
     public void CheckBill() // 按下結帳按鈕以處理購物車訂單
     {
-        ResourceManager resourceManager = WindowDataSetup.GetResourceManager();
+        ResourceManager resourceManager = ResourceManager.Instance;
 
         // 檢查例外狀況
         if (resourceManager.getMoney() < totalPrice)
@@ -144,7 +140,7 @@ public class CartController : MonoBehaviour
             return;
         }
 
-        // 將購買的商品交由 ResourceManager 管理（尚未與背包對接）
+        // 將購買的商品交由 ResourceManager 管理（姑且與背包對接了，但不曉得效果好不好）
         List<Item> itemsToAdd = new(); // 以清單進行統整
         foreach (CartItemData value in cartData.Values)
         {
@@ -161,7 +157,7 @@ public class CartController : MonoBehaviour
         resourceManager.SpendMoney(totalPrice);
 
         // 播放結帳音效
-        audioSource.PlayOneShot(checkBillSound);
+        AudioManager.Instance.PlaySFX(checkBillSound);
 
         // 清空購物車
         foreach (Transform child in cartContent.transform)

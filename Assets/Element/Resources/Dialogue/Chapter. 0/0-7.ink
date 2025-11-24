@@ -1,4 +1,4 @@
-#speaker:Empty
+#speaker:Empty #bgm:StarlightParade
 #background:NormalStage #sfx:Kansei
 （舞台上的熱量一陣陣傳來）
 #speaker:Manager
@@ -73,7 +73,7 @@
 #emotion:Talk
 安靜。
 
-#speaker:Empty
+#speaker:Empty #sfx:Drum
 #Tachie1_Character:Kuma
 #Tachie2_Character:Sirius
 ——入選的是...

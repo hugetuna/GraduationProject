@@ -16,8 +16,8 @@ public class InternalDemonUI : MonoBehaviour
     private bool hintShown = true; // 記錄提示圖示是否顯示中
     private bool firstTalkClicked = false; // 記錄是否第一次點對話按鈕
     //-----------------------------------------------------------------//
-    [SerializeField] private Button sellButton; // 可開啟販賣頁面的按鈕
-    [SerializeField] private GameObject sellUI; // 販賣頁面
+    // [SerializeField] private Button sellButton; // 可開啟販賣頁面的按鈕
+    // [SerializeField] private GameObject sellUI; // 販賣頁面
     private Button closeSellButton; // 關閉販賣頁面的按鈕
 
     // 退出惡魔頁面的按鈕寫在 DemonUIHandler 腳本（讓惡魔頁面的開關能統一管理）
@@ -32,20 +32,20 @@ public class InternalDemonUI : MonoBehaviour
         dialogueObject.onClick.AddListener(OnDialogueBgClick);
         problemButton.onClick.AddListener(OnProblemButtonClick);
 
-        sellButton.onClick.AddListener(() =>
-        {
-            sellUI.SetActive(true); // 開啟販賣頁面
-        });
+        // sellButton.onClick.AddListener(() =>
+        // {
+        //     sellUI.SetActive(true); // 開啟販賣頁面
+        // });
 
-        closeSellButton = sellUI.transform.Find("Close").GetComponent<Button>();
-        closeSellButton.onClick.AddListener(() =>
-        {
-            sellUI.SetActive(false); // 關閉販賣頁面
-        });
+        // closeSellButton = sellUI.transform.Find("Close").GetComponent<Button>();
+        // closeSellButton.onClick.AddListener(() =>
+        // {
+        //     sellUI.SetActive(false); // 關閉販賣頁面
+        // });
 
         dialogueText.text = GetInkLine("talk_0"); // 初始對話框文字
         hintIcon.SetActive(true); // 預設提示圖示為顯示狀態
-        sellUI.SetActive(false); // 預設隱藏販賣頁面
+        // sellUI.SetActive(false); // 預設隱藏販賣頁面
     }
 
     void OnEnable()
