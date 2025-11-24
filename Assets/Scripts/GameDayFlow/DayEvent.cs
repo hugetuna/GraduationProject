@@ -38,6 +38,7 @@ public class DayEvent : ScriptableObject
     public Vector3 targetPlayerPositionMin;//若WaitUntilPlayerPosition->等待玩家移動至目標區間
     public Vector3 targetPlayerPositionMax;
     public string interactableObjectKey;//若WaitUntilInteractWithObject->等待與目標互動物件互動
+    public float waitSeconds;//若WaitForSeconds->等待秒數
     [TextArea]
     public string description;//自由敘述
 }

@@ -148,6 +148,10 @@ public class DayEventManager : MonoBehaviour
                 }
             }
         }
+        else if (dayEvent.Type == EventType.WaitForSeconds)
+        {
+            StartCoroutine(WaitForSec(dayEvent.waitSeconds, onFinish));
+        }
         else if (dayEvent.Type == EventType.WaitAfterDayEndEventStart)
         {
             // 電腦結算頁面後
@@ -161,4 +165,26 @@ public class DayEventManager : MonoBehaviour
             onFinish?.Invoke();
         }
     }
+    private IEnumerator WaitForSec(float sec,System.Action onEnd)
+    {
+        TeamManager teamManager = FindAnyObjectByType<TeamManager>();
+        if (teamManager != null)
+        {
+            teamManager = FindAnyObjectByType<TeamManager>();
+            teamManager.teamMembers[
+                teamManager.currentLeaderIndex].enabled = false;
+        }
+        float timer = 0f;
+        while (timer <= sec) {
+            timer += Time.deltaTime;
+            yield return null;
+        }
+        if (teamManager != null)
+        {
+            teamManager = FindAnyObjectByType<TeamManager>();
+            teamManager.teamMembers[
+                teamManager.currentLeaderIndex].enabled = true;
+        }
+        onEnd?.Invoke();
+    } 
 }
