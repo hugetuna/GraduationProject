@@ -44,13 +44,13 @@ public class TraineeAssignment : MonoBehaviour
         }
 
         // 處理隊長 
-        // var leader = teamMembers[tm.currentLeaderIndex];
-        // bool leaderInTrainees = trainees.Any(t => leader.name.Contains(t));
-        // if (leaderInTrainees && tm.teamMembers.Count > 1)
-        // {
-        //     // 若派隊長去訓練，且隊伍人數大於 1，則更換隊長
-        //     tm.SwitchLeader(1);
-        // }
+        var leader = teamMembers[tm.currentLeaderIndex];
+        bool leaderInTrainees = trainees.Any(t => leader.name.Contains(t));
+        if (leaderInTrainees && tm.teamMembers.Count > 1)
+        {
+            // 若派隊長去訓練，且隊伍人數大於 1，則更換隊長
+            tm.SwitchLeader(1);
+        }
 
         // 遍歷 trainees 以進行訓練指派 
         foreach (string trainee in trainees)
