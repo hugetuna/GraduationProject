@@ -9,6 +9,7 @@ public class DayEventManager : MonoBehaviour
     private HashSet<string> triggeredEvents = new HashSet<string>(); // 紀錄已觸發事件避免重複觸發
     public int EventedNumberToday =0;
     [Header("紀錄互動事件所需的參數")]
+    public bool isAllEventDone=false;
     public bool isWaitingForInteract=false;
     public string interactObjectKey;
     // 初始化當天事件隊列
@@ -17,20 +18,51 @@ public class DayEventManager : MonoBehaviour
         Debug.Log($"今天是第 {currentDay} 天");
         EventedNumberToday = 0;
         eventQueue.Clear();
-        foreach (var dayEvent in allDayEvents)
+        for(int timeIndex=0; timeIndex<200; timeIndex++)
         {
-            if (dayEvent.TriggerDay == currentDay)
+            foreach (var dayEvent in allDayEvents)
             {
-                eventQueue.Enqueue(dayEvent);
+                if (dayEvent.TriggerDay == currentDay && dayEvent.TriggerTimeIndex == timeIndex)
+                {
+                    Debug.Log($"加入事件: {dayEvent.eventId} at time {timeIndex}");
+                    eventQueue.Enqueue(dayEvent);
+                }
+            }
+            //WaitAfterDayEndEventStart事件
+            if (timeIndex == 100)
+            {
+                var waitAfterDayEndEventStartEvent = CreateWaitAfterDayEndEventStartEvent();
+                eventQueue.Enqueue(waitAfterDayEndEventStartEvent);
             }
         }
+        // 最後加上結束一天事件
+        var endDayEvent = CreateEndDayEvent();
+        eventQueue.Enqueue(endDayEvent);
+
+        isAllEventDone = false;
     }
+    private DayEvent CreateWaitAfterDayEndEventStartEvent()
+    {
+        DayEvent e = ScriptableObject.CreateInstance<DayEvent>();
+        e.eventId = "WAIT_AFTER_DAY_END_EVENT_START";
+        e.Type = EventType.WaitAfterDayEndEventStart;
+        return e;
+    }
+    private DayEvent CreateEndDayEvent()
+    {
+        DayEvent e = ScriptableObject.CreateInstance<DayEvent>();
+        e.eventId = "END_DAY";
+        e.Type = EventType.EndDay;
+        return e;
+    }
+
     // 觸發下一個事件
     public void TriggerNextEvent()
     {
         if (eventQueue.Count == 0)
         {
             Debug.Log("No more events to trigger today.");
+            isAllEventDone = true;
             return;
         }
         var ev = eventQueue.Dequeue();
@@ -115,6 +147,18 @@ public class DayEventManager : MonoBehaviour
                     };
                 }
             }
+        }
+        else if (dayEvent.Type == EventType.WaitAfterDayEndEventStart)
+        {
+            // 電腦結算頁面後
+            DayManager.Instance.onDayFinish = onFinish;
+        }
+        else if (dayEvent.Type == EventType.EndDay)
+        {
+            // 結束一天
+            DayManager.Instance.EndDay();
+            // 然後呼叫 onFinish 讓事件管理器知道這個事件結束
+            onFinish?.Invoke();
         }
     }
 }

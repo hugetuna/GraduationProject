@@ -84,7 +84,6 @@ public class AudioManager : MonoBehaviour
     //停止背景音樂
     public void StopMusic()
     {
-        Debug.Log("停止BGM");
         AudioSource musicSource = Music.GetComponent<AudioSource>();
         musicSource.Stop();
     }

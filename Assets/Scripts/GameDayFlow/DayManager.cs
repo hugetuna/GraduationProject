@@ -1,3 +1,4 @@
+using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -9,6 +10,8 @@ public class DayManager : MonoBehaviour
     public int date = 0; //保存遊戲中的日期
     public DayEventManager dayEventManager;
     public bool IsInStartOfDay = false;//是否處於新一天開始的階段
+    [Header("為了EventManager")]
+    public System.Action onDayFinish = null;
     private void Awake()
     {
         if (Instance == null) Instance = this;
@@ -34,6 +37,11 @@ public class DayManager : MonoBehaviour
         dayEventManager.InitializeDayEvents(date);
         dayEventManager.TriggerNextEvent();
     }
+    public void AfterDayEndEventStart()
+    {
+        Debug.Log("觸發結束一天後的事件");
+        onDayFinish?.Invoke();
+    }
     public void EndDay()
     {
         // 訓練結算（先這樣，以後說不定會再改）
@@ -41,7 +49,10 @@ public class DayManager : MonoBehaviour
         {
             idol.SettleTrainRecord();
         }
-
+        // 重置事件狀態
+        Debug.Log($"結束一天 Date:{date}");
+        onDayFinish = null;
         IsInStartOfDay = false;
+        SceneTransitionManager.Instance.teleportByTargetSceneName("Floor_1");
     }  
 }

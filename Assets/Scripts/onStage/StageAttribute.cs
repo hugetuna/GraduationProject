@@ -29,6 +29,7 @@ public class StageAttribute : ScriptableObject
     public int roundMax;//總回合數
     public float secPerRound;//一回合的時間
     [Header("結束後")]
+    public DialogueSaveData clearDialogue;
     public string nextSceneName;
     public int baseRewardFans;
     [TextArea(2, 5)]

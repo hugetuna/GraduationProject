@@ -79,7 +79,10 @@ public class SceneTransitionManager : MonoBehaviour
             DialogueManager.Instance.dialogueType = false;
         }
         if (!isTransitioning)
+        {
             StartCoroutine(TransitionRoutine(sceneName));
+        }
+            
     }
     private IEnumerator TransitionRoutine(string sceneName)
     {
@@ -110,7 +113,6 @@ public class SceneTransitionManager : MonoBehaviour
         // 4.完成單例轉場後的額外處理
         DialogueManager.Instance.OnSceneLoaded();
         ResourceManager.Instance.OnSceneLoaded();
-        DayManager.Instance.OnSceneLoaded(sceneName);
         // 追加檢查事件是否被達成
         if (onDialogueFinish != null&&waitSceneName==sceneName)
         {
@@ -130,6 +132,8 @@ public class SceneTransitionManager : MonoBehaviour
         string sceneNameLower = sceneName.ToLower();
         if(sceneNameLower.Contains("b1")) AudioManager.Instance.SetMusic(b1); 
         else if(sceneNameLower.Any(c => c >= '1' && c <= '4')) AudioManager.Instance.SetMusic(otherFloors);
+        // 8.通知DayManager場景已載入
+        DayManager.Instance.OnSceneLoaded(sceneName);
     }
 
     //取得動畫片段長度

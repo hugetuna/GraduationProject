@@ -267,6 +267,7 @@ public class OnStageManager : MonoBehaviour
     public void EndAndLeave()
     {
         //TODO:用關卡資料動態回歸場景
+        if(currentStageData.clearDialogue!=null) GameManager.Instance.SaveInkJSONAssetData(currentStageData.clearDialogue);
         SceneTransitionManager.Instance.teleportByTargetSceneName(currentStageData.nextSceneName);
     }
     

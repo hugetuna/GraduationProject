@@ -59,9 +59,8 @@ public class SetSettleUI : MonoBehaviour
         moneyText.text = $"+{moneyEarned}";
 
         // 裝備和物品顯示（目前沒東西...但如果商店可以買東西再來改）
-
         // 正式結算請放到 DayManager 的 EndDay() 裡面
         endDayButton.onClick.RemoveAllListeners(); // 避免重複綁定
-        endDayButton.onClick.AddListener(() => DayManager.Instance.EndDay());
+        endDayButton.onClick.AddListener(() => DayManager.Instance.AfterDayEndEventStart());
     }
 }
