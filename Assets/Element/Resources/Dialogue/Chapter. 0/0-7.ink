@@ -1,6 +1,6 @@
 #speaker:Empty
 #background:NormalStage #sfx:Kansei
-(舞台上的熱量一陣陣傳來，)
+（舞台上的熱量一陣陣傳來）
 #speaker:Manager
 ...好亮。她們真的...在發光。
 
@@ -15,7 +15,7 @@
 
 #speaker:Empty
 #background:Black
-(回到了後台)
+（回到了後台）
 
 #background:DressingRoom
 #speaker:Kuma
