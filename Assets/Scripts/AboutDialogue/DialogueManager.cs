@@ -265,7 +265,7 @@ public class DialogueManager : MonoBehaviour
             if (bgmTag == "Stop")
             {
                 AudioManager.Instance.StopMusic();
-                Debug.Log("停止BGM");
+                
                 return;
             }
             AudioClip audioClip = bgmFiles.Find(bgm => bgm.BGMName == bgmTag)?.audioClip;
@@ -414,7 +414,10 @@ public class DialogueManager : MonoBehaviour
     }
     private void OnDialougeEnd()
     {
-        if (dialogueType == true) { SceneTransitionManager.Instance.teleportByTargetSceneName(onDialogueEndScene); }
+        AudioManager.Instance.StopSFX();
+        if (dialogueType == true) {
+            SceneTransitionManager.Instance.teleportByTargetSceneName(onDialogueEndScene);
+        }
         else {
             //如果是主場景對話結束，恢復玩家控制
             dialogueCanvas.SetActive(false);

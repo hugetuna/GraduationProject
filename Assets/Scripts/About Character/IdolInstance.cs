@@ -132,6 +132,11 @@ public class IdolInstance : MonoBehaviour
     public void FansIncrease(int increseAmount)
     {
         fans += increseAmount;
+        MainCanvasSetter mainCanvasSetter = FindAnyObjectByType<MainCanvasSetter>();
+        if (mainCanvasSetter!=null)
+        {
+            mainCanvasSetter.setStatusBar();
+        }
     }
 
     // 每天結束時的訓練結算＆記錄重置

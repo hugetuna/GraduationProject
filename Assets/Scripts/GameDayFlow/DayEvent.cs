@@ -12,14 +12,23 @@ public enum EventType
     WaitUntilPlayerPosition,
     WaitUntilInteractWithObject,
     WaitForSeconds,
-    AfterDayEnd
+    WaitAfterDayEndEventStart,
+    EndDay
 }
 [CreateAssetMenu(menuName = "DayFlow/Day Event")]
 public class DayEvent : ScriptableObject
 {
     public string eventId;// 可用來查找避免重複
     public int TriggerDay;//觸發的遊戲天數
-    public EventType Type;//觸發地點(需不需要換場)
+
+    //觸發的時間點序號
+    //0~99: 白天事件
+    //100:  WaitAfterDayEndEventStart事件
+    //101~200: 一天結束事件
+    //999: EndDay事件
+    public int TriggerTimeIndex;
+
+    public EventType Type;//觸發事件類型
     public DialogueSaveData DialogueWhenTrigger;//觸發的對話劇本
     public bool onlyTriggerOnce = true;// 教學 / 劇情只跑一次
     [Header("特定事件需要的參數")]
