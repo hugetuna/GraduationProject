@@ -48,8 +48,6 @@ public class TeamManager : MonoBehaviour
             {
                 busyMembers.Add(idol.GetComponent<PlayerControlMainWorld>());
             }
-            //同步跨場景角色啟用/隱藏
-            idol.SetActive(idolAbility.isActive);
         }
         //初始化位置編號
         SetUpTeamPosition();

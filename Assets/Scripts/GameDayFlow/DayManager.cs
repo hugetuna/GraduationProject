@@ -36,6 +36,10 @@ public class DayManager : MonoBehaviour
         date++;
         dayEventManager.InitializeDayEvents(date);
         dayEventManager.TriggerNextEvent();
+        foreach (var idol in TeamDataUtility.IdolInstances.Values)
+        {
+            idol.gameObject.SetActive(idol.isActive);
+        }
     }
     public void AfterDayEndEventStart()
     {
