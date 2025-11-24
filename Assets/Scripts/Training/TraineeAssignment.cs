@@ -25,7 +25,9 @@ public class TraineeAssignment : MonoBehaviour
         foreach (var idol in TeamDataUtility.IdolInstances.Values.Select(i => i.gameObject)){
             idol.SetActive(true); // 將隱藏的角色都顯示出來 
             tm.RemoveBusyMember(idol.GetComponent<PlayerControlMainWorld>()); // 從忙碌成員列表移除
-            UpdateTrainRecord(idol.name, isActive: true); // 重設跨場景角色啟用狀態
+
+            string name = TeamDataUtility.CleanNameOfCharacterObject(idol.name);
+            UpdateTrainRecord(name, isActive: true); // 重設跨場景角色啟用狀態
         }
         disappearCharacters.Clear(); // 清空上一次的列表 
 
