@@ -137,7 +137,7 @@ public class IdolInstance : MonoBehaviour
     // 每天結束時的訓練結算＆記錄重置
     public void SettleTrainRecord()
     {
-        vigour -= vigourCost;
+        // vigour -= vigourCost; // 應該會改到其他部分執行
         dance += danceExp;
         vocal += vocalExp;
         visual += visualExp;

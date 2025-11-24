@@ -14,7 +14,7 @@ public class MainUIHandler : MonoBehaviour
     void OnDestroy()
     {
         ComputerInteraction.OnComputerInteracted -= HideMainUI; // 取消訂閱與電腦互動事件
-        DesktopUIHandler.OnDesktopUIClosed -= ShowMainUI; // 取消訂閱桌面 UI 關閉事件
+        // DesktopUIHandler.OnDesktopUIClosed -= ShowMainUI; // 取消訂閱桌面 UI 關閉事件
     }
 
     private void HideMainUI()

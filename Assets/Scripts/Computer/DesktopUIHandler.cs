@@ -11,6 +11,7 @@ public class DesktopUIHandler : MonoBehaviour
     public GameObject desktopUI;
     [SerializeField] private Button powerButton;
     [SerializeField] private GameObject startMenu;
+    [SerializeField] private GameObject settleUI; // 按下 powerButton 後跳出結算畫面
     //-----------------------------------------------------------------//
     [Header("角色控制")]
     public TeamManager teamManager; // 透過 TeamManager 物件取得當前隊伍成員
@@ -31,6 +32,7 @@ public class DesktopUIHandler : MonoBehaviour
     void Start()
     {
         desktopUI.SetActive(false); // 初始隱藏桌面 UI
+        settleUI.SetActive(false); // 初始隱藏結算畫面
 
         ComputerInteraction.OnComputerInteracted += ShowDesktopUI; // 訂閱並監聽與電腦互動事件
         powerButton.onClick.AddListener(TurnOffComputer); // 設置關機按鈕點擊事件
@@ -64,15 +66,18 @@ public class DesktopUIHandler : MonoBehaviour
         startMenu.SetActive(false); // 關閉開始選單
         desktopUI.SetActive(false); // 關閉電腦桌面 UI
 
-        OnDesktopUIClosed?.Invoke(); // 觸發關閉桌面 UI 事件
+        settleUI.SetActive(true); // 開啟結算畫面
+        settleUI.GetComponent<SetSettleUI>().ShowTodayBenefits(); // 設定裡面的 UI
+
+        // OnDesktopUIClosed?.Invoke(); // 觸發關閉桌面 UI 事件
 
         // 切換成透視投影
         Camera.main.orthographic = false;
 
-        teamMembers = teamManager.teamMembers; // 獲取當前隊伍成員
-        foreach (PlayerControlMainWorld member in teamMembers)
-        {
-            member.gameObject.SetActive(true); // 正常顯示角色
-        }
+        // teamMembers = teamManager.teamMembers; // 獲取當前隊伍成員
+        // foreach (PlayerControlMainWorld member in teamMembers)
+        // {
+        //     member.gameObject.SetActive(true); // 正常顯示角色
+        // }
     }
 }
