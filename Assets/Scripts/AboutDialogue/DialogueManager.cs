@@ -74,6 +74,7 @@ public class DialogueManager : MonoBehaviour
             dialogueCanvas.SetActive(false);
             backGroundCanvas.SetActive(false);
         }
+        tachieManager.ResetAllTachieSlot();
         MainCanvas= GameObject.Find("Canvas_Main");
         teamManager = FindAnyObjectByType<TeamManager>();
     }

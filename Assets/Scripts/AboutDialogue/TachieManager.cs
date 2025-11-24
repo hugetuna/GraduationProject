@@ -28,6 +28,15 @@ public class TachieManager : MonoBehaviour
                 slot.originalPos = slot.slotTransform.localPosition;
         }
     }
+    public void ResetAllTachieSlot()
+    {
+        foreach (var slot in tachieSlots)
+        {
+            slot.image.gameObject.SetActive(false);
+            slot.slotTransform.localPosition = slot.originalPos;
+        }
+        Debug.Log("Reset All Tachie Slots");
+    }
     //傳入標籤組，一次處理標籤行為
     public void ApplyTachieTags(List<string> tags)
     {
