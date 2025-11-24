@@ -170,6 +170,13 @@ MonoBehaviour:
   bondWithP: 0
   BHaveSetUp: 0
   BasicTrainRecord: {fileID: 11400000, guid: d3a131f41f6629544a1ec71dfd859083, type: 2}
+  state: 0
+  positionInTrainingUI: {x: 0, y: 0}
+  vigourCost: 0
+  danceExp: 0
+  vocalExp: 0
+  visualExp: 0
+  isActive: 1
 --- !u!114 &874445509639540754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -403,7 +410,7 @@ PrefabInstance:
     - target: {fileID: -4012249580024808462, guid: 9402fbb8a96c7eb4496931c3a60a1752, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 5513132389521480282, guid: 642a05760cfc6bc4bb05c049ca52a7e0, type: 3}
+      objectReference: {fileID: 4446022497029084646, guid: 9402fbb8a96c7eb4496931c3a60a1752, type: 3}
     - target: {fileID: -4012249580024808462, guid: 9402fbb8a96c7eb4496931c3a60a1752, type: 3}
       propertyPath: m_SortingOrder
       value: 5
@@ -419,7 +426,7 @@ PrefabInstance:
     - target: {fileID: -2989888900304473720, guid: 9402fbb8a96c7eb4496931c3a60a1752, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -2281194117618808028, guid: 642a05760cfc6bc4bb05c049ca52a7e0, type: 3}
+      objectReference: {fileID: 3752441016508246464, guid: 9402fbb8a96c7eb4496931c3a60a1752, type: 3}
     - target: {fileID: -2946642945975680583, guid: 9402fbb8a96c7eb4496931c3a60a1752, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -463,7 +470,7 @@ PrefabInstance:
     - target: {fileID: 1479235017799979244, guid: 9402fbb8a96c7eb4496931c3a60a1752, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -4524100547943873379, guid: 642a05760cfc6bc4bb05c049ca52a7e0, type: 3}
+      objectReference: {fileID: 7261514741972955479, guid: 9402fbb8a96c7eb4496931c3a60a1752, type: 3}
     - target: {fileID: 1479235017799979244, guid: 9402fbb8a96c7eb4496931c3a60a1752, type: 3}
       propertyPath: m_SortingOrder
       value: 6
@@ -487,7 +494,7 @@ PrefabInstance:
     - target: {fileID: 2807849939648999647, guid: 9402fbb8a96c7eb4496931c3a60a1752, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: 2366456746185531785, guid: 642a05760cfc6bc4bb05c049ca52a7e0, type: 3}
+      objectReference: {fileID: 7548924643165104260, guid: 9402fbb8a96c7eb4496931c3a60a1752, type: 3}
     - target: {fileID: 2807849939648999647, guid: 9402fbb8a96c7eb4496931c3a60a1752, type: 3}
       propertyPath: m_SortingOrder
       value: 3
@@ -527,7 +534,7 @@ PrefabInstance:
     - target: {fileID: 5359103177601667974, guid: 9402fbb8a96c7eb4496931c3a60a1752, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -4454571669769671937, guid: 642a05760cfc6bc4bb05c049ca52a7e0, type: 3}
+      objectReference: {fileID: -6988890126078578937, guid: 9402fbb8a96c7eb4496931c3a60a1752, type: 3}
     - target: {fileID: 5940439505003250821, guid: 9402fbb8a96c7eb4496931c3a60a1752, type: 3}
       propertyPath: m_Layer
       value: 3
@@ -567,7 +574,7 @@ PrefabInstance:
     - target: {fileID: 7483522030580231420, guid: 9402fbb8a96c7eb4496931c3a60a1752, type: 3}
       propertyPath: m_Sprite
       value: 
-      objectReference: {fileID: -3253000011514988935, guid: 986f9d74a4515ca4e87d4f118180bbbc, type: 3}
+      objectReference: {fileID: 5940700252801409012, guid: 9402fbb8a96c7eb4496931c3a60a1752, type: 3}
     - target: {fileID: 7483522030580231420, guid: 9402fbb8a96c7eb4496931c3a60a1752, type: 3}
       propertyPath: m_SortingOrder
       value: 4
@@ -669,9 +676,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CategoryHash: 1.0025338e-29
-  m_labelHash: 0.0012341411
+  m_labelHash: 9.040195e-19
   m_SpriteKey: 0
-  m_SpriteHash: 56240186
+  m_SpriteHash: 365748523
 --- !u!1 &2634590933158538087 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -4176830485460551830, guid: 9402fbb8a96c7eb4496931c3a60a1752, type: 3}
@@ -690,9 +697,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CategoryHash: 0.04429719
-  m_labelHash: 0.0012341411
+  m_labelHash: 9.040195e-19
   m_SpriteKey: 0
-  m_SpriteHash: 927838583
+  m_SpriteHash: 432541588
 --- !u!1 &4080792382652381566 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -2727215730689464973, guid: 9402fbb8a96c7eb4496931c3a60a1752, type: 3}
@@ -711,9 +718,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CategoryHash: 0.000000018164215
-  m_labelHash: 0.0012341411
+  m_labelHash: 9.040195e-19
   m_SpriteKey: 0
-  m_SpriteHash: 692499389
+  m_SpriteHash: 114495351
 --- !u!1 &5775591408869050934 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3647948108748871227, guid: 9402fbb8a96c7eb4496931c3a60a1752, type: 3}
@@ -732,9 +739,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CategoryHash: 1.6027343e-37
-  m_labelHash: 0.0012341411
+  m_labelHash: 9.040195e-19
   m_SpriteKey: 0
-  m_SpriteHash: 222571102
+  m_SpriteHash: 978575546
 --- !u!1 &7610501171154431872 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: -8423148791957130355, guid: 9402fbb8a96c7eb4496931c3a60a1752, type: 3}
@@ -753,9 +760,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CategoryHash: 6.216492e-18
-  m_labelHash: 0.0012341411
+  m_labelHash: 9.040195e-19
   m_SpriteKey: 0
-  m_SpriteHash: 237633580
+  m_SpriteHash: 1021391222
 --- !u!4 &8478253588302079443 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7552582706839291426, guid: 9402fbb8a96c7eb4496931c3a60a1752, type: 3}
@@ -779,6 +786,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_CategoryHash: 0.0047193225
-  m_labelHash: 0.0012341411
+  m_labelHash: 9.040195e-19
   m_SpriteKey: 0
-  m_SpriteHash: 768932902
+  m_SpriteHash: 839205941
