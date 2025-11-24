@@ -24,10 +24,11 @@ public class TraineeAssignment : MonoBehaviour
     {
         List<PlayerControlMainWorld> teamMembers = tm.teamMembers;
 
-        // 將隱藏的角色都顯示出來 
-        foreach (var character in teamMembers){
-            character.gameObject.SetActive(true);
-            var name = TeamDataUtility.CleanNameOfCharacterObject(character.name);
+        foreach (var member in teamMembers){
+            member.gameObject.SetActive(true); // 將隱藏的角色都顯示出來 
+            tm.RemoveBusyMember(member); // 從忙碌成員列表移除
+
+            var name = TeamDataUtility.CleanNameOfCharacterObject(member.name);
             UpdateTrainRecord(name, isActive: true); // 重設跨場景角色啟用狀態
         }
         disappearCharacters.Clear(); // 清空上一次的列表 
@@ -43,13 +44,13 @@ public class TraineeAssignment : MonoBehaviour
         }
 
         // 處理隊長 
-        var leader = teamMembers[tm.currentLeaderIndex];
-        bool leaderInTrainees = trainees.Any(t => leader.name.Contains(t));
-        if (leaderInTrainees && tm.teamMembers.Count > 1)
-        {
-            // 若派隊長去訓練，且隊伍人數大於 1，則更換隊長
-            tm.SwitchLeader(1);
-        }
+        // var leader = teamMembers[tm.currentLeaderIndex];
+        // bool leaderInTrainees = trainees.Any(t => leader.name.Contains(t));
+        // if (leaderInTrainees && tm.teamMembers.Count > 1)
+        // {
+        //     // 若派隊長去訓練，且隊伍人數大於 1，則更換隊長
+        //     tm.SwitchLeader(1);
+        // }
 
         // 遍歷 trainees 以進行訓練指派 
         foreach (string trainee in trainees)
@@ -61,9 +62,9 @@ public class TraineeAssignment : MonoBehaviour
                 continue;
             }
 
-            // 同步更新 IdolInstance 的 trainRecord（備份用，還不會真增減角色數值）
+            // 同步更新 IdolInstance 的 trainRecord（備份用，還不會真的增減角色數值）
             float bonus = string.IsNullOrEmpty(data.teacherName) ? data.basicBenefit : data.withTeacherBenefit;
-            int benefit = 0;
+            int benefit;
             switch (data.trainingType)
             {
                 case "Dance":
@@ -79,11 +80,12 @@ public class TraineeAssignment : MonoBehaviour
                     UpdateTrainRecord(trainee, visual: benefit);
                     break;
             }
-            UpdateTrainRecord(trainee, vigour: data.neededVigour, isActive: false);
+            UpdateTrainRecord(trainee, vigourCost: data.neededVigour, isActive: false);
 
             // 隱藏隊伍中去訓練的角色 
             var character = idolInstance.gameObject;
             disappearCharacters.Add(character);
+            tm.RemoveBusyMember(character.GetComponent<PlayerControlMainWorld>()); // 從忙碌成員列表移除
             character.SetActive(false);
         }
 
@@ -98,7 +100,7 @@ public class TraineeAssignment : MonoBehaviour
     // 在指派訓練成員的同時備份狀態變化
     public static void UpdateTrainRecord(string name, IdolTrainingState state = IdolTrainingState.None,
                                     Vector2? position = null,
-                                    int? vigour = null,
+                                    int? vigourCost = null,
                                     int? dance = null,
                                     int? vocal = null,
                                     int? visual = null,
@@ -108,7 +110,7 @@ public class TraineeAssignment : MonoBehaviour
 
         if (state != IdolTrainingState.None) idol.state = state;
         if (position != null) idol.positionInTrainingUI = position.Value;
-        if (vigour != null) idol.vigourCost = vigour.Value;
+        if (vigourCost != null) idol.vigourCost = vigourCost.Value;
         if (dance != null) idol.danceExp = dance.Value;
         if (vocal != null) idol.vocalExp = vocal.Value;
         if (visual != null) idol.visualExp = visual.Value;
