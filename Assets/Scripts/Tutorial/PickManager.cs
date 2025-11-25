@@ -17,6 +17,7 @@ public struct WhoPicked
 }
 public class PickManager : MonoBehaviour
 {
+    public bool isDone=false;
     public List<GameObject> PickIdolPrefabs = new List<GameObject>();//可選取偶像的預製物列表
     public List<WhoPicked> whoPickedList = new List<WhoPicked>();//紀錄每個偶像是否被選取
     public int pickedIdolCount=0;
@@ -92,14 +93,18 @@ public class PickManager : MonoBehaviour
     }
     public void ConfirmPick()
     {
-        if (pickedIdolCount==3)
+        if (isDone == true)
+        {
+            return;
+        }
+        if (pickedIdolCount == 3)
         {
             //實例化所選取的偶像
             foreach (var whoPicked in whoPickedList)
             {
-                if (whoPicked.isPicked==true)
+                if (whoPicked.isPicked == true)
                 {
-                    GameObject newIdol= Instantiate(PickIdolPrefabs[(int)whoPicked.pickedIdol]);
+                    GameObject newIdol = Instantiate(PickIdolPrefabs[(int)whoPicked.pickedIdol]);
                     newIdol.GetComponent<IdolInstance>().IdolSetUp();
                 }
             }
@@ -107,5 +112,6 @@ public class PickManager : MonoBehaviour
             GameManager.Instance.SaveInkJSONAssetData(DialogueSaveData);
             SceneTransitionManager.Instance.teleportByTargetSceneName("Dialogue Scene");
         }
+        isDone = true;
     }
 }
