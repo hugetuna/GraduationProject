@@ -53,6 +53,19 @@ public class TeamManager : MonoBehaviour
         //初始化位置編號
         SetUpTeamPosition();
     }
+    public void ResetIdolsTeam()
+    {
+        for (int i = busyMembers.Count - 1; i >= 0; i--)
+        {
+            RemoveBusyMember(busyMembers[i]);
+        }
+
+        foreach (var member in teamMembers)
+        {
+            member.gameObject.SetActive(true);
+        }
+    }
+
     public void AddBusyMember(PlayerControlMainWorld member)
     {
         if (teamMembers.Contains(member) && !busyMembers.Contains(member))

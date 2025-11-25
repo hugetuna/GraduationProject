@@ -36,6 +36,9 @@ public class DayManager : MonoBehaviour
         date++;
         dayEventManager.InitializeDayEvents(date);
         dayEventManager.TriggerNextEvent();
+        TeamManager teamManager;
+        teamManager = FindAnyObjectByType<TeamManager>();
+        teamManager.ResetIdolsTeam();
         foreach (var idol in TeamDataUtility.IdolList)
         {
             // 保險起見先寫死
