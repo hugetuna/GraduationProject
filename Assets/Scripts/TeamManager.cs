@@ -63,6 +63,7 @@ public class TeamManager : MonoBehaviour
         foreach (var member in teamMembers)
         {
             member.gameObject.SetActive(true);
+            member.GetComponent<IdolInstance>().state = IdolTrainingState.InTeam;
         }
     }
 
