@@ -53,7 +53,7 @@ public class TeamManager : MonoBehaviour
         //初始化位置編號
         SetUpTeamPosition();
     }
-    public void ResetIdolsTeam()
+    public void ResetIdolsTeam() // 每日重置用
     {
         for (int i = busyMembers.Count - 1; i >= 0; i--)
         {
@@ -62,8 +62,10 @@ public class TeamManager : MonoBehaviour
 
         foreach (var member in teamMembers)
         {
-            member.gameObject.SetActive(true);
-            member.GetComponent<IdolInstance>().state = IdolTrainingState.InTeam;
+            // 因為寫在結束一天的 SettleTrainRecord 似乎無效，於是在這裡再寫一遍
+            IdolInstance idol = member.GetComponent<IdolInstance>();
+            idol.SettleTrainRecord();
+            idol.gameObject.SetActive(idol.isActive);
         }
     }
 

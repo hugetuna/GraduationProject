@@ -36,15 +36,9 @@ public class DayManager : MonoBehaviour
         date++;
         dayEventManager.InitializeDayEvents(date);
         dayEventManager.TriggerNextEvent();
-        TeamManager teamManager;
-        teamManager = FindAnyObjectByType<TeamManager>();
+        
+        TeamManager teamManager = FindAnyObjectByType<TeamManager>();
         teamManager.ResetIdolsTeam();
-        foreach (var idol in TeamDataUtility.IdolList)
-        {
-            // 保險起見先寫死
-            idol.isActive = true;
-            idol.gameObject.SetActive(true); 
-        }
     }
     public void AfterDayEndEventStart()
     {
@@ -53,7 +47,7 @@ public class DayManager : MonoBehaviour
     }
     public void EndDay()
     {
-        // 訓練結算（先這樣，以後說不定會再改）
+        // 訓練結算（寫在這裡好像沒效，但多寫一遍也無傷大雅）
         foreach (var idol in TeamDataUtility.IdolList)
         {
             idol.SettleTrainRecord();
