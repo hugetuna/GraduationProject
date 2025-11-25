@@ -99,6 +99,7 @@ public class PickManager : MonoBehaviour
         }
         if (pickedIdolCount == 3)
         {
+            isDone = true;
             //實例化所選取的偶像
             foreach (var whoPicked in whoPickedList)
             {
@@ -112,6 +113,6 @@ public class PickManager : MonoBehaviour
             GameManager.Instance.SaveInkJSONAssetData(DialogueSaveData);
             SceneTransitionManager.Instance.teleportByTargetSceneName("Dialogue Scene");
         }
-        isDone = true;
+        
     }
 }
