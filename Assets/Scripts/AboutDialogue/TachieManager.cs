@@ -30,10 +30,12 @@ public class TachieManager : MonoBehaviour
     }
     public void ResetAllTachieSlot()
     {
+        Debug.Log("reset all slot");
         foreach (var slot in tachieSlots)
         {
+            slot.slotTransform.localPosition = Vector3.zero;
+            slot.nowPos = Vector3.zero;
             slot.image.gameObject.SetActive(false);
-            slot.slotTransform.localPosition = slot.originalPos;
         }
     }
     //傳入標籤組，一次處理標籤行為

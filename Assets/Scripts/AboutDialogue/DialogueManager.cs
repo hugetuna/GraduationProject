@@ -74,7 +74,6 @@ public class DialogueManager : MonoBehaviour
             dialogueCanvas.SetActive(false);
             backGroundCanvas.SetActive(false);
         }
-        tachieManager.ResetAllTachieSlot();
         MainCanvas= GameObject.Find("Canvas_Main");
         teamManager = FindAnyObjectByType<TeamManager>();
     }
@@ -429,6 +428,7 @@ public class DialogueManager : MonoBehaviour
             teamManager.currentLeaderIndex].enabled = true;
             }        
         }
+        tachieManager.ResetAllTachieSlot();
         onDialogueFinish?.Invoke();
         onDialogueFinish = null;
     }
