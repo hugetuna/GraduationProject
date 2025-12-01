@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.VirtualTexturing;
+using UnityEngine.U2D.Animation;
 
 public enum IdolWho { none = -1, Kuma = 0, Karo = 1, Sirius = 2 }
 public class IdolInstance : MonoBehaviour
@@ -25,7 +27,10 @@ public class IdolInstance : MonoBehaviour
     //粉絲數
     public int fans;
     public int bondWithP;//與玩家的羈絆
-
+    //衣服編號->string字典
+    public Dictionary<int, string> clothesDict = new Dictionary<int, string>();
+    public int currentClothIndex = 0;//目前穿著的衣服編號
+    //是否已經完成初始化
     public bool BHaveSetUp = false;
 
     // 訓練紀錄
@@ -94,7 +99,16 @@ public class IdolInstance : MonoBehaviour
         fans = data.fans;
         bondWithP = data.bondWithP;//與玩家的羈絆
         BHaveSetUp = data.BHaveSetUp;
-
+        //衣服編號
+        clothesDict = new Dictionary<int, string>()
+        {
+            {0,"normal" },
+            {1,"clo1" },
+            {2,"clo2" },
+            {3,"clo3" },
+        };
+        currentClothIndex = data.currentClothIndex;
+        ChangeCloth(currentClothIndex);
         // 訓練紀錄
         state = data.state;
         positionInTrainingUI = data.positionInTrainingUI;
@@ -103,6 +117,7 @@ public class IdolInstance : MonoBehaviour
         vocalExp = data.vocalExp;
         visualExp = data.visualExp;
         BasicTrainRecord = data.basicTrainRecord;
+
         isActive = data.isActive;
 
         positionInTeam = data.positionInTeam;
@@ -120,6 +135,39 @@ public class IdolInstance : MonoBehaviour
         {
             return false;
         }
+    }
+    public void ChangeCloth(int ClothIndex)
+    {
+        //找到目標偶像的Transform
+        Transform TargetTransform = transform.Find("KumaQ2.0");
+        if (TargetTransform == null)
+        {
+            TargetTransform = transform.Find("KaroQ2.0");
+        }
+        if (TargetTransform == null)
+        {
+            TargetTransform = transform.Find("SiriusQ2.0");
+        }
+        if (TargetTransform == null)
+        {
+            return;
+        }
+        //取得各部位的SpriteResolver
+        Dictionary<string, SpriteResolver> resolvers = new Dictionary<string, SpriteResolver>()
+    {
+        { "Body", TargetTransform.Find("Body").GetComponent<SpriteResolver>() },
+        { "LHand", TargetTransform.Find("LHand").GetComponent<SpriteResolver>() },
+        { "RHand", TargetTransform.Find("RHand").GetComponent<SpriteResolver>() },
+        { "LLeg", TargetTransform.Find("LLeg").GetComponent<SpriteResolver>() },
+        { "RLeg", TargetTransform.Find("RLeg").GetComponent<SpriteResolver>() },
+        { "OnHead", TargetTransform.Find("OnHead").GetComponent<SpriteResolver>() },
+    };
+        //根據index更換衣服
+        foreach (var resolver in resolvers)
+        {
+            resolver.Value.SetCategoryAndLabel(resolver.Key, clothesDict[ClothIndex]);
+        }
+        currentClothIndex = ClothIndex;
     }
     //每天結束時必須重製全員暫時狀態
     public void ResetTemporaryEffect()

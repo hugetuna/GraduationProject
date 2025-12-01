@@ -82,6 +82,7 @@ public class GameManager : MonoBehaviour
                 danceExp = idol.danceExp,
                 vocalExp = idol.vocalExp,
                 visualExp = idol.visualExp,
+                currentClothIndex = idol.currentClothIndex,
                 isActive = idol.isActive
             };
             idolDataList.Add(data);

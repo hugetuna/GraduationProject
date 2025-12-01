@@ -12,26 +12,7 @@ public class ClothChange : MonoBehaviour,IInteractable
     {
         teamManager = FindAnyObjectByType<TeamManager>();
         PlayerControlMainWorld leader = teamManager.teamMembers[teamManager.currentLeaderIndex];
-        Transform leaderTransform = leader?.transform.Find("KumaQ2.0");
-        if (leaderTransform == null) {
-            leaderTransform= leader?.transform.Find("KaroQ2.0");
-        }
-        if (leaderTransform == null)
-        {
-            leaderTransform= leader?.transform.Find("SiriusQ2.0");
-        }
-        resolvers = new Dictionary<string, SpriteResolver>()
-    {
-        { "Body", leaderTransform.Find("Body").GetComponent<SpriteResolver>() },
-        { "LHand", leaderTransform.Find("LHand").GetComponent<SpriteResolver>() },
-        { "RHand", leaderTransform.Find("RHand").GetComponent<SpriteResolver>() },
-        { "LLeg", leaderTransform.Find("LLeg").GetComponent<SpriteResolver>() },
-        { "RLeg", leaderTransform.Find("RLeg").GetComponent<SpriteResolver>() },
-        { "OnHead", leaderTransform.Find("OnHead").GetComponent<SpriteResolver>() },
-    };
-        foreach (var resolver in resolvers)
-        {
-            resolver.Value.SetCategoryAndLabel(resolver.Key, "clo1");
-        }
+        IdolInstance idol = leader.GetComponent<IdolInstance>();
+        idol.ChangeCloth(1);
     }
 }

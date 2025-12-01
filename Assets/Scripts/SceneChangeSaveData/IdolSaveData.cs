@@ -25,6 +25,8 @@ public class IdolSaveData
     //粉絲數
     public int fans;
     public int bondWithP;//與玩家的羈絆
+    //當前衣服編號
+    public int currentClothIndex;
     //使否初始化過
     public bool BHaveSetUp;
 
