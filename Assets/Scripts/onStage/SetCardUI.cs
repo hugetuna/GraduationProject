@@ -98,14 +98,28 @@ public class SetCardUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     //拖曳
     public void OnBeginDrag(PointerEventData eventData)
     {
-        if (!isInteractive) return; // 不可拖曳就跳出
+        if (!isInteractive) return;
         isDragging = true;
+
+        // 恢復原位 (避免 hover offset 干擾)
         transform.localPosition = originalPosition;
-        //紀錄位置
+
+        // 紀錄位置
         originalParent = transform.parent;
         originalPosition = transform.localPosition;
-        transform.SetParent(dragLayer, true);// 放到最上層避免被 UI 遮擋
+
+        // 進入拖曳層
+        transform.SetParent(dragLayer, true);
         canvasGroup.blocksRaycasts = false;
+
+        //立刻將卡片移到滑鼠中心
+        RectTransformUtility.ScreenPointToLocalPointInRectangle(
+            dragLayer,
+            eventData.position,
+            eventData.pressEventCamera,
+            out Vector2 localPoint);
+
+        rectTransform.anchoredPosition = localPoint;
     }
 
     public void OnDrag(PointerEventData eventData)
