@@ -2,7 +2,8 @@ using NUnit.Framework;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+using UnityEngine.Events;
+using UnityEngine.UI;
 public class DayManager : MonoBehaviour
 {
     public static DayManager Instance;
@@ -27,6 +28,10 @@ public class DayManager : MonoBehaviour
         else if (SceneName == "Floor_4"&&date == 0)
         {
             StartDay();
+        }
+        if (SceneName == "Floor_4"|| SceneName == "Floor_3" || SceneName == "Floor_2" || SceneName == "Floor_1" || SceneName == "Floor_B1")
+        {
+            dayEventManager.ShowEventHint(dayEventManager.currentEvent);
         }
     }
     // 用來更動日期的函式

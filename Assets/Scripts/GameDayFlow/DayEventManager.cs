@@ -1,17 +1,23 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
-
+using UnityEngine.Events;
+using UnityEngine.UI;
 public class DayEventManager : MonoBehaviour
 {
     public List<DayEvent> allDayEvents; // 用來保存所有的日常事件
     public Queue<DayEvent> eventQueue = new Queue<DayEvent>();//當天需觸發的所有事件
+    public DayEvent currentEvent; // 當前正在處理的事件
     private HashSet<string> triggeredEvents = new HashSet<string>(); // 紀錄已觸發事件避免重複觸發
     public int EventedNumberToday =0;
     [Header("紀錄互動事件所需的參數")]
     public bool isAllEventDone=false;
     public bool isWaitingForInteract=false;
     public string interactObjectKey;
+    [Header("事件視覺化")]
+    public GameObject eventHintPanel;
+    public TextMeshProUGUI eventHintText;
     // 初始化當天事件隊列
     public void InitializeDayEvents(int currentDay)
     {
@@ -83,6 +89,8 @@ public class DayEventManager : MonoBehaviour
     {
         // 根據事件的屬性執行相應的邏輯
         Debug.Log($"Triggering event: {dayEvent.eventId}");
+        currentEvent = dayEvent;
+        ShowEventHint(dayEvent);
         if (dayEvent.Type== EventType.MainWorld)
         {
             GameManager.Instance.SaveInkJSONAssetData(dayEvent.DialogueWhenTrigger);
@@ -163,6 +171,24 @@ public class DayEventManager : MonoBehaviour
             DayManager.Instance.EndDay();
             // 然後呼叫 onFinish 讓事件管理器知道這個事件結束
             onFinish?.Invoke();
+        }
+    }
+    public void ShowEventHint(DayEvent dayEvent)
+    {
+        if (dayEvent == null) return;
+        if (eventHintPanel == null)
+        {
+            eventHintPanel = GameObject.FindGameObjectWithTag("EventHint");
+            eventHintText = eventHintPanel?.GetComponentInChildren<TextMeshProUGUI>();
+        }
+        if (dayEvent.isHintEvent)
+        {
+            eventHintPanel?.gameObject.SetActive(true);
+            eventHintText.text = dayEvent.hint;
+        }
+        else
+        {
+            eventHintPanel?.gameObject.SetActive(false);
         }
     }
     private IEnumerator WaitForSec(float sec,System.Action onEnd)
