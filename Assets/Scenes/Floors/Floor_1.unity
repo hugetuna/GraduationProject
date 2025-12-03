@@ -1258,6 +1258,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Canvas_Main
       objectReference: {fileID: 0}
+    - target: {fileID: 2941810755754915106, guid: 103882bfe476b6849a05d0a2accee92d, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 2958915720396417333, guid: 103882bfe476b6849a05d0a2accee92d, type: 3}
       propertyPath: m_Sprite
       value: 
@@ -2280,6 +2284,10 @@ PrefabInstance:
     - target: {fileID: 8704934796690645585, guid: e4f66792482b2ab498ca1c73a313e2f6, type: 3}
       propertyPath: m_Name
       value: UIManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 8704934796690645585, guid: e4f66792482b2ab498ca1c73a313e2f6, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8997741260682818168, guid: e4f66792482b2ab498ca1c73a313e2f6, type: 3}
       propertyPath: CharacterUI
@@ -3415,13 +3423,31 @@ PrefabInstance:
     - {fileID: 5488085938352286264, guid: a9d7f1edb4df15748b17a5c204bf6c28, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 8717442212464232720, guid: a9d7f1edb4df15748b17a5c204bf6c28, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1958400374579444719}
   m_SourcePrefab: {fileID: 100100000, guid: a9d7f1edb4df15748b17a5c204bf6c28, type: 3}
 --- !u!1 &1958400374579444718 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8717442212464232720, guid: a9d7f1edb4df15748b17a5c204bf6c28, type: 3}
   m_PrefabInstance: {fileID: 1958400374579444717}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1958400374579444719
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1958400374579444718}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16defcab490c8724e9b4572d055ae02d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hintPrefab: {fileID: 1776773948414331192, guid: 1f68213dbd0f542449843e0e85fa0aa1, type: 3}
+  SpwanPoint: {x: 0, y: 3.5, z: -1.5}
+  XDeg: 45
 --- !u!1001 &6115471822236083972
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3893,6 +3919,7 @@ SceneRoots:
   - {fileID: 1381385670}
   - {fileID: 437439504}
   - {fileID: 7614758915692691029}
+  - {fileID: 946883003}
   - {fileID: 1624828041}
   - {fileID: 901428141}
   - {fileID: 833178236}
@@ -3900,4 +3927,3 @@ SceneRoots:
   - {fileID: 1904789345}
   - {fileID: 6115471822236083972}
   - {fileID: 1321039402}
-  - {fileID: 946883003}
