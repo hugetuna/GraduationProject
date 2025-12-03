@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Elevator : MonoBehaviour, IInteractable
 {
-    public string InteractionKey => null; // 這個字串用來指定動畫 key
+    public string InteractionKey => "Elevator"; // 這個字串用來指定動畫 key
     public GameObject elevatorCanvas;
     public SetElevatorIcon elevatorIconSetter;
     public int placeCode; // 電梯所在樓層代碼
