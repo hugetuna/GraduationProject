@@ -18,8 +18,8 @@ public class ChatRoomManager : MonoBehaviour
     private bool waitingForChoice = false; // 是否正在等待玩家選擇
     //-----------------------------------------------------------------//
     [Tooltip("聊天間隔")]
-    [SerializeField] private float firstLineDelay = 1.0f;
-    [SerializeField] private float autoPlayInterval = 5.0f;
+    [SerializeField] private float firstLineDelay = 0.5f;
+    private float autoPlayInterval;
     private Coroutine continueCoroutine = null; // 記錄 Coroutine 以方便取消
 
     void Awake()
@@ -122,6 +122,7 @@ public class ChatRoomManager : MonoBehaviour
                 currentUserRuntime.chatHistory.Add((text, isPlayer));
 
                 // 自動播放下一句
+                autoPlayInterval = Random.Range(1.0f, 3.0f);
                 yield return new WaitForSeconds(autoPlayInterval);
             }
             else if (story.currentChoices.Count > 0)
