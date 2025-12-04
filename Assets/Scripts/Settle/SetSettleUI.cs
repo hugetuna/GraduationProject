@@ -34,7 +34,7 @@ public class SetSettleUI : MonoBehaviour
         }
 
         // 呼叫角色顯示
-        IdolInstance[] idolInstances = TeamDataUtility.IdolInstances.Values.ToArray();
+        IdolInstance[] idolInstances = TeamDataUtility.IdolInstanceList.ToArray();
         // 強制排序，確保顯示順序一致（雖然很怪但先這樣寫）
         IdolInstance[] sortedIdolInstances = idolInstances.OrderBy(idol => (int)idol.idolIndex).ToArray();
 
@@ -47,9 +47,9 @@ public class SetSettleUI : MonoBehaviour
                 headSprites[(int)idol.idolIndex],
                 idol.basicStatus.idolName,
                 idol.vigour, idol.vigourMax, 0,  // 目前沒有最大體力值變動
-                idol.dance, idol.danceExp,
-                idol.vocal, idol.vocalExp,
-                idol.visual, idol.visualExp,
+                idol.dance, idol.trainRecord.danceExp,
+                idol.vocal, idol.trainRecord.vocalExp,
+                idol.visual, idol.trainRecord.visualExp,
                 idol.performance, 0 // 目前沒有演技變動
             );
         }

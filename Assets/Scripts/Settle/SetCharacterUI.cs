@@ -41,21 +41,21 @@ public class SetCharacterUI : MonoBehaviour
 
         // 體力
         vigourBar.fillAmount = (float)vigourCurrent / vigourMax;
-        vigourMaxDeltaText.text = (vigourMaxDelta >= 0) ? $"+{vigourMaxDelta}" : vigourMaxDelta.ToString();
+        vigourMaxDeltaText.text = (vigourMaxDelta > 0) ? $"+{vigourMaxDelta}" : "";
 
         // 三種能力數值
         danceText.text = danceCurrent.ToString();
-        danceDeltaText.text = (danceDelta >= 0) ? $"+{danceDelta}" : danceDelta.ToString();
+        danceDeltaText.text = (danceDelta > 0) ? $"+{danceDelta}" : "";
 
         vocalText.text = vocalCurrent.ToString();
-        vocalDeltaText.text = (vocalDelta >= 0) ? $"+{vocalDelta}" : vocalDelta.ToString();
+        vocalDeltaText.text = (vocalDelta > 0) ? $"+{vocalDelta}" : "";
 
         visualText.text = visualCurrent.ToString();
-        visualDeltaText.text = (visualDelta >= 0) ? $"+{visualDelta}" : visualDelta.ToString();
+        visualDeltaText.text = (visualDelta > 0) ? $"+{visualDelta}" : "";
 
         // 演技
         performanceText.text = performanceCurrent.ToString();
-        performanceDeltaText.text = (performanceDelta >= 0) ? $"+{performanceDelta}" : performanceDelta.ToString();
+        performanceDeltaText.text = (performanceDelta > 0) ? $"+{performanceDelta}" : "";
     }
 
 }

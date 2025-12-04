@@ -20,17 +20,15 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         get { return currentDropZone; }
         set { currentDropZone = value; }
     }
+    private int zoneIndex = -1; // 紀錄目前所在的 DropZone 編號
     //-----------------------------------------------------------------//
     [Header("拖曳時受影響的 UI 元素")]
-    [SerializeField] private Slider vigourSlider;
-    [SerializeField] private GameObject benefitBar;
-    [SerializeField] private GameObject buffBoard;
+    [SerializeField] private GameObject vigourSlider;
     private VigourBar vigourBar; // 對應腳本參考
-    private BenefitBar benefitBarComp;
-    private BuffBoard buffBoardComp;
     //-----------------------------------------------------------------//
     // [Header("訓練 UI 資料")]
-    private TrainingUIData trainingUIData;
+    private TrainingUIData trainingUIData; // 目前訓練 UI 的資料
+    private NumbersController numbersController;
     private string myName = "";
     private string MyName
     {
@@ -38,16 +36,13 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         {
             if (string.IsNullOrEmpty(myName))
             {
-                Image img = GetComponent<Image>();
-                if (img != null && img.sprite != null)
-                {
-                    myName = TeamDataUtility.CleanNameOfCharacterUI(img.sprite.name);
-                }
-                else return "";
+                myName = GetComponent<Image>().sprite?.name ?? "";
+                myName = TeamDataUtility.CleanNameOfCharacterUI(myName);
             }
             return myName;
         }
     }
+    private IdolWho MyIdolIndex => TeamDataUtility.GetIdolEnum(MyName);
     //-----------------------------------------------------------------//
     [Header("相關音效")]
     [SerializeField] private AudioClip dragCompletedSound; // 拖曳成功的音效
@@ -59,8 +54,7 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         canvasGroup = GetComponent<CanvasGroup>();
 
         vigourBar = GetComponent<VigourBar>();
-        benefitBarComp = GetComponent<BenefitBar>();
-        buffBoardComp = GetComponent<BuffBoard>();
+        numbersController = GetComponentInParent<NumbersController>();
 
         originalPosition = rectTransform.anchoredPosition;
     }
@@ -70,14 +64,13 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         trainingUIData = data;
 
         // 傳遞該角色名稱給底下的元件進行初始化
-        vigourBar.Initialize(MyName);
-        benefitBarComp.Initialize(MyName, trainingUIData);
-        buffBoardComp.Initialize(MyName);
+        vigourBar.Initialize(trainingUIData, MyIdolIndex);
+        numbersController.InitializeSlots(trainingUIData); // 初始化數值顯示
 
         // 確保換場景後 UI 不會跑掉
-        var state = TrainingUIManager.Instance.GetIdolState(MyName);
-        if (state == IdolTrainingState.InTeam) buffBoard.SetActive(true);
-        else buffBoard.SetActive(false);
+        var state = TrainingUIManager.Instance.GetIdolState(MyIdolIndex);
+        if (state == IdolTrainingState.InTeam) vigourSlider.SetActive(true);
+        else vigourSlider.SetActive(false);
     }
 
     public void OnBeginDrag(PointerEventData eventData)
@@ -92,9 +85,7 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         canvasGroup.blocksRaycasts = false;
 
         // 開始拖曳時，隱藏角色底下的 UI 元素
-        vigourSlider.gameObject.SetActive(false);
-        benefitBar.SetActive(false);
-        buffBoard.SetActive(false);
+        vigourSlider.SetActive(false);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -122,33 +113,56 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             AudioManager.Instance.PlaySFX(dragCompletedSound, 0.5f); // 播放拖曳成功音效
             rectTransform.position = CurrentDropZone.MyRect.position + dropOffset;
 
+            // 清掉原本位置的數值資料
+            if(lastDropZone == null)
+            {
+                var idol = TeamDataUtility.IdolDict[MyIdolIndex];
+                var tr = idol.trainRecord;
+                numbersController.ClearSlot(tr.droppedZoneType, tr.droppedZoneIndex);
+            }
+            else
+            {
+                numbersController.ClearSlot(lastDropZone.zoneType, zoneIndex);
+            }
+            
             lastDropZone = CurrentDropZone;
             currentZoneType = CurrentDropZone.zoneType;
+            zoneIndex = CurrentDropZone.zoneIndex;
 
-            // 更新底下元件的資料
-            vigourBar.UpdateVigourBar(trainingUIData);
-            benefitBarComp.UpdateBenefitBar(trainingUIData);
-            buffBoardComp.UpdateBuffBoard(trainingUIData);
+            // 更新當前位置的數值資料
+            numbersController.AssignIdolSlot(
+                MyIdolIndex,
+                currentZoneType,
+                zoneIndex,
+                trainingUIData
+            );
         }
         else if (lastDropZone != null) // 拖曳失敗，回到上個 DropZone
         {
             rectTransform.position = lastDropZone.MyRect.position + dropOffset;
             currentZoneType = lastDropZone.zoneType;
+            zoneIndex = lastDropZone.zoneIndex;
         }
         else // 拖曳失敗，沒有上個 DropZone，回到原始位置
         {
             rectTransform.anchoredPosition = originalPosition + (Vector2)dropOffset;
             currentZoneType = DropZoneType.Member;
+            // 不動 zoneIndex
         }
         UpdateTeamStatus(currentZoneType);
 
-        // 同步更新 IdolInstance 的 trainRecord（備份用）
-        TraineeAssignment.UpdateTrainRecord(MyName, position: rectTransform.anchoredPosition);
+        // 更新角色底下的 UI 元素
+        if (currentZoneType == DropZoneType.Member)
+        {
+            vigourSlider.SetActive(true);
+        }
+        else
+        {
+            vigourSlider.SetActive(false);
+        }
 
-        // 結束拖曳時，顯示角色底下的 UI 元素
-        vigourSlider.gameObject.SetActive(true);
-        benefitBar.SetActive(true);
-        if (currentZoneType == DropZoneType.Member) buffBoard.SetActive(true);
+        // 同步更新 IdolInstance 的 trainRecord（備份用）
+        TraineeAssignment.UpdateTrainRecord(MyIdolIndex, position: rectTransform.anchoredPosition);
     }
 
     private void UpdateTeamStatus(DropZoneType newZoneType)
@@ -161,8 +175,8 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             DropZoneType.Visual => IdolTrainingState.InVisual,
             _ => IdolTrainingState.InTeam
         };
-        
-        TrainingUIManager.Instance.SetIdolState(MyName, newState);
+
+        TrainingUIManager.Instance.SetIdolState(MyIdolIndex, newState);
     }
 }
 

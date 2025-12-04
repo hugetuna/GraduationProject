@@ -168,15 +168,20 @@ MonoBehaviour:
   vigourMax: 0
   fans: 0
   bondWithP: 0
+  currentClothIndex: 0
   BHaveSetUp: 0
-  BasicTrainRecord: {fileID: 11400000, guid: d3a131f41f6629544a1ec71dfd859083, type: 2}
-  state: 0
-  positionInTrainingUI: {x: 0, y: 0}
-  vigourCost: 0
-  danceExp: 0
-  vocalExp: 0
-  visualExp: 0
-  isActive: 1
+  sprite: {fileID: 21300000, guid: 30f2ce5d3c7c0e444a2738948ccb8a7a, type: 3}
+  basicTrainRecord: {fileID: 11400000, guid: 281f7b185b77a6d458f16d7948d532c7, type: 2}
+  trainRecord:
+    state: 0
+    position: {x: 0, y: 0}
+    droppedZoneType: 0
+    droppedZoneIndex: 0
+    vigourCost: 0
+    danceExp: 0
+    vocalExp: 0
+    visualExp: 0
+    isActive: 0
 --- !u!114 &-2746678269606791096
 MonoBehaviour:
   m_ObjectHideFlags: 0

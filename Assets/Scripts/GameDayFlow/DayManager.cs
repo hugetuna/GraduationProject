@@ -53,10 +53,10 @@ public class DayManager : MonoBehaviour
     public void EndDay()
     {
         // 訓練結算（寫在這裡好像沒效，但多寫一遍也無傷大雅）
-        foreach (var idol in TeamDataUtility.IdolList)
-        {
-            idol.SettleTrainRecord();
-        }
+        // foreach (var idol in TeamDataUtility.IdolInstanceList)
+        // {
+        //     idol.SettleTrainRecord();
+        // }
         // 重置事件狀態
         Debug.Log($"結束一天 Date:{date}");
         onDayFinish = null;

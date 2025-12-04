@@ -75,15 +75,8 @@ public class GameManager : MonoBehaviour
                 fans = idol.fans,
                 bondWithP = idol.bondWithP,
                 BHaveSetUp = true,
-                basicTrainRecord = idol.BasicTrainRecord,
-                state = idol.state,
-                positionInTrainingUI = idol.positionInTrainingUI,
-                vigourCost = idol.vigourCost,
-                danceExp = idol.danceExp,
-                vocalExp = idol.vocalExp,
-                visualExp = idol.visualExp,
-                currentClothIndex = idol.currentClothIndex,
-                isActive = idol.isActive
+                basicTrainRecord = idol.basicTrainRecord,
+                trainRecord = idol.trainRecord
             };
             idolDataList.Add(data);
         }

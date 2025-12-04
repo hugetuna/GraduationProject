@@ -35,7 +35,7 @@ public class UseItem : MonoBehaviour
         // 根據目前隊伍成員決定下拉選單的選項
         dropdown.options.Clear(); // 清空原有選項
 
-        idolInstances = TeamDataUtility.IdolInstances.Values.ToArray();
+        idolInstances = TeamDataUtility.IdolInstanceList.ToArray();
         // 強制排序，確保顯示順序一致（雖然很怪但先這樣寫）
         IdolInstance[] sortedIdolInstances = idolInstances.OrderBy(idol => (int)idol.idolIndex).ToArray();
         teamMembers = sortedIdolInstances.Select(go => go.GetComponent<PlayerControlMainWorld>()).ToList();

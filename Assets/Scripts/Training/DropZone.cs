@@ -3,6 +3,7 @@ using UnityEngine.EventSystems;
 
 public enum DropZoneType
 {
+    None,
     Member, // 隊伍區域
     Dance,  // 舞蹈訓練室
     Vocal,  // 歌唱訓練室
@@ -12,6 +13,7 @@ public enum DropZoneType
 public class DropZone : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     public DropZoneType zoneType; // 直接在 Inspector 設定即可
+    public int zoneIndex; // 同一類型的區域可能有多個，從 0 開始編號
     //-----------------------------------------------------------------//
     private RectTransform myRect;
     public RectTransform MyRect => myRect;

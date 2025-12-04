@@ -33,15 +33,9 @@ public class IdolInstance : MonoBehaviour
     //是否已經完成初始化
     public bool BHaveSetUp = false;
 
-    // 訓練紀錄
-    public BasicTrainRecord BasicTrainRecord; // 初始值存放地
-    public IdolTrainingState state; // 在隊伍或者特定訓練室
-    public Vector2 positionInTrainingUI; // 代表圖片在訓練 UI 的位置
-    public int vigourCost; // 體力消耗
-    public int danceExp; // 舞蹈收益
-    public int vocalExp; // 歌唱收益
-    public int visualExp; // 表現力收益
-    public bool isActive = true;//是否在場景中啟用
+    public Sprite sprite; // 角色 UI 圖片
+    public BasicTrainRecord basicTrainRecord; // 初始值存放地
+    public TrainRecord trainRecord = new(); // 訓練紀錄
 
     // Start is called before the first frame update
     void Start()
@@ -72,12 +66,20 @@ public class IdolInstance : MonoBehaviour
         vigour = vigourMax = basicStatus.vigour;
         fans = 0;
 
-        state = BasicTrainRecord.state;
-        positionInTrainingUI = BasicTrainRecord.position;
-        vigourCost = BasicTrainRecord.vigourCost;
-        danceExp = BasicTrainRecord.danceExp;
-        vocalExp = BasicTrainRecord.vocalExp;
-        visualExp = BasicTrainRecord.visualExp;
+        if (basicTrainRecord == null)
+        {
+            Debug.LogError("基本狀態 (basicTrainRecord) 未設定！");
+            return;
+        }
+        trainRecord.SetTrainRecord(basicTrainRecord.state, 
+                                   basicTrainRecord.position,
+                                   basicTrainRecord.droppedZoneType,
+                                   basicTrainRecord.droppedZoneIndex,
+                                   basicTrainRecord.vigourCost,
+                                   basicTrainRecord.danceExp,
+                                   basicTrainRecord.vocalExp,
+                                   basicTrainRecord.visualExp,
+                                   basicTrainRecord.isActive);
     }
     //填入讀取的資料組
     public void LoadData(IdolSaveData data)
@@ -109,17 +111,11 @@ public class IdolInstance : MonoBehaviour
         };
         currentClothIndex = data.currentClothIndex;
         ChangeCloth(currentClothIndex);
+
         // 訓練紀錄
-        state = data.state;
-        positionInTrainingUI = data.positionInTrainingUI;
-        vigourCost = data.vigourCost;
-        danceExp = data.danceExp;
-        vocalExp = data.vocalExp;
-        visualExp = data.visualExp;
-        BasicTrainRecord = data.basicTrainRecord;
-
-        isActive = data.isActive;
-
+        basicTrainRecord = data.basicTrainRecord;
+        trainRecord = data.trainRecord;
+                                  
         positionInTeam = data.positionInTeam;
     }
     public bool costVigour(int Amount)
@@ -181,27 +177,27 @@ public class IdolInstance : MonoBehaviour
     {
         fans += increseAmount;
         MainCanvasSetter mainCanvasSetter = FindAnyObjectByType<MainCanvasSetter>();
-        if (mainCanvasSetter!=null)
+        if (mainCanvasSetter != null)
         {
             mainCanvasSetter.setStatusBar();
         }
     }
 
     // 每天結束時的訓練結算＆記錄重置
-    public void SettleTrainRecord()
-    {
-        // vigour -= vigourCost; // 應該會改到其他部分執行
-        dance += danceExp;
-        vocal += vocalExp;
-        visual += visualExp;
+    // public void SettleTrainRecord()
+    // {
+    //     // vigour -= vigourCost; // 應該會改到其他部分執行
+    //     dance += danceExp;
+    //     vocal += vocalExp;
+    //     visual += visualExp;
 
-        // 重置訓練紀錄
-        state = BasicTrainRecord.state;
-        positionInTrainingUI = BasicTrainRecord.position;
-        vigourCost = BasicTrainRecord.vigourCost;
-        danceExp = BasicTrainRecord.danceExp;
-        vocalExp = BasicTrainRecord.vocalExp;
-        visualExp = BasicTrainRecord.visualExp;
-        isActive = true;
-    }
+    //     // 重置訓練紀錄
+    //     state = BasicTrainRecord.state;
+    //     positionInTrainingUI = BasicTrainRecord.position;
+    //     vigourCost = BasicTrainRecord.vigourCost;
+    //     danceExp = BasicTrainRecord.danceExp;
+    //     vocalExp = BasicTrainRecord.vocalExp;
+    //     visualExp = BasicTrainRecord.visualExp;
+    //     isActive = true;
+    // }
 }

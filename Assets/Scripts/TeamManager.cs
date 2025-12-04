@@ -40,7 +40,7 @@ public class TeamManager : MonoBehaviour
             //手動把資料填回去
             idolAbility.LoadData(data);
             //idolAbility.positionInTeam = i;
-            if (idolAbility.state == IdolTrainingState.InTeam)
+            if (idolAbility.trainRecord.state == IdolTrainingState.InTeam)
             {
                 teamMembers.Add(idol.GetComponent<PlayerControlMainWorld>());
             }
@@ -48,7 +48,7 @@ public class TeamManager : MonoBehaviour
             {
                 busyMembers.Add(idol.GetComponent<PlayerControlMainWorld>());
             }
-            idol.SetActive(idolAbility.isActive);
+            idol.SetActive(idolAbility.trainRecord.isActive);
         }
         //初始化位置編號
         SetUpTeamPosition();
@@ -64,8 +64,8 @@ public class TeamManager : MonoBehaviour
         {
             // 因為寫在結束一天的 SettleTrainRecord 似乎無效，於是在這裡再寫一遍
             IdolInstance idol = member.GetComponent<IdolInstance>();
-            idol.SettleTrainRecord();
-            idol.gameObject.SetActive(idol.isActive);
+            // idol.SettleTrainRecord();
+            idol.gameObject.SetActive(idol.trainRecord.isActive);
         }
     }
 
