@@ -10,6 +10,7 @@ public class StatsSlot
     public TextMeshProUGUI dance;
     public TextMeshProUGUI vocal;
     public TextMeshProUGUI visual;
+    public List<GameObject> buffList; // 顯示加成效果的物件列表（底下的文字和圖示另外設定）
     public IdolInstance currentIdol; // 這個 slot 目前放哪個角色
 }
 
@@ -29,6 +30,10 @@ public class NumbersController : MonoBehaviour
             slot.dance.text = "";
             slot.vocal.text = "";
             slot.visual.text = "";
+            foreach (var buff in slot.buffList)
+            {
+                buff.SetActive(false);
+            }
         }
 
         foreach (var slot in traineeSlots)
@@ -38,6 +43,10 @@ public class NumbersController : MonoBehaviour
             slot.dance.text = "";
             slot.vocal.text = "";
             slot.visual.text = "";
+            foreach (var buff in slot.buffList)
+            {
+                buff.SetActive(false);
+            }
         }
 
         // 取得所有成員
@@ -71,6 +80,10 @@ public class NumbersController : MonoBehaviour
         slot.dance.text = zoneType == DropZoneType.Dance ? $"{idol.dance + data.withTeacherBenefit}▲" : idol.dance.ToString();
         slot.vocal.text = zoneType == DropZoneType.Vocal ? $"{idol.vocal + data.withTeacherBenefit}▲" : idol.vocal.ToString();
         slot.visual.text = zoneType == DropZoneType.Visual ? $"{idol.visual + data.withTeacherBenefit}▲" : idol.visual.ToString();
+        foreach (var buff in slot.buffList)
+        {
+            buff.SetActive(true); // 顯示加成效果物件 => 功能待增加
+        }
     }
 
     public void ClearSlot(DropZoneType zoneType, int slotIndex)
@@ -84,5 +97,9 @@ public class NumbersController : MonoBehaviour
         slot.dance.text = "";
         slot.vocal.text = "";
         slot.visual.text = "";
+        foreach (var buff in slot.buffList)
+        {
+            buff.SetActive(false); // 隱藏加成效果物件
+        }
     }
 }

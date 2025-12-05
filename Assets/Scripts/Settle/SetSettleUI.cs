@@ -15,7 +15,7 @@ public class SetSettleUI : MonoBehaviour
     [SerializeField] private Button endDayButton;
     //-----------------------------------------------------------------//
     [Header("顯示資料")]
-    [SerializeField] private List<Sprite> headSprites; // 角色大頭照（須按照 IdolIndex 的順序排列）
+    [SerializeField] private List<Sprite> headSprites; // 角色大頭照（按照 IdolIndex 的順序排列）
     // [SerializeField] private ResourceManager resourceManager;
     private int moneyEarned;
     // [SerializeField] private List<ItemStack> itemsEarned;
@@ -33,15 +33,13 @@ public class SetSettleUI : MonoBehaviour
             AudioManager.Instance.PlaySFX(settleBGM);
         }
 
-        // 呼叫角色顯示
-        IdolInstance[] idolInstances = TeamDataUtility.IdolInstanceList.ToArray();
-        // 強制排序，確保顯示順序一致（雖然很怪但先這樣寫）
-        IdolInstance[] sortedIdolInstances = idolInstances.OrderBy(idol => (int)idol.idolIndex).ToArray();
+        // 呼叫角色顯示（已排序）
+        var idolInstances = TeamDataUtility.IdolInstanceList;
 
-        foreach(GameObject character in characters)
+        foreach(var idol in idolInstances)
         {
-            int charIndex = characters.IndexOf(character);
-            IdolInstance idol = sortedIdolInstances[charIndex];
+            int index = idolInstances.IndexOf(idol);
+            GameObject character = characters[index];
 
             character.GetComponent<SetCharacterUI>().ShowCharacterBenefits(
                 headSprites[(int)idol.idolIndex],
@@ -54,12 +52,12 @@ public class SetSettleUI : MonoBehaviour
             );
         }
 
-        // 金錢資料顯示（目前沒東西）
-        moneyEarned = 0;
+        // 金錢資料顯示（目前沒東西所以先寫死）
+        moneyEarned = 1000;
         moneyText.text = $"+{moneyEarned}";
 
         // 裝備和物品顯示（目前沒東西...但如果商店可以買東西再來改）
-        // 正式結算請放到 DayManager 的 EndDay() 裡面
+        // 正式結算請放到 DayManager 的 EndDay() 之類的地方
         endDayButton.onClick.RemoveAllListeners(); // 避免重複綁定
         endDayButton.onClick.AddListener(() => DayManager.Instance.AfterDayEndEventStart());
     }

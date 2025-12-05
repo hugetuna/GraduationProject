@@ -13,12 +13,13 @@ public class TraineeAssignment : MonoBehaviour
     void Start()
     {
         TrainingUIHandler.OnTrainingUIConfirmed += AssignTrainees; // 訂閱訓練 UI 確定指派事件
+        HintToggler.OnGoToComputer += AssignTrainees; // 訂閱確定前往電腦介面事件
     }
 
     void OnDestroy()
     {
         TrainingUIHandler.OnTrainingUIConfirmed -= AssignTrainees; // 取消訂閱訓練 UI 確定指派事件
-
+        HintToggler.OnGoToComputer -= AssignTrainees; // 取消訂閱確定前往電腦介面事件
     }
 
     public void AssignTrainees(TrainingUIData data) // 指派訓練成員的函式（確定有人才呼叫）
@@ -35,10 +36,22 @@ public class TraineeAssignment : MonoBehaviour
 
         // 取得目前 trainees 
         trainees = TrainingUIManager.Instance.GetTrainees();
+
         if(trainees.Count == 0)
         {
             return; // 若無人去訓練，就什麼也不做
         }
+        
+        bool isAllTrainees;
+        if(trainees.Count == TeamDataUtility.idolCount)
+        {
+            isAllTrainees = true; // 若所有人都去訓練，待會不用隱藏場景中角色
+        }
+        else
+        {
+            isAllTrainees = false;
+        }
+
         Debug.Log($"指派訓練成員: {string.Join(", ", trainees)}");
 
         // 處理隊長 => 交由 TeamManager 內部處理
@@ -81,6 +94,8 @@ public class TraineeAssignment : MonoBehaviour
                     break;
             }
 
+            if(isAllTrainees) continue; // 若所有人都去訓練，就不隱藏場景中角色
+            
             // 隱藏隊伍中去訓練的角色 
             Debug.Log($"隱藏訓練成員: {idolControl}");
             teamManager.AddBusyMember(idolControl);

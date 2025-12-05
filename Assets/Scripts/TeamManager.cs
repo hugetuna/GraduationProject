@@ -62,9 +62,9 @@ public class TeamManager : MonoBehaviour
 
         foreach (var member in teamMembers)
         {
-            // 因為寫在結束一天的 SettleTrainRecord 似乎無效，於是在這裡再寫一遍
+            // 因為寫在 DayManager 的 EndDay 似乎沒用，於是在這裡再寫一遍
             IdolInstance idol = member.GetComponent<IdolInstance>();
-            // idol.SettleTrainRecord();
+            idol.SettleTrainRecord();
             idol.gameObject.SetActive(idol.trainRecord.isActive);
         }
     }

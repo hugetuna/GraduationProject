@@ -27,6 +27,9 @@ public class TrainingUIHandler : MonoBehaviour
     //-----------------------------------------------------------------//
     private TrainingUIData trainingUIData; // 訓練 UI 的資料 ScriptableObject
     private bool isInitialized = false; // 確保訓練 UI 只初始化一次
+    //-----------------------------------------------------------------//
+    [Header("跳轉提示 UI 元素")]
+    [SerializeField] private GameObject hintPrefab; // 跳轉提示的 prefab
 
     void Start()
     {
@@ -123,7 +126,10 @@ public class TrainingUIHandler : MonoBehaviour
     {
         if(TrainingUIManager.Instance.GetMembers().Count == 0)
         {
-            // 若全員皆去訓練，觸發可通往電腦場景的 UI => 之後提醒主程式以方便銜接
+            // 若全員皆去訓練，觸發可通往電腦場景的 UI
+            var hintObj = Instantiate(hintPrefab, trainingUI.transform.parent); // 在 TrainingUI 的父物件下生成提示 UI
+            hintObj.transform.SetAsLastSibling(); // 確保提示 UI 在最上層
+            hintObj.GetComponent<HintToggler>().SetTrainingUIData(trainingUIData); // 若確定前往電腦介面可先進行訓練結算
         }
         else
         {
