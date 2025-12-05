@@ -14,7 +14,7 @@ public class StatsSlot
     public IdolInstance currentIdol; // 這個 slot 目前放哪個角色
 }
 
-/* 控制角色拖曳後的數值顯示，預計會掛在不同的訓練 UI 上 */
+/* 控制角色拖曳後的數值顯示，掛在不同的訓練 UI 上 */
 public class NumbersController : MonoBehaviour
 {
     [SerializeField] private List<StatsSlot> memberSlots = new();

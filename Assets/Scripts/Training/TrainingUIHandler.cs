@@ -68,6 +68,10 @@ public class TrainingUIHandler : MonoBehaviour
             {
                 dtl.Initialize(trainingUIData); // 初始化底下每一個 DragToLesson 元件
             }
+
+            var numbersController = trainingUI.GetComponent<NumbersController>();
+            numbersController.InitializeSlots(trainingUIData); // 初始化數值顯示
+            
             isInitialized = true;
         }
     }

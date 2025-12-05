@@ -65,7 +65,6 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
         // 傳遞該角色名稱給底下的元件進行初始化
         vigourBar.Initialize(trainingUIData, MyIdolIndex);
-        numbersController.InitializeSlots(trainingUIData); // 初始化數值顯示
 
         // 確保換場景後 UI 不會跑掉
         var state = TrainingUIManager.Instance.GetIdolState(MyIdolIndex);
