@@ -55,6 +55,7 @@ public class DesktopUIHandler : MonoBehaviour
         teamMembers = teamManager.teamMembers; // 獲取當前隊伍成員
         foreach (PlayerControlMainWorld member in teamMembers)
         {
+            member.transform.position=new Vector3(0,0,0); // 將角色移出畫面避免遮擋 UI
             member.gameObject.SetActive(false); // 隱藏角色避免遮擋 UI
         }
     }

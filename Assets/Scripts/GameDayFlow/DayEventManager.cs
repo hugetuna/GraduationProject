@@ -51,6 +51,7 @@ public class DayEventManager : MonoBehaviour
     {
         DayEvent e = ScriptableObject.CreateInstance<DayEvent>();
         e.eventId = "WAIT_AFTER_DAY_END_EVENT_START";
+        e.TriggerTimeIndex= 100;
         e.Type = EventType.WaitAfterDayEndEventStart;
         return e;
     }
@@ -58,6 +59,7 @@ public class DayEventManager : MonoBehaviour
     {
         DayEvent e = ScriptableObject.CreateInstance<DayEvent>();
         e.eventId = "END_DAY";
+        e.TriggerTimeIndex = 999;
         e.Type = EventType.EndDay;
         return e;
     }
@@ -150,6 +152,7 @@ public class DayEventManager : MonoBehaviour
                     member.waitInteractionKey= interactObjectKey;
                     member.onInteractionFinish = () =>
                     {
+                        interactObjectKey = "";
                         isWaitingForInteract = false;
                         onFinish?.Invoke();
                     };
@@ -164,6 +167,7 @@ public class DayEventManager : MonoBehaviour
         {
             // 電腦結算頁面後
             DayManager.Instance.onDayFinish = onFinish;
+            
         }
         else if (dayEvent.Type == EventType.EndDay)
         {

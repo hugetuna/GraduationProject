@@ -30,7 +30,6 @@ public class TachieManager : MonoBehaviour
     }
     public void ResetAllTachieSlot()
     {
-        Debug.Log("reset all slot");
         foreach (var slot in tachieSlots)
         {
             slot.slotTransform.localPosition = Vector3.zero;

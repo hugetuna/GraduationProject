@@ -45,7 +45,7 @@ public class PlayerControlMainWorld : MonoBehaviour
         //偵測是否處於等待互動事件狀態
         if (DayManager.Instance.dayEventManager.isWaitingForInteract==true)
         {
-            waitInteractionKey = DayManager.Instance.dayEventManager.interactObjectKey;
+            waitInteractionKey = DayManager.Instance.dayEventManager.currentEvent.interactableObjectKey;
             onInteractionFinish =() =>
             {
                 DayManager.Instance.dayEventManager.TriggerNextEvent();
@@ -172,9 +172,10 @@ public class PlayerControlMainWorld : MonoBehaviour
                     Debug.Log("與 " + hit.gameObject.name + "互動");
                     if (interactable.InteractionKey == waitInteractionKey)
                     {
-                        waitInteractionKey = null;
-                        onInteractionFinish?.Invoke();
+                        var temp = onInteractionFinish;
+                        waitInteractionKey = "";
                         onInteractionFinish = null;
+                        temp?.Invoke();
                     }
                     return; // 只與最近的物件互動
                 }

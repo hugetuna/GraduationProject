@@ -48,7 +48,11 @@ public class DayManager : MonoBehaviour
     public void AfterDayEndEventStart()
     {
         Debug.Log("觸發結束一天後的事件");
-        onDayFinish?.Invoke();
+
+        var temp = onDayFinish;   // 保護現有事件
+        onDayFinish = null;       // 立刻清空，防止重複觸發
+
+        temp?.Invoke();
     }
     public void EndDay()
     {
