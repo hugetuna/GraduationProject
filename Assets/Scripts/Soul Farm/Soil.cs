@@ -90,12 +90,14 @@ public class Soil : MonoBehaviour, IInteractable
 
     void IInteractable.Interact(int toolType) // 互動行為
     {
+        IdolInstance leader = teamManager.teamMembers[teamManager.currentLeaderIndex].GetComponent<IdolInstance>();
         //TODO:追加工具反映
         //未處於種植狀態且不可種植->翻土
-        if(isPlanting == false && isPlantable == false)
+        if (isPlanting == false && isPlantable == false)
         {
             TurnTheSoil();
             AudioManager.Instance.PlaySFX(audio_TurnTheSoil);
+            leader.costVigour(leader.plantVigourCost);
             //新手教學的特殊事件處理
             if (DayManager.Instance.date==2&&DayManager.Instance.dayEventManager.EventedNumberToday==5)
             {
@@ -108,12 +110,19 @@ public class Soil : MonoBehaviour, IInteractable
             pot.SetActive(false);
             PlantSeed(1);
             AudioManager.Instance.PlaySFX(audio_PlantSeed);
+            leader.costVigour(leader.plantVigourCost);
         }
         //種植中，但成長未滿->澆水
         else if (isPlanting == true && isPlantable == false && seedOnThisSoil.GetDaysGrown()< seedOnThisSoil.seedData.growthDays)
         {
             seedOnThisSoil.GetComponent<SeedInstanceScript>().Water();
             AudioManager.Instance.PlaySFX(audio_WaterSeed);
+            if (seedOnThisSoil.GetIsWateredToday())
+            {
+                Debug.Log("這顆種子今天已經澆過水了！");
+                return;
+            }
+            leader.costVigour(leader.waterVigourCost);
         }
         //種植中，但成長以滿->收割
         else if (isPlanting == true && isPlantable == false && seedOnThisSoil.GetDaysGrown() >= seedOnThisSoil.seedData.growthDays)
@@ -121,7 +130,6 @@ public class Soil : MonoBehaviour, IInteractable
             pot.SetActive(true);
             AudioManager.Instance.PlaySFX(audio_HarvestSeed);
             //從teammanager抓隊長，把種出來的粉絲填入收割者，然後再塞進道具庫
-            IdolInstance leader=teamManager.teamMembers[teamManager.currentLeaderIndex].GetComponent<IdolInstance>();
             int seedRewardPoint = seedOnThisSoil.GetComponent<SeedInstanceScript>().Harvest();
             //最終值算法(暫定)->種植值+魅力-80~種植值+魅力+30
             int finalSeedRewardPoint = Random.Range(seedRewardPoint - 80 + leader.charm, seedRewardPoint + 30 + leader.charm);
@@ -131,7 +139,7 @@ public class Soil : MonoBehaviour, IInteractable
             isPlanting = false;
             isPlantable = false;
             //新手教學的特殊事件處理
-            if (DayManager.Instance.date == 2 && DayManager.Instance.dayEventManager.EventedNumberToday == 7)
+            if (DayManager.Instance.date == 2 && DayManager.Instance.dayEventManager.EventedNumberToday == 8)
             {
                 newFan.SetPriceType(PriceType.Fans);
                 newFan.Use(leader);

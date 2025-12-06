@@ -30,6 +30,9 @@ public class IdolInstance : MonoBehaviour
     //衣服編號->string字典
     public Dictionary<int, string> clothesDict = new Dictionary<int, string>();
     public int currentClothIndex = 0;//目前穿著的衣服編號
+    //道具相關
+    public int plantVigourCost = 5;
+    public int waterVigourCost=3;
     //是否已經完成初始化
     public bool BHaveSetUp = false;
 
@@ -132,6 +135,16 @@ public class IdolInstance : MonoBehaviour
             return false;
         }
     }
+    public void recoverVigour(int Amount)
+    {
+        vigour += Amount;
+        if (vigour > vigourMax)
+        {
+            vigour = vigourMax;
+        }
+        MainCanvasSetter mainCanvasSetter = FindAnyObjectByType<MainCanvasSetter>();
+        mainCanvasSetter.setStatusBar();
+    }
     public void ChangeCloth(int ClothIndex)
     {
         //找到目標偶像的Transform
@@ -180,7 +193,9 @@ public class IdolInstance : MonoBehaviour
         if (mainCanvasSetter != null)
         {
             mainCanvasSetter.setStatusBar();
+            mainCanvasSetter.setStatusBoard();
         }
+        Debug.Log($"{idolIndex}的粉絲數增加了{increseAmount}，目前粉絲數為{fans}");
     }
 
     // 每天結束時的訓練結算＆記錄重置

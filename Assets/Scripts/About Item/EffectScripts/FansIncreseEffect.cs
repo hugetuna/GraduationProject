@@ -9,6 +9,6 @@ public class FansIncreseEffect : ItemEffect
     public override void Apply(IdolInstance target, ResourceManager manager)
     {
         target.FansIncrease(fansIncreseAmount);
-        Debug.Log($"[粉絲增加] 增加 {fansIncreseAmount} ，現在粉絲{target.fans}");
+        //Debug.Log($"[粉絲增加] 增加 {fansIncreseAmount} ，現在粉絲{target.fans}");
     }
 }
