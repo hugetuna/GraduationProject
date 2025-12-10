@@ -87,7 +87,7 @@ public class SetProductUI : MonoBehaviour
 
     public void UpdateStackText()
     {
-        stackText.text = $"庫存：{product.stack}";
+        stackText.text = $"庫存 {product.stack}";
         stackText.ForceMeshUpdate();
 
         if (product.stack == 0) cartButton.interactable = false;

@@ -52,7 +52,7 @@ public class GuideInfoUI : MonoBehaviour
         quoteText.text = "";
         goldText.text = "奉獻金：";
         powerText.text = "推坑之力：";
-        harvestText.text = "累積收成數：";
+        harvestText.text = "累積收成數";
 
         // 預設相關道具欄位
         foreach (Transform slot in relevantItems.transform)
@@ -87,7 +87,7 @@ public class GuideInfoUI : MonoBehaviour
         fansInfoDescription.text = fans.description;
         goldText.text = $"奉獻金：{fans.moneyPower}";
         powerText.text = $"推坑之力：{fans.OShiPower}";
-        harvestText.text = $"累積收成數：1"; // 暫時寫死，之後再改
+        harvestText.text = $"累積收成數 1"; // 暫時寫死，之後再改
 
         foreach (Image slot in itemSlots) slot.sprite = null; // 先清空欄位
         for(int i = 0; i < fans.dropableItems.Count; i++)

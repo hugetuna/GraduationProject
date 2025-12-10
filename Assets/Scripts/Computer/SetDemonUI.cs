@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using TMPro;
 
 /* 掛在惡魔頁面 prefab 的根部 */
-public class InternalDemonUI : MonoBehaviour
+public class SetDemonUI : MonoBehaviour
 {
     [Header("惡魔頁面內部元素")]
     [SerializeField] private Button talkButton;

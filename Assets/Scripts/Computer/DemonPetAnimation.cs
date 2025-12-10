@@ -66,15 +66,22 @@ public class DemonPetAnimation : MonoBehaviour
             Debug.Log($"觸發動畫：{triggerName}");
             animator.SetTrigger(triggerName);
 
-            // 播放 Run 或 Fly 同時進行位移
+            // 播放 Run 或 Fly 動畫
             if (triggerName == "DoRun")
             {
                 Vector3 dir = new Vector3(Random.Range(-1f, 1f), Random.Range(-0.5f, 0.5f), 0).normalized;
-                StartCoroutine(Run(dir, runSpeed, runDuration));
+                // 確保動畫播完才會執行下一段程式碼
+                yield return StartCoroutine(Run(dir, runSpeed, runDuration));
             }
             else if (triggerName == "DoFly")
             {
-                StartCoroutine(Fly(flyHeight, flyDuration)); // 飛高單位 + 總時間
+                // 確保動畫播完才會執行下一段程式碼
+                yield return StartCoroutine(Fly(flyHeight, flyDuration)); // 飛高單位 + 總時間
+            }
+            else if (triggerName == "DoCall")
+            {
+                // 如果是單純播放動畫沒有 Coroutine，可以手動等待動畫長度
+                yield return new WaitForSeconds(1.0f);
             }
         }
     }
@@ -84,67 +91,93 @@ public class DemonPetAnimation : MonoBehaviour
         if (isMoving) yield break;
         isMoving = true;
 
-        // 將水平方向投影到傾斜平面上
-        Vector3 planeNormal = new Vector3(
+        // 將輸入方向投影到平面並標準化
+        Vector3 planeNormal = new(
             0f,
             Mathf.Sin(Mathf.Deg2Rad * rotationAngle),
             -Mathf.Cos(Mathf.Deg2Rad * rotationAngle)
         );
-        direction = Vector3.ProjectOnPlane(direction, planeNormal).normalized;
+        Vector3 inputDirection = Vector3.ProjectOnPlane(direction, planeNormal).normalized;
+
+        // 初始化翻面判斷變數
+        // 判斷當前面向：若 Y 軸旋轉在 90~270 之間視為向左 (-1)，否則向右 (1)
+        float currentFacing = (model.localEulerAngles.y > 90 && model.localEulerAngles.y < 270) ? -1f : 1f;
+        float flipTimer = 0f;
+        float flipThreshold = 0.1f; // 設定 0.1 秒的防抖動時間
 
         float elapsed = 0f;
 
         while (elapsed < duration)
         {
-            Vector3 currentPos = transform.position;
-            Vector3 nextPos = currentPos + direction * speed * Time.deltaTime;
+            Vector3 startPos = transform.position;
+            Vector3 targetPos = startPos + inputDirection * speed * Time.deltaTime;
 
-            // 檢查是否仍在合法區域
+            // 碰撞檢測邏輯
             bool insideAnyVolume = false;
             foreach (var vol in movementVolumes)
             {
-                if (vol.bounds.Contains(nextPos))
+                if (vol.bounds.Contains(targetPos))
                 {
                     insideAnyVolume = true;
                     break;
                 }
             }
 
-            if (!insideAnyVolume) // 碰到邊界後沿著邊界移動
+            // 如果撞到邊界 (不在任何 Volume 內)
+            if (!insideAnyVolume)
             {
-                // 找距離邊界最近的點
-                Vector3 closestPoint = movementVolumes[0].bounds.ClosestPoint(nextPos);
+                // 找出最近的邊界點
+                Vector3 closestPoint = movementVolumes[0].bounds.ClosestPoint(targetPos);
                 foreach (var vol in movementVolumes)
                 {
-                    Vector3 candidate = vol.bounds.ClosestPoint(nextPos);
-                    if ((candidate - nextPos).sqrMagnitude < (closestPoint - nextPos).sqrMagnitude)
+                    Vector3 candidate = vol.bounds.ClosestPoint(targetPos);
+                    if ((candidate - targetPos).sqrMagnitude < (closestPoint - targetPos).sqrMagnitude)
                         closestPoint = candidate;
                 }
 
-                // 計算靠近邊界的方向向量
-                Vector3 toBoundary = closestPoint - currentPos;
+                // 計算修正向量
+                Vector3 toBoundary = closestPoint - startPos;
 
-                // 將合法方向投影到移動方向（滑動）
-                Vector3 slide = Vector3.Project(toBoundary, direction);
+                // 計算碰到邊界後的滑動
+                Vector3 slide = Vector3.Project(toBoundary, inputDirection);
 
-                // 得到最自然的貼邊移動位置
-                nextPos = currentPos + slide;
-                transform.position = nextPos;
-
-                // 這幀不需要再做翻面與其餘處理，跳到下一幀
-                elapsed += Time.deltaTime;
-                yield return null;
-                continue;
+                // 更新目標位置
+                targetPos = startPos + slide;
             }
 
-            // 更新座標
-            transform.position = nextPos;
+            // 統一執行實際移動
+            transform.position = targetPos;
 
-            // 水平翻面
-            if (Mathf.Abs(direction.x) > 0.01f)
+            // 依據「實際位移」進行防抖動翻面判斷
+            Vector3 actualMovement = targetPos - startPos;
+
+            if (Mathf.Abs(actualMovement.x) > 0.001f)
             {
-                float faceDir = Mathf.Sign(direction.x);
-                model.localRotation = Quaternion.Euler(0, faceDir > 0 ? 0 : 180, 0);
+                float moveDir = Mathf.Sign(actualMovement.x);
+
+                // 如果移動方向與當前面向相反，開始計時
+                if (moveDir != currentFacing)
+                {
+                    flipTimer += Time.deltaTime;
+
+                    // 持續反向移動超過閾值才執行翻面
+                    if (flipTimer > flipThreshold)
+                    {
+                        currentFacing = moveDir;
+                        model.localRotation = Quaternion.Euler(0, currentFacing > 0 ? 0 : 180, 0);
+                        flipTimer = 0f;
+                    }
+                }
+                else
+                {
+                    // 方向一致，重置計時器
+                    flipTimer = 0f;
+                }
+            }
+            else
+            {
+                // 幾乎沒有移動，重置計時器
+                flipTimer = 0f;
             }
 
             elapsed += Time.deltaTime;

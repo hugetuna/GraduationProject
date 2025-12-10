@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-/* 暫時用腳本，掛在桌面工作列的開始按鈕上 */
+/* 掛在桌面工作列的開始按鈕上 */
 public class MenuToggler : MonoBehaviour
 {
     private Button startButton; // 自己身上的按鈕組件

@@ -32,7 +32,7 @@ public class MoneyUsage : MonoBehaviour
 
     public void UpdateMoneyText()
     {
-        moneyText.text = $"$ {resourceManager.getMoney():N0}";
+        moneyText.text = $"${resourceManager.getMoney():N0}";
     }
 
 }
