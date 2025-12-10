@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Rendering.VirtualTexturing;
 using UnityEngine.U2D.Animation;
 
-public enum IdolWho { none = -1, Kuma = 0, Karo = 1, Sirius = 2 }
+public enum IdolWho { none = -1, Kuma = 0, Karo = 1, Sirius = 2 ,Mizar=3,Aicor=4}
 public class IdolInstance : MonoBehaviour
 {
     public IdolWho idolIndex;
@@ -156,6 +156,10 @@ public class IdolInstance : MonoBehaviour
         if (TargetTransform == null)
         {
             TargetTransform = transform.Find("SiriusQ2.0");
+        }
+        if (TargetTransform == null)
+        {
+            TargetTransform = transform.Find("MizarQ2.0");
         }
         if (TargetTransform == null)
         {
