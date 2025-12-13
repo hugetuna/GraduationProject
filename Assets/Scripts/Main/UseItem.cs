@@ -17,7 +17,7 @@ public class UseItem : MonoBehaviour
     [SerializeField]
     private List<PlayerControlMainWorld> teamMembers = new(); // 記錄取得的隊伍成員
     //-----------------------------------------------------------------//
-    private IdolInstance[] idolInstances; // 存放偶像資料參考
+    private List<IdolInstance> idolInstances; // 存放偶像資料參考
     private IdolInstance itemUser; // 使用道具的角色
     public ItemInfoUI itemInfoUI; // 用於獲取欲使用的道具資訊
     //-----------------------------------------------------------------//
@@ -35,10 +35,8 @@ public class UseItem : MonoBehaviour
         // 根據目前隊伍成員決定下拉選單的選項
         dropdown.options.Clear(); // 清空原有選項
 
-        idolInstances = TeamDataUtility.IdolInstanceList.ToArray();
-        // 強制排序，確保顯示順序一致（雖然很怪但先這樣寫）
-        IdolInstance[] sortedIdolInstances = idolInstances.OrderBy(idol => (int)idol.idolIndex).ToArray();
-        teamMembers = sortedIdolInstances.Select(go => go.GetComponent<PlayerControlMainWorld>()).ToList();
+        idolInstances = TeamDataUtility.IdolInstanceList;
+        teamMembers = idolInstances.Select(idol => idol.GetComponent<PlayerControlMainWorld>()).ToList();
 
         for (int i = 0; i < teamMembers.Count; i++) // 確保不會超出陣列範圍
         {
@@ -66,12 +64,15 @@ public class UseItem : MonoBehaviour
     {
         // 使用道具的對象
         selectedCharacterName = selectedCharacterName.Replace("給 ", ""); // 去除名稱前綴
-        IdolWho characterIndex = IdolWho.none;
-        if (selectedCharacterName == "Kuma") characterIndex = IdolWho.Kuma;
-        else if (selectedCharacterName == "Karo") characterIndex = IdolWho.Karo;
-        else if (selectedCharacterName == "Sirius") characterIndex = IdolWho.Sirius;
+        var name = TeamDataUtility.GetIdolEnum(selectedCharacterName);
+        var characterIndex = name == IdolWho.none ? IdolWho.none : name;
+        if(characterIndex == IdolWho.none)
+        {
+            Debug.LogWarning("選擇的角色無效，無法使用道具！");
+            return;
+        }
 
-        for (int i = 0; i < idolInstances.Length; i++) // 確保不會超出陣列範圍
+        for (int i = 0; i < idolInstances.Count; i++) // 確保不會超出陣列範圍
         {
             if (idolInstances[i].idolIndex == characterIndex) // 找到對應的偶像資料
             {
@@ -82,7 +83,7 @@ public class UseItem : MonoBehaviour
 
         // 欲使用的道具（可從 itemInfoUI 獲取）
         Item item = itemInfoUI.selectedItem;
-        if(item == null)
+        if (item == null)
         {
             Debug.LogWarning("未選擇任何道具，無法使用！");
             return;

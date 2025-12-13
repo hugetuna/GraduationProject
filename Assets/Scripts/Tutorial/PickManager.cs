@@ -100,15 +100,21 @@ public class PickManager : MonoBehaviour
         if (pickedIdolCount == 3)
         {
             isDone = true;
+            
             //實例化所選取的偶像
+            int newIdolCount = 0; // 記錄目前已生成幾個角色（用於設定在訓練等介面裡的初始位置）
             foreach (var whoPicked in whoPickedList)
             {
                 if (whoPicked.isPicked == true)
                 {
                     GameObject newIdol = Instantiate(PickIdolPrefabs[(int)whoPicked.pickedIdol]);
-                    newIdol.GetComponent<IdolInstance>().IdolSetUp();
+                    var newIdolInstance = newIdol.GetComponent<IdolInstance>();
+                    newIdolInstance.IdolSetUp();
+                    newIdolInstance.trainRecord.droppedZoneIndex = newIdolCount; // 覆蓋 BasicTrainRecord 給的值
+                    newIdolCount++;
                 }
             }
+            
             //直接進入主場景，SceneTransitionManager會處理好場景轉換與資料保存
             GameManager.Instance.SaveInkJSONAssetData(DialogueSaveData);
             SceneTransitionManager.Instance.teleportByTargetSceneName("Dialogue Scene");

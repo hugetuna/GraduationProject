@@ -15,10 +15,9 @@ public class SetSettleUI : MonoBehaviour
     [SerializeField] private Button endDayButton;
     //-----------------------------------------------------------------//
     [Header("顯示資料")]
-    [SerializeField] private List<Sprite> headSprites; // 角色大頭照（按照 IdolIndex 的順序排列）
     // [SerializeField] private ResourceManager resourceManager;
-    private int moneyEarned;
     // [SerializeField] private List<ItemStack> itemsEarned;
+    private int moneyEarned;
     [SerializeField] private TeamManager teamManager;
     //-----------------------------------------------------------------//
     [Header("背景音樂")]
@@ -42,7 +41,7 @@ public class SetSettleUI : MonoBehaviour
             GameObject character = characters[index];
 
             character.GetComponent<SetCharacterUI>().ShowCharacterBenefits(
-                headSprites[(int)idol.idolIndex],
+                TeamDataUtility.TachieSprites[idol.idolIndex],
                 idol.basicStatus.idolName,
                 idol.vigour, idol.vigourMax, 0,  // 目前沒有最大體力值變動
                 idol.dance, idol.trainRecord.danceExp,

@@ -20,7 +20,6 @@ public class TrainingUIManager : MonoBehaviour
     private TrainingUIHandler current = null; // 目前開著的 UI
     //-----------------------------------------------------------------//
     private Dictionary<IdolWho, IdolTrainingState> characterStates = new(); // 角色名稱＆訓練狀態對應表
-    private Dictionary<IdolWho, Sprite> characterSprites = new(); // 角色 UI 圖片
     private bool isInitialized = false;
     // 目前還沒有選角功能，不必特別照隊伍成員決定用哪些圖片
 
@@ -41,7 +40,6 @@ public class TrainingUIManager : MonoBehaviour
     public void InitializeTeamData()
     {
         characterStates.Clear();
-        characterSprites.Clear();
 
         // 設定角色的初始訓練狀態＆圖片（也考慮了跨場景的情形）
         foreach (var dict in TeamDataUtility.IdolDict)
@@ -50,7 +48,6 @@ public class TrainingUIManager : MonoBehaviour
 
             // TeamDataUtility 內的資料本身會自動更新
             characterStates[dict.Key] = dict.Value.trainRecord.state;
-            characterSprites[dict.Key] = dict.Value.sprite;
         }
     }
 
@@ -96,13 +93,6 @@ public class TrainingUIManager : MonoBehaviour
     {
         current = null; // 目前沒有任何 UI 開著
         UIAndPlayerInput.EnableAllPlayerInputs(); // UI 已關閉 -> 啟用所有玩家移動
-    }
-
-    public Sprite GetCharacterSprite(IdolWho idol) // 根據角色名取得其 UI 圖片
-    {
-        return characterSprites.ContainsKey(idol)
-            ? characterSprites[idol]
-            : null;
     }
 
     public IdolTrainingState GetIdolState(IdolWho idol) // 根據角色名取得其訓練狀態

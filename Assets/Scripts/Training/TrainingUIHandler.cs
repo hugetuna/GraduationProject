@@ -85,7 +85,7 @@ public class TrainingUIHandler : MonoBehaviour
             // 為圖片插槽放置角色圖片
             if (i < TeamDataUtility.idolCount)
             {
-                img.sprite = TrainingUIManager.Instance.GetCharacterSprite((IdolWho)i);
+                img.sprite = TeamDataUtility.QSprites.ElementAt(i).Value;
             }
             else
             {
@@ -94,7 +94,7 @@ public class TrainingUIHandler : MonoBehaviour
                 continue;
             }
 
-            var idolInstance = TeamDataUtility.IdolDict[(IdolWho)i];
+            var idolInstance = TeamDataUtility.IdolDict.ElementAt(i).Value;
             var state = TrainingUIManager.Instance.GetIdolState(idolInstance.idolIndex);
 
             bool isActive = false;

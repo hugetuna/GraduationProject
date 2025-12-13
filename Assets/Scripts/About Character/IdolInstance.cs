@@ -36,7 +36,8 @@ public class IdolInstance : MonoBehaviour
     //是否已經完成初始化
     public bool BHaveSetUp = false;
 
-    public Sprite sprite; // 角色 UI 圖片
+    public Sprite spriteQ; // 角色 UI 圖片（Q 版）
+    public Sprite spriteTachie; // 角色 UI 圖片（立繪）
     public BasicTrainRecord basicTrainRecord; // 初始值存放地
     public TrainRecord trainRecord = new(); // 訓練紀錄
 
