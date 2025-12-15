@@ -178,6 +178,7 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
     //拖曳落點
     public void OnDrop(PointerEventData eventData)
     {
+        if (stageManager.gameBreak) return; // 遊戲暫停中不可拖曳
         // 嘗試從拖曳來源取得 SetCardUI
         SetCardUI draggedCardUI = eventData.pointerDrag?.GetComponent<SetCardUI>();
         if (draggedCardUI != null)

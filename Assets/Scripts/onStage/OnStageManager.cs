@@ -16,6 +16,7 @@ public class OnStageManager : MonoBehaviour
     public SpriteRenderer backgroundRenderer;
     [Header("關卡開始與結束旗標")]
     public bool gameStarted = false;
+    public bool gameBreak = false;//回合間休息
     public bool gamePaused = false;
     public bool gameEnded = false;
     public GameObject gameStartUIPanel;
@@ -32,6 +33,7 @@ public class OnStageManager : MonoBehaviour
     public float drawChance = 0;//抽排次數
     public float drawCharge = 0;//抽排充能條
     public float drawChargeLimit = 40;//抽排充能上限，超過就抽一張
+    public float breakTime = 5f;//每回合的休息時間
     [Header("視覺化計數")]
     public Image timerFillImg;
     public TextMeshProUGUI roundText;
@@ -97,8 +99,11 @@ public class OnStageManager : MonoBehaviour
     {
         if (!gameStarted || gameEnded||gamePaused) return;
         // 每秒更新 roundTimer
-        roundTimer += Time.deltaTime;
-        timerFillImg.fillAmount = roundTimer / currentStageData.secPerRound;
+        if (!gameBreak)
+        {
+            roundTimer += Time.deltaTime;
+            timerFillImg.fillAmount = roundTimer / currentStageData.secPerRound;
+        }
         // 每秒更新 drawCharge
         if (drawChance < 3)
         {
@@ -149,6 +154,7 @@ public class OnStageManager : MonoBehaviour
                 }
             }
             AudioManager.Instance.PlaySFX(RoundEndSFX);
+            StartCoroutine(Break());//開始回合間休息
             Debug.Log($"進入第 {round} 回合！");
             if(round> currentStageData.roundMax)
             {
@@ -227,6 +233,18 @@ public class OnStageManager : MonoBehaviour
         Shuffle();
         // 顯示描述（可以連接到 UI）
         Debug.Log($"載入關卡：{stageData.stageName} - {stageData.description}");
+    }
+    private IEnumerator Break()
+    {
+        gameBreak = true;
+        Debug.Log("進入回合間休息時間");
+        float breakTimer = 0;
+        while (breakTimer <= breakTime)
+        {
+            breakTimer += Time.deltaTime;
+            yield return null;
+        }
+        gameBreak = false;
     }
     public void PauseGame()
     {
