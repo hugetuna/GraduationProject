@@ -46,7 +46,7 @@ public class OnStageManager : MonoBehaviour
     public Image drawChargeGauge;
     [Header("遊戲開始UI")]
     public List<Sprite> showStageIdolPrefabs;
-    public List<Image> showStageIdolPic;
+    public List<EquipmentSet> showStageIdolSet;
     [Header("遊戲結束UI")]
     public TextMeshProUGUI endStageName;
     public TextMeshProUGUI endFansRewardText;
@@ -188,9 +188,9 @@ public class OnStageManager : MonoBehaviour
         }
         //展示偶像及裝備列表
         var idolDataList = GameManager.Instance.idolDataList;
-        for (int i=0;i< showStageIdolPrefabs.Count && i< showStageIdolPic.Count; i++)
+        for (int i=0;i< showStageIdolPrefabs.Count && i< showStageIdolSet.Count; i++)
         {
-            showStageIdolPic[i].sprite = showStageIdolPrefabs[(int)idolDataList[i].idolIndex];
+            showStageIdolSet[i].showIdol.sprite = showStageIdolPrefabs[(int)idolDataList[i].idolIndex];
         }
     }
     public void GameStart()
@@ -217,10 +217,14 @@ public class OnStageManager : MonoBehaviour
                 Debug.LogError("IdolOnStage Prefab 缺少 IdolInstance 組件！");
                 continue;
             }
-
-            // 載入儲存的資料
-            instance.LoadData(idolDataList[i]);
-
+            // 載入儲存的資料(根據position in team)
+            foreach(var idol in idolDataList)
+            {
+                if(idol.positionInTeam==i)
+                {
+                    instance.LoadData(idol);
+                }
+            }
             onStageIdols.Add(instance);
         }
     }
