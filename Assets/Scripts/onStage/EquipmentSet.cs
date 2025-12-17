@@ -45,28 +45,30 @@ public class EquipmentSet : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     public void OnDrop(PointerEventData eventData)
     {
         var idolDataList = GameManager.Instance.idolDataList;
-        // 嘗試從拖曳來源取得 EquipmentSet
         EquipmentSet draggedSetUI = eventData.pointerDrag?.GetComponent<EquipmentSet>();
-        if (draggedSetUI != null && draggedSetUI.stageSpot != stageSpot) {
-            // 交換兩個 EquipmentSet 的 showIdol 圖片
-            Sprite tempSprite = showIdol.sprite;
-            showIdol.sprite = draggedSetUI.showIdol.sprite;
-            draggedSetUI.showIdol.sprite = tempSprite;
 
-            // 交換GameManager中的PositionInTeam
-            foreach (var idol in idolDataList)
-            {
-                //找到被放的，將其設為被拖的位置
-                if (idol.positionInTeam == stageSpot)
-                {
-                    idol.positionInTeam = draggedSetUI.stageSpot;
-                }
-                //找到被拖的，將其設為被放的位置
-                else if (idol.positionInTeam == draggedSetUI.stageSpot)
-                {
-                    idol.positionInTeam = stageSpot;
-                }
-            }
+        if (draggedSetUI != null && draggedSetUI != this) // 確保不是放回自己身上
+        {
+            // 1. 先找出那兩個資料物件
+            var idolA = idolDataList.Find(i => i.positionInTeam == this.stageSpot);
+            var idolB = idolDataList.Find(i => i.positionInTeam == draggedSetUI.stageSpot);
+
+            // 2. 交換資料層的數值 (如果資料存在的話)
+            if (idolA != null) idolA.positionInTeam = draggedSetUI.stageSpot;
+            if (idolB != null) idolB.positionInTeam = this.stageSpot;
+
+            // 3. 交換 UI 表現 (建議把這段包成 Function)
+            SwapUI(this, draggedSetUI);
         }
+    }
+
+    private void SwapUI(EquipmentSet a, EquipmentSet b)
+    {
+        Sprite tempSprite = a.showIdol.sprite;
+        a.showIdol.sprite = b.showIdol.sprite;
+        b.showIdol.sprite = tempSprite;
+
+        // 如果未來有名字、等級，也寫在這裡交換
+        // string tempName = a.nameText.text; ...
     }
 }
