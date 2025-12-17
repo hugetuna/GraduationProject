@@ -10,7 +10,10 @@ public class SpriteAnimator : MonoBehaviour
 
     private int currentFrame;
     private float timer;
-
+    public void FirstPic()
+    {
+        currentFrame = 0;
+    }
     void Update()
     {
         if (frames == null || frames.Count == 0) return;

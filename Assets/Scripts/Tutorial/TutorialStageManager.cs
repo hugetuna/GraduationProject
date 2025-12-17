@@ -170,14 +170,13 @@ public class TutorialStageManager : MonoBehaviour
         else if (step == 2)
         {
             // Step 2: 重啟教學，遮罩定位在計分板。
-            onStageManager.DrawCards(3);
+            StartCoroutine(waitBeforeResumeTutorial(0.5f));
             mask.Focus(new Vector2(0.5f, 0.625f), new Vector2(0.045f, 0.05f));
             return stepButton;
         }
         else if (step == 3)
         {
             // Step 3: 計分板
-            onStageManager.PauseGame();
             mask.Focus(new Vector2(0.5f, 0.625f), new Vector2(0.045f, 0.05f));
             return stepButton;
         }
@@ -231,5 +230,11 @@ public class TutorialStageManager : MonoBehaviour
             return stepButton;
         }
         return null; // 該步驟不需要等待按鈕點擊
+    }
+    IEnumerator waitBeforeResumeTutorial(float waitTime)
+    {
+        onStageManager.DrawCards(3);
+        yield return new WaitForSeconds(waitTime);
+        onStageManager.PauseGame();
     }
 }
