@@ -32,6 +32,8 @@ public class StageAttribute : ScriptableObject
     public DialogueSaveData clearDialogue;
     public string nextSceneName;
     public int baseRewardFans;
+    public int baseRewardMoney;
+    public List<ItemStack> baseRewardItems;
     [TextArea(2, 5)]
     public string description;
 }

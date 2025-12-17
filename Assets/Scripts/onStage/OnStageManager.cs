@@ -44,6 +44,10 @@ public class OnStageManager : MonoBehaviour
     public TextMeshProUGUI playerPointText;
     public List<GameObject> showDrawChanceCard;
     public Image drawChargeGauge;
+    [Header("遊戲結束")]
+    public TextMeshProUGUI endStageName;
+    public TextMeshProUGUI endFansRewardText;
+    public TextMeshProUGUI endMoneyRewardText;
     //public TextMeshProUGUI drawChanceText;
     [Header("有關卡片")]
     public List<ActionCard> deck;
@@ -276,6 +280,14 @@ public class OnStageManager : MonoBehaviour
     {
         gameStarted = false;
         gameEnded = true;
+        //設置並顯示結算畫面
+        endStageName.text= currentStageData.stageName;
+        endFansRewardText.text= $"{currentStageData.baseRewardFans}";
+        endMoneyRewardText.text= $"{currentStageData.baseRewardMoney}";
+        foreach(var idol in onStageIdols)
+        {
+            idol.transform.gameObject.SetActive(false);
+        }
         gameOngoingUIPanel.SetActive(false);
         gameEndUIPanel.SetActive(true);
         Monitor.SetActive(false);
