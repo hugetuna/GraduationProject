@@ -866,6 +866,39 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9fe5171271c188b4b9801674b8b909da, type: 3}
+--- !u!114 &1264127153 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 252589919983848052, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
+  m_PrefabInstance: {fileID: 6796696927425795413}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1264127154 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5425806354784462074, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
+  m_PrefabInstance: {fileID: 6796696927425795413}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1264127155 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 610596963942779428, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
+  m_PrefabInstance: {fileID: 6796696927425795413}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1268906298 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1958041305085420821, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
@@ -1611,9 +1644,25 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 379004148}
     - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
+      propertyPath: showStageIdolPic.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
       propertyPath: showDrawChanceCard.Array.size
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
+      propertyPath: 'showStageIdolPic.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1264127155}
+    - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
+      propertyPath: 'showStageIdolPic.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1264127154}
+    - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
+      propertyPath: 'showStageIdolPic.Array.data[2]'
+      value: 
+      objectReference: {fileID: 1264127153}
     - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
       propertyPath: 'showDrawChanceCard.Array.data[0]'
       value: 
@@ -1770,7 +1819,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1788417977914956821, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2320057088947603535, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
       propertyPath: m_Pivot.x

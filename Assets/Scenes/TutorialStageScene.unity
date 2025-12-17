@@ -1220,6 +1220,17 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: d32b08c261bf5e345a0ebaf3073b4cfe, type: 3}
+--- !u!114 &345486674 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 252589919983848052, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
+  m_PrefabInstance: {fileID: 6796696927425795413}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &360625021 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7958818606926056667, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
@@ -1802,6 +1813,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 536009862}
   m_CullTransparentMesh: 1
+--- !u!114 &542756689 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 610596963942779428, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
+  m_PrefabInstance: {fileID: 6796696927425795413}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &546449727
 GameObject:
   m_ObjectHideFlags: 0
@@ -4055,6 +4077,10 @@ PrefabInstance:
       propertyPath: onStageStage
       value: 
       objectReference: {fileID: 11400000, guid: 95b26892d80cf3742b7f8e1da627351f, type: 2}
+    - target: {fileID: 6814912132265877993, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: idolDataList.Array.data[0].idolIndex
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 7896774796638631959, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8.386003
@@ -4444,6 +4470,17 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1408097692}
   m_CullTransparentMesh: 1
+--- !u!114 &1408138675 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 5425806354784462074, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
+  m_PrefabInstance: {fileID: 6796696927425795413}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &1439457606 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 6927250252393671611, guid: 1a995c5b9aaba9d42972bcd627e28505, type: 3}
@@ -6549,8 +6586,28 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 379004148}
     - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
+      propertyPath: showStageIdolPic.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
       propertyPath: showDrawChanceCard.Array.size
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
+      propertyPath: 'showStageIdolPic.Array.data[0]'
+      value: 
+      objectReference: {fileID: 542756689}
+    - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
+      propertyPath: 'showStageIdolPic.Array.data[1]'
+      value: 
+      objectReference: {fileID: 1408138675}
+    - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
+      propertyPath: 'showStageIdolPic.Array.data[2]'
+      value: 
+      objectReference: {fileID: 345486674}
+    - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
+      propertyPath: showStageIdolPrefabs.Array.size
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
       propertyPath: 'showDrawChanceCard.Array.data[0]'
@@ -6564,6 +6621,26 @@ PrefabInstance:
       propertyPath: 'showDrawChanceCard.Array.data[2]'
       value: 
       objectReference: {fileID: 360625021}
+    - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
+      propertyPath: 'showStageIdolPrefabs.Array.data[0]'
+      value: 
+      objectReference: {fileID: 21300000, guid: 0099ecf598c388c40b54043fdf68a403, type: 3}
+    - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
+      propertyPath: 'showStageIdolPrefabs.Array.data[1]'
+      value: 
+      objectReference: {fileID: 21300000, guid: 30f2ce5d3c7c0e444a2738948ccb8a7a, type: 3}
+    - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
+      propertyPath: 'showStageIdolPrefabs.Array.data[2]'
+      value: 
+      objectReference: {fileID: 21300000, guid: c82fa3f448ef1ee48b81cc25f8eb2bef, type: 3}
+    - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
+      propertyPath: 'showStageIdolPrefabs.Array.data[3]'
+      value: 
+      objectReference: {fileID: 21300000, guid: 0a63fd202613f3f4e9d3806c48fa6291, type: 3}
+    - target: {fileID: 6783987714642005633, guid: 84d2cc61132f30c4d832e141863fc015, type: 3}
+      propertyPath: 'showStageIdolPrefabs.Array.data[4]'
+      value: 
+      objectReference: {fileID: 21300000, guid: 097ac59493bd3994bb020c149f5e8977, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -6834,6 +6911,10 @@ PrefabInstance:
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
       objectReference: {fileID: 0}
+    - target: {fileID: 2846411844436377388, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
+      propertyPath: m_Name
+      value: Set_2
+      objectReference: {fileID: 0}
     - target: {fileID: 2953322944042756405, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
       propertyPath: m_LocalScale.x
       value: 1.21
@@ -6929,6 +7010,10 @@ PrefabInstance:
     - target: {fileID: 3345134981149655239, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[2].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 3843582663100496483, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
+      propertyPath: m_Name
+      value: Set_1
       objectReference: {fileID: 0}
     - target: {fileID: 3852777599371206318, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
       propertyPath: m_AnchorMax.x
@@ -7041,6 +7126,10 @@ PrefabInstance:
     - target: {fileID: 7425053031840048306, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
       value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
+    - target: {fileID: 7577721998478877538, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
+      propertyPath: m_Name
+      value: Set_3
       objectReference: {fileID: 0}
     - target: {fileID: 7603567580904245252, guid: 1db859dec32362944947fa625fa2d31a, type: 3}
       propertyPath: m_Name

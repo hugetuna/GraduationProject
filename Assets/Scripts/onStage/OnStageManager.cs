@@ -44,11 +44,13 @@ public class OnStageManager : MonoBehaviour
     public TextMeshProUGUI playerPointText;
     public List<GameObject> showDrawChanceCard;
     public Image drawChargeGauge;
-    [Header("遊戲結束")]
+    [Header("遊戲開始UI")]
+    public List<Sprite> showStageIdolPrefabs;
+    public List<Image> showStageIdolPic;
+    [Header("遊戲結束UI")]
     public TextMeshProUGUI endStageName;
     public TextMeshProUGUI endFansRewardText;
     public TextMeshProUGUI endMoneyRewardText;
-    //public TextMeshProUGUI drawChanceText;
     [Header("有關卡片")]
     public List<ActionCard> deck;
     public List<GameObject> hands;
@@ -69,7 +71,7 @@ public class OnStageManager : MonoBehaviour
     {
         currentStageData = GameManager.Instance.onStageStage;
         gameStartUIPanel.SetActive(true);
-        LodeCardDemonstration();
+        LodeStartDemonstration();
         gameOngoingUIPanel.SetActive(false);
         gameEndUIPanel.SetActive(false);
         //寫字
@@ -168,9 +170,10 @@ public class OnStageManager : MonoBehaviour
         }
     }
     //在遊戲開始前於UI展示卡組內容
-    public void LodeCardDemonstration()
+    public void LodeStartDemonstration()
     {
-        foreach(var singleStack in currentStageData.actionCardStacks)
+        //展示卡片列表
+        foreach (var singleStack in currentStageData.actionCardStacks)
         {
             for(int i=0;i< singleStack.quantity;i++)
             {
@@ -182,6 +185,12 @@ public class OnStageManager : MonoBehaviour
                 ui.isInteractive = false;
                 ui.SetCard(actionCard);
             }
+        }
+        //展示偶像及裝備列表
+        var idolDataList = GameManager.Instance.idolDataList;
+        for (int i=0;i< showStageIdolPrefabs.Count && i< showStageIdolPic.Count; i++)
+        {
+            showStageIdolPic[i].sprite = showStageIdolPrefabs[(int)idolDataList[i].idolIndex];
         }
     }
     public void GameStart()

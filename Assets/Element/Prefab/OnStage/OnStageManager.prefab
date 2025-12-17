@@ -48,10 +48,48 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 95b26892d80cf3742b7f8e1da627351f, type: 2}
   stageIDToLoad: 0
   currentStageData: {fileID: 0}
-  musicSource: {fileID: 0}
   backgroundRenderer: {fileID: 0}
+  gameStarted: 0
+  gameBreak: 0
+  gamePaused: 0
+  gameEnded: 0
+  gameStartUIPanel: {fileID: 0}
+  gameOngoingUIPanel: {fileID: 0}
+  gamePauseUIPanel: {fileID: 0}
+  gameEndUIPanel: {fileID: 0}
+  Monitor: {fileID: 0}
+  playerPoint: 0
+  round: 0
+  roundTimer: 0
+  drawChance: 0
+  drawCharge: 0
+  drawChargeLimit: 40
+  breakTime: 5
+  timerFillImg: {fileID: 0}
+  roundText: {fileID: 0}
+  roundBlockParant: {fileID: 0}
+  roundBlockPrefab: {fileID: 0}
+  musicNameText: {fileID: 0}
+  playerPointText: {fileID: 0}
+  showDrawChanceCard: []
+  drawChargeGauge: {fileID: 0}
+  showStageIdolPrefabs:
+  - {fileID: 21300000, guid: 0099ecf598c388c40b54043fdf68a403, type: 3}
+  - {fileID: 21300000, guid: 30f2ce5d3c7c0e444a2738948ccb8a7a, type: 3}
+  - {fileID: 21300000, guid: c82fa3f448ef1ee48b81cc25f8eb2bef, type: 3}
+  - {fileID: 21300000, guid: 0a63fd202613f3f4e9d3806c48fa6291, type: 3}
+  - {fileID: 21300000, guid: 097ac59493bd3994bb020c149f5e8977, type: 3}
+  showStageIdolPic: []
+  endStageName: {fileID: 0}
+  endFansRewardText: {fileID: 0}
+  endMoneyRewardText: {fileID: 0}
   deck: []
   hands: []
+  cardPrefab: {fileID: 0}
+  handArea: {fileID: 0}
+  drawCardSFX: {fileID: 0}
+  RoundEndSFX: {fileID: 0}
+  gainPointSFX: {fileID: 0}
   idolOnStagePrefab: {fileID: 708269301796109116, guid: 820ec3591b3a20a4ca7e2fdb62176e2a, type: 3}
   spawnPoints:
   - {fileID: 0}
