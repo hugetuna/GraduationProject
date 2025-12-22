@@ -30,7 +30,9 @@ public class TicketInfoUI : MonoBehaviour
     [SerializeField] private List<GameObject> minTicketPrefabs = new();
     [SerializeField] private GameObject DaysContent; // 用於放置最小化活動圖示的容器
     private Dictionary<Button, Button> ticketMinDict = new(); // 儲存票券按鈕對應的最小化圖示字典
-
+    //-----------------------------------------------------------------//
+    [Header("音效設定")]
+    [SerializeField] private AudioClip joinSound;
 
     void Start()
     {
@@ -137,6 +139,7 @@ public class TicketInfoUI : MonoBehaviour
 
     public void OnJoinActivity()
     {
+        AudioManager.Instance.PlaySFX(joinSound); // 播放音效
         ticketStatDict[selectedButton] = true; // 標記該票券為已報名
 
         // 改變當下被選擇的票券外觀
