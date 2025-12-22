@@ -10,7 +10,7 @@ public class ConsumableItem : Item
     {
         // 透過函式引數可指定使用道具的偶像
         //IdolInstance target = FindObjectOfType<IdolInstance>();
-        ResourceManager resourceManager = FindObjectOfType<ResourceManager>();
+        ResourceManager resourceManager = FindAnyObjectByType<ResourceManager>();
         if (target == null|| resourceManager==null)
         {
             Debug.LogError("找不到 IdolInstance 或 ResourceManager");
