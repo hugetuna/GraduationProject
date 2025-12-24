@@ -15,7 +15,7 @@ public class ChangeProductType : MonoBehaviour
     public Sprite activeBtnImg;
     public Sprite normalBtnImg;
     public ScrollRect productScrollRect;
-    private int currentIndex = 0; // 當前選中的按鈕索引
+    // private int currentIndex = 0; // 當前選中的按鈕索引
 
     void Start()
     {
@@ -37,11 +37,6 @@ public class ChangeProductType : MonoBehaviour
         }
     }
 
-    // void Update()
-    // {
-
-    // }
-
     public void OnButtonClick(Button clickedButton)
     {
         for (int i = 0; i < productTypeButtons.Count; i++)
@@ -61,25 +56,25 @@ public class ChangeProductType : MonoBehaviour
         {
             productTypePages[0].SetActive(true);
             productScrollRect.content = productTypePages[0].GetComponent<RectTransform>();
-            currentIndex = 0; // 更新當前索引
+            // currentIndex = 0; // 更新當前索引
         }
         else if (clickedButton == productTypeButtons[1])
         {
             productTypePages[1].SetActive(true);
             productScrollRect.content = productTypePages[1].GetComponent<RectTransform>();
-            currentIndex = 1; // 更新當前索引
+            // currentIndex = 1; // 更新當前索引
         }
         else if (clickedButton == productTypeButtons[2])
         {
             productTypePages[2].SetActive(true);
             productScrollRect.content = productTypePages[2].GetComponent<RectTransform>();
-            currentIndex = 2; // 更新當前索引
+            // currentIndex = 2; // 更新當前索引
         }
         else if (clickedButton == productTypeButtons[3])
         {
             productTypePages[3].SetActive(true);
             productScrollRect.content = productTypePages[3].GetComponent<RectTransform>();
-            currentIndex = 3; // 更新當前索引
+            // currentIndex = 3; // 更新當前索引
         }
     }
 }

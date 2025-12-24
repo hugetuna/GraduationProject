@@ -12,7 +12,7 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     [SerializeField] private Vector3 dropOffset = new(0f, 2f, 0f);
     private Vector2 originalPosition;
     //-----------------------------------------------------------------//
-    private bool isDragging = false;
+    // private bool isDragging = false;
     private DropZone lastDropZone = null; // 紀錄上一次成功放置的 DropZone
     private DropZone currentDropZone = null; // 當前放置的 DropZone
     public DropZone CurrentDropZone
@@ -80,7 +80,7 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             return;
         }
 
-        isDragging = true;
+        // isDragging = true;
         canvasGroup.blocksRaycasts = false;
 
         // 開始拖曳時，隱藏角色底下的 UI 元素
@@ -102,7 +102,7 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
 
     public void OnEndDrag(PointerEventData eventData)
     {
-        isDragging = false;
+        // isDragging = false;
         canvasGroup.blocksRaycasts = true;
 
         // 拖曳成功，放到新的 DropZone

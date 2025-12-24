@@ -21,7 +21,7 @@ public class DesktopUIHandler : MonoBehaviour
     [Header("相關音效")]
     [SerializeField] private AudioClip turnOnSound;
     //-----------------------------------------------------------------//
-    public static event Action OnDesktopUIClosed; // 關閉桌面 UI 事件
+    // public static event Action OnDesktopUIClosed; // 關閉桌面 UI 事件
 
     void Awake()
     {

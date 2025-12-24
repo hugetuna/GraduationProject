@@ -12,7 +12,7 @@ public class ChangeUserType : MonoBehaviour
 
     [Tooltip("用戶分類頁面（需與用戶類型按鈕互相對應）")]
     public List<GameObject> userTypePages = new();
-    private int currentIndex = 0; // 當前選中的按鈕索引
+    // private int currentIndex = 0; // 當前選中的按鈕索引
 
     void Start()
     {
@@ -43,22 +43,22 @@ public class ChangeUserType : MonoBehaviour
         if (clickedButton == userTypeButtons[0])
         {
             userTypePages[0].SetActive(true);
-            currentIndex = 0; // 更新當前索引
+            // currentIndex = 0; // 更新當前索引
         }
         else if (clickedButton == userTypeButtons[1])
         {
             userTypePages[1].SetActive(true);
-            currentIndex = 1; // 更新當前索引
+            // currentIndex = 1; // 更新當前索引
         }
         else if (clickedButton == userTypeButtons[2])
         {
             userTypePages[2].SetActive(true);
-            currentIndex = 2; // 更新當前索引
+            // currentIndex = 2; // 更新當前索引
         }
         else if (clickedButton == userTypeButtons[3])
         {
             userTypePages[3].SetActive(true);
-            currentIndex = 3; // 更新當前索引
+            // currentIndex = 3; // 更新當前索引
         }
     }
 }

@@ -8,7 +8,7 @@ public class MainUIHandler : MonoBehaviour
     void Start()
     {
         ComputerInteraction.OnComputerInteracted += HideMainUI; // 訂閱並監聽與電腦互動事件
-        DesktopUIHandler.OnDesktopUIClosed += ShowMainUI; // 訂閱並監聽桌面 UI 關閉事件
+        // DesktopUIHandler.OnDesktopUIClosed += ShowMainUI; // 訂閱並監聽桌面 UI 關閉事件
     }
 
     void OnDestroy()
@@ -22,8 +22,8 @@ public class MainUIHandler : MonoBehaviour
         mainUI.SetActive(false);
     }
 
-    private void ShowMainUI()
-    {
-        mainUI.SetActive(true);
-    }
+    // private void ShowMainUI()
+    // {
+    //     mainUI.SetActive(true);
+    // }
 }
