@@ -13,11 +13,15 @@ public class ComputerInteraction : MonoBehaviour, IInteractable
         // 來自 IInteractable 介面
         if (FindObjectsByType<DayManager>(FindObjectsInactive.Include, FindObjectsSortMode.None).Length > 0)
         {
-            // 若場景中不存在 DayManager，表示不是在遊戲主流程中，不用特別檢查
-            if (DayManager.Instance.date == 1 && DayManager.Instance.dayEventManager.EventedNumberToday <= 13)
+            if (DayManager.Instance.dayEventManager.currentEvent.TriggerTimeIndex <14&&DayManager.Instance.date==1)
             {
-                Debug.Log("第一天特定事件前不觸發電腦互動");
-                return; // 第一天在特定事件前不觸發互動
+                Debug.Log("完成特定第一天事件前不觸發");
+                return;
+            }
+            if (DayManager.Instance.dayEventManager.currentEvent.TriggerTimeIndex < 10 && DayManager.Instance.date == 2)
+            {
+                Debug.Log("完成特定第二天事件前不觸發");
+                return;
             }
         }
         OnComputerInteracted?.Invoke();

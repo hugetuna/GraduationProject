@@ -10,7 +10,7 @@ public class DayManager : MonoBehaviour
     public int chapter = 0; //保存遊戲中的章節
     public int date = 0; //保存遊戲中的日期
     public DayEventManager dayEventManager;
-    public bool IsInStartOfDay = false;//是否處於新一天開始的階段
+    public bool IsInStartOfDay = true;//是否處於新一天開始的階段
     [Header("為了EventManager")]
     public System.Action onDayFinish = null;
     private void Awake()
@@ -19,9 +19,23 @@ public class DayManager : MonoBehaviour
         else { Destroy(gameObject); return; }
         DontDestroyOnLoad(gameObject);
     }
+    public void OnGameFileLoad()
+    {
+        date=GameManager.Instance.DayData.day;
+        IsInStartOfDay= GameManager.Instance.DayData.IsInStartOfDay;
+        if (IsInStartOfDay)
+        {
+            StartDay();
+        }
+        else
+        {
+            dayEventManager.InitializeDayEvents(date, GameManager.Instance.DayData.currentEventIndex);
+            dayEventManager.TriggerNextEvent();
+        }
+    }
     public void OnSceneLoaded(string SceneName)
     {
-        if (IsInStartOfDay==false&&SceneName=="Floor_1")
+        if (IsInStartOfDay==true&&SceneName=="Floor_1")
         {
             StartDay();
         }
@@ -37,9 +51,9 @@ public class DayManager : MonoBehaviour
     // 用來更動日期的函式
     public void StartDay()
     {
-        IsInStartOfDay = true;
+        IsInStartOfDay = false;
         date++;
-        dayEventManager.InitializeDayEvents(date);
+        dayEventManager.InitializeDayEvents(date,0);
         dayEventManager.TriggerNextEvent();
         
         TeamManager teamManager = FindAnyObjectByType<TeamManager>();
@@ -65,7 +79,7 @@ public class DayManager : MonoBehaviour
         // 重置事件狀態
         Debug.Log($"結束一天 Date:{date}");
         onDayFinish = null;
-        IsInStartOfDay = false;
+        IsInStartOfDay = true;
         SceneTransitionManager.Instance.teleportByTargetSceneName("Floor_1");
     }  
 }

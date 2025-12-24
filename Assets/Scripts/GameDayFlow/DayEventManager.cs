@@ -19,12 +19,12 @@ public class DayEventManager : MonoBehaviour
     public GameObject eventHintPanel;
     public TextMeshProUGUI eventHintText;
     // 初始化當天事件隊列
-    public void InitializeDayEvents(int currentDay)
+    public void InitializeDayEvents(int currentDay,int startTimeIndex)
     {
         Debug.Log($"今天是第 {currentDay} 天");
         EventedNumberToday = 0;
         eventQueue.Clear();
-        for(int timeIndex=0; timeIndex<200; timeIndex++)
+        for(int timeIndex=startTimeIndex; timeIndex<200; timeIndex++)
         {
             foreach (var dayEvent in allDayEvents)
             {
@@ -92,6 +92,7 @@ public class DayEventManager : MonoBehaviour
         // 根據事件的屬性執行相應的邏輯
         Debug.Log($"Triggering event: {dayEvent.eventId}");
         currentEvent = dayEvent;
+        GameManager.Instance.SaveDayData();//儲存當前事件進度
         ShowEventHint(dayEvent);
         if (dayEvent.Type== EventType.MainWorld)
         {
@@ -188,7 +189,8 @@ public class DayEventManager : MonoBehaviour
         if (dayEvent.isHintEvent)
         {
             eventHintPanel?.gameObject.SetActive(true);
-            eventHintText.text = dayEvent.hint;
+            if (eventHintPanel != null)
+                eventHintText.text = dayEvent.hint;
         }
         else
         {

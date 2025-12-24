@@ -10,6 +10,7 @@ public class GameManager : MonoBehaviour
     //永久儲存資料
     public List<SoilSaveData> soilDataList = new List<SoilSaveData>();
     public List<IdolSaveData> idolDataList = new List<IdolSaveData>();
+    public DaySaveData DayData;
     public ResourceSaveData ResourceData;
     public ChatSaveData chatSaveData;
     //臨時儲存資料
@@ -83,6 +84,12 @@ public class GameManager : MonoBehaviour
             idolDataList.Add(data);
         }
     }
+    public void SaveDayData()
+    {
+        DayData.day = DayManager.Instance.date;
+        DayData.currentEventIndex = DayManager.Instance.dayEventManager.currentEvent.TriggerTimeIndex;
+        DayData.IsInStartOfDay = DayManager.Instance.IsInStartOfDay;
+    }
     //保存劇情文本(方便轉場時直接使用)
     public void SaveInkJSONAssetData(DialogueSaveData data)
     {
@@ -123,6 +130,7 @@ public class GameManager : MonoBehaviour
             soilDataList = this.soilDataList,
             idolDataList = this.idolDataList,
             ResourceData = this.ResourceData,
+            DayData = this.DayData,
             chatSaveData = this.chatSaveData,
             isElevatorUsedToday = this.isElevatorUsedToday,
             //dialogueSaveData = this.dialogueSaveData
@@ -155,9 +163,12 @@ public class GameManager : MonoBehaviour
         this.soilDataList = wrapper.soilDataList;
         this.idolDataList = wrapper.idolDataList;
         this.ResourceData = wrapper.ResourceData;
+        this.DayData = wrapper.DayData;
         this.chatSaveData = wrapper.chatSaveData;
         this.isElevatorUsedToday = wrapper.isElevatorUsedToday;
         //this.dialogueSaveData = wrapper.dialogueSaveData;
+        //4.處理讀取後的資料
+        DayManager.Instance.OnGameFileLoad();
 
         Debug.Log("存檔已載入。");
     }

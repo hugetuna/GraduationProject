@@ -99,7 +99,7 @@ public class Soil : MonoBehaviour, IInteractable
             AudioManager.Instance.PlaySFX(audio_TurnTheSoil);
             leader.costVigour(leader.plantVigourCost);
             //新手教學的特殊事件處理
-            if (DayManager.Instance.date==2&&DayManager.Instance.dayEventManager.EventedNumberToday==5)
+            if (DayManager.Instance.date==2&&DayManager.Instance.dayEventManager.currentEvent.TriggerTimeIndex==5)
             {
                 StartCoroutine(TutorialAnimator());
             }
@@ -139,7 +139,7 @@ public class Soil : MonoBehaviour, IInteractable
             isPlanting = false;
             isPlantable = false;
             //新手教學的特殊事件處理
-            if (DayManager.Instance.date == 2 && DayManager.Instance.dayEventManager.EventedNumberToday == 8)
+            if (DayManager.Instance.date == 2 && DayManager.Instance.dayEventManager.currentEvent.TriggerTimeIndex == 8)
             {
                 newFan.SetPriceType(PriceType.Fans);
                 newFan.Use(leader);
