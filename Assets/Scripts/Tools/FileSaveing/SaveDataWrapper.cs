@@ -8,6 +8,7 @@ public class SaveDataWrapper
     public List<SoilSaveData> soilDataList;
     public List<IdolSaveData> idolDataList;
     public DaySaveData DayData;
+    public string sceneNameSave;
     public ResourceSaveData ResourceData;
     public ChatSaveData chatSaveData;
     public bool isElevatorUsedToday;

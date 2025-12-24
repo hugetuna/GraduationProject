@@ -5,8 +5,9 @@ using UnityEngine;
 public class WaitPlayerEnterAreaEvent : MonoBehaviour
 {
     private System.Action onFinish;
-
+    [SerializeField]
     private Vector3 minPos;
+    [SerializeField]
     private Vector3 maxPos;
 
     private Transform leader;  // 取得隊長
@@ -16,14 +17,15 @@ public class WaitPlayerEnterAreaEvent : MonoBehaviour
         minPos = areaMin;
         maxPos = areaMax;
         onFinish = finish;
-        teamManager= FindAnyObjectByType<TeamManager>();
+        DontDestroyOnLoad(this);
         // 開始檢查玩家位置
         enabled = true;
     }
 
     private void Update()
     {
-        leader= teamManager.teamMembers[teamManager.currentLeaderIndex].GetComponent<Transform>();
+        teamManager = FindAnyObjectByType<TeamManager>();
+        leader = teamManager?.teamMembers[teamManager.currentLeaderIndex].GetComponent<Transform>();
         if (leader == null) return;
 
         Vector3 p = leader.position;

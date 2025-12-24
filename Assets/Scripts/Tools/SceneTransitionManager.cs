@@ -36,6 +36,10 @@ public class SceneTransitionManager : MonoBehaviour
             return;
         }
     }
+    public void OnGameFileLoad()
+    {
+        teleportByTargetSceneName(GameManager.Instance.sceneNameSave);
+    }
     /// <summary>
     /// 呼叫這個方法自動儲存資料並處理動畫
     /// <summary>
@@ -65,6 +69,7 @@ public class SceneTransitionManager : MonoBehaviour
         }
         // 傳送到指定場景
         AudioManager.Instance.StopMusic();
+        GameManager.Instance.sceneNameSave = targetSceneName;
         LoadSceneWithTransition(targetSceneName);
     }
     /// <summary>

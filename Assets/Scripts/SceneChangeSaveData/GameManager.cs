@@ -11,6 +11,7 @@ public class GameManager : MonoBehaviour
     public List<SoilSaveData> soilDataList = new List<SoilSaveData>();
     public List<IdolSaveData> idolDataList = new List<IdolSaveData>();
     public DaySaveData DayData;
+    public string sceneNameSave = "";
     public ResourceSaveData ResourceData;
     public ChatSaveData chatSaveData;
     //臨時儲存資料
@@ -131,6 +132,7 @@ public class GameManager : MonoBehaviour
             idolDataList = this.idolDataList,
             ResourceData = this.ResourceData,
             DayData = this.DayData,
+            sceneNameSave = this.sceneNameSave,
             chatSaveData = this.chatSaveData,
             isElevatorUsedToday = this.isElevatorUsedToday,
             //dialogueSaveData = this.dialogueSaveData
@@ -164,12 +166,13 @@ public class GameManager : MonoBehaviour
         this.idolDataList = wrapper.idolDataList;
         this.ResourceData = wrapper.ResourceData;
         this.DayData = wrapper.DayData;
+        this.sceneNameSave = wrapper.sceneNameSave;
         this.chatSaveData = wrapper.chatSaveData;
         this.isElevatorUsedToday = wrapper.isElevatorUsedToday;
         //this.dialogueSaveData = wrapper.dialogueSaveData;
         //4.處理讀取後的資料
         DayManager.Instance.OnGameFileLoad();
-
+        SceneTransitionManager.Instance.OnGameFileLoad();
         Debug.Log("存檔已載入。");
     }
 }
