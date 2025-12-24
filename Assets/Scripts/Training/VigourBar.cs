@@ -8,7 +8,7 @@ public class VigourBar : MonoBehaviour
     //-----------------------------------------------------------------//
     [Header("體力 UI")]
     [SerializeField] private Slider vigourSlider; // 該角色的體力值 UI
-    [SerializeField] private Image fillImage; // 體力條填充圖片
+    // [SerializeField] private Image fillImage; // 體力條填充圖片
     [SerializeField] private Material grayMaterial; // 灰階材質
     // private bool isAbleToTrain = true; // 是否能進行訓練
 
@@ -37,14 +37,14 @@ public class VigourBar : MonoBehaviour
                 // isAbleToTrain = false; // 體力不足無法訓練
                 characterImage.GetComponent<CanvasGroup>().interactable = false;
                 characterImage.material = grayMaterial; // 使用灰階材質
-                fillImage.color = new Color32(240, 58, 106, 255); // 將不足以訓練的體力設成桃紅色
+                // fillImage.color = new Color32(240, 58, 106, 255); // 將不足以訓練的體力設成桃紅色
             }
             else
             {
                 // isAbleToTrain = true; // 有足夠體力進行訓練
                 characterImage.GetComponent<CanvasGroup>().interactable = true;
                 characterImage.material = null;
-                fillImage.color = new Color32(214, 189, 255, 255);
+                // fillImage.color = new Color32(255, 255, 255, 255); // 預設白色（不影響圖片顯示）
             }
         }
     }

@@ -206,20 +206,19 @@ public class IdolInstance : MonoBehaviour
     // 每天結束時的訓練結算＆記錄重置
     public void SettleTrainRecord()
     {
-        // vigour -= vigourCost; // 應該會改到其他部分執行
         dance += trainRecord.danceExp;
         vocal += trainRecord.vocalExp;
         visual += trainRecord.visualExp;
 
-        // 重置訓練紀錄
-        trainRecord.SetTrainRecord(basicTrainRecord.state, 
-                                   basicTrainRecord.position,
-                                   basicTrainRecord.droppedZoneType,
-                                   basicTrainRecord.droppedZoneIndex,
+        // 重置必須清空的訓練紀錄（耗體＆三種訓練數值）
+        trainRecord.SetTrainRecord(IdolTrainingState.None,
+                                   null,
+                                   DropZoneType.None,
+                                   -1,
                                    basicTrainRecord.vigourCost,
                                    basicTrainRecord.danceExp,
                                    basicTrainRecord.vocalExp,
                                    basicTrainRecord.visualExp,
-                                   basicTrainRecord.isActive);
+                                   null);
     }
 }

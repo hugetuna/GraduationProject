@@ -96,6 +96,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be53f333c3110d04587904237fcd29af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  traineeZoneType: 2
   memberSlots:
   - fans: {fileID: 4546772170354313457}
     dance: {fileID: 4142826347524081588}
@@ -9368,6 +9369,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be53f333c3110d04587904237fcd29af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  traineeZoneType: 3
   memberSlots:
   - fans: {fileID: 1601771944553474271}
     dance: {fileID: 5668928806250665200}
@@ -13414,7 +13416,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -284.8, y: -24}
+  m_AnchoredPosition: {x: -284.8, y: -22.623}
   m_SizeDelta: {x: 80, y: 111.3402}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &4905355915094269846
@@ -13480,7 +13482,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vigourSlider: {fileID: 3027897302133165301}
-  fillImage: {fileID: 5784735950121914192}
   grayMaterial: {fileID: 2100000, guid: c825e143326146346b4b0d5508af5e8e, type: 2}
 --- !u!114 &4796802524058380268
 MonoBehaviour:
@@ -18417,6 +18418,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: be53f333c3110d04587904237fcd29af, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  traineeZoneType: 4
   memberSlots:
   - fans: {fileID: 7821583229971772944}
     dance: {fileID: 7354086658898441538}
@@ -21503,7 +21505,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -284.8, y: -24}
+  m_AnchoredPosition: {x: -284.8, y: -22.623}
   m_SizeDelta: {x: 80, y: 111.3402}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2417047769972041491
@@ -21569,7 +21571,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vigourSlider: {fileID: 3548803364118023266}
-  fillImage: {fileID: 4443865482072382072}
   grayMaterial: {fileID: 2100000, guid: c825e143326146346b4b0d5508af5e8e, type: 2}
 --- !u!114 &9215692308383063655
 MonoBehaviour:
@@ -22344,7 +22345,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -197.8, y: -24}
+  m_AnchoredPosition: {x: -197.8, y: -22.623}
   m_SizeDelta: {x: 80, y: 111.3402}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2076104885008259719
@@ -22410,7 +22411,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vigourSlider: {fileID: 2006406035205385161}
-  fillImage: {fileID: 2752040158612991669}
   grayMaterial: {fileID: 2100000, guid: c825e143326146346b4b0d5508af5e8e, type: 2}
 --- !u!114 &5745601912943976906
 MonoBehaviour:
@@ -24348,7 +24348,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -197.8, y: -24}
+  m_AnchoredPosition: {x: -197.8, y: -22.623}
   m_SizeDelta: {x: 80, y: 111.3402}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8074913013763141500
@@ -24414,7 +24414,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vigourSlider: {fileID: 4842632369834429926}
-  fillImage: {fileID: 8350924607088212957}
   grayMaterial: {fileID: 2100000, guid: c825e143326146346b4b0d5508af5e8e, type: 2}
 --- !u!114 &5825237756477783972
 MonoBehaviour:
@@ -25401,7 +25400,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -110.8, y: -24}
+  m_AnchoredPosition: {x: -110.8, y: -22.623}
   m_SizeDelta: {x: 80, y: 111.3402}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5597368456623032284
@@ -25467,7 +25466,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vigourSlider: {fileID: 1267762903332251271}
-  fillImage: {fileID: 3974186323916233953}
   grayMaterial: {fileID: 2100000, guid: c825e143326146346b4b0d5508af5e8e, type: 2}
 --- !u!114 &4406317361195125084
 MonoBehaviour:
@@ -29398,7 +29396,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -284.8, y: -24}
+  m_AnchoredPosition: {x: -284.8, y: -22.623}
   m_SizeDelta: {x: 80, y: 111.3402}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &3305869618638817129
@@ -29464,7 +29462,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vigourSlider: {fileID: 4675656920597282025}
-  fillImage: {fileID: 6902004949545227941}
   grayMaterial: {fileID: 2100000, guid: c825e143326146346b4b0d5508af5e8e, type: 2}
 --- !u!114 &2469200792950833425
 MonoBehaviour:
@@ -29916,7 +29913,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -197.8, y: -24}
+  m_AnchoredPosition: {x: -197.8, y: -22.623}
   m_SizeDelta: {x: 80, y: 111.3402}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &5241567089261499361
@@ -29982,7 +29979,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vigourSlider: {fileID: 5312898366275040204}
-  fillImage: {fileID: 8611180727572269166}
   grayMaterial: {fileID: 2100000, guid: c825e143326146346b4b0d5508af5e8e, type: 2}
 --- !u!114 &7703038142402107683
 MonoBehaviour:
@@ -30037,7 +30033,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -110.8, y: -24}
+  m_AnchoredPosition: {x: -110.8, y: -22.623}
   m_SizeDelta: {x: 80, y: 111.3402}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8764577804925718936
@@ -30103,7 +30099,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vigourSlider: {fileID: 664960285507363633}
-  fillImage: {fileID: 1136563179241431706}
   grayMaterial: {fileID: 2100000, guid: c825e143326146346b4b0d5508af5e8e, type: 2}
 --- !u!114 &442531507552270880
 MonoBehaviour:
@@ -32010,7 +32005,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -110.8, y: -24}
+  m_AnchoredPosition: {x: -110.8, y: -22.623}
   m_SizeDelta: {x: 80, y: 111.3402}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &8038990754679574778
@@ -32076,7 +32071,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   vigourSlider: {fileID: 8500478009910835981}
-  fillImage: {fileID: 29132931283448273}
   grayMaterial: {fileID: 2100000, guid: c825e143326146346b4b0d5508af5e8e, type: 2}
 --- !u!114 &6960330847412382148
 MonoBehaviour:

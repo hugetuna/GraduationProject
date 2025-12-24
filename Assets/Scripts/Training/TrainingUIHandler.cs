@@ -24,6 +24,7 @@ public class TrainingUIHandler : MonoBehaviour
     //-----------------------------------------------------------------//
     [Header("相關音效")]
     [SerializeField] private AudioClip openSound; // 開啟訓練 UI 的音效
+    [SerializeField] private AudioClip assignSound; // 按下指派按鈕的音效
     //-----------------------------------------------------------------//
     private TrainingUIData trainingUIData; // 訓練 UI 的資料 ScriptableObject
     private bool isInitialized = false; // 確保訓練 UI 只初始化一次
@@ -128,6 +129,11 @@ public class TrainingUIHandler : MonoBehaviour
 
     private void ConfirmToAssign()
     {
+        if(assignSound != null)
+        {
+            AudioManager.Instance.PlaySFX(assignSound);
+        }
+
         if(TrainingUIManager.Instance.GetMembers().Count == 0)
         {
             // 若全員皆去訓練，觸發可通往電腦場景的 UI

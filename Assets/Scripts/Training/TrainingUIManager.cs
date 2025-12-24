@@ -21,7 +21,6 @@ public class TrainingUIManager : MonoBehaviour
     //-----------------------------------------------------------------//
     private Dictionary<IdolWho, IdolTrainingState> characterStates = new(); // 角色名稱＆訓練狀態對應表
     private bool isInitialized = false;
-    // 目前還沒有選角功能，不必特別照隊伍成員決定用哪些圖片
 
 
     void Awake()
