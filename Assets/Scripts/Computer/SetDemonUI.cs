@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using Ink.Runtime;
 using UnityEngine.UI;
@@ -14,13 +15,18 @@ public class SetDemonUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private GameObject hintIcon;
     private bool hintShown = true;
-
+    //-----------------------------------------------------------------//
     [Header("對話腳本")]
     [SerializeField] private TextAsset inkJSONAsset;
     private Story story;
-
     private string currentKnot = "default_text"; // 目前正在跑的 Ink knot
     private bool storyFinished = false;
+    //-----------------------------------------------------------------//
+    [Header("打字機效果設定")]
+    [SerializeField] private float typingSpeed = 0.05f; // 每個字出現的速度
+    private Coroutine typingCoroutine;
+    private bool isTyping = false;
+    private string fullLineText = ""; // 暫存目前的完整文字內容
 
     void Start()
     {
@@ -49,10 +55,7 @@ public class SetDemonUI : MonoBehaviour
         if (currentKnot == "talk" && !storyFinished) return;
 
         currentKnot = "talk";
-        story = new Story(inkJSONAsset.text);
-        story.ChoosePathString(currentKnot);
-        storyFinished = false;
-        ShowNextLine();
+        InitAndStartStory(currentKnot);
     }
 
     private void OnProblemButtonClick()
@@ -60,26 +63,40 @@ public class SetDemonUI : MonoBehaviour
         if (currentKnot == "problem" && !storyFinished) return;
 
         currentKnot = "problem";
-        story = new Story(inkJSONAsset.text);
-        story.ChoosePathString(currentKnot);
-        storyFinished = false;
-        ShowNextLine();
+        InitAndStartStory(currentKnot);
     }
 
-    private void OnSellButtonClick()
+    private void OnSellButtonClick() // 販賣頁面待追加
     {
         if (currentKnot == "sell" && !storyFinished) return;
 
         currentKnot = "sell";
+        InitAndStartStory(currentKnot);
+    }
+
+    // 將重複的故事初始化整理成函式
+    private void InitAndStartStory(string knotName)
+    {
         story = new Story(inkJSONAsset.text);
-        story.ChoosePathString(currentKnot);
+        story.ChoosePathString(knotName);
         storyFinished = false;
+
+        // 切換 Knot 時要確保停止上一個正在跑的打字機
+        if (typingCoroutine != null) StopCoroutine(typingCoroutine);
         ShowNextLine();
     }
 
     private void OnDialogueBgClick()
     {
-        ShowNextLine();
+        // 如果正在打字，點擊背景則立即輸出完整文字
+        if (isTyping)
+        {
+            FinishTypewriterInstantly();
+        }
+        else
+        {
+            ShowNextLine();
+        }
     }
 
     private void ShowNextLine()
@@ -88,30 +105,71 @@ public class SetDemonUI : MonoBehaviour
 
         if (story.canContinue)
         {
-            dialogueText.text = story.Continue();
+            fullLineText = story.Continue();
+            
+            // 啟動打字機效果
+            if (typingCoroutine != null) StopCoroutine(typingCoroutine);
+            typingCoroutine = StartCoroutine(TypeTextRoutine(fullLineText));
         }
         else
         {
             storyFinished = true;
-            dialogueText.text = story.currentText; // 維持最後一句
+            dialogueText.maxVisibleCharacters = fullLineText.Length; // 結束時確保文字完全顯示
+            // dialogueText.text = story.currentText; // 維持最後一句
         }
     }
-
-    private string GetInkLine(string knotName)
+    private IEnumerator TypeTextRoutine(string text) // 打字機協程
     {
-        var tempStory = new Story(inkJSONAsset.text);
-        tempStory.ChoosePathString(knotName);
-        return tempStory.Continue();
+        isTyping = true;
+        dialogueText.text = text;
+        dialogueText.maxVisibleCharacters = 0;
+
+        // 強制更新網格以確保排版正確，避免文字在打字過程中換行跳動
+        dialogueText.ForceMeshUpdate();
+
+        int totalVisibleCharacters = text.Length;
+        int counter = 0;
+
+        while (counter <= totalVisibleCharacters)
+        {
+            dialogueText.maxVisibleCharacters = counter;
+            counter++;
+            yield return new WaitForSeconds(typingSpeed);
+        }
+
+        isTyping = false;
     }
+
+    private void FinishTypewriterInstantly() // 即時停止打字機效果（並顯示所有文字）
+    {
+        if (typingCoroutine != null) StopCoroutine(typingCoroutine);
+        dialogueText.maxVisibleCharacters = fullLineText.Length;
+        isTyping = false;
+    }
+
+    // private string GetInkLine(string knotName)
+    // {
+    //     var tempStory = new Story(inkJSONAsset.text);
+    //     tempStory.ChoosePathString(knotName);
+    //     return tempStory.Continue();
+    // }
 
     private void ResetDialogue()
     {
+        // 重置時也要停止打字機
+        if (typingCoroutine != null) StopCoroutine(typingCoroutine);
+        isTyping = false;
+
         currentKnot = "default_text";
         story = new Story(inkJSONAsset.text);
         story.ChoosePathString(currentKnot);
         storyFinished = false;
         hintIcon.SetActive(true);
         hintShown = true;
-        dialogueText.text = GetInkLine(currentKnot);
+        
+        // 預設內容也改用打字機顯示
+        // fullLineText = GetInkLine(currentKnot);
+        // typingCoroutine = StartCoroutine(TypeTextRoutine(fullLineText));
+        ShowNextLine();
     }
 }
