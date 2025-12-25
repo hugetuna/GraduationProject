@@ -2,6 +2,8 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
+using System;
+using System.Linq;
 
 [System.Serializable]
 public class StatsSlot
@@ -19,87 +21,154 @@ public class NumbersController : MonoBehaviour
 {
     [SerializeField] private List<StatsSlot> memberSlots = new();
     [SerializeField] private List<StatsSlot> traineeSlots = new();
+    [SerializeField] private string trainingType = "";
+    public static event Action<IdolWho, DropZoneType, int, TrainingUIData> OnIdolPositionChanged;
+
+    void Start()
+    {
+        OnIdolPositionChanged += HandleIdolPositionChanged; // 訂閱事件
+    }
+
+    void OnDestroy()
+    {
+        OnIdolPositionChanged -= HandleIdolPositionChanged; // 取消訂閱事件
+    }
 
     public void InitializeSlots(TrainingUIData data)
     {
-        // 先全部清空
-        foreach (var slot in memberSlots)
-        {
-            slot.currentIdol = null;
-            slot.fans.text = "";
-            slot.dance.text = "";
-            slot.vocal.text = "";
-            slot.visual.text = "";
-            foreach (var buff in slot.buffList)
-            {
-                buff.SetActive(false);
-            }
-        }
+        ClearAllSlots(); // 先全部清空
 
-        foreach (var slot in traineeSlots)
-        {
-            slot.currentIdol = null;
-            slot.fans.text = "";
-            slot.dance.text = "";
-            slot.vocal.text = "";
-            slot.visual.text = "";
-            foreach (var buff in slot.buffList)
-            {
-                buff.SetActive(false);
-            }
-        }
-
-        // 取得所有成員
+        // 分區處理
         var idols = TeamDataUtility.IdolInstanceList;
+        var zoneGroups = idols.GroupBy(idol => idol.trainRecord.droppedZoneType);
 
-        for (int i = 0; i < idols.Count; i++)
+        foreach (var group in zoneGroups)
         {
-            var idol = idols[i];
-            var trainRecord = idol.trainRecord;
-            
-            if (i < memberSlots.Count) // 避免超出範圍
+            // 找出該區目前「原本」最大的 Index，當作衝突時往後遞補的基準
+            // 如果該區是空的，max 給 -1，這樣下面 +1 就會從 0 開始
+            int currentMaxIndex = group.Any() ? group.Max(x => x.trainRecord.droppedZoneIndex) : -1;
+
+            // 用來記錄「已經發出去的號碼牌」
+            HashSet<int> occupiedIndices = new HashSet<int>();
+
+            // 排序：先照 Index 排，如果 Index 一樣就照 ID 排 (保證每次執行結果順序固定)
+            var sortedIdols = group
+                .OrderBy(idol => idol.trainRecord.droppedZoneIndex)
+                .ThenBy(idol => idol.idolIndex)
+                .ToList();
+
+            // 分配角色 UI 位置
+            foreach (var idol in sortedIdols)
             {
-                // 設定各角色初始所在 slot
-                AssignIdolSlot(idol.idolIndex, trainRecord.droppedZoneType, trainRecord.droppedZoneIndex, data);
+                int finalIndex = idol.trainRecord.droppedZoneIndex;
+
+                // 檢查：如果這個座位已經有人坐了 (發生衝突)
+                if (occupiedIndices.Contains(finalIndex))
+                {
+                    // 直接把這個人丟到「當前最大值 + 1」的位置
+                    currentMaxIndex++;
+                    finalIndex = currentMaxIndex;
+
+                    // 同步到跨場景資料
+                    TraineeAssignment.UpdateTrainRecord(idol.idolIndex, droppedZoneIndex: finalIndex);
+                }
+                // 如果 currentMaxIndex 比現在的 index 小記得更新
+                else if (finalIndex > currentMaxIndex)
+                {
+                    currentMaxIndex = finalIndex;
+                }
+
+                // 登記座位，防止下一個人又搶到這個位置
+                occupiedIndices.Add(finalIndex);
+
+                // 根據位置資料更新 UI
+                HandleIdolPositionChanged(idol.idolIndex, group.Key, finalIndex, data);
             }
         }
     }
 
+    private void HandleIdolPositionChanged(IdolWho idolIndex, DropZoneType zoneType, int slotIndex, TrainingUIData data)
+    {
+        // 不論該角色被拖曳到哪，先檢查該 UI 內部是否正在顯示該角色，有就清掉（解決殘影問題）
+        RemoveIdolFromPreSlots(idolIndex);
 
-    public void AssignIdolSlot(IdolWho idolIndex, DropZoneType zoneType, int slotIndex, TrainingUIData data)
+        // 判斷角色的「新位置」是否屬於此 UI 的管轄範圍
+        string targetZoneTypeStr = zoneType.ToString();
+
+        // 1. 如果去的是成員區 (Member)，所有 UI 的成員區都要更新。
+        // 2. 如果去的是訓練區，則只有「類型符合」的 UI 才要更新訓練區。
+        bool isMyBusiness = (zoneType == DropZoneType.Member) || (targetZoneTypeStr.ToLower() == trainingType.ToLower());
+        if (!isMyBusiness) return;
+
+        // 將角色數值填到對應的 slot
+        var slotList = (zoneType == DropZoneType.Member) ? memberSlots : traineeSlots;
+
+        if (slotIndex >= 0 && slotIndex < slotList.Count)
+        {
+            FillSlotData(slotList[slotIndex], idolIndex, zoneType, data);
+        }
+    }
+
+    private void RemoveIdolFromPreSlots(IdolWho idolIndex)
+    {
+        // 檢查並清除成員區
+        for (int i = 0; i < memberSlots.Count; i++)
+        {
+            if (memberSlots[i].currentIdol != null && memberSlots[i].currentIdol.idolIndex == idolIndex)
+            {
+                ClearSlotUI(memberSlots[i]);
+            }
+        }
+        // 檢查並清除訓練區
+        for (int i = 0; i < traineeSlots.Count; i++)
+        {
+            if (traineeSlots[i].currentIdol != null && traineeSlots[i].currentIdol.idolIndex == idolIndex)
+            {
+                ClearSlotUI(traineeSlots[i]);
+            }
+        }
+    }
+
+    private void FillSlotData(StatsSlot slot, IdolWho idolIndex, DropZoneType zoneType, TrainingUIData data)
     {
         var idol = TeamDataUtility.IdolDict[idolIndex];
+        slot.currentIdol = idol;
 
-        var slotList = zoneType == DropZoneType.Member ? memberSlots : traineeSlots;
-        var slot = slotList[slotIndex];
-
-        slot.currentIdol = idol; // 記錄這個 slot 的角色
-
-        // 更新數值（先預設為有老師加成）
+        // 更新文字
         slot.fans.text = idol.fans.ToString();
-        slot.dance.text = zoneType == DropZoneType.Dance ? $"{idol.dance + data.withTeacherBenefit}▲" : idol.dance.ToString();
-        slot.vocal.text = zoneType == DropZoneType.Vocal ? $"{idol.vocal + data.withTeacherBenefit}▲" : idol.vocal.ToString();
-        slot.visual.text = zoneType == DropZoneType.Visual ? $"{idol.visual + data.withTeacherBenefit}▲" : idol.visual.ToString();
+        slot.dance.text = (zoneType == DropZoneType.Dance) ? $"{idol.dance + data.withTeacherBenefit}▲" : idol.dance.ToString();
+        slot.vocal.text = (zoneType == DropZoneType.Vocal) ? $"{idol.vocal + data.withTeacherBenefit}▲" : idol.vocal.ToString();
+        slot.visual.text = (zoneType == DropZoneType.Visual) ? $"{idol.visual + data.withTeacherBenefit}▲" : idol.visual.ToString();
+
+        // 顯示加成物件
         foreach (var buff in slot.buffList)
         {
-            buff.SetActive(true); // 顯示加成效果物件 => 功能待增加
+            buff.SetActive(true);
         }
     }
 
-    public void ClearSlot(DropZoneType zoneType, int slotIndex)
+    private void ClearSlotUI(StatsSlot slot)
     {
-        var slotList = zoneType == DropZoneType.Member ? memberSlots : traineeSlots;
-        var slot = slotList[slotIndex];
         slot.currentIdol = null;
-
-        // 清掉文字
         slot.fans.text = "";
         slot.dance.text = "";
         slot.vocal.text = "";
         slot.visual.text = "";
         foreach (var buff in slot.buffList)
         {
-            buff.SetActive(false); // 隱藏加成效果物件
+            buff.SetActive(false);
         }
+    }
+
+    private void ClearAllSlots()
+    {
+        foreach (var slot in memberSlots) ClearSlotUI(slot);
+        foreach (var slot in traineeSlots) ClearSlotUI(slot);
+    }
+
+    // 外部呼叫用
+    public static void NotifyIdolMoved(IdolWho idolIndex, DropZoneType zoneType, int slotIndex, TrainingUIData data)
+    {
+        OnIdolPositionChanged?.Invoke(idolIndex, zoneType, slotIndex, data);
     }
 }

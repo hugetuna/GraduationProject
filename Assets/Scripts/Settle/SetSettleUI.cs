@@ -19,6 +19,7 @@ public class SetSettleUI : MonoBehaviour
     // [SerializeField] private List<ItemStack> itemsEarned;
     private int moneyEarned;
     [SerializeField] private TeamManager teamManager;
+    private List<IdolInstance> idolInstances;
     //-----------------------------------------------------------------//
     [Header("背景音樂")]
     [SerializeField] private AudioClip settleBGM;
@@ -33,17 +34,18 @@ public class SetSettleUI : MonoBehaviour
         }
 
         // 呼叫角色顯示（已排序）
-        var idolInstances = TeamDataUtility.IdolInstanceList;
+        idolInstances = TeamDataUtility.IdolInstanceList;
 
         foreach(var idol in idolInstances)
         {
             int index = idolInstances.IndexOf(idol);
             GameObject character = characters[index];
 
+            int finalVigour = idol.vigour - idol.trainRecord.vigourCost;
             character.GetComponent<SetCharacterUI>().ShowCharacterBenefits(
                 TeamDataUtility.TachieSprites[idol.idolIndex],
                 idol.basicStatus.idolName,
-                idol.vigour, idol.vigourMax, 0,  // 目前沒有最大體力值變動
+                finalVigour, idol.vigourMax, 0,  // 目前沒有最大體力值變動
                 idol.dance, idol.trainRecord.danceExp,
                 idol.vocal, idol.trainRecord.vocalExp,
                 idol.visual, idol.trainRecord.visualExp,
@@ -58,6 +60,15 @@ public class SetSettleUI : MonoBehaviour
         // 裝備和物品顯示（目前沒東西...但如果商店可以買東西再來改）
         // 正式結算請放到 DayManager 的 EndDay() 之類的地方
         endDayButton.onClick.RemoveAllListeners(); // 避免重複綁定
-        endDayButton.onClick.AddListener(() => DayManager.Instance.AfterDayEndEventStart());
+        endDayButton.onClick.AddListener(OnEndDayButtonClicked);
+    }
+
+    private void OnEndDayButtonClicked()
+    {
+        foreach (var idol in idolInstances)
+        {
+            idol.SettleTrainRecord(); // 換天前搞定訓練結算
+        }
+        DayManager.Instance.AfterDayEndEventStart();
     }
 }

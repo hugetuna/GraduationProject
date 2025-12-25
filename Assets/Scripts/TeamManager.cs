@@ -40,7 +40,7 @@ public class TeamManager : MonoBehaviour
             //手動把資料填回去
             idolAbility.LoadData(data);
             //idolAbility.positionInTeam = i;
-            if (idolAbility.trainRecord.state == IdolTrainingState.InTeam)
+            if (idolAbility.trainRecord.isActive) //判斷是否在隊伍中
             {
                 teamMembers.Add(idol.GetComponent<PlayerControlMainWorld>());
             }
@@ -62,9 +62,8 @@ public class TeamManager : MonoBehaviour
 
         foreach (var member in teamMembers)
         {
-            // 因為寫在 DayManager 的 EndDay 似乎沒用，於是在這裡再寫一遍
+            // 因為寫在 DayManager 的 EndDay 似乎沒用，於是直接寫在這
             IdolInstance idol = member.GetComponent<IdolInstance>();
-            idol.SettleTrainRecord();
             idol.gameObject.SetActive(idol.trainRecord.isActive);
         }
     }

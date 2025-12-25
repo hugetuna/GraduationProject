@@ -6,99 +6,118 @@ using System.Linq;
 /* 掛在 TrainingManager 上，負責指派訓練成員並備份資料 */
 public class TraineeAssignment : MonoBehaviour
 {
-    private List<IdolWho> trainees = new();
-    private List<GameObject> disappearCharacters = new(); // 需要隱藏的角色物件 
     [SerializeField] private TeamManager teamManager;
 
     void Start()
     {
-        TrainingUIHandler.OnTrainingUIConfirmed += AssignTrainees; // 訂閱訓練 UI 確定指派事件
-        HintToggler.OnGoToComputer += AssignTrainees; // 訂閱確定前往電腦介面事件
+        TrainingUIHandler.OnTrainingUIConfirmed += AssignTrainees;
+        HintToggler.OnGoToComputer += AssignTrainees;
     }
 
     void OnDestroy()
     {
-        TrainingUIHandler.OnTrainingUIConfirmed -= AssignTrainees; // 取消訂閱訓練 UI 確定指派事件
-        HintToggler.OnGoToComputer -= AssignTrainees; // 取消訂閱確定前往電腦介面事件
+        TrainingUIHandler.OnTrainingUIConfirmed -= AssignTrainees;
+        HintToggler.OnGoToComputer -= AssignTrainees;
     }
 
-    public void AssignTrainees(TrainingUIData data) // 指派訓練成員的函式（確定有人才呼叫）
+    public void AssignTrainees(TrainingUIData data) // 當任意訓練 UI 按下確定按鈕時呼叫
     {
-        // 清除上一次的狀態
+        // 取得該訓練 UI 類型
+        string currentTrainingType = data.trainingType.ToLower();
+
+        // 遍歷所有角色來檢查狀態
         foreach (var idol in TeamDataUtility.IdolObjectList)
         {
-            teamManager.RemoveBusyMember(idol.GetComponent<PlayerControlMainWorld>()); // 從忙碌成員列表移除
-            idol.SetActive(true); // 將隱藏的角色都顯示出來 
+            // 取得角色的訓練資料
+            string idolName = TeamDataUtility.CleanNameOfCharacterObject(idol.name);
+            IdolWho idolEnum = TeamDataUtility.GetIdolEnum(idolName);
+            IdolInstance idolData = TeamDataUtility.IdolDict[idolEnum];
+            var trainRecord = idolData.trainRecord;
 
-            string name = TeamDataUtility.CleanNameOfCharacterObject(idol.name);
-            UpdateTrainRecord(TeamDataUtility.GetIdolEnum(name), isActive: true); // 重設跨場景角色啟用狀態
-        }
-        disappearCharacters.Clear();
+            // 取得角色的控制腳本
+            PlayerControlMainWorld idolControl = idol.GetComponent<PlayerControlMainWorld>();
 
-        // 取得目前 trainees 
-        trainees = TrainingUIManager.Instance.GetTrainees();
+            // 判斷該角色目前被分配在哪個區域 (由拖曳系統決定)
+            string idolZoneStr = trainRecord.droppedZoneType.ToString().ToLower();
 
-        if (trainees.Count == 0)
-        {
-            return; // 若無人去訓練，就什麼也不做
-        }
-
-        bool isAllTrainees;
-        if (trainees.Count == TeamDataUtility.idolCount)
-        {
-            isAllTrainees = true; // 若所有人都去訓練，待會不用隱藏場景中角色
-        }
-        else
-        {
-            isAllTrainees = false;
-        }
-
-        Debug.Log($"已指派訓練成員: {string.Join(", ", trainees)}");
-
-
-        // 遍歷 trainees 以進行訓練指派 
-        foreach (IdolWho trainee in trainees)
-        {
-            IdolInstance idol = TeamDataUtility.IdolDict[trainee];
-            GameObject idolObject = idol.gameObject;
-            PlayerControlMainWorld idolControl = idolObject.GetComponent<PlayerControlMainWorld>();
-
-            if (idol == null)
+            // 情況一：這個角色被分配到「當前正開啟的訓練 UI」
+            if (idolZoneStr == currentTrainingType)
             {
-                Debug.Log($"找不到欲訓練的角色 {trainee}");
+                // 執行數值計算
+                CalculateAndSetTrainingStats(idolData, data);
+
+                // 標記為忙碌並隱藏角色物件
+                teamManager.AddBusyMember(idolControl);
+                idol.SetActive(false);
+
+                // 更新跨場景狀態
+                UpdateTrainRecord(idolEnum, isActive: false);
+            }
+            // 情況二：這個角色在「成員區」(可能是剛被移出訓練，或者原本就沒事)
+            else if (trainRecord.droppedZoneType == DropZoneType.Member)
+            {
+                // 重置訓練數值計算
+                ClearTrainingStats(idolData);
+
+                // 確保角色在場景中是顯示的
+                teamManager.RemoveBusyMember(idolControl);
+                idol.SetActive(true);
+
+                // 更新跨場景狀態
+                UpdateTrainRecord(idolEnum, isActive: true);
+            }
+            // 情況三：這個角色在其他 UI 的訓練區（例如角色在 Vocal，而玩家正處於 Dance）
+            else
+            {
+                // 不做任何處理（維持原狀）
                 continue;
             }
-
-            // 同步更新 IdolInstance 的 trainRecord（備份用，還不會真的增減角色數值）
-            int benefit = data.withTeacherBenefit; // 先假設都有老師加成
-            switch (data.trainingType.ToLower())
-            {
-                case "dance":
-                    benefit = (int)(benefit * idol.daTrainingBonus);
-                    UpdateTrainRecord(trainee, vigourCost: data.neededVigour, danceExp: benefit, isActive: false);
-                    break;
-                case "vocal":
-                    benefit = (int)(benefit * idol.voTrainingBonus);
-                    UpdateTrainRecord(trainee, vigourCost: data.neededVigour, vocalExp: benefit, isActive: false);
-                    break;
-                case "visual":
-                    benefit = (int)(benefit * idol.viTrainingBonus);
-                    UpdateTrainRecord(trainee, vigourCost: data.neededVigour, visualExp: benefit, isActive: false);
-                    break;
-            }
-
-            if (isAllTrainees) continue; // 若所有人都去訓練，就不隱藏場景中角色
-
-            // 隱藏隊伍中去訓練的角色 
-            Debug.Log($"隱藏訓練成員: {idolControl}");
-            teamManager.AddBusyMember(idolControl);
-
-            disappearCharacters.Add(idolObject);
-            idolObject.SetActive(false);
         }
     }
 
-     // 在指派訓練成員的同時備份狀態變化
+    // 計算並寫入訓練數值 (體力與經驗)
+    private void CalculateAndSetTrainingStats(IdolInstance idol, TrainingUIData data)
+    {
+        int benefit = data.withTeacherBenefit;
+        int finalDanceExp = 0;
+        int finalVocalExp = 0;
+        int finalVisualExp = 0;
+
+        // 根據訓練類型計算加成
+        switch (data.trainingType.ToLower())
+        {
+            case "dance":
+                finalDanceExp = (int)(benefit * idol.daTrainingBonus);
+                break;
+            case "vocal":
+                finalVocalExp = (int)(benefit * idol.voTrainingBonus);
+                break;
+            case "visual":
+                finalVisualExp = (int)(benefit * idol.viTrainingBonus);
+                break;
+        }
+
+        // 寫入 Record (這裡只是紀錄「將會」發生什麼事，還沒真正扣體力)
+        UpdateTrainRecord(idol.idolIndex,
+            vigourCost: data.neededVigour,
+            danceExp: finalDanceExp,
+            vocalExp: finalVocalExp,
+            visualExp: finalVisualExp
+        );
+    }
+
+    // 重置訓練數值 (當角色不在訓練區)
+    private void ClearTrainingStats(IdolInstance idol)
+    {
+        UpdateTrainRecord(idol.idolIndex,
+            vigourCost: 0,
+            danceExp: 0,
+            vocalExp: 0,
+            visualExp: 0
+        );
+    }
+
+    // 在指派訓練成員的同時備份狀態變化
     public static void UpdateTrainRecord(IdolWho name, // 第一項引述必填
                                          IdolTrainingState state = IdolTrainingState.None,
                                          Vector2? position = null,

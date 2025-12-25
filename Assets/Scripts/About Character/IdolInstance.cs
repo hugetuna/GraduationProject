@@ -48,8 +48,8 @@ public class IdolInstance : MonoBehaviour
         {
             IdolSetUp();
         }
-
     }
+
     //初始化
     public void IdolSetUp()
     {
@@ -127,8 +127,7 @@ public class IdolInstance : MonoBehaviour
         if (vigour - Amount >= 0)
         {
             vigour -= Amount;
-            MainCanvasSetter mainCanvasSetter = FindAnyObjectByType<MainCanvasSetter>();
-            mainCanvasSetter.setStatusBar();
+            UpdateMainStatusBar();
             return true;
         }
         else
@@ -143,9 +142,18 @@ public class IdolInstance : MonoBehaviour
         {
             vigour = vigourMax;
         }
-        MainCanvasSetter mainCanvasSetter = FindAnyObjectByType<MainCanvasSetter>();
-        mainCanvasSetter.setStatusBar();
+        UpdateMainStatusBar();
     }
+
+    public void UpdateMainStatusBar()
+    {
+        MainCanvasSetter mainCanvasSetter = FindAnyObjectByType<MainCanvasSetter>();
+        if (mainCanvasSetter != null)
+        {
+            mainCanvasSetter.setStatusBar();
+        }
+    }
+
     public void ChangeCloth(int ClothIndex)
     {
         //找到目標偶像的Transform
@@ -206,19 +214,20 @@ public class IdolInstance : MonoBehaviour
     // 每天結束時的訓練結算＆記錄重置
     public void SettleTrainRecord()
     {
+        vigour -= trainRecord.vigourCost; // 隔天主 UI 會同步此變化
         dance += trainRecord.danceExp;
         vocal += trainRecord.vocalExp;
         visual += trainRecord.visualExp;
 
-        // 重置必須清空的訓練紀錄（耗體＆三種訓練數值）
-        trainRecord.SetTrainRecord(IdolTrainingState.None,
-                                   null,
-                                   DropZoneType.None,
+        // 重置必須清空的訓練紀錄（三種訓練數值）
+        trainRecord.SetTrainRecord(IdolTrainingState.InTeam,
+                                   Vector2.zero,
+                                   DropZoneType.Member,
                                    -1,
                                    basicTrainRecord.vigourCost,
                                    basicTrainRecord.danceExp,
                                    basicTrainRecord.vocalExp,
                                    basicTrainRecord.visualExp,
-                                   null);
+                                   true);
     }
 }
