@@ -170,9 +170,11 @@ public class GameManager : MonoBehaviour
         this.chatSaveData = wrapper.chatSaveData;
         this.isElevatorUsedToday = wrapper.isElevatorUsedToday;
         //this.dialogueSaveData = wrapper.dialogueSaveData;
+
         //4.處理讀取後的資料
         DayManager.Instance.OnGameFileLoad();
         SceneTransitionManager.Instance.OnGameFileLoad();
+
         Debug.Log("存檔已載入。");
     }
 }
