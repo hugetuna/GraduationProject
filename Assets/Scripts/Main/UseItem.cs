@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 using System.Linq;
 
-/* 掛在背包頁面的使用按鈕上，按下按鈕時會使用選擇的道具在特定角色上 */
+/* 掛在背包 UI 的 UseButton 上，按下按鈕時會將選擇的道具用在特定角色上 */
 [DefaultExecutionOrder(0)]
 public class UseItem : MonoBehaviour
 {

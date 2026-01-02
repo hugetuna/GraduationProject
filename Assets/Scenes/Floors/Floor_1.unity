@@ -170,6 +170,17 @@ Transform:
   - {fileID: 1229087996}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &199471713 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 4047759834101451403, guid: 103882bfe476b6849a05d0a2accee92d, type: 3}
+  m_PrefabInstance: {fileID: 946883003}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &214394650 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 2630313988088260911, guid: b7d5987cdaab6274a996b3366f323931, type: 3}
@@ -1983,13 +1994,17 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 946883006}
     - target: {fileID: 8997741260682818168, guid: e4f66792482b2ab498ca1c73a313e2f6, type: 3}
+      propertyPath: closeButton
+      value: 
+      objectReference: {fileID: 946883005}
+    - target: {fileID: 8997741260682818168, guid: e4f66792482b2ab498ca1c73a313e2f6, type: 3}
       propertyPath: CharacterButton
       value: 
       objectReference: {fileID: 946883011}
     - target: {fileID: 8997741260682818168, guid: e4f66792482b2ab498ca1c73a313e2f6, type: 3}
       propertyPath: panelBackground
       value: 
-      objectReference: {fileID: 946883005}
+      objectReference: {fileID: 199471713}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

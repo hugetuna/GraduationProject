@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-/* 掛在同名的背包子物件上 */
+/* 掛在背包 UI 底下的 ItemInfo 上 */
 public class ItemInfoUI : MonoBehaviour
 {
     public Image itemInfoIcon; // 道具詳細資訊的圖示

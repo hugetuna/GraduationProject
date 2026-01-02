@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using System.Linq;
 
-/* 掛在用來切換道具類型的背包子物件上 */
+/* 掛在背包 UI 底下的 TypeSelector 上 */
 public class ChangeTypeUI : MonoBehaviour
 {
     public List<Button> itemTypeButtons = new(); // 儲存按鈕的列表，分別代表消耗品、裝備和紛絲

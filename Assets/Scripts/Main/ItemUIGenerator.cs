@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-/* 掛在背包頁面根部，主要用來生成會放在 ScrollView 的道具項目 UI */
+/* 掛在背包 UI 根部，用來生成會放在 ScrollView 的道具項目 UI */
 public class ItemUIGenerator : MonoBehaviour
 {
     private ResourceManager resourceManager; // 資源管理器，用於獲取道具清單

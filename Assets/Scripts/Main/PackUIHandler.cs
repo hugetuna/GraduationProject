@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
 
-/* 掛在背包 UI 外控制背包 */
+/* 掛在 UIManager 上 */
 public class PackUIHandler : MonoBehaviour
 {
     public GameObject packUI; // 背包 UI

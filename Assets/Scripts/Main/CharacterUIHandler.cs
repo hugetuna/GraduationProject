@@ -4,10 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 
+/* 掛在 UIManager 上 */
 public class CharacterUIHandler : MonoBehaviour
 {
     [SerializeField] private GameObject CharacterUI;
     [SerializeField] private Button CharacterButton;
+    [SerializeField] private Button closeButton;
     [SerializeField] private Button panelBackground;
     //-----------------------------------------------------------------//
     [SerializeField] private AudioClip openCharacterSound;
@@ -16,14 +18,8 @@ public class CharacterUIHandler : MonoBehaviour
     {
         CharacterUI.SetActive(false);
         CharacterButton.onClick.AddListener(OpenCharacterUI); // 設置按鈕點擊事件
-        panelBackground.onClick.AddListener(() =>
-        {
-            if (CharacterUI.activeSelf)
-            {
-                UIAndPlayerInput.EnableAllPlayerInputs(); // 啟用所有玩家的輸入系統
-                CharacterUI.SetActive(false);
-            }
-        });
+        closeButton.onClick.AddListener(CloseCharacterUI);
+        panelBackground.onClick.AddListener(CloseCharacterUI);
     }
 
     private void OpenCharacterUI()
@@ -34,5 +30,12 @@ public class CharacterUIHandler : MonoBehaviour
             AudioManager.Instance.PlaySFX(openCharacterSound); // 播放音效
             CharacterUI.SetActive(true);
         }
+    }
+
+    private void CloseCharacterUI() // 使用 UI 上的叉叉關閉 UI
+    {
+        Debug.Log("關閉 UI");
+        UIAndPlayerInput.EnableAllPlayerInputs(); // 啟用所有玩家的輸入系統
+        CharacterUI.SetActive(false);
     }
 }
