@@ -78,6 +78,7 @@ public class GameManager : MonoBehaviour
                 vigourMax = idol.vigourMax,
                 fans = idol.fans,
                 bondWithP = idol.bondWithP,
+                currentClothIndex = idol.currentClothIndex,
                 BHaveSetUp = true,
                 basicTrainRecord = idol.basicTrainRecord,
                 trainRecord = idol.trainRecord

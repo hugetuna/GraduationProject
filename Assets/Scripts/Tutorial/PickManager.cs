@@ -20,10 +20,12 @@ public class PickManager : MonoBehaviour
     public bool isDone=false;
     public List<GameObject> PickIdolPrefabs = new List<GameObject>();//可選取偶像的預製物列表
     public List<WhoPicked> whoPickedList = new List<WhoPicked>();//紀錄每個偶像是否被選取
+
     public int pickedIdolCount=0;
     [Header("調控UI")]
     public List<GameObject> PhotoList= new List<GameObject>();
     public List<GameObject> FileList = new List<GameObject>();
+    public List<GameObject> PickedMemberList = new List<GameObject>();
     public Button confirmButton;
     public TextMeshProUGUI countText;
     [Header("設定傳送對話")]
@@ -54,6 +56,7 @@ public class PickManager : MonoBehaviour
     }
     public void pick(int whoToPick)
     {
+        
         for (int i = 0; i < whoPickedList.Count; i++)
         {
             if((int)whoPickedList[i].pickedIdol==whoToPick)
@@ -86,7 +89,30 @@ public class PickManager : MonoBehaviour
                 tempPicked.isPicked = !tempPicked.isPicked;
                 //存回列表
                 whoPickedList[i] = tempPicked;
+                //更新視覺
+                UpdatePickedMemberUI();
                 break;
+            }
+        }
+        
+    }
+    public void  UpdatePickedMemberUI()
+    {
+        
+        //先清空已顯示的成員
+        foreach (var member in PickedMemberList)
+        {
+            member.GetComponent<MemberConfig>()?.SetMemberPhoto(-1);
+        }
+        //顯示已選取的成員
+        int displayIndex = 0;
+        foreach (var whoPicked in whoPickedList)
+        {
+            if (whoPicked.isPicked == true)
+            {
+                PickedMemberList[displayIndex].GetComponent<MemberConfig>()?.SetMemberPhoto((int)whoPicked.pickedIdol);
+                Debug.Log("更新已選取成員UI: " + (int)whoPicked.pickedIdol);
+                displayIndex++;
             }
         }
         
