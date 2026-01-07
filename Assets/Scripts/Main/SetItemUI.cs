@@ -4,24 +4,31 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-/* 掛在道具項目的 prefab 根部 */
+/* 掛在道具項目的 prefab 根部（Button） */
 public class SetItemUI : MonoBehaviour
 {
-    public Item item; // 道具資料
-    public int quantity; // 道具數量
+    private Item item; // 道具資料
+    private int quantity; // 道具數量
+    public Item Item => item;
+    public int Quantity => quantity;
     //-----------------------------------------------------------------//
     private TextMeshProUGUI itemNameText; // 顯示道具名稱的 UI 元素
     private TextMeshProUGUI itemStackText; // 顯示道具數量的 UI 元素
     private Image itemIcon; // 顯示道具圖示的 UI 元素
 
-    void Start()
+    void Awake()
     {
         itemNameText = transform.Find("NameText").GetComponent<TextMeshProUGUI>();
         itemStackText = transform.Find("StackText").GetComponent<TextMeshProUGUI>();
         itemIcon = transform.Find("Image").GetComponent<Image>();
+    }
+
+    public void Initialize(Item newItem, int newQuantity)
+    {
+        item = newItem;
+        quantity = newQuantity;
 
         itemNameText.text = item.itemName;
-        //itemStackText.text = "x" + item.maxStack.ToString();
         itemStackText.text = "x" + quantity.ToString();
         itemIcon.sprite = item.icon;
 

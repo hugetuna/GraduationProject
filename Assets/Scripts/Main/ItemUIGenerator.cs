@@ -9,69 +9,95 @@ public class ItemUIGenerator : MonoBehaviour
     private ResourceManager resourceManager; // 資源管理器，用於獲取道具清單
     [SerializeField] private List<ItemStack> itemList = new(); // 儲存道具資訊的清單
     //-----------------------------------------------------------------//
-    public GameObject itemPrefab; // 用於生成道具項目的預製件
-    public Transform consumableContent; // 用於放置生成的道具物件的容器（消耗品）
-    public Transform fansContent; // 用於放置生成的道具物件的容器（粉絲）
-    public Transform equipContent; // 用於放置生成的道具物件的容器（裝備）
+    [SerializeField] private GameObject itemPrefab; // 用於生成道具項目的預製件
+    [SerializeField] private Transform consumableContent; // 用於放置生成的道具物件的容器（消耗品）
+    [SerializeField] private Transform fansContent; // 用於放置生成的道具物件的容器（粉絲）
+    [SerializeField] private Transform equipContent; // 用於放置生成的道具物件的容器（裝備）
     //-----------------------------------------------------------------//
-    public ItemInfoUI itemInfoUI; // 使生成的道具項目能夠與詳細資訊的腳本連接
+    private List<GameObject> itemSlotPool = new(); // 物件池，儲存已生成的道具項目物件
+    private ItemInfoUI itemInfoUI; // 使生成的道具項目能夠與詳細資訊的腳本連接
+
+    void Awake()
+    {
+        itemInfoUI = GetComponentInChildren<ItemInfoUI>();
+        resourceManager = ResourceManager.Instance;
+    }
 
     public void RefreshPackUI()
     {
-        ClearAllItems();  // 避免重複生成 -> 僅限（少量道具）測試用
+        if(!resourceManager.IsItemChanged) return; // 如果道具沒有變化就不刷新
+        
+        // 取代全部銷毀，把舊的道具項目全部「關掉」收回池子
+        ReturnAllToPool();
 
-        resourceManager = ResourceManager.Instance;
-        itemList = resourceManager.items; // 從資源管理器獲取道具清單
+        itemList = resourceManager.items;
+        // Debug.Log("道具清單長度：" + itemList.Count);
 
-        foreach (ItemStack itemStack in itemList) // 按清單生成初始的道具項目
+        foreach (ItemStack itemStack in itemList)
         {
-            // 生成道具並為其分門別類
-            GameObject itemObject = null; // "Wrapper" + Button
-            if (itemStack.item.itemType == ItemType.Consumable)
-            {
-                itemObject = Instantiate(itemPrefab, consumableContent);
-            }
-            else if (itemStack.item.itemType == ItemType.Fans)
-            {
-                itemObject = Instantiate(itemPrefab, fansContent);
-            }
-            else if (itemStack.item.itemType == ItemType.Equipment)
-            {
-                itemObject = Instantiate(itemPrefab, equipContent);
-            }
-            //itemObject = Instantiate(itemPrefab, consumableContent); // 未分類測試用
+            // 從池子拿物件，拿不到才生成
+            GameObject itemObject = GetObjectFromPool();
 
-            if (itemObject == null)
+            // 根據類型決定它的父物件
+            Transform targetContent = itemStack.item.itemType switch
             {
-                Debug.Log("道具項目生成失敗！");
-                continue;
-            }
-            GameObject inside = itemObject.transform.Find("Button").gameObject; // Wrapper + "Button"
-            Button btn = inside.GetComponent<Button>();
-            itemInfoUI.itemButtons.Add(btn); // 設定按鈕的點擊效果
-            btn.onClick.AddListener(() => itemInfoUI.OnButtonClick(btn)); // 設定按鈕的點擊事件
-            if (itemInfoUI.originalPos == Vector2.zero) // 記錄按鈕的起始位置
+                ItemType.Consumable => consumableContent,
+                ItemType.Fans => fansContent,
+                ItemType.Equipment => equipContent,
+                _ => consumableContent
+            };
+
+            itemObject.transform.SetParent(targetContent, false);
+            itemObject.SetActive(true); // 啟用該道具項目
+
+            // 處理內部按鈕與資料設定
+            var inside = itemObject.transform.Find("Button");
+            var btn = inside.GetComponent<Button>();
+            var setItemUI = inside.GetComponent<SetItemUI>();
+
+            setItemUI.Initialize(itemStack.item, itemStack.quantity);
+
+            btn.onClick.RemoveAllListeners(); // 移除舊的監聽事件避免重複
+            btn.onClick.AddListener(() => itemInfoUI.OnItemClicked(btn));
+
+            itemInfoUI.AddToItemButtons(btn);
+            if (itemInfoUI.OriginalPos == Vector2.zero)
             {
-                itemInfoUI.originalPos = inside.GetComponent<RectTransform>().localPosition;
+                itemInfoUI.OriginalPos = inside.localPosition;
             }
-            // 設置道具資料
-            SetItemUI setItemUI = inside.GetComponent<SetItemUI>();
-            setItemUI.item = itemStack.item;
-            setItemUI.quantity = itemStack.quantity;
         }
 
-        void ClearAllItems()
+        resourceManager.SetItemChanged(false); // 重置變更標記
+    }
+
+    private GameObject GetObjectFromPool()
+    {
+        // 找看看池子裡有沒有已生成、但沒人在用的道具項目
+        foreach (GameObject obj in itemSlotPool)
         {
-            foreach (Transform child in consumableContent)
-                Destroy(child.gameObject);
-
-            foreach (Transform child in fansContent)
-                Destroy(child.gameObject);
-
-            foreach (Transform child in equipContent)
-                Destroy(child.gameObject);
-
-            itemInfoUI.itemButtons.Clear();
+            if (!obj.activeSelf) return obj;
         }
+
+        // 真的沒人了，才當場生成一個，並加入池子
+        GameObject newObj = Instantiate(itemPrefab);
+        itemSlotPool.Add(newObj);
+        return newObj;
+    }
+
+    private void ReturnAllToPool()
+    {
+        // 把所有池子裡的物件隱藏
+        foreach (GameObject obj in itemSlotPool)
+        {
+            obj.SetActive(false);
+        }
+
+        // 按鈕清單還是要清空，因為重新記錄
+        itemInfoUI.ClearItemButtons();
+    }
+
+    public List<Transform> GetAllItemTypeContent()
+    {
+        return new List<Transform> { consumableContent, fansContent, equipContent };
     }
 }

@@ -9,14 +9,14 @@ using System.Linq;
 /* 掛在背包 UI 底下的 TypeSelector 上 */
 public class ChangeTypeUI : MonoBehaviour
 {
-    public List<Button> itemTypeButtons = new(); // 儲存按鈕的列表，分別代表消耗品、裝備和紛絲
-    public Sprite activeBtnImg;
-    public Sprite normalBtnImg;
+    [SerializeField] private List<Button> itemTypeButtons = new(); // 儲存按鈕的列表，分別代表消耗品、裝備和紛絲
+    [SerializeField] private Sprite activeBtnImg;
+    [SerializeField] private Sprite normalBtnImg;
     //-----------------------------------------------------------------//
-    public PackUIAction packUIAction; // 用於處理背包 UI 的 input system
+    [SerializeField] private PackUIAction packUIAction; // 用於處理背包 UI 的 input system
     private int currentIndex = 0; // 當前選中的按鈕索引
     //-----------------------------------------------------------------//
-    public ItemUIGenerator itemUIGenerator; // 用於生成道具項目 UI 的生成器，此處用來切換不同的道具頁面
+    [SerializeField] private ItemUIGenerator itemUIGenerator; // 用於生成道具項目 UI 的生成器，此處用來切換不同的道具頁面
     private GameObject consumablePage;
     private GameObject fansPage;
     private GameObject equipPage;
@@ -66,9 +66,21 @@ public class ChangeTypeUI : MonoBehaviour
 
     void Start()
     {
-        consumablePage = itemUIGenerator.consumableContent.gameObject;
-        fansPage = itemUIGenerator.fansContent.gameObject;
-        equipPage = itemUIGenerator.equipContent.gameObject;
+        PackUIHandler.OnPackUIClosed += ResetTypeUI; // 訂閱背包 UI 開啟事件
+        InitializeWhenStart();
+    }
+
+    void OnDestroy()
+    {
+        PackUIHandler.OnPackUIClosed -= ResetTypeUI; // 取消訂閱背包 UI 開啟事件
+    }
+
+    private void InitializeWhenStart()
+    {
+        var allContents = itemUIGenerator.GetAllItemTypeContent();
+        consumablePage = allContents[0].gameObject;
+        fansPage = allContents[1].gameObject;
+        equipPage = allContents[2].gameObject;
 
         // 設定按鈕的點擊事件
         foreach (Button btn in itemTypeButtons)
@@ -81,6 +93,7 @@ public class ChangeTypeUI : MonoBehaviour
         consumablePage.SetActive(true);
         fansPage.SetActive(false);
         equipPage.SetActive(false);
+        ResetTypeUI();
     }
 
     public void OnButtonClick(Button clickedButton)

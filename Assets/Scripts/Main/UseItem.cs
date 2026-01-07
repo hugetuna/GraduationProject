@@ -9,44 +9,41 @@ using System.Linq;
 [DefaultExecutionOrder(0)]
 public class UseItem : MonoBehaviour
 {
-    public TMP_Dropdown dropdown; // 可選擇使用道具的角色之下拉選單
-    [SerializeField]
-    private string selectedCharacterName; // 儲存選擇的角色名稱
-    //-----------------------------------------------------------------//
-    public TeamManager teamManager; // 透過 TeamManager 物件取得當前隊伍成員
-    [SerializeField]
-    private List<PlayerControlMainWorld> teamMembers = new(); // 記錄取得的隊伍成員
+    [SerializeField] private TMP_Dropdown dropdown; // 可選擇使用道具的角色之下拉選單
+    [SerializeField] private string selectedCharacterName; // 儲存選擇的角色名稱
     //-----------------------------------------------------------------//
     private List<IdolInstance> idolInstances; // 存放偶像資料參考
     private IdolInstance itemUser; // 使用道具的角色
-    public ItemInfoUI itemInfoUI; // 用於獲取欲使用的道具資訊
     //-----------------------------------------------------------------//
-    public AudioClip UseItemSound;
-    private AudioSource audioSource;
+    [SerializeField] private AudioClip UseItemSound;
 
-    void Awake()
-    {
-        audioSource = GetComponent<AudioSource>();
-    }
 
     [System.Obsolete]
-    private void Start()
+    void Start()
+    {
+        InitializeWhenStart();
+        PackUIHandler.OnPackUIClosed += ResetDropdown; // 訂閱背包 UI 關閉事件
+    }
+
+    void OnDestroy()
+    {
+        PackUIHandler.OnPackUIClosed -= ResetDropdown; // 取消訂閱背包 UI 關閉事件
+    }
+
+    private void InitializeWhenStart()
     {
         // 根據目前隊伍成員決定下拉選單的選項
         dropdown.options.Clear(); // 清空原有選項
 
         idolInstances = TeamDataUtility.IdolInstanceList;
-        teamMembers = idolInstances.Select(idol => idol.GetComponent<PlayerControlMainWorld>()).ToList();
+        var teamMembers = idolInstances.Select(idol => idol.GetComponent<PlayerControlMainWorld>()).ToList();
 
         for (int i = 0; i < teamMembers.Count; i++) // 確保不會超出陣列範圍
         {
             string memberName = TeamDataUtility.CleanNameOfCharacterObject(teamMembers[i].name); // 取得隊伍成員名稱
-            //Debug.Log("隊伍成員名稱：" + memberName);
-            dropdown.options.Add(new TMP_Dropdown.OptionData("給 " + memberName));
+            dropdown.options.Add(new TMP_Dropdown.OptionData("給 " + memberName)); // 新增選單項目
         }
-        dropdown.value = 0; // 預設選擇第一個選項
-        dropdown.RefreshShownValue(); // 確保 UI 正確顯示
-        selectedCharacterName = dropdown.options[0].text; // 初始化選擇的角色名稱，格式為「給 角色名稱」
+        ResetDropdown();
 
         // 設定下拉選單的事件監聽器
         dropdown.onValueChanged.AddListener(OnDropdownValueChanged);
@@ -82,7 +79,7 @@ public class UseItem : MonoBehaviour
         }
 
         // 欲使用的道具（可從 itemInfoUI 獲取）
-        Item item = itemInfoUI.selectedItem;
+        Item item = ItemInfoUI.SelectedItem;
         if (item == null)
         {
             Debug.LogWarning("未選擇任何道具，無法使用！");
@@ -100,15 +97,15 @@ public class UseItem : MonoBehaviour
             var itemToUse = item as FansItem;
             itemToUse.Use(itemUser);
         }
-        audioSource.PlayOneShot(UseItemSound); // 播放音效
+        AudioManager.Instance.PlaySFX(UseItemSound); // 播放音效
 
         // 裝備的使用尚未實作
     }
 
     public void ResetDropdown()
     {
-        dropdown.value = 0; // 重置為第一個選項
+        dropdown.value = 0; // 預設選擇第一個選項
         dropdown.RefreshShownValue(); // 確保 UI 正確顯示
-        selectedCharacterName = dropdown.options[0].text; // 重置選擇的角色名稱
+        selectedCharacterName = dropdown.options[0].text; // 初始化選擇的角色名稱，格式為「給 角色名稱」
     }
 }
