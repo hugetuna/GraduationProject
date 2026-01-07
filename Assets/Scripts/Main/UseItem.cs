@@ -15,6 +15,9 @@ public class UseItem : MonoBehaviour
     private List<IdolInstance> idolInstances; // 存放偶像資料參考
     private IdolInstance itemUser; // 使用道具的角色
     //-----------------------------------------------------------------//
+    [SerializeField] private GameObject backpackUI; // 背包 UI 物件（用來放置提示）
+    [SerializeField] private GameObject hintPrefab; // 使用道具後的提示 prefab
+    //-----------------------------------------------------------------//
     [SerializeField] private AudioClip UseItemSound;
 
 
@@ -60,8 +63,8 @@ public class UseItem : MonoBehaviour
     private void OnUseItem()
     {
         // 使用道具的對象
-        selectedCharacterName = selectedCharacterName.Replace("給 ", ""); // 去除名稱前綴
-        var name = TeamDataUtility.GetIdolEnum(selectedCharacterName);
+        var characterName = selectedCharacterName.Replace("給 ", ""); // 去除名稱前綴
+        var name = TeamDataUtility.GetIdolEnum(characterName);
         var characterIndex = name == IdolWho.none ? IdolWho.none : name;
         if(characterIndex == IdolWho.none)
         {
@@ -97,7 +100,11 @@ public class UseItem : MonoBehaviour
             var itemToUse = item as FansItem;
             itemToUse.Use(itemUser);
         }
+        
         AudioManager.Instance.PlaySFX(UseItemSound); // 播放音效
+        // 生成使用道具提示
+        GameObject hintInstance = Instantiate(hintPrefab, backpackUI.transform);
+        hintInstance.GetComponent<HintTogglerForPack>().SetHintUI(characterName, item.itemName);
 
         // 裝備的使用尚未實作
     }
