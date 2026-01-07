@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7896774796638631959}
   - component: {fileID: 6814912132265877993}
-  - component: {fileID: 7615355056145143729}
+  - component: {fileID: 2127634012987873847}
   m_Layer: 0
   m_Name: GameMangerGen
   m_TagString: Untagged
@@ -70,15 +70,19 @@ MonoBehaviour:
     vigourMax: 0
     fans: 0
     bondWithP: 0
+    currentClothIndex: 1
     BHaveSetUp: 0
     basicTrainRecord: {fileID: 11400000, guid: d3a131f41f6629544a1ec71dfd859083, type: 2}
-    state: 0
-    positionInTrainingUI: {x: 0, y: 0}
-    vigourCost: 0
-    danceExp: 0
-    vocalExp: 0
-    visualExp: 0
-    isActive: 1
+    trainRecord:
+      state: 0
+      position: {x: 0, y: 0}
+      droppedZoneType: 0
+      droppedZoneIndex: 0
+      vigourCost: 0
+      danceExp: 0
+      vocalExp: 0
+      visualExp: 0
+      isActive: 0
   - positionInTeam: 1
     idolIndex: 1
     basicStatus: {fileID: 11400000, guid: a8b952e84e0073849a2d817947bb270c, type: 2}
@@ -95,15 +99,19 @@ MonoBehaviour:
     vigourMax: 0
     fans: 0
     bondWithP: 0
+    currentClothIndex: 1
     BHaveSetUp: 0
     basicTrainRecord: {fileID: 11400000, guid: d3a131f41f6629544a1ec71dfd859083, type: 2}
-    state: 0
-    positionInTrainingUI: {x: 0, y: 0}
-    vigourCost: 0
-    danceExp: 0
-    vocalExp: 0
-    visualExp: 0
-    isActive: 1
+    trainRecord:
+      state: 0
+      position: {x: 0, y: 0}
+      droppedZoneType: 0
+      droppedZoneIndex: 0
+      vigourCost: 0
+      danceExp: 0
+      vocalExp: 0
+      visualExp: 0
+      isActive: 0
   - positionInTeam: 2
     idolIndex: 2
     basicStatus: {fileID: 11400000, guid: e14ab52a0b03c89419a4e9a8c75d38ed, type: 2}
@@ -120,17 +128,24 @@ MonoBehaviour:
     vigourMax: 0
     fans: 0
     bondWithP: 0
+    currentClothIndex: 1
     BHaveSetUp: 0
     basicTrainRecord: {fileID: 11400000, guid: d3a131f41f6629544a1ec71dfd859083, type: 2}
-    state: 0
-    positionInTrainingUI: {x: 0, y: 0}
-    vigourCost: 0
-    danceExp: 0
-    vocalExp: 0
-    visualExp: 0
-    isActive: 1
-  dialogueSaveData: {fileID: 11400000, guid: 807d617339645774091bd803e13c01d6, type: 2}
-  onStageStage: {fileID: 11400000, guid: 95b26892d80cf3742b7f8e1da627351f, type: 2}
+    trainRecord:
+      state: 0
+      position: {x: 0, y: 0}
+      droppedZoneType: 0
+      droppedZoneIndex: 0
+      vigourCost: 0
+      danceExp: 0
+      vocalExp: 0
+      visualExp: 0
+      isActive: 0
+  DayData:
+    day: 0
+    currentEventIndex: 0
+    IsInStartOfDay: 0
+  sceneNameSave: 
   ResourceData:
     Money: 0
     MoneyBonus: 1
@@ -148,8 +163,10 @@ MonoBehaviour:
       bondValue: 0
     items: []
   chatSaveData: {fileID: 0}
+  dialogueSaveData: {fileID: 11400000, guid: 807d617339645774091bd803e13c01d6, type: 2}
+  onStageStage: {fileID: 11400000, guid: 95b26892d80cf3742b7f8e1da627351f, type: 2}
   isElevatorUsedToday: 0
---- !u!114 &7615355056145143729
+--- !u!114 &2127634012987873847
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -158,6 +175,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 3894208688146214750}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 333ea34f206eb8040a256e2a3b80e18b, type: 3}
+  m_Script: {fileID: 11500000, guid: 60b551bdd44233549b44ee54fd6863e8, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 

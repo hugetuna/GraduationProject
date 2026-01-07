@@ -210,9 +210,9 @@ public class GameManager : MonoBehaviour
             return;
         }
         // 應用音量設定
-        AudioManager.Instance.volume = configData.masterVolume;
-        AudioManager.Instance.musicVolume = configData.musicVolume;
-        AudioManager.Instance.sfxVolume = configData.sfxVolume;
+        AudioManager.Instance.SetVolume(configData.masterVolume);
+        AudioManager.Instance.SetMusicVolume(configData.musicVolume);
+        AudioManager.Instance.SetSFXVolume(configData.sfxVolume);
         Debug.Log("遊戲設定已載入。");
     }
 }
