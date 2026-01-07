@@ -26,6 +26,7 @@ public class GameManager : MonoBehaviour
         {
             Instance = this;
             DontDestroyOnLoad(gameObject);
+            LoadGameConfigFromFile();
         }
         else
         {
@@ -177,5 +178,41 @@ public class GameManager : MonoBehaviour
         SceneTransitionManager.Instance.OnGameFileLoad();
 
         Debug.Log("存檔已載入。");
+    }
+    [ContextMenu("Save Config")]
+    public void SaveGameConfigToFile()
+    {
+        GameConfigDataWrapper configData = new GameConfigDataWrapper
+        {
+            masterVolume = AudioManager.Instance.volume,
+            musicVolume = AudioManager.Instance.musicVolume,
+            sfxVolume = AudioManager.Instance.sfxVolume
+        };
+        string json = JsonUtility.ToJson(configData, true);
+        string configPath = Path.Combine(Application.persistentDataPath, "gameconfig.json");
+        File.WriteAllText(configPath, json);
+        Debug.Log($"遊戲設定已儲存至：{configPath}");
+    }
+    [ContextMenu("Load Config")]
+    public void LoadGameConfigFromFile()
+    {
+        string configPath = Path.Combine(Application.persistentDataPath, "gameconfig.json");
+        if (!File.Exists(configPath))
+        {
+            Debug.LogWarning("找不到遊戲設定檔案。");
+            return;
+        }
+        string json = File.ReadAllText(configPath);
+        GameConfigDataWrapper configData = JsonUtility.FromJson<GameConfigDataWrapper>(json);
+        if (AudioManager.Instance == null)
+        {
+            Debug.LogWarning("AudioManager 實例不存在，無法應用音量設定。");
+            return;
+        }
+        // 應用音量設定
+        AudioManager.Instance.volume = configData.masterVolume;
+        AudioManager.Instance.musicVolume = configData.musicVolume;
+        AudioManager.Instance.sfxVolume = configData.sfxVolume;
+        Debug.Log("遊戲設定已載入。");
     }
 }

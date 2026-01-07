@@ -40,6 +40,34 @@ public class AudioManager : MonoBehaviour
             sfxPool.Enqueue(src);
         }
     }
+    public void SetVolume(float newVolume)
+    {
+        volume = newVolume;
+        // 更新正在播放的音效音量
+        foreach (var src in playingSFXs)
+        {
+            src.volume = volume * sfxVolume;
+        }
+        // 更新背景音樂音量
+        AudioSource musicSource = Music.GetComponent<AudioSource>();
+        musicSource.volume = volume * musicVolume;
+    }
+    public void SetSFXVolume(float newSFXVolume)
+    {
+        sfxVolume = newSFXVolume;
+        // 更新正在播放的音效音量
+        foreach (var src in playingSFXs)
+        {
+            src.volume = volume * sfxVolume;
+        }
+    }
+    public void SetMusicVolume(float newMusicVolume)
+    {
+        musicVolume = newMusicVolume;
+        // 更新背景音樂音量
+        AudioSource musicSource = Music.GetComponent<AudioSource>();
+        musicSource.volume = volume * musicVolume;
+    }
     // 播放音效
     public void PlaySFX(AudioClip clip, float setVolume = 1f)
     {
@@ -99,4 +127,3 @@ public class AudioManager : MonoBehaviour
         }
     }
 }
-
