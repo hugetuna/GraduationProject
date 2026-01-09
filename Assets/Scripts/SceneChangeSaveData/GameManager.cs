@@ -7,14 +7,16 @@ using System.IO;
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
-    //永久儲存資料
+    public ResolutionManager ResolutionManager;
+    [Header("永久儲存資料")]
     public List<SoilSaveData> soilDataList = new List<SoilSaveData>();
     public List<IdolSaveData> idolDataList = new List<IdolSaveData>();
     public DaySaveData DayData;
     public string sceneNameSave = "";
     public ResourceSaveData ResourceData;
     public ChatSaveData chatSaveData;
-    //臨時儲存資料
+
+    [Header("臨時儲存資料")]
     public DialogueSaveData dialogueSaveData;
     public StageAttribute onStageStage;
     public bool isElevatorUsedToday = false;
@@ -184,9 +186,14 @@ public class GameManager : MonoBehaviour
     {
         GameConfigDataWrapper configData = new GameConfigDataWrapper
         {
+            // 音量設定
             masterVolume = AudioManager.Instance.volume,
             musicVolume = AudioManager.Instance.musicVolume,
-            sfxVolume = AudioManager.Instance.sfxVolume
+            sfxVolume = AudioManager.Instance.sfxVolume,
+            // 畫面設定
+            resolutionWidth = ResolutionManager.targetWidth,
+            resolutionHeight = ResolutionManager.targetHeight,
+            fullScreenMode = ResolutionManager.targetFullScreenMode
         };
         string json = JsonUtility.ToJson(configData, true);
         string configPath = Path.Combine(Application.persistentDataPath, "gameconfig.json");
@@ -204,6 +211,7 @@ public class GameManager : MonoBehaviour
         }
         string json = File.ReadAllText(configPath);
         GameConfigDataWrapper configData = JsonUtility.FromJson<GameConfigDataWrapper>(json);
+        //設置音效設定
         if (AudioManager.Instance == null)
         {
             Debug.LogWarning("AudioManager 實例不存在，無法應用音量設定。");
@@ -213,6 +221,10 @@ public class GameManager : MonoBehaviour
         AudioManager.Instance.SetVolume(configData.masterVolume);
         AudioManager.Instance.SetMusicVolume(configData.musicVolume);
         AudioManager.Instance.SetSFXVolume(configData.sfxVolume);
+        // 應用畫面設定
+        ResolutionManager.targetWidth = configData.resolutionWidth;
+        ResolutionManager.targetHeight = configData.resolutionHeight;
+        ResolutionManager.targetFullScreenMode = configData.fullScreenMode;
         Debug.Log("遊戲設定已載入。");
     }
 }
