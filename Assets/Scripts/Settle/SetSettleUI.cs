@@ -42,7 +42,7 @@ public class SetSettleUI : MonoBehaviour
             GameObject character = characters[index];
 
             int finalVigour = idol.vigour - idol.trainRecord.vigourCost;
-            character.GetComponent<SetCharacterUI>().ShowCharacterBenefits(
+            character.GetComponent<SetCharacterUIForSettle>().ShowCharacterBenefits(
                 TeamDataUtility.TachieSprites[idol.idolIndex],
                 idol.basicStatus.idolName,
                 finalVigour, idol.vigourMax, 0,  // 目前沒有最大體力值變動

@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 
 /* 掛在結算畫面的各個角色根部 */
-public class SetCharacterUI : MonoBehaviour
+public class SetCharacterUIForSettle : MonoBehaviour
 {
     [Header("UI 元素")]
     [SerializeField] private Image headImage; // 從 SetSettleUI 傳進來的頭像
