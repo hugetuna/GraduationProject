@@ -8,6 +8,7 @@ public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
     public ResolutionManager ResolutionManager;
+    public GameObject Canvas_Config;
     [Header("永久儲存資料")]
     public List<SoilSaveData> soilDataList = new List<SoilSaveData>();
     public List<IdolSaveData> idolDataList = new List<IdolSaveData>();
@@ -226,5 +227,18 @@ public class GameManager : MonoBehaviour
         ResolutionManager.targetHeight = configData.resolutionHeight;
         ResolutionManager.targetFullScreenMode = configData.fullScreenMode;
         Debug.Log("遊戲設定已載入。");
+    }
+    //關閉遊戲
+    public void QuitGame()
+    {
+        Debug.Log("正在要求關閉遊戲...");
+
+        // 1. 如果是在 Unity 編輯器內執行
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false; // 停止按下 Play 的狀態
+#else
+            // 2. 如果是正式打包出來的程式
+            Application.Quit(); 
+#endif
     }
 }

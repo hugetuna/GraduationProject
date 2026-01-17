@@ -135,7 +135,6 @@ public class PlayerControlMainWorld : MonoBehaviour
     }
     public void OnInteract(InputAction.CallbackContext context)
     {
-        
         //如果自己不是隊長就不啟動
         if (FindAnyObjectByType<TeamManager>().teamMembers[
             FindAnyObjectByType<TeamManager>().currentLeaderIndex] != this)
@@ -226,5 +225,22 @@ public class PlayerControlMainWorld : MonoBehaviour
         Gizmos.color = Color.green;
         // 畫出一個球，代表互動範圍
         Gizmos.DrawWireSphere(transform.position + new Vector3(sphereOffset, interactRadius, 0), interactRadius);
+    }
+    public void OnCallConfig(InputAction.CallbackContext context)
+    {
+        //如果自己不是隊長就不啟動
+        if (FindAnyObjectByType<TeamManager>().teamMembers[
+            FindAnyObjectByType<TeamManager>().currentLeaderIndex] != this)
+        {
+            return;
+        }
+        if (context.performed)
+        {
+            Debug.Log("開關設定選單");
+            if (GameManager.Instance.Canvas_Config!=null)
+            {
+                GameManager.Instance.Canvas_Config.SetActive(!GameManager.Instance.Canvas_Config.activeSelf);
+            }
+        }
     }
 }
