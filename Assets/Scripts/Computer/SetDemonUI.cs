@@ -10,7 +10,9 @@ public class SetDemonUI : MonoBehaviour
     [Header("惡魔頁面內部元素")]
     [SerializeField] private Button talkButton;
     [SerializeField] private Button problemButton;
-    [SerializeField] private Button sellButton; // 新增販賣按鈕
+    [SerializeField] private Button sellButton; // 販賣按鈕
+    [SerializeField] private GameObject sellUI; // 販賣頁面
+    private bool isSellInitialized = false;
     [SerializeField] private Button dialogueObject;
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private GameObject hintIcon;
@@ -29,7 +31,9 @@ public class SetDemonUI : MonoBehaviour
     private string fullLineText = ""; // 暫存目前的完整文字內容
 
     void Start()
-    {
+    {       
+        sellUI.SetActive(false); // 預設關閉販賣頁面
+
         talkButton.onClick.AddListener(OnTalkButtonClick);
         problemButton.onClick.AddListener(OnProblemButtonClick);
         sellButton.onClick.AddListener(OnSellButtonClick);
@@ -66,12 +70,21 @@ public class SetDemonUI : MonoBehaviour
         InitAndStartStory(currentKnot);
     }
 
-    private void OnSellButtonClick() // 販賣頁面待追加
+    private void OnSellButtonClick()
     {
-        if (currentKnot == "sell" && !storyFinished) return;
+        // 打開販賣頁面
+        sellUI.SetActive(true);
+        if(!isSellInitialized)
+        {
+            sellUI.GetComponent<SetSellUI>().Initialize();
+            isSellInitialized = true;
+        }
+        
+        // 原先的對話
+        // if (currentKnot == "sell" && !storyFinished) return;
 
-        currentKnot = "sell";
-        InitAndStartStory(currentKnot);
+        // currentKnot = "sell";
+        // InitAndStartStory(currentKnot);
     }
 
     // 將重複的故事初始化整理成函式
