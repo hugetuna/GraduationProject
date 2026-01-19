@@ -16,19 +16,13 @@ public class SetCharacterUIForSell : MonoBehaviour
     
     // 所有放粉絲的位置＆相關程式碼
 
-    void Start()
-    {
-        headImage.sprite = null;
-        nameText.text = "";
-        lastButton.interactable = false;
-        nextButton.interactable = false;
-        pageText.text = "1/1";
-    }
-
-    public void Initialize(IdolInstance idol)
+    public void Initialize(IdolInstance idol, List<FansItem> fansList)
     {
         headImage.sprite = idol.spriteTachie;
         nameText.text = idol.idolIndex.ToString();
+        lastButton.interactable = false;
+        nextButton.interactable = false;
+        pageText.text = "1/1";
 
         // 從 ResourceManager 取得該 Idol 的 FansItem 清單
         // 再根據粉絲數量決定頁數與按鈕顯示
