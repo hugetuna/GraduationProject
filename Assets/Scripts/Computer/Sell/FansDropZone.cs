@@ -1,21 +1,20 @@
 using UnityEngine.EventSystems;
 using UnityEngine;
 
-// public enum FansDropZoneType
-// {
-//     // 一種粉絲只能拖曳到擁有者或販賣區域
-//     None,
-//     MemberA,
-//     MemberB,
-//     MemberC,
-//     Sell
-// }
+public enum FansDropZoneType
+{
+    // 粉絲只能拖曳至擁有者或販賣區域
+    None,
+    MemberA,
+    MemberB,
+    MemberC,
+    Sell
+}
 
 /* 掛在販賣頁面的可拖曳區域上 */
 public class FansDropZone : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
-    // public FansDropZoneType zoneType; // 直接在 Inspector 設定即可
-    // public int zoneIndex; // 同一類型的區域可能有多個，從 0 開始編號
+    public FansDropZoneType zoneType; // 直接在 Inspector 設定即可
     //-----------------------------------------------------------------//
     private RectTransform myRect;
     public RectTransform MyRect => myRect;
@@ -52,7 +51,7 @@ public class FansDropZone : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         if (draggedObject == null) return;
 
         // 重點設定
-        var drag = draggedObject.GetComponent<DragToLesson>();
+        var drag = draggedObject.GetComponent<DragToSell>();
         if (drag != null && drag.CurrentDropZone == this)
         {
             drag.CurrentDropZone = null;

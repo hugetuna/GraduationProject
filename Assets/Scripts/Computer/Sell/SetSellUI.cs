@@ -10,7 +10,7 @@ public class SetSellUI : MonoBehaviour
     [SerializeField] private Button closeButton; // 關閉販賣頁面按鈕
     [SerializeField] private Button transformButton; // 轉換按鈕
     //-----------------------------------------------------------------//
-    private Dictionary<IdolInstance, List<FansItem>> idolFansDict = new();
+    private Dictionary<IdolInstance, List<ItemStack>> idolFansDict = new();
 
     void Start()
     {
@@ -28,7 +28,7 @@ public class SetSellUI : MonoBehaviour
     {
         // 初始化販賣頁面（角色部分）- 1
         var idolList = TeamDataUtility.IdolInstanceList;
-        
+
         // 例外狀況處理
         if (idolList.Count != characterUIList.Count)
         {
@@ -37,28 +37,27 @@ public class SetSellUI : MonoBehaviour
         }
 
         // 取得角色粉絲
-        List<FansItem> fansList = new();
-        foreach(var itemStack in ResourceManager.Instance.items)
+        List<ItemStack> fansList = new();
+        foreach (var itemStack in ResourceManager.Instance.items)
         {
-            if(itemStack.item is FansItem fansItem)
+            if (itemStack.item.itemType == ItemType.Fans)
             {
-                fansList.Add(fansItem);
+                fansList.Add(itemStack);
             }
         }
-        foreach(var fans in fansList)
+        // 本來應該按照 harvester 分配，但這裡先寫死
+        foreach (var idol in idolList)
         {
-            // 本來應該按照 harvester 分配，但這裡先寫死
-            idolFansDict.Add(TeamDataUtility.IdolInstanceList[0], new List<FansItem>());
-            idolFansDict[idolList[0]].Add(fans);
+            idolFansDict[idol] = new List<ItemStack>();
         }
+        idolFansDict[idolList[0]].Add(fansList[0]);
 
         // 初始化販賣頁面（角色部分）- 2
         for (int i = 0; i < characterUIList.Count; i++)
         {
             var characterUI = characterUIList[i].GetComponent<SetCharacterUIForSell>();
             // 場景角色和角色 UI 相對應
-            if(i == 0) characterUI.Initialize(idolList[i], idolFansDict[idolList[i]]);
-            else characterUI.Initialize(idolList[i], null); 
+            characterUI.Initialize(idolList[i], idolFansDict[idolList[i]]);
             Debug.Log($"初始化販賣頁面角色 UI：{idolList[i].idolIndex}");
         }
     }
