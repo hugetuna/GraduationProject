@@ -19,6 +19,7 @@ public class SetCharacterUIForSell : MonoBehaviour
     [SerializeField] private int fansPerPage = 10; // 一頁顯示幾個
     private List<ItemStack> allFansData = new(); // 儲存所有粉絲資料
     private int currentPage = 0;
+    private IdolInstance idolInstance;
 
     void Start()
     {
@@ -29,13 +30,15 @@ public class SetCharacterUIForSell : MonoBehaviour
 
     public void Initialize(IdolInstance idol, List<ItemStack> fansList)
     {
+        idolInstance = idol;
+
         // 取得該角色所有粉絲物件 UI
         var slots = fansObjectParent.GetComponentsInChildren<SetFansObjectUI>(true);
         fixedFansSlots.AddRange(slots);
 
         // 設定角色 UI
-        headImage.sprite = idol.spriteTachie;
-        nameText.text = idol.idolIndex.ToString();
+        headImage.sprite = idolInstance.spriteTachie;
+        nameText.text = idolInstance.idolIndex.ToString();
 
         // 儲存粉絲資料並重設其 UI
         allFansData = fansList ?? new List<ItemStack>(); // 若清單為 null，則給予空清單
@@ -63,7 +66,7 @@ public class SetCharacterUIForSell : MonoBehaviour
             {
                 // 有資料，顯示並更新
                 slot.gameObject.SetActive(true);
-                slot.Initialize(allFansData[dataIndex]);
+                slot.Initialize(allFansData[dataIndex], idolInstance.idolIndex);
                 // Debug.Log($"顯示粉絲資料{dataIndex}：{allFansData[dataIndex].item.itemName}");
             }
             else

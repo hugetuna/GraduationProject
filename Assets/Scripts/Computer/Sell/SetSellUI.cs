@@ -1,6 +1,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 /* 掛在販賣頁面根部 */
 public class SetSellUI : MonoBehaviour
@@ -8,7 +9,6 @@ public class SetSellUI : MonoBehaviour
     [Header("UI 元素")]
     [SerializeField] private List<GameObject> characterUIList = new();
     [SerializeField] private Button closeButton; // 關閉販賣頁面按鈕
-    [SerializeField] private Button transformButton; // 轉換按鈕
     //-----------------------------------------------------------------//
     private Dictionary<IdolInstance, List<ItemStack>> idolFansDict = new();
 
@@ -19,9 +19,6 @@ public class SetSellUI : MonoBehaviour
         {
             gameObject.SetActive(false);
         });
-
-        // 轉換按鈕預設為不可點擊
-        transformButton.interactable = false;
     }
 
     public void Initialize()

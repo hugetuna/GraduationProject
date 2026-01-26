@@ -74,22 +74,6 @@ public class TeamDataUtility
         }
     }
 
-    private static Dictionary<IdolWho, Sprite> tachieSprites = new(); // 角色 UI 圖片（立繪）
-    public static Dictionary<IdolWho, Sprite> TachieSprites
-    {
-        get
-        {
-            if (tachieSprites.Count == 0)
-            {
-                foreach (var idol in IdolDict)
-                {
-                    tachieSprites[idol.Key] = idol.Value.spriteTachie;
-                }
-            }
-            return tachieSprites;
-        }
-    }
-
     public static void RefreshIdolInstances()
     {
         var instances = Object.FindObjectsByType<IdolInstance>(FindObjectsInactive.Include, FindObjectsSortMode.None);

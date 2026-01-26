@@ -11,15 +11,20 @@ public class SetFansObjectUI : MonoBehaviour
     [SerializeField] private Image fansIcon;
     [SerializeField] private TextMeshProUGUI fansNameText;
     [SerializeField] private TextMeshProUGUI fansNumText;
+    [SerializeField] private Image ownerIcon;
     //-----------------------------------------------------------------//
-    [Header("粉絲資料")]
-    private Item fansItem;
-
-    public void Initialize(ItemStack fansItemStack)
+    [Header("角色粉絲資料")]
+    private ItemStack fansItemStack;
+    public ItemStack FansItemStack => fansItemStack;
+    [SerializeField] private List<Sprite> ownerSprites = new(); // 依照 IdolWho enum 順序放置 
+    
+    public void Initialize(ItemStack fansItemStack, IdolWho idolIndex)
     {
-        fansItem = fansItemStack.item;
-        fansIcon.sprite = fansItem.icon;
-        fansNameText.text = fansItem.itemName;
+        this.fansItemStack = fansItemStack;
+
+        fansIcon.sprite = fansItemStack.item.icon;
+        fansNameText.text = fansItemStack.item.itemName;
         fansNumText.text = $"{fansItemStack.quantity}";
+        ownerIcon.sprite = ownerSprites[(int)idolIndex];
     }
 }

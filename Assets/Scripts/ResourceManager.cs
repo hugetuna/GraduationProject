@@ -65,7 +65,10 @@ public class ResourceManager : MonoBehaviour
     public void GainMoney(int gain)
     {
         Money += (int)(gain * MoneyBonus);
-        FindAnyObjectByType<MainCanvasSetter>().setResourceUI();
+        
+        // 避免找不到主介面時報錯
+        var mainUI = FindAnyObjectByType<MainCanvasSetter>();
+        if (mainUI != null) mainUI.setResourceUI();
     }
     public void SpendMoney(int spend)
     {
