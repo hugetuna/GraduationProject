@@ -5,6 +5,7 @@ using UnityEngine.SceneManagement;
 using UnityEngine.UI;
 using TMPro;
 using UnityEngine.EventSystems;
+using Unity.VisualScripting;
 
 public class OnStageManager : MonoBehaviour
 {
@@ -65,7 +66,7 @@ public class OnStageManager : MonoBehaviour
     [Header("上台位置（建議為3個）")]
     public Transform[] spawnPoints;
     [Header("目前場上的偶像")]
-    private List<IdolInstance> onStageIdols = new List<IdolInstance>();
+    public List<IdolInstance> onStageIdols = new List<IdolInstance>();
 
     void Start()
     {
@@ -77,6 +78,7 @@ public class OnStageManager : MonoBehaviour
         //寫字
         roundText.text = "ROUND " + round.ToString();
         musicNameText.text = "music: "+currentStageData.musicName;
+        LoadIdolsToStage();
         //生成回合塊
         roundBlocks = new GameObject[currentStageData.roundMax];
         for (int i=0;i< currentStageData.roundMax; i++)
@@ -85,7 +87,7 @@ public class OnStageManager : MonoBehaviour
             if(i< round)
             {
                 Color color;
-                if (ColorUtility.TryParseHtmlString("#B8DAFF", out color))
+                if (UnityEngine.ColorUtility.TryParseHtmlString("#B8DAFF", out color))
                 {
                     newBlock.GetComponent<Image>().color = color;
                 }
@@ -145,7 +147,7 @@ public class OnStageManager : MonoBehaviour
                 if (i < round)
                 {
                     Color color;
-                    if (ColorUtility.TryParseHtmlString("#B8DAFF", out color))
+                    if (UnityEngine.ColorUtility.TryParseHtmlString("#B8DAFF", out color))
                     {
                         roundBlocks[i].GetComponent<Image>().color = color;
                     }
@@ -199,14 +201,22 @@ public class OnStageManager : MonoBehaviour
         gameStartUIPanel.SetActive(false);
         gameOngoingUIPanel.SetActive(true);
         Monitor.SetActive(true);
-        LoadIdolsToStage();
         LoadStage(currentStageData);
+        foreach (var idol in onStageIdols)
+        {
+            idol.transform.gameObject.SetActive(true);
+        }
+        //處理裝備
+        foreach (IdolInstance idol in onStageIdols)
+        {
+            idol.gameObject.GetComponent<IdolOnStage>().ApplyAbility();
+            idol.gameObject.GetComponent<IdolOnStage>().ApplyEquipment();
+        }
     }
     //將儲存的idol save data讀入不同於主世界的game object
     void LoadIdolsToStage()
     {
         var idolDataList = GameManager.Instance.idolDataList;
-
         for (int i = 0; i < idolDataList.Count && i < spawnPoints.Length; i++)
         {
             GameObject idolObj = Instantiate(idolOnStagePrefab, spawnPoints[i].position, Quaternion.identity);
@@ -225,6 +235,7 @@ public class OnStageManager : MonoBehaviour
                     instance.LoadData(idol);
                 }
             }
+            idolObj.SetActive(false);
             onStageIdols.Add(instance);
         }
     }

@@ -4,8 +4,9 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "New Consumable", menuName = "Inventory/Consumable")]
 public class ConsumableItem : Item
 {
+    
+    [SerializeField]
     public List<ItemEffect> effects;
-
     public override void Use(IdolInstance target)
     {
         // 透過函式引數可指定使用道具的偶像

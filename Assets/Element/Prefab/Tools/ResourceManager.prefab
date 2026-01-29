@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2590214763853501337}
   - component: {fileID: 6044898494438979232}
+  - component: {fileID: 2494880656662655635}
   m_Layer: 0
   m_Name: ResourceManager
   m_TagString: Untagged
@@ -44,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0a2f64e678d816e439c8fc7a1953e008, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  InventoryManager: {fileID: 2494880656662655635}
   Money: 1000
   MoneyBonus: 1
   bondAB:
@@ -71,3 +73,16 @@ MonoBehaviour:
     quantity: 1
   - item: {fileID: 11400000, guid: e456311751baa5c4ca5bb8d62af3fb02, type: 2}
     quantity: 1
+--- !u!114 &2494880656662655635
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4843475384063576880}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b508e8759c0c0b4981222618f9d7ead, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ownedEquipments: []

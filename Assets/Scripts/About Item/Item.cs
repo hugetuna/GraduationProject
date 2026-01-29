@@ -17,5 +17,4 @@ public abstract class Item : ScriptableObject
     {
         return Instantiate(this);
     }
-
 }

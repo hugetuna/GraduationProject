@@ -85,7 +85,8 @@ public class GameManager : MonoBehaviour
                 currentClothIndex = idol.currentClothIndex,
                 BHaveSetUp = true,
                 basicTrainRecord = idol.basicTrainRecord,
-                trainRecord = idol.trainRecord
+                trainRecord = idol.trainRecord,
+                equippedItemName = idol.equipmentItemNow != null ? idol.equipmentItemNow.itemName : ""
             };
             idolDataList.Add(data);
         }

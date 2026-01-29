@@ -27,6 +27,9 @@ public class IdolInstance : MonoBehaviour
     //粉絲數
     public int fans;
     public int bondWithP;//與玩家的羈絆
+    //裝備
+    public EquipmentItem equipmentItemNow=null;
+    public string equippedItemName; //用來存裝備的名字(unity無法直接存OS)
     //衣服編號->string字典
     public Dictionary<int, string> clothesDict = new Dictionary<int, string>();
     public int currentClothIndex = 0;//目前穿著的衣服編號
@@ -69,7 +72,7 @@ public class IdolInstance : MonoBehaviour
         performance = basicStatus.performance;
         vigour = vigourMax = basicStatus.vigour;
         fans = 0;
-
+        
         if (basicTrainRecord == null)
         {
             Debug.LogError("基本狀態 (basicTrainRecord) 未設定！");
@@ -105,6 +108,13 @@ public class IdolInstance : MonoBehaviour
         fans = data.fans;
         bondWithP = data.bondWithP;//與玩家的羈絆
         BHaveSetUp = data.BHaveSetUp;
+        //裝備
+        equippedItemName = data.equippedItemName;
+        if (equippedItemName != null && equippedItemName != "")
+        {
+            EquipmentItem equipmentBridg = ResourceManager.Instance.InventoryManager.FindEquipmentByName(equippedItemName);
+            ResourceManager.Instance.InventoryManager.TryEquip(equipmentBridg, this);
+        }
         //衣服編號
         clothesDict = new Dictionary<int, string>()
         {
@@ -233,5 +243,11 @@ public class IdolInstance : MonoBehaviour
                                    basicTrainRecord.vocalExp,
                                    basicTrainRecord.visualExp,
                                    true);
+    }
+    [ContextMenu("TestEquip")]
+    public void TestEquip()
+    {
+        EquipmentItem equipmentBridg = ResourceManager.Instance.InventoryManager.FindEquipmentByName("4分音符髮飾");
+        ResourceManager.Instance.InventoryManager.TryEquip(equipmentBridg, this);
     }
 }

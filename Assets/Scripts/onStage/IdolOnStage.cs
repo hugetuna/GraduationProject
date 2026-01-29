@@ -12,10 +12,13 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
     public int idolPersonalPoint;//偶像個人得分數
     public List<ActionCard> usedCards;
     public float actionTimer=0;
-    public bool isAcion = false;
-    public ActionCard applyingCard=null;
+    public bool isAcion = false;//是否正在執行動作
+    public ActionCard applyingCard=null;//正在執行的卡片
     public int StageStamina;
     public int StageStaminaMax;
+    public int StageVocal;
+    public int StageDance;
+    public int StageVisual;
     private OnStageManager stageManager;
     //不同的偶像有不同的視覺呈現，在此以連續圖片列表模擬動畫
     [Header("上台的偶像視覺呈現")]
@@ -48,10 +51,33 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
         //設置旋轉量
         startRotation = Quaternion.Euler(0, 0, 0);
         endRotation = Quaternion.Euler(0, 180f, 0);
+    }
+    public void ApplyAbility()
+    {
         //設置血量
         StageStaminaMax = idolInstance.basicStatus.onStageStamina;
         StageStamina = StageStaminaMax;
         StageStaminaText.text = $"{StageStamina}/{StageStaminaMax}";
+        //設置屬性
+        StageVocal = idolInstance.vocal;
+        StageDance = idolInstance.dance;
+        StageVisual = idolInstance.visual;
+    }
+    public void ApplyEquipment()
+    {
+        //適用裝備
+        if (idolInstance.equipmentItemNow != null)
+        {
+            StageVocal+= idolInstance.equipmentItemNow.vocalBonus;
+            StageDance+= idolInstance.equipmentItemNow.danceBonus;
+            StageVisual+= idolInstance.equipmentItemNow.visualBonus;
+            StageStaminaMax+= idolInstance.equipmentItemNow.staminaBonus;
+            StageStamina = StageStaminaMax;//裝備後補滿血
+        }
+        else
+        {
+            Debug.Log($"{idolInstance.name} 沒有裝備，跳過數值套用。");
+        }
     }
     private void Update()
     {
@@ -106,7 +132,7 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
         {
             applyingCard = cardToApply;
             //如果有過標準就結算效果
-            if (idolInstance.vocal >= applyingCard.voGate && idolInstance.dance >= applyingCard.daGate && idolInstance.visual >= applyingCard.viGate)
+            if (StageVocal >= applyingCard.voGate && StageDance >= applyingCard.daGate && StageVisual >= applyingCard.viGate)
             {
                 foreach (var applyEffect in applyingCard.effects)
                 {
@@ -131,7 +157,7 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
     public void ApllyOnEndAndReset()
     {
         //如果有過標準就結算效果
-        if (idolInstance.vocal>=applyingCard.voGate&& idolInstance.dance >= applyingCard.daGate&& idolInstance.visual >= applyingCard.viGate)
+        if (StageVocal>=applyingCard.voGate&& StageDance >= applyingCard.daGate&& StageVisual >= applyingCard.viGate)
         {
             foreach (var endEffect in applyingCard.effects)
             {
@@ -199,5 +225,3 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
     }
 
 }
-
-

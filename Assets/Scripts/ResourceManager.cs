@@ -19,6 +19,7 @@ public struct ItemStack
 public class ResourceManager : MonoBehaviour
 {
     public static ResourceManager Instance;
+    public InventoryManager InventoryManager;
 
     public int Money = 0;
     public float MoneyBonus = 1f;//賺錢倍率
@@ -85,6 +86,12 @@ public class ResourceManager : MonoBehaviour
     //新增道具(scriptable obj 可以用"=="來判斷相同)
     public void AddItem(Item newItem)
     {
+        //裝備類道具直接加入擁有清單
+        if (newItem.itemType==ItemType.Equipment)
+        {
+            InventoryManager.ownedEquipments.Add(newItem as EquipmentItem);
+            return;
+        }
         bool found = false;
         for (int i = 0; i < items.Count; i++)
         {
@@ -108,6 +115,13 @@ public class ResourceManager : MonoBehaviour
     //指定數量來新增道具(scriptable obj 可以用"=="來判斷相同)
     public void AddItem(Item newItem, int amount = 1)
     {
+        //裝備類道具直接加入擁有清單
+        if (newItem.itemType == ItemType.Equipment)
+        {
+            for (int i = 0; i < amount; i++)
+                InventoryManager.ownedEquipments.Add(newItem as EquipmentItem);
+            return;
+        }
         for (int i = 0; i < items.Count; i++)
         {
             if (items[i].item == newItem)
@@ -138,6 +152,12 @@ public class ResourceManager : MonoBehaviour
     {
         foreach (var newItem in addList)
         {
+            //裝備類道具直接加入擁有清單
+            if (newItem.itemType == ItemType.Equipment)
+            {
+                InventoryManager.ownedEquipments.Add(newItem as EquipmentItem);
+                break;
+            }
             bool found = false;
             for (int i = 0; i < items.Count; i++)
             {
