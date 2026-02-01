@@ -7,7 +7,7 @@ using TMPro;
 /* 掛在購物車項目的 prefab 上（不看 Wrapper）*/
 public class SetCartItemUI : MonoBehaviour
 {
-    private Product product;
+    private ProductRuntime productRuntime;
     private int quantity; // 購物車內的商品數量
     //-----------------------------------------------------------------//
     [Header("購物車項目的 UI 設定")]
@@ -17,22 +17,20 @@ public class SetCartItemUI : MonoBehaviour
     [SerializeField] private Button addButton; // 增加購物車內商品數量的按鈕
     [SerializeField] private Button reduceButton; // 減少購物車內商品數量的按鈕
     //-----------------------------------------------------------------//
-    private CartController controller; // 方便存取其實例
+    private CartController cartController;
 
-    public void SetController(CartController ctrl)
-    {
-        controller = ctrl;
-    }
-
-    public void Initialize(Product product, int qty)
+    public void Initialize(ProductRuntime product, int qty)
     {
         // 設定該購物車項目對應的商品資料
-        this.product = product;
+        productRuntime = product;
         quantity = qty;
 
+        // 設定購物車控制器
+        cartController = GetComponentInParent<CartController>();
+
         // 設定 UI 顯示
-        productNameText.text = product.item.itemName;
-        productPriceText.text = $"${product.price}";
+        productNameText.text = product.product.item.itemName;
+        productPriceText.text = $"${product.product.price}";
         UpdateCartQuantity(quantity);
 
         // 商品購買數量的增減控制
@@ -48,11 +46,11 @@ public class SetCartItemUI : MonoBehaviour
 
     private void OnAddClicked()
     {
-        controller.AddToCart(product);
+        cartController.AddToCart(productRuntime);
     }
 
     private void OnReduceClicked()
     {
-        controller.ReduceQuantity(product);
+        cartController.ReduceQuantity(productRuntime);
     }
 }

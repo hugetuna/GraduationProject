@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -8,21 +9,11 @@ public class MenuToggler : MonoBehaviour
 {
     private Button startButton; // 自己身上的按鈕組件
     [SerializeField] private GameObject startMenu; // 開始選單物件
+    [SerializeField] private Button panelToClose;
 
     void Awake()
     {
         startButton = GetComponent<Button>();
-    }
-
-    void Update()
-    {
-        if (Input.GetMouseButtonDown(0)) // 點擊非 UI 區域時關閉 UI
-        {
-            if (!UIAndPlayerInput.IsCursorClickUIObject() && startMenu.activeSelf)
-            {
-                startMenu.SetActive(false);
-            }
-        }
     }
 
     void Start()
@@ -33,6 +24,12 @@ public class MenuToggler : MonoBehaviour
         {
             // 切換開始選單的顯示狀態
             startMenu.SetActive(!startMenu.activeSelf);
+        });
+
+        panelToClose.onClick.AddListener(() =>
+        {
+            // 點擊面板外圍關閉選單
+            startMenu.SetActive(false);
         });
     }
 }

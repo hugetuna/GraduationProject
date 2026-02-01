@@ -3,8 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems;
 
+/* 掛在 UIManager 上（Singleton） */
 public class WindowManager : MonoBehaviour
 {
+    public static WindowManager Instance; // 唯一實例
+    //-----------------------------------------------------------------//
     [Header("視窗設定")]
     public RectTransform windowContainer; // 視窗們的父物件
     private List<RectTransform> registeredWinRect = new();
@@ -14,51 +17,14 @@ public class WindowManager : MonoBehaviour
     public Vector2 offset = new Vector2(30, -20); // 每個新視窗的偏移量
     private static int windowCount = 0;
 
-    void Update()
+    void Awake()
     {
-        // 若滑鼠點擊了視窗，則將該視窗置頂
-        if (Input.GetMouseButtonDown(0))
-        {
-            PointerEventData pointerData = new(EventSystem.current)
-            {
-                position = Input.mousePosition
-            };
-
-            List<RaycastResult> results = new();
-            EventSystem.current.RaycastAll(pointerData, results);
-
-            // 如果滑鼠點到了叉叉按鈕就直接 return
-            foreach (RaycastResult r in results)
-            {
-                if (r.gameObject.name == "Close") return;
-            }
-
-            // 視窗的置前效果
-            RectTransform topWindow = null;
-            int topIndex = -1;
-
-            foreach (RectTransform window in registeredWinRect)
-            {
-                if (IsPointerOverUIObject(window))
-                {
-                    int index = window.GetSiblingIndex();
-                    if (index > topIndex)
-                    {
-                        topIndex = index;
-                        topWindow = window;
-                    }
-                }
-            }
-
-            if (topWindow != null)
-            {
-                BringToFront(topWindow);
-            }
-        }
+        if (Instance == null) Instance = this; // 保持單一實例
+        else Destroy(gameObject); // 刪除多餘實例
     }
 
     public void RegisterWindow(RectTransform rect) // 設定新視窗位置＆排序
-    {
+    {   
         // 計算 cascade 位置
         Vector2 pos = startPos + offset * windowCount;
 
@@ -67,7 +33,13 @@ public class WindowManager : MonoBehaviour
         rect.anchoredPosition = pos;
 
         // 移到最上層
-        rect.SetAsLastSibling();
+        BringToFront(rect);
+
+        // 自動掛上「偵測點擊置前」的 WindowFocusTrigger 腳本
+        if (!rect.gameObject.GetComponent<WindowFocusTrigger>())
+        {
+            rect.gameObject.AddComponent<WindowFocusTrigger>().Initialize(rect);
+        }
 
         // 更新視窗數量
         windowCount++;
@@ -84,6 +56,11 @@ public class WindowManager : MonoBehaviour
         }
     }
 
+    public bool IsWindowRegistered(RectTransform rect) // 檢查視窗是否已註冊
+    {
+        return registeredWinRect.Contains(rect);
+    }
+
     // public void CloseAllWindows() // 關閉所有視窗的實作與調整
     // {
     //     foreach (RectTransform window in registeredWinRect)
@@ -98,25 +75,25 @@ public class WindowManager : MonoBehaviour
     {
         window.SetAsLastSibling();
     }
+}
 
-    private bool IsPointerOverUIObject(RectTransform uiElement) // 檢查特定 UI 元件是否被滑鼠點擊
+public class WindowFocusTrigger : MonoBehaviour, IPointerDownHandler
+{
+    private RectTransform myRect;
+
+    public void Initialize(RectTransform rect) => myRect = rect;
+
+    public void OnPointerDown(PointerEventData eventData) // 檢查視窗是否被點擊
     {
-        PointerEventData pointerData = new(EventSystem.current)
-        {
-            position = Input.mousePosition
-        };
-
         List<RaycastResult> results = new();
-        EventSystem.current.RaycastAll(pointerData, results);
+        EventSystem.current.RaycastAll(eventData, results);
 
-        foreach (var result in results)
+        foreach (RaycastResult r in results)
         {
-            if (result.gameObject.transform == uiElement ||
-                result.gameObject.transform.IsChildOf(uiElement))
-            {
-                return true;
-            }
+            if (r.gameObject.name == "Close") return; // 點到叉叉按鈕就不置頂
         }
-        return false;
+
+        // 通知 WindowManager 將該視窗置頂
+        WindowManager.Instance.BringToFront(myRect);
     }
 }

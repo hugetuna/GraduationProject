@@ -8,7 +8,7 @@ using TMPro;
 public class SetProductUI : MonoBehaviour
 {
     [Header("商品卡片的 UI 設定")]
-    private Product product;
+    private ProductRuntime productRuntime;
     [SerializeField] private TextMeshProUGUI productNameText; // 商品名稱文字
     [SerializeField] private TextMeshProUGUI productPriceText; // 商品價格文字
     [SerializeField] private TextMeshProUGUI oldProductPriceText; // 商品原價文字（若有特價）
@@ -22,6 +22,8 @@ public class SetProductUI : MonoBehaviour
     [SerializeField] private GameObject discountDash; // 特價時的原價刪除線
     private float minDashLength = 19; // 原價刪除線的最小長度
     private float maxDashLength = 23; // 原價刪除線的最大長度
+    //-----------------------------------------------------------------//
+    private CartController cartController;
 
     void Start()
     {
@@ -33,19 +35,25 @@ public class SetProductUI : MonoBehaviour
         CartController.OnPurchaseSuccess -= UpdateStackText; // 取消訂閱結帳事件
     }
 
-    public void Initialize(Product newProduct)
+    public void Initialize(ProductRuntime newProduct)
     {
-        product = newProduct;
+        // 設定商品資料
+        productRuntime = newProduct;
+        Product product = productRuntime.product;
+
+        // 設定購物車控制器
+        cartController = GetComponentInParent<CartController>();
 
         // 設定 UI 顯示
         productImage.sprite = product.item.icon;
         productNameText.text = product.item.itemName;
 
-        product.stack = product.item.maxStack; // 初始庫存數量設為道具的最大庫存數
+        // 初始庫存數量設為最大庫存數
+        productRuntime.currentStack = product.maxStack; 
         UpdateStackText();
 
         // 根據是否特價來調整價格顯示
-        float discount = product.discount;
+        float discount = productRuntime.currentDiscount;
         if (discount == 1.0f) // 原價
         {
             productPriceText.text = $"$ {product.price}";
@@ -81,16 +89,16 @@ public class SetProductUI : MonoBehaviour
         cartButton.onClick.RemoveAllListeners(); // 確保不會重複註冊
         cartButton.onClick.AddListener(() =>
         {
-            CartController.Instance.AddToCart(product);
+            cartController.AddToCart(productRuntime);
         });
     }
 
     public void UpdateStackText()
     {
-        stackText.text = $"庫存 {product.stack}";
+        stackText.text = $"庫存 {productRuntime.currentStack}";
         stackText.ForceMeshUpdate();
 
-        if (product.stack == 0) cartButton.interactable = false;
+        if (productRuntime.currentStack == 0) cartButton.interactable = false;
         else cartButton.interactable = true;
     }
 

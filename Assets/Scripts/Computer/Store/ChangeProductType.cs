@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
+/* 掛在商店視窗的 TypeSelector 底下 */
 public class ChangeProductType : MonoBehaviour
 {
     [Header("商品類型按鈕＆頁面切換")]

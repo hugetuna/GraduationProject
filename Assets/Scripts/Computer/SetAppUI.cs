@@ -18,7 +18,7 @@ public class SetAppUI : MonoBehaviour
     [Header("視窗設定")]
     private GameObject appWindow; // 該 App 對應的視窗
     [Tooltip("視窗們的父物件")] public RectTransform windowContainer;
-    [Tooltip("用來控制視窗開關")] public WindowManager windowManager;
+    private WindowManager windowManager;
     //-----------------------------------------------------------------//
     [Header("最小化按鈕設定")]
     [Tooltip("位於工具列的最小化視窗（動態生成）")] public GameObject miniPrefab;
@@ -43,18 +43,8 @@ public class SetAppUI : MonoBehaviour
 
         appButton = GetComponent<Button>();
         appButton.onClick.AddListener(OpenTheWindow);
-    }
 
-    void Update()
-    {
-        if (appWindow.activeSelf)
-        {
-            appButton.interactable = false; // 避免重複點擊按鈕
-        }
-        else
-        {
-            appButton.interactable = true; // 確保按鈕可互動
-        }
+        windowManager = WindowManager.Instance;
     }
 
     public void OpenTheWindow()
@@ -66,16 +56,26 @@ public class SetAppUI : MonoBehaviour
             Debug.Log($"雙擊開啟 {appData.appName} 視窗");
 
             appWindow.SetActive(true); // 開啟視窗
-            windowManager.RegisterWindow(appWindow.GetComponent<RectTransform>()); // 設定視窗位置與排序
+            var winRect = appWindow.GetComponent<RectTransform>();
 
-            miniInstance = Instantiate(miniPrefab, theMinimized.transform); // 生成最小化按鈕
-            Image icon = miniInstance.transform.Find("Icon").GetComponent<Image>();
-            icon.sprite = appData.appIcon; // 設定最小化按鈕的圖示
-            TextMeshProUGUI text = miniInstance.GetComponentInChildren<TextMeshProUGUI>();
-            text.text = appData.appName; // 設定最小化按鈕的名稱
+            if (!windowManager.IsWindowRegistered(winRect))
+            {
+                windowManager.RegisterWindow(winRect); // 設定視窗位置與排序
+                miniInstance = Instantiate(miniPrefab, theMinimized.transform); // 生成最小化按鈕
+                Image icon = miniInstance.transform.Find("Icon").GetComponent<Image>();
+                icon.sprite = appData.appIcon; // 設定最小化按鈕的圖示
+                TextMeshProUGUI text = miniInstance.GetComponentInChildren<TextMeshProUGUI>();
+                text.text = appData.appName; // 設定最小化按鈕的名稱
 
-            MinimizeController minimizeController = miniInstance.GetComponent<MinimizeController>();
-            minimizeController.SetAppWindow(appWindow); // 設定最小化按鈕所對應的視窗
+                MinimizeController minimizeController = miniInstance.GetComponent<MinimizeController>();
+                minimizeController.SetAppWindow(appWindow); // 設定最小化按鈕所對應的視窗
+            }
+            else
+            {
+                // 若視窗已註冊，將其置前
+                windowManager.BringToFront(winRect);
+            }
+
         }
 
         lastClickTime = Time.time;

@@ -281,7 +281,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 8012270757299811579}
-  - component: {fileID: 7936073463245704594}
   m_Layer: 0
   m_Name: Sidebar
   m_TagString: Untagged
@@ -309,24 +308,6 @@ Transform:
   - {fileID: 2203003962461263330}
   m_Father: {fileID: 7567603169997344966}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7936073463245704594
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 297767728393386133}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 360b6bf76a731044191302d62a7904e8, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  cartContent: {fileID: 5313967902187622849}
-  cartItemPrefab: {fileID: 5868130643167491960, guid: bd467aae52b9ba942a56cd0df111331c, type: 3}
-  totalPriceText: {fileID: 8807572837171559706}
-  buyButton: {fileID: 2668338256701129852}
-  moneyText: {fileID: 4077681229306956690}
-  checkBillSound: {fileID: 8300000, guid: f7b140d4b7082bc4f8154680d3f6506f, type: 3}
 --- !u!1 &334081368156554078
 GameObject:
   m_ObjectHideFlags: 0
@@ -2239,6 +2220,7 @@ GameObject:
   - component: {fileID: 1706941808385487786}
   - component: {fileID: 295883502932148168}
   - component: {fileID: 8807572837171559706}
+  - component: {fileID: 5107829768544914490}
   m_Layer: 5
   m_Name: TotalText
   m_TagString: Untagged
@@ -2364,6 +2346,18 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
+--- !u!114 &5107829768544914490
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5342509725151685877}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61d130300049ffc4282b5e12676f311d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &5371704050308427542
 GameObject:
   m_ObjectHideFlags: 0
@@ -3266,14 +3260,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.78113204, g: 0.78113204, b: 0.78113204, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 0
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: 2d2a32a77420a5f428964d3635a2ed2c, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -3849,6 +3843,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 333546009286446038, guid: 0a0f46b22a7f5664e8be91f19490c5c8, type: 3}
       insertIndex: -1
       addedObject: {fileID: 6887589224487944680}
+    - targetCorrespondingSourceObject: {fileID: 333546009286446038, guid: 0a0f46b22a7f5664e8be91f19490c5c8, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1302490403526765651}
   m_SourcePrefab: {fileID: 100100000, guid: 0a0f46b22a7f5664e8be91f19490c5c8, type: 3}
 --- !u!1 &5755909262555580334 stripped
 GameObject:
@@ -3885,6 +3882,25 @@ MonoBehaviour:
   - {fileID: 9000722247900136979}
   - {fileID: 1099691511607384335}
   - {fileID: 3693969998823538650}
+--- !u!114 &1302490403526765651
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5755909262555580334}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 360b6bf76a731044191302d62a7904e8, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  cartContent: {fileID: 5313967902187622849}
+  cartItemPrefab: {fileID: 5868130643167491960, guid: bd467aae52b9ba942a56cd0df111331c, type: 3}
+  totalPriceText: {fileID: 8807572837171559706}
+  buyButton: {fileID: 2668338256701129852}
+  moneyText: {fileID: 4077681229306956690}
+  checkBillSound: {fileID: 8300000, guid: f7b140d4b7082bc4f8154680d3f6506f, type: 3}
+  failToBuySound: {fileID: 8300000, guid: 1bd3612f644df154ca6fdbf3b5427f49, type: 3}
 --- !u!224 &7567603169997344966 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 2469204403442867390, guid: 0a0f46b22a7f5664e8be91f19490c5c8, type: 3}

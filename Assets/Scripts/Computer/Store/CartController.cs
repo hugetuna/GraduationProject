@@ -1,53 +1,45 @@
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
 // 單筆購物車資料
-[System.Serializable]
+[Serializable]
 public class CartItemData
 {
-    public Product productToBuy;
-    public int qty;
+    public ProductRuntime productToBuy;
+    public int quantity;
 
-    public CartItemData(Product product, int qty = 1)
+    public CartItemData(ProductRuntime product, int qty = 1)
     {
-        this.productToBuy = product;
-        this.qty = qty;
+        productToBuy = product;
+        quantity = qty;
     }
 }
 
 
-/* 預計掛在商店視窗的 Sidebar 上（Singleton）*/
+/* 掛在商店視窗根部 */
 // 控制整個購物車
 public class CartController : MonoBehaviour
 {
-    public static CartController Instance; // 唯一實例
-    //-----------------------------------------------------------------//
     [Header("購物車的 UI 設定")]
     [SerializeField] private Transform cartContent; // 購物車容器
     [SerializeField] private GameObject cartItemPrefab; // 購物車項目 Prefab
     [SerializeField] private TextMeshProUGUI totalPriceText; // 總價文字
     [SerializeField] private Button buyButton; // 購物車結帳按鈕
     //-----------------------------------------------------------------//
-    private Dictionary<Product, CartItemData> cartData = new(); // 存放商品與其數量
-    private Dictionary<Product, SetCartItemUI> cartItemUIDict = new(); // 存放商品與其 UI 控制器
+    private Dictionary<ProductRuntime, CartItemData> cartData = new(); // 存放商品與其數量
+    private Dictionary<ProductRuntime, SetCartItemUI> cartItemUIDict = new(); // 存放商品與其 UI 控制器
     //-----------------------------------------------------------------//
     [Header("結帳功能設定")]
     private int totalPrice = 0; // 購物車總價
     [SerializeField] private TextMeshProUGUI moneyText; // 玩家持有金錢文字
-    public AudioClip checkBillSound;
     public static event Action OnPurchaseSuccess; // 購買成功的事件
-
-
-
-    void Awake()
-    {
-        if (Instance == null) Instance = this; // 保持單一實例
-        else Destroy(gameObject); // 刪除多餘實例
-    }
+    //-----------------------------------------------------------------//
+    [Header("相關音效")]
+    public AudioClip checkBillSound;
+    public AudioClip failToBuySound;
 
     void Start()
     {
@@ -56,24 +48,19 @@ public class CartController : MonoBehaviour
         UpdateTotalPrice(); // 確保初始總價正確
     }
 
-    void OnDestroy()
-    {
-        if (Instance == this) Instance = null; // 清除單一實例
-    }
-
-    public void AddToCart(Product product)
+    public void AddToCart(ProductRuntime product)
     {
         if (cartData.ContainsKey(product))
         {
             // 若該購物車項目已存在，增加其購買數量
-            cartData[product].qty++;
-            if(cartData[product].qty > product.stack) // 若購買數量超過庫存
+            cartData[product].quantity++;
+            if (cartData[product].quantity > product.currentStack) // 若購買數量超過庫存
             {
                 Debug.Log("已達庫存上限，無法再增加購買數量");
-                cartData[product].qty = product.stack; // 限制購買數量為庫存數量
+                cartData[product].quantity = product.currentStack; // 限制購買數量為庫存數量
             }
 
-            cartItemUIDict[product].UpdateCartQuantity(cartData[product].qty);   
+            cartItemUIDict[product].UpdateCartQuantity(cartData[product].quantity);
         }
         else
         {
@@ -85,21 +72,19 @@ public class CartController : MonoBehaviour
             GameObject card = cartObject.transform.Find("Card").gameObject; // Wrapper + Card
             SetCartItemUI setCartItemUI = card.GetComponent<SetCartItemUI>();
 
-            setCartItemUI.Initialize(product, cartItemData.qty); // 傳遞商品資料與數量
-            setCartItemUI.SetController(this); // 綁定個別購物車項目與整個購物車
+            setCartItemUI.Initialize(product, cartItemData.quantity); // 傳遞商品資料與數量
             cartItemUIDict[product] = setCartItemUI; // 記錄商品與其 UI 控制器
         }
 
         UpdateTotalPrice();
     }
 
-    public void ReduceQuantity(Product product)
+    public void ReduceQuantity(ProductRuntime product)
     {
         if (!cartData.ContainsKey(product)) return;
 
-        cartData[product].qty--;
-
-        if (cartData[product].qty <= 0)
+        cartData[product].quantity--;
+        if (cartData[product].quantity <= 0)
         {
             Destroy(cartItemUIDict[product].transform.parent.gameObject); // Wrapper + Card
             cartData.Remove(product);
@@ -107,7 +92,7 @@ public class CartController : MonoBehaviour
         }
         else
         {
-            cartItemUIDict[product].UpdateCartQuantity(cartData[product].qty);
+            cartItemUIDict[product].UpdateCartQuantity(cartData[product].quantity);
         }
 
         UpdateTotalPrice();
@@ -119,7 +104,7 @@ public class CartController : MonoBehaviour
         totalPrice = 0;
         foreach (var data in cartData.Values)
         {
-            totalPrice += data.productToBuy.price * data.qty;
+            totalPrice += data.productToBuy.product.price * data.quantity;
         }
 
         totalPriceText.text = $"${totalPrice:N0}";
@@ -136,6 +121,15 @@ public class CartController : MonoBehaviour
         // 檢查例外狀況
         if (resourceManager.getMoney() < totalPrice)
         {
+            // 執行總價文字的閃爍效果
+            if (totalPriceText.TryGetComponent<UIFlashEffect>(out var flash))
+            {
+                flash.Flash();
+            }
+
+            // 播放錯誤音效
+            AudioManager.Instance.PlaySFX(failToBuySound);
+
             Debug.Log("玩家持有金額不足，無法結帳");
             return;
         }
@@ -144,12 +138,12 @@ public class CartController : MonoBehaviour
         List<Item> itemsToAdd = new(); // 以清單進行統整
         foreach (CartItemData value in cartData.Values)
         {
-            int buyCount = Mathf.Min(value.qty, value.productToBuy.stack);
+            int buyCount = Mathf.Min(value.quantity, value.productToBuy.currentStack);
             for (int i = 0; i < buyCount; i++)
             {
-                itemsToAdd.Add(value.productToBuy.item);
+                itemsToAdd.Add(value.productToBuy.product.item);
             }
-            value.productToBuy.stack -= buyCount;
+            value.productToBuy.currentStack -= buyCount;
         }
         resourceManager.AddItem(itemsToAdd);
 

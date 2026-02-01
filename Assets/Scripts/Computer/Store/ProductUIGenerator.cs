@@ -9,23 +9,31 @@ public class ProductUIGenerator : MonoBehaviour
     [Header("商品資料")]
     // 目前沒有任何地方能獲取商品清單之類的
     public List<Product> productList = new(); // 儲存商品資訊的清單（道具包含在商品資料裡）
+    private List<ProductRuntime> inventoryList = new(); // 商店的商品實體清單（包含動態資料）
     //-----------------------------------------------------------------//
     public GameObject productPrefab; // 用於生成商品項目的預製件
     public List<Transform> productContent = new(); // 用於放置生成的商品物件的容器
 
     void Start()
     {
+        // 替商品清單產生動態資料
+        foreach (Product product in productList)
+        {
+            ProductRuntime newProductRuntime = new ProductRuntime(product);
+            inventoryList.Add(newProductRuntime);
+        }
+
         // 從無處獲取商品清單
-        foreach (Product product in productList) // 按清單生成初始的商品項目
+        foreach (ProductRuntime productRuntime in inventoryList) // 按清單生成初始的商品項目
         {
             // 生成商品並分類...然而現在只有兩個分類（消耗品 vs. 裝備）
             GameObject productObject = null;
-            
-            if(product.item.itemType == ItemType.Consumable)
+            var itemType = productRuntime.product.item.itemType;
+            if(itemType == ItemType.Consumable)
             {
                 productObject = Instantiate(productPrefab, productContent[0]); // "Wrapper" + Card
             }
-            else if(product.item.itemType == ItemType.Equipment)
+            else if(itemType == ItemType.Equipment)
             {
                 productObject = Instantiate(productPrefab, productContent[1]); // "Wrapper" + Card
             }
@@ -39,7 +47,7 @@ public class ProductUIGenerator : MonoBehaviour
             GameObject card = productObject.transform.Find("Card").gameObject; // Wrapper + "Card"
             // 設定商品卡片的 UI 資料
             SetProductUI setProductUI = card.GetComponent<SetProductUI>();
-            setProductUI.Initialize(product);
+            setProductUI.Initialize(productRuntime);
         }
     }
 }
