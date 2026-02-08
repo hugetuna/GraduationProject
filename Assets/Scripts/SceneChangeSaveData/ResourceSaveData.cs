@@ -11,4 +11,5 @@ public class ResourceSaveData
     public BondData bondBC;
     public BondData bondCA;
     public List<ItemStack> items = new List<ItemStack>();
+    public List<string> allEqupmentNames;
 }
