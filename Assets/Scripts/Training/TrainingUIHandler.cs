@@ -49,7 +49,7 @@ public class TrainingUIHandler : MonoBehaviour
         trainingUI.SetActive(true);
         AudioManager.Instance.PlaySFX(openSound);
 
-        TypeText.text = trainingUIData.trainingType; // 設定訓練類型的 UI 文字內容
+        TypeText.text = trainingUIData.trainingType.ToString(); // 設定訓練類型的 UI 文字內容
         if (trainingUIData.teacherName != null) // 設定老師的 UI 文字內容
         {
             TeacherText.text = $"老師：{trainingUIData.teacherName}"; // 暫時寫死老師的名稱
@@ -99,16 +99,16 @@ public class TrainingUIHandler : MonoBehaviour
             var state = TrainingUIManager.Instance.GetIdolState(idolInstance.idolIndex);
 
             bool isActive = false;
-            string type = trainingUIData.trainingType.ToLower();
-            if (type == "dance")
+            TrainingType type = trainingUIData.trainingType;
+            if (type == TrainingType.Dance)
             {
                 isActive = state == IdolTrainingState.InTeam || state == IdolTrainingState.InDance;
             }
-            else if (type == "vocal")
+            else if (type == TrainingType.Vocal)
             {
                 isActive = state == IdolTrainingState.InTeam || state == IdolTrainingState.InVocal;
             }
-            else if (type == "visual")
+            else if (type == TrainingType.Visual)
             {
                 isActive = state == IdolTrainingState.InTeam || state == IdolTrainingState.InVisual;
             }

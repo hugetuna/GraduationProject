@@ -4,11 +4,11 @@ using System.Linq;
 
 public enum IdolTrainingState
 {
-    InTeam,
-    InDance,
-    InVocal,
-    InVisual,
-    None
+    None = -1,
+    InTeam = 0,
+    InDance = 1,
+    InVocal = 2,
+    InVisual = 3,
 }
 
 /* 掛在 TrainingManager 上，統一管理三種不同的 UI（Singleton） */
@@ -66,13 +66,13 @@ public class TrainingUIManager : MonoBehaviour
             isInitialized = true;
         }
 
-        string type = data.trainingType.ToLower();
+        TrainingType type = data.trainingType; // None=-1, Dance=0, Vocal=1, Visual=2
 
         TrainingUIHandler ui = type switch // 預計要打開的 UI
         {
-            "dance" => trainingUIHandlers[0],
-            "vocal" => trainingUIHandlers[1],
-            "visual" => trainingUIHandlers[2],
+            TrainingType.Dance => trainingUIHandlers[0],
+            TrainingType.Vocal => trainingUIHandlers[1],
+            TrainingType.Visual => trainingUIHandlers[2],
             _ => null
         };
 

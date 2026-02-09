@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 
-/* 掛在聊天室本身的 ScrollView 上（Singleton）*/
+/* 掛在掛在聊天室視窗的 Rightside 上（Singleton）*/
 public class ChatBubbleManager : MonoBehaviour
 {
     public static ChatBubbleManager Instance; // 唯一實例
@@ -16,8 +16,8 @@ public class ChatBubbleManager : MonoBehaviour
     [SerializeField] private Sprite playerBubbleIcon; // 玩家的大頭貼
     //-----------------------------------------------------------------//
     [Header("聊天室排版")]
-    [SerializeField] private ScrollRect scrollRect; // 該物件的 ScrollRect 組件
-    [SerializeField] private RectTransform content; // 該物件底下的 Content
+    [SerializeField] private ScrollRect scrollRect; // 該物件底下 ScrollView 的 ScrollRect 組件
+    [SerializeField] private RectTransform content; // scrollRect 底下的 Content
     [SerializeField] private float maxTextWidth = 200f; // 訊息泡泡文字之最大寬度
     [SerializeField] private float heightPerRow = 12f; // 每增加一行文字，泡泡高度增加的數值
     private float baseHeight; // 泡泡的基礎高度
@@ -91,9 +91,9 @@ public class ChatBubbleManager : MonoBehaviour
         foreach (Transform child in content) Destroy(child.gameObject);
     }
 
-    public void RebuildFromHistory(List<(string text, bool isPlayer)> history) // 根據對話紀錄重建對話泡泡
+    public void RebuildFromHistory(List<ChatHistory> history) // 根據對話紀錄重建對話泡泡
     {
-        foreach (var (text, isPlayer) in history) AddBubble(text, isPlayer);
+        foreach (var message in history) AddBubble(message.text, message.isPlayer);
     }
 
     public void SetUserBubbleIcon(Sprite icon) // 設定用戶泡泡的大頭貼

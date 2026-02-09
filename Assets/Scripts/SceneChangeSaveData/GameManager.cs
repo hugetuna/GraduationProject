@@ -15,7 +15,8 @@ public class GameManager : MonoBehaviour
     public DaySaveData DayData;
     public string sceneNameSave = "";
     public ResourceSaveData ResourceData;
-    public ChatSaveData chatSaveData;
+    public ChatSaveData chatSaveData = new();
+    public AppointSaveData appointSaveData = new();
 
     [Header("臨時儲存資料")]
     public DialogueSaveData dialogueSaveData;
@@ -125,6 +126,12 @@ public class GameManager : MonoBehaviour
         chatSaveData = data;
     }
 
+    // 預約相關儲存（例如老師）
+    public void SaveAppointData(AppointSaveData data)
+    {
+        appointSaveData = data;
+    }
+
     /*本地存檔相關*/
     private string SavePath => Path.Combine(Application.persistentDataPath, "gamesave.json");
 
@@ -140,6 +147,7 @@ public class GameManager : MonoBehaviour
             DayData = this.DayData,
             sceneNameSave = this.sceneNameSave,
             chatSaveData = this.chatSaveData,
+            appointSaveData = this.appointSaveData,
             isElevatorUsedToday = this.isElevatorUsedToday,
             //dialogueSaveData = this.dialogueSaveData
         };

@@ -23,7 +23,7 @@ public class TraineeAssignment : MonoBehaviour
     public void AssignTrainees(TrainingUIData data) // 當任意訓練 UI 按下確定按鈕時呼叫
     {
         // 取得該訓練 UI 類型
-        string currentTrainingType = data.trainingType.ToLower();
+        string currentTrainingType = data.trainingType.ToString();
 
         // 遍歷所有角色來檢查狀態
         foreach (var idol in TeamDataUtility.IdolObjectList)
@@ -38,7 +38,7 @@ public class TraineeAssignment : MonoBehaviour
             PlayerControlMainWorld idolControl = idol.GetComponent<PlayerControlMainWorld>();
 
             // 判斷該角色目前被分配在哪個區域 (由拖曳系統決定)
-            string idolZoneStr = trainRecord.droppedZoneType.ToString().ToLower();
+            string idolZoneStr = trainRecord.droppedZoneType.ToString();
 
             // 情況一：這個角色被分配到「當前正開啟的訓練 UI」
             if (idolZoneStr == currentTrainingType)
@@ -84,15 +84,15 @@ public class TraineeAssignment : MonoBehaviour
         int finalVisualExp = 0;
 
         // 根據訓練類型計算加成
-        switch (data.trainingType.ToLower())
+        switch (data.trainingType)
         {
-            case "dance":
+            case TrainingType.Dance:
                 finalDanceExp = (int)(benefit * idol.daTrainingBonus);
                 break;
-            case "vocal":
+            case TrainingType.Vocal:
                 finalVocalExp = (int)(benefit * idol.voTrainingBonus);
                 break;
-            case "visual":
+            case TrainingType.Visual:
                 finalVisualExp = (int)(benefit * idol.viTrainingBonus);
                 break;
         }

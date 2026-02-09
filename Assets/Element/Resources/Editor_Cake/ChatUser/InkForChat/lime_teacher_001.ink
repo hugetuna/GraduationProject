@@ -14,20 +14,21 @@
 很不巧呢，我們的現代舞導師現在檔期都是滿的#speaker: Teacher
 這麼搶手嗎!? #speaker: Player
 是的，或許您只能之後再來了 #speaker: Teacher
--> Success
+-> Final
 
 === B ===
 哎呀，居然想學哈卡舞嗎? #speaker: Teacher
-好可惜，我們的哈卡舞導師前幾天回鄉探親了 #speaker: Teacher
+好可惜，我們的哈卡舞導師前幾天回國探親了 #speaker: Teacher
 請下次再來吧 #speaker: Teacher
--> Success
+-> Final
 
 === C ===
-Popping是嗎?很抱歉我們舞蹈教室沒有教Popping的老師呢#speaker: Teacher
-欸??這麼熱門的舞種居然沒有嗎??#speaker: Player
-是的呢，如果有需要請再看看其他舞種喔~ #speaker: Teacher
-(這間舞蹈教室到底都有哪些老師啊...??)#speaker: Player
--> END
+Popping是嗎?正好我就是教Popping的老師呢 #speaker: Teacher
+欸??太好了，那您明天方便來指導我們事務所的練習生嗎? #speaker: Player
+沒問題，已幫您預約完成~ #speaker: Teacher #appointTrName: Amy #appointTrType: Dance
+謝謝Amy老師，明天見 #speaker: Player
+-> Final
 
-=== Success ===
+=== Final ===
+＊此次對話已結束＊ #speaker: Teacher
 -> END

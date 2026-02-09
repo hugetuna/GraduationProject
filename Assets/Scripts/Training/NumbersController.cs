@@ -21,7 +21,7 @@ public class NumbersController : MonoBehaviour
 {
     [SerializeField] private List<StatsSlot> memberSlots = new();
     [SerializeField] private List<StatsSlot> traineeSlots = new();
-    [SerializeField] private string trainingType = "";
+    [SerializeField] private TrainingType trainingType = TrainingType.None;
     public static event Action<IdolWho, DropZoneType, int, TrainingUIData> OnIdolPositionChanged;
 
     void Start()
@@ -97,7 +97,7 @@ public class NumbersController : MonoBehaviour
 
         // 1. 如果去的是成員區 (Member)，所有 UI 的成員區都要更新。
         // 2. 如果去的是訓練區，則只有「類型符合」的 UI 才要更新訓練區。
-        bool isMyBusiness = (zoneType == DropZoneType.Member) || (targetZoneTypeStr.ToLower() == trainingType.ToLower());
+        bool isMyBusiness = (zoneType == DropZoneType.Member) || (targetZoneTypeStr == trainingType.ToString());
         if (!isMyBusiness) return;
 
         // 將角色數值填到對應的 slot

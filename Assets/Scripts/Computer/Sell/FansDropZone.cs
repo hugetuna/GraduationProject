@@ -4,11 +4,11 @@ using UnityEngine;
 public enum FansDropZoneType
 {
     // 粉絲只能拖曳至擁有者或販賣區域
-    None,
-    MemberA,
-    MemberB,
-    MemberC,
-    Sell
+    None = -1,
+    MemberA = 0,
+    MemberB = 1,
+    MemberC = 2,
+    Sell = 3
 }
 
 /* 掛在販賣頁面的可拖曳區域上 */

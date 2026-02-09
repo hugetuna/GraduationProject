@@ -26,7 +26,8 @@
 怎樣?外聘也算員工吧#speaker: Friend
 
 呃...啊啊..是...#speaker: Player
--> END
+-> Final
 
-=== End_Section ===
+=== Final ===
+＊此次對話已結束＊ #speaker: Friend
 -> END

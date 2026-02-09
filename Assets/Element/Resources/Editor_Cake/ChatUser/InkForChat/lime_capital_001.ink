@@ -14,17 +14,21 @@
 我們合約裡有規定最低服務年限喔~#speaker: Capital
 要離職的話要付我違約金，嘿嘿#speaker: Capital
 哇... #speaker: Player
--> END
+-> Final
 
 === B ===
 因為你現在在用的是公司的電腦 #speaker: Capital
 喔喔!對喔!確實 #speaker: Player
-... #speaker: Capital
--> END
+... #speaer: Capital
+-> Final
 
 === C ===
 很有幹勁嘛，我們公司的未來就看你的了 #speaker: Capital
-我一定會讓他們出道的#speaker: Player
+我一定會讓他們出道的 #speaker: Player
 好的，加油加油! #speaker: Capital
+-> Final
+
+=== Final ===
+＊此次對話已結束＊ #speaker: Capital
 -> END
 

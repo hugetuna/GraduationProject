@@ -3,11 +3,11 @@ using UnityEngine.EventSystems;
 
 public enum DropZoneType
 {
-    None,
-    Member, // 隊伍區域
-    Dance,  // 舞蹈訓練室
-    Vocal,  // 歌唱訓練室
-    Visual  // 表現力訓練室
+    None = -1,
+    Member = 0, // 隊伍區域
+    Dance = 1,  // 舞蹈訓練室
+    Vocal = 2,  // 歌唱訓練室
+    Visual = 3  // 表現力訓練室
 }
 
 public class DropZone : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
