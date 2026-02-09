@@ -118,6 +118,10 @@ public class GameManager : MonoBehaviour
         ResourceData.bondBC = resource.bondBC;
         ResourceData.bondCA = resource.bondCA;
         ResourceData.items = resource.items;
+        foreach(EquipmentItem equipment in resource.InventoryManager.ownedEquipments)
+        {
+            ResourceData.allEqupmentNames.Add(equipment.itemName);
+        }
     }
 
     //聊天視窗專用儲存
@@ -187,6 +191,7 @@ public class GameManager : MonoBehaviour
 
         //4.處理讀取後的資料
         DayManager.Instance.OnGameFileLoad();
+        ResourceManager.Instance.OnGameFileLoad();
         SceneTransitionManager.Instance.OnGameFileLoad();
 
         Debug.Log("存檔已載入。");

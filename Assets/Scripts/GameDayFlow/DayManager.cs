@@ -55,9 +55,9 @@ public class DayManager : MonoBehaviour
         date++;
         dayEventManager.InitializeDayEvents(date,0);
         dayEventManager.TriggerNextEvent();
-        
         TeamManager teamManager = FindAnyObjectByType<TeamManager>();
         teamManager.ResetIdolsTeam();
+        GameManager.Instance.SaveDayData();
     }
     public void AfterDayEndEventStart()
     {

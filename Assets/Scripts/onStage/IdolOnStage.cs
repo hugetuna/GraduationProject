@@ -19,6 +19,7 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
     public int StageVocal;
     public int StageDance;
     public int StageVisual;
+    [SerializeField]
     private OnStageManager stageManager;
     //不同的偶像有不同的視覺呈現，在此以連續圖片列表模擬動畫
     [Header("上台的偶像視覺呈現")]
@@ -42,7 +43,6 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
     // Start is called before the first frame update
     void Start()
     {
-        stageManager = FindAnyObjectByType<OnStageManager>();
         //spriteAnimator = gameObject.GetComponent<SpriteAnimator>();
         //設置動作圖片
         idleFrames = idolInstance.basicStatus.idleFrames;
@@ -65,6 +65,7 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
     }
     public void ApplyEquipment()
     {
+        stageManager = FindAnyObjectByType<OnStageManager>();
         //適用裝備
         if (idolInstance.equipmentItemNow != null)
         {
@@ -73,6 +74,8 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
             StageVisual+= idolInstance.equipmentItemNow.visualBonus;
             StageStaminaMax+= idolInstance.equipmentItemNow.staminaBonus;
             StageStamina = StageStaminaMax;//裝備後補滿血
+            stageManager.deck.AddRange(idolInstance.equipmentItemNow.actionCardsAddByEquipment);
+            stageManager.Shuffle();
         }
         else
         {

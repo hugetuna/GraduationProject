@@ -43,6 +43,11 @@ public class ResourceManager : MonoBehaviour
     }
     public void OnSceneLoaded()
     {
+        //SetupResourceFromGameManager();
+        IsItemChanged = true; // 每換場景即刷新一次道具相關 UI（例如背包）
+    }
+    public void OnGameFileLoad()
+    {
         SetupResourceFromGameManager();
     }
     public void SetupResourceFromGameManager()
@@ -54,8 +59,10 @@ public class ResourceManager : MonoBehaviour
         bondBC = resourceSaveData.bondBC;
         bondCA = resourceSaveData.bondCA;
         items = resourceSaveData.items;
-
-        IsItemChanged = true; // 每換場景即刷新一次道具相關 UI（例如背包）
+        foreach(var itemName in resourceSaveData.allEqupmentNames)
+        {
+            InventoryManager.ownedEquipments.Add(InventoryManager.FindEquipmentByName(itemName));
+        }
     }
     //每天結束時必須重製資源暫時狀態
     public void ResetTemporaryEffect()

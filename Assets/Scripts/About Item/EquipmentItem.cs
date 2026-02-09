@@ -8,6 +8,7 @@ public class EquipmentItem : Item
     public int danceBonus;
     public int visualBonus;
     public int staminaBonus;
+    public List<ActionCard> actionCardsAddByEquipment;
     public override void Use(IdolInstance target)
     {
         // 透過函式引數可指定使用道具的偶像
