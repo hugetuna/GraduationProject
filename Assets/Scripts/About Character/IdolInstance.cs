@@ -92,7 +92,6 @@ public class IdolInstance : MonoBehaviour
     public void LoadData(IdolSaveData data)
     {
         idolIndex = data.idolIndex;
-        basicStatus = data.basicStatus;
         vocal = data.vocal;
         dance = data.dance;
         visual = data.visual;
