@@ -6,7 +6,6 @@ using TMPro;
 /* 掛在商店視窗的 MoneyText 上 */
 public class MoneyUsage : MonoBehaviour
 {
-    private ResourceManager resourceManager;
     private TextMeshProUGUI moneyText;
 
     void Awake()
@@ -16,13 +15,17 @@ public class MoneyUsage : MonoBehaviour
 
     void Start()
     {
-        resourceManager = ResourceManager.Instance;
-
         // 先在 ResourceManager 設定金錢，避免無法測試商店購買功能
         // resourceManager.GainMoney(1000); 
         UpdateMoneyText();
 
         CartController.OnPurchaseSuccess += UpdateMoneyText; // 訂閱結帳事件
+    }
+
+    void OnEnable()
+    {
+        // 若道具有變化（例如販賣粉絲獲得金錢），則更新金錢顯示
+        if(ResourceManager.Instance.IsItemChanged) UpdateMoneyText();
     }
 
     void OnDestroy()
@@ -32,7 +35,7 @@ public class MoneyUsage : MonoBehaviour
 
     public void UpdateMoneyText()
     {
-        moneyText.text = $"${resourceManager.getMoney():N0}";
+        moneyText.text = $"${ResourceManager.Instance.getMoney():N0}";
     }
 
 }

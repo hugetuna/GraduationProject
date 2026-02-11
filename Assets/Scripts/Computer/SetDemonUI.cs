@@ -33,6 +33,7 @@ public class SetDemonUI : MonoBehaviour
     void Start()
     {       
         sellUI.SetActive(false); // 預設關閉販賣頁面
+        hintIcon.SetActive(true); // 預設顯示提示圖示
 
         talkButton.onClick.AddListener(OnTalkButtonClick);
         problemButton.onClick.AddListener(OnProblemButtonClick);
@@ -177,8 +178,8 @@ public class SetDemonUI : MonoBehaviour
         story = new Story(inkJSONAsset.text);
         story.ChoosePathString(currentKnot);
         storyFinished = false;
-        hintIcon.SetActive(true);
-        hintShown = true;
+        // hintIcon.SetActive(true);
+        // hintShown = true;
         
         // 預設內容也改用打字機顯示
         // fullLineText = GetInkLine(currentKnot);

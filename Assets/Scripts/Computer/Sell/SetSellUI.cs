@@ -10,8 +10,7 @@ public class SetSellUI : MonoBehaviour
     [SerializeField] private List<GameObject> characterUIList = new();
     [SerializeField] private Button closeButton; // 關閉販賣頁面按鈕
     //-----------------------------------------------------------------//
-    [Header("測試用粉絲")]
-    [SerializeField] private List<ItemStack> testFansList = new();
+    private List<ItemStack> testFansList = new(); // 測試用粉絲資料
     //-----------------------------------------------------------------//
     private Dictionary<IdolInstance, List<ItemStack>> idolFansDict = new();
 
@@ -36,10 +35,8 @@ public class SetSellUI : MonoBehaviour
             return;
         }
 
-        /* 新增測試用粉絲 */
-        #if UNITY_EDITOR
-                AddTestFansData(idolList);
-        #endif
+        /* 處理測試用粉絲 */
+        AddTestFansData(idolList);
 
         // 初始化角色粉絲字典
         foreach (var idol in idolList) idolFansDict[idol] = new List<ItemStack>();
@@ -61,14 +58,20 @@ public class SetSellUI : MonoBehaviour
 
     private void AddTestFansData(List<IdolInstance> idolList)
     {
+        // 測試用粉絲已預先加入 ResourceManager
+        foreach(var itemStack in ResourceManager.Instance.items)
+        {
+            if (itemStack.item is FansItem)
+            {
+                testFansList.Add(itemStack);
+            }
+        }
+        
+        // 確保測試用粉絲的 harvester 不為空
         for (int i = 0; i < testFansList.Count; i++)
         {
-            if (testFansList[i].item is FansItem item)
-            {
-                item.harvester = idolList[i % idolList.Count].idolIndex;
-                // 因為目前道具的最大庫存都是 1，若想加的數量大於一，內部邏輯會自己分次處理
-                ResourceManager.Instance.AddItem(item, testFansList[i].quantity);
-            }
+            var item = testFansList[i].item as FansItem;
+            item.harvester = idolList[i % idolList.Count].idolIndex;
         }
     }
 

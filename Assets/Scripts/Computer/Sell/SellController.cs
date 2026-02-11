@@ -25,10 +25,10 @@ public class SellController : MonoBehaviour
     private List<ItemStack> allItemData = new(); // 儲存所有道具資料
     private int currentPage = 0;
     //-----------------------------------------------------------------//
-    private List<GameObject> fansToSellList = new();
-    private int totalMoney = 0;
-    private int totalFans = 0;
-    private Dictionary<Item, int> totalItems = new();
+    private List<SetFansObjectUI> fansToSellList = new();
+    private int totalMoney = 0; // 可轉換的所有金錢
+    private Dictionary<IdolWho, int> totalFans = new(); // 可轉換的所有粉絲數（以角色區分）
+    private Dictionary<Item, int> totalItems = new(); // 可轉換的所有道具（方便 UI 顯示）
     //-----------------------------------------------------------------//
     [Header("相關音效")]
     [SerializeField] private AudioClip sellSound; // 售出音效
@@ -49,8 +49,15 @@ public class SellController : MonoBehaviour
         fixeditemSlots.AddRange(slots);
     }
 
-    public void AddToFansUIList(GameObject fansUI)
+    public void AddToFansUIList(GameObject fansObjectUI)
     {
+        var fansUI = fansObjectUI.GetComponent<SetFansObjectUI>();
+        if (fansUI == null || fansObjectUI == null)
+        {
+            Debug.LogError($"物件不存在或缺少 SetFansObjectUI 組件！");
+            return;
+        }
+
         if (!fansToSellList.Contains(fansUI))
         {
             fansToSellList.Add(fansUI);
@@ -58,8 +65,15 @@ public class SellController : MonoBehaviour
         }
     }
 
-    public void RemoveFromFansUIList(GameObject fansUI)
+    public void RemoveFromFansUIList(GameObject fansObjectUI)
     {
+        var fansUI = fansObjectUI.GetComponent<SetFansObjectUI>();
+        if (fansUI == null || fansObjectUI == null)
+        {
+            Debug.LogError($"物件不存在或缺少 SetFansObjectUI 組件！");
+            return;
+        }
+
         if (fansToSellList.Contains(fansUI))
         {
             fansToSellList.Remove(fansUI);
@@ -84,31 +98,32 @@ public class SellController : MonoBehaviour
         totalMoney = 0;
         foreach (var fansUI in fansToSellList)
         {
-            var fansObjectUI = fansUI.GetComponent<SetFansObjectUI>();
-            if (fansObjectUI != null)
-            {
-                var fansItemStack = fansObjectUI.FansItemStack;
-                FansItem fansItem = fansItemStack.item as FansItem;
-                totalMoney += fansItem.moneyPower * fansItemStack.quantity;
-            }
+            var fansItemStack = fansUI.FansItemStack;
+            FansItem fansItem = fansItemStack.item as FansItem;
+            totalMoney += fansItem.moneyPower * fansItemStack.quantity;
         }
         moneyText.text = $"= ${totalMoney:N0}";
     }
 
     private void UpdateFansPage()
     {
-        totalFans = 0;
+        totalFans.Clear();
         foreach (var fansUI in fansToSellList)
         {
-            var fansObjectUI = fansUI.GetComponent<SetFansObjectUI>();
-            if (fansObjectUI != null)
+            if (fansUI != null)
             {
-                var fansItemStack = fansObjectUI.FansItemStack;
+                var fansItemStack = fansUI.FansItemStack;
                 FansItem fansItem = fansItemStack.item as FansItem;
-                totalFans += fansItem.OShiPower * fansItemStack.quantity;
+                totalFans[fansItem.harvester] = totalFans.GetValueOrDefault(fansItem.harvester, 0) + fansItem.OShiPower * fansItemStack.quantity;
             }
         }
-        fansText.text = $"= {totalFans:N0} 個粉絲數";
+
+        int totalFansCount = 0;
+        foreach (var fansCount in totalFans.Values)
+        {
+            totalFansCount += fansCount;
+        }
+        fansText.text = $"= {totalFansCount:N0} 個粉絲數";
     }
 
     private void UpdateItemPage()
@@ -116,24 +131,22 @@ public class SellController : MonoBehaviour
         totalItems.Clear();
         foreach (var fansUI in fansToSellList)
         {
-            var fansObjectUI = fansUI.GetComponent<SetFansObjectUI>();
-            if (fansObjectUI != null)
+
+            var fansItemStack = fansUI.FansItemStack;
+            FansItem fansItem = fansItemStack.item as FansItem;
+
+            foreach (var dropItem in fansItem.dropableItems)
             {
-                var fansItemStack = fansObjectUI.FansItemStack;
-                FansItem fansItem = fansItemStack.item as FansItem;
-                
-                foreach (var dropItem in fansItem.dropableItems)
+                if (totalItems.ContainsKey(dropItem))
                 {
-                    if (totalItems.ContainsKey(dropItem))
-                    {
-                        totalItems[dropItem] += fansItemStack.quantity;
-                    }
-                    else
-                    {
-                        totalItems[dropItem] = fansItemStack.quantity;
-                    }
+                    totalItems[dropItem] += fansItemStack.quantity;
+                }
+                else
+                {
+                    totalItems[dropItem] = fansItemStack.quantity;
                 }
             }
+
         }
         HandleItemPool();
         UpdatePageToggler();
@@ -200,40 +213,28 @@ public class SellController : MonoBehaviour
     {
         if (moneyPage.activeSelf)
         {
-            ResourceManager.Instance.GainMoney(totalMoney);
-            totalMoney = 0;
+            TransformToMoney();
         }
         else if (fansPage.activeSelf)
         {
-            // 根據粉絲道具的擁有者，增加該角色的粉絲數
-            // 因為目前只寫了一個角色，暫時先硬寫
-            TeamDataUtility.IdolInstanceList[0].fans += totalFans;
-            totalFans = 0;
+            TransformToFansNum();
         }
         else if (itemPage.activeSelf)
         {
-            foreach (var item in totalItems)
-            {
-                ResourceManager.Instance.AddItem(item.Key, item.Value);
-            }
-            totalItems.Clear();
+            TransformToItems();
         }
 
         // 移除已售出的粉絲（FansItem）
         foreach (var fansUI in fansToSellList)
         {
-            var fansObjectUI = fansUI.GetComponent<SetFansObjectUI>();
-            if (fansObjectUI != null)
-            {
-                var fansItemStack = fansObjectUI.FansItemStack;
-                ResourceManager.Instance.RemoveItem(fansItemStack.item, fansItemStack.quantity);
-            }
+            var fansItemStack = fansUI.FansItemStack;
+            ResourceManager.Instance.RemoveItem(fansItemStack.item, fansItemStack.quantity);
         }
 
         // 清空待售清單
         foreach (var fansUI in fansToSellList)
         {
-            Destroy(fansUI);
+            Destroy(fansUI.gameObject);
         }
         fansToSellList.Clear();
 
@@ -241,9 +242,49 @@ public class SellController : MonoBehaviour
         UpdateSellMenuUI();
 
         // 播放售出音效
-        if(sellSound != null)
+        if (sellSound != null)
         {
             AudioManager.Instance.PlaySFX(sellSound);
         }
+    }
+
+    private void TransformToMoney()
+    {
+        ResourceManager.Instance.GainMoney(totalMoney);
+        totalMoney = 0;
+    }
+
+    private void TransformToFansNum()
+    {
+        // 根據粉絲道具的擁有者，增加該角色的粉絲數
+        foreach (var fans in totalFans)
+        {
+            TeamDataUtility.IdolDict[fans.Key].fans += fans.Value;
+        }
+        totalFans.Clear();
+    }
+
+    private void TransformToItems()
+    {
+        List<FansItem> fansItems = new();
+
+        // 先將欲轉換的粉絲道具之 priceType 設為 Item
+        foreach (var fansUI in fansToSellList)
+        {
+            var fansItemStack = fansUI.FansItemStack;
+            FansItem fansItem = fansItemStack.item as FansItem;
+            
+            fansItem.SetPriceType(PriceType.Item);
+            for(int i = 0; i < fansItemStack.quantity; i++) fansItems.Add(fansItem);
+        }
+
+        // 再進行粉絲道具的正式轉換
+        foreach (var fansItem in fansItems)
+        {
+            var target = TeamDataUtility.IdolDict[fansItem.harvester];
+            fansItem.Use(target);
+        }
+
+        totalItems.Clear();
     }
 }

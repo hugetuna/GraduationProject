@@ -16,10 +16,11 @@ public class UserRuntime
     //-----------------------------------------------------------------//
     public bool isUnread = true;  // 是否有未讀訊息
     public string lastMessageText = ""; // 最後一則訊息的內容
-    public int lastMessageDay = DayManager.Instance.date; // 紀錄最後一則訊息是第幾天
+    public int lastMessageDay; // 紀錄最後一則訊息是第幾天
 
     public void Initialize()
     {
+        // 故事初始化
         if (user == null || user.inkJSONAsset == null)
         {
             Debug.LogError($"User SO 或 Ink 資源，無法初始化！");
@@ -38,6 +39,9 @@ public class UserRuntime
             story.state.LoadJson(savedInkState);
             Debug.Log($"{user.name} 的對話狀態已載入");
         }
+
+        // 其他初始化
+        lastMessageDay = DayManager.Instance.date; // 預設為當前日期
     }
 
     public void AddToChatHistory(string text, bool isPlayer)
