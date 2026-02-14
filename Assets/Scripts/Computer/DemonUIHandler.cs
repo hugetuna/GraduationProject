@@ -44,15 +44,15 @@ public class DemonUIHandler : MonoBehaviour
     public void OnDemonButtonClick()
     {
         Debug.Log("點擊了惡魔桌寵");
-        demonPet.SetActive(false); // 隱藏惡魔桌寵
+        // demonPet.SetActive(false); // 隱藏惡魔桌寵
         demonUI.SetActive(true); // 顯示惡魔頁面（預設就在圖層最前面）
-        AudioManager.Instance.PlaySFX(clickDemonSound, 0.5f); // 播放音效
+        AudioManager.Instance.PlaySFX(clickDemonSound); // 播放音效
     }
 
     public void OnByeButtonClick()
     {
         Debug.Log("退出惡魔頁面");
-        demonPet.SetActive(true); // 顯示惡魔桌寵
+        // demonPet.SetActive(true); // 顯示惡魔桌寵
         demonUI.SetActive(false); // 隱藏惡魔頁面
     }
 
