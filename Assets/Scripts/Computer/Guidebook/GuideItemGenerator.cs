@@ -7,7 +7,6 @@ using UnityEngine.UI;
 public class GuideItemGenerator : MonoBehaviour
 {
     [Header("粉絲資料")]
-    [Tooltip("須手動拖入所有粉絲道具資料")]
     public List<FansItem> fansList = new(); // 儲存粉絲資訊的清單
     //-----------------------------------------------------------------//
     public GameObject fansPrefab; // 用於生成粉絲卡片的預製件
@@ -28,10 +27,9 @@ public class GuideItemGenerator : MonoBehaviour
 
             GameObject btn = fansObject.transform.Find("Button").gameObject; // Wrapper + "Button"
             // 設定粉絲卡片的 UI 資料
-            SetGuideItemUI setFansUI = btn.GetComponent<SetGuideItemUI>();
-            setFansUI.SetFansItem(fans);
-            // 設定粉絲卡片的點擊效果
+            btn.GetComponent<SetGuideItemUI>().SetFansItem(fans);
             guideInfoUI.AddToFansButtons(btn.GetComponent<Button>()); 
         }
+        guideInfoUI.UpdateCollectNumber();  // 設定粉絲卡片點擊事件＆更新顯示的收集數量
     }
 }

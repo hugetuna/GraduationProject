@@ -11,6 +11,7 @@ public class FansItem : Item
     public IdolWho harvester = IdolWho.none;
     public int OShiPower;
     public int moneyPower;
+    public string quote = "";
     public List<Item> dropableItems;
     public List<ItemEffect> effects;//效果列表
     public void SetPriceType(PriceType Type)
