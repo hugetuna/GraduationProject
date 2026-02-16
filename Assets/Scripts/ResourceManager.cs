@@ -59,7 +59,9 @@ public class ResourceManager : MonoBehaviour
         bondBC = resourceSaveData.bondBC;
         bondCA = resourceSaveData.bondCA;
         items = resourceSaveData.items;
-        foreach(var itemName in resourceSaveData.allEqupmentNames)
+        //裝備類道具需要從名稱找回物件
+        InventoryManager.ownedEquipments.Clear();
+        foreach (var itemName in resourceSaveData.allEqupmentNames)
         {
             InventoryManager.ownedEquipments.Add(InventoryManager.FindEquipmentByName(itemName));
         }

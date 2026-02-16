@@ -23,15 +23,15 @@ public class DayManager : MonoBehaviour
     {
         date=GameManager.Instance.DayData.day;
         IsInStartOfDay= GameManager.Instance.DayData.IsInStartOfDay;
-        if (IsInStartOfDay)
-        {
-            StartDay();
-        }
-        else
-        {
-            dayEventManager.InitializeDayEvents(date, GameManager.Instance.DayData.currentEventIndex);
-            dayEventManager.TriggerNextEvent();
-        }
+        //if (IsInStartOfDay)
+        //{
+        //    StartDay();
+        //}
+        //else
+        //{
+        //    dayEventManager.InitializeDayEvents(date, GameManager.Instance.DayData.currentEventIndex);
+        //    dayEventManager.TriggerNextEvent();
+        //}
     }
     public void OnSceneLoaded(string SceneName)
     {
@@ -39,7 +39,7 @@ public class DayManager : MonoBehaviour
         {
             StartDay();
         }
-        else if (SceneName == "Floor_4"&&date == 0)
+        else if (SceneName == "Floor_4"&&date == 1&& IsInStartOfDay == true)
         {
             StartDay();
         }
@@ -52,12 +52,10 @@ public class DayManager : MonoBehaviour
     public void StartDay()
     {
         IsInStartOfDay = false;
-        date++;
         dayEventManager.InitializeDayEvents(date,0);
         dayEventManager.TriggerNextEvent();
         TeamManager teamManager = FindAnyObjectByType<TeamManager>();
         teamManager.ResetIdolsTeam();
-        GameManager.Instance.SaveDayData();
     }
     public void AfterDayEndEventStart()
     {
@@ -78,6 +76,10 @@ public class DayManager : MonoBehaviour
         Debug.Log($"結束一天 Date:{date}");
         onDayFinish = null;
         IsInStartOfDay = true;
+        // 每天結束時大保存一次
+        date++;
+        GameManager.Instance.SaveDayData();
+        GameManager.Instance.SaveToFile();
         SceneTransitionManager.Instance.teleportByTargetSceneName("Floor_1");
     }  
 }

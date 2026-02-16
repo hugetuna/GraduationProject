@@ -118,7 +118,9 @@ public class GameManager : MonoBehaviour
         ResourceData.bondBC = resource.bondBC;
         ResourceData.bondCA = resource.bondCA;
         ResourceData.items = resource.items;
-        foreach(EquipmentItem equipment in resource.InventoryManager.ownedEquipments)
+        //塞入裝備名稱（因為裝備是以物件形式存在，無法直接存入，所以只存名字，讀取時再對照名字給裝備）
+        ResourceData.allEqupmentNames.Clear();
+        foreach (EquipmentItem equipment in resource.InventoryManager.ownedEquipments)
         {
             ResourceData.allEqupmentNames.Add(equipment.itemName);
         }
@@ -191,8 +193,8 @@ public class GameManager : MonoBehaviour
 
         //4.處理讀取後的資料
         DayManager.Instance.OnGameFileLoad();
-        ResourceManager.Instance.OnGameFileLoad();
         SceneTransitionManager.Instance.OnGameFileLoad();
+        ResourceManager.Instance.OnGameFileLoad();
 
         Debug.Log("存檔已載入。");
     }

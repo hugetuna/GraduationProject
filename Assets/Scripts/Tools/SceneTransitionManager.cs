@@ -38,7 +38,14 @@ public class SceneTransitionManager : MonoBehaviour
     }
     public void OnGameFileLoad()
     {
-        teleportByTargetSceneName(GameManager.Instance.sceneNameSave);
+        if (GameManager.Instance.DayData.day == 1)
+        {
+            teleportByTargetSceneName("Floor_4");
+        }
+        else
+        {
+            teleportByTargetSceneName("Floor_1");
+        }
     }
     /// <summary>
     /// 呼叫這個方法自動儲存資料並處理動畫
