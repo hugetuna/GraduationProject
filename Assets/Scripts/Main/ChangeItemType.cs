@@ -7,19 +7,22 @@ using UnityEngine.UI;
 using System.Linq;
 
 /* 掛在背包 UI 底下的 TypeSelector 上 */
-public class ChangeTypeUI : MonoBehaviour
+public class ChangeItemType : MonoBehaviour
 {
-    [SerializeField] private List<Button> itemTypeButtons = new(); // 儲存按鈕的列表，分別代表消耗品、裝備和紛絲
+    [Header("分類按鈕設定")]
+    [SerializeField] private List<Button> itemTypeButtons = new(); // 儲存按鈕的列表，分別代表消耗品、粉絲和裝備
     [SerializeField] private Sprite activeBtnImg;
     [SerializeField] private Sprite normalBtnImg;
     //-----------------------------------------------------------------//
     [SerializeField] private PackUIAction packUIAction; // 用於處理背包 UI 的 input system
     private int currentIndex = 0; // 當前選中的按鈕索引
     //-----------------------------------------------------------------//
-    [SerializeField] private ItemUIGenerator itemUIGenerator; // 用於生成道具項目 UI 的生成器，此處用來切換不同的道具頁面
-    private GameObject consumablePage;
-    private GameObject fansPage;
-    private GameObject equipPage;
+    [Header("分類頁面")]
+    [SerializeField] private GameObject consumablePage;
+    [SerializeField] private GameObject fansPage;
+    [SerializeField] private GameObject equipPage;
+    //-----------------------------------------------------------------//
+    private bool isInitialized = false;
 
     void Awake()
     {
@@ -32,6 +35,8 @@ public class ChangeTypeUI : MonoBehaviour
         packUIAction.TypeControl.SwitchRight.performed += OnSwitchRight;
         packUIAction.TypeControl.SwitchLeft.Enable();
         packUIAction.TypeControl.SwitchRight.Enable();
+
+        if(isInitialized) ResetTypeUI(); // 如果已經初始化過了，改為重置預設頁面
     }
 
     void OnDisable()
@@ -66,22 +71,6 @@ public class ChangeTypeUI : MonoBehaviour
 
     void Start()
     {
-        PackUIHandler.OnPackUIClosed += ResetTypeUI; // 訂閱背包 UI 開啟事件
-        InitializeWhenStart();
-    }
-
-    void OnDestroy()
-    {
-        PackUIHandler.OnPackUIClosed -= ResetTypeUI; // 取消訂閱背包 UI 開啟事件
-    }
-
-    private void InitializeWhenStart()
-    {
-        var allContents = itemUIGenerator.GetAllItemTypeContent();
-        consumablePage = allContents[0].gameObject;
-        fansPage = allContents[1].gameObject;
-        equipPage = allContents[2].gameObject;
-
         // 設定按鈕的點擊事件
         foreach (Button btn in itemTypeButtons)
         {
@@ -89,11 +78,8 @@ public class ChangeTypeUI : MonoBehaviour
             tempBtn.onClick.AddListener(() => OnButtonClick(tempBtn));
         }
 
-        // 預設顯示消耗品頁面（已在 Unity 編輯器中預先設定好圖片）
-        consumablePage.SetActive(true);
-        fansPage.SetActive(false);
-        equipPage.SetActive(false);
-        ResetTypeUI();
+        ResetTypeUI(); // 初始化為預設頁面
+        isInitialized = true;
     }
 
     public void OnButtonClick(Button clickedButton)
@@ -113,28 +99,32 @@ public class ChangeTypeUI : MonoBehaviour
         if (clickedButton == itemTypeButtons[0]) // 假設第一個按鈕是消耗品
         {
             consumablePage.SetActive(true);
-            equipPage.SetActive(false);
             fansPage.SetActive(false);
+            equipPage.SetActive(false);
             currentIndex = 0; // 更新當前索引
         }
-        else if (clickedButton == itemTypeButtons[1]) // 假設第二個按鈕是裝備
+        else if (clickedButton == itemTypeButtons[1]) // 假設第二個按鈕是粉絲
         {
             consumablePage.SetActive(false);
-            equipPage.SetActive(true);
-            fansPage.SetActive(false);
+            fansPage.SetActive(true);
+            equipPage.SetActive(false);
             currentIndex = 1; // 更新當前索引
         }
-        else if (clickedButton == itemTypeButtons[2]) // 假設第三個按鈕是粉絲
+        else if (clickedButton == itemTypeButtons[2]) // 假設第三個按鈕是裝備
         {
             consumablePage.SetActive(false);
-            equipPage.SetActive(false);
-            fansPage.SetActive(true);
+            fansPage.SetActive(false);
+            equipPage.SetActive(true);
             currentIndex = 2; // 更新當前索引
         }
     }
 
-    public void ResetTypeUI()
+    public void ResetTypeUI() // 預設顯示消耗品頁面（已在 Unity 編輯器中預先設定好圖片）
     {
+        consumablePage.SetActive(true);
+        fansPage.SetActive(false);
+        equipPage.SetActive(false);
+
         SelectButton(0); // 重置為第一個按鈕
     }
 }

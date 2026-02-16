@@ -5,54 +5,54 @@ using TMPro;
 using UnityEngine.UI;
 using System.Linq;
 
-/* 掛在背包 UI 的 UseButton 上，按下按鈕時會將選擇的道具用在特定角色上 */
+/* 掛在背包 UI 根部，按下按鈕時會將選擇的道具用在特定角色上 */
 [DefaultExecutionOrder(0)]
 public class UseItem : MonoBehaviour
 {
     [SerializeField] private TMP_Dropdown dropdown; // 可選擇使用道具的角色之下拉選單
-    [SerializeField] private string selectedCharacterName; // 儲存選擇的角色名稱
+    [SerializeField] private Button useButton; // 確認使用道具的按鈕
     //-----------------------------------------------------------------//
+    private string selectedCharacterName; // 儲存選擇的角色名稱
     private List<IdolInstance> idolInstances; // 存放偶像資料參考
     private IdolInstance itemUser; // 使用道具的角色
     //-----------------------------------------------------------------//
-    [SerializeField] private GameObject backpackUI; // 背包 UI 物件（用來放置提示）
     [SerializeField] private GameObject hintPrefab; // 使用道具後的提示 prefab
-    //-----------------------------------------------------------------//
     [SerializeField] private AudioClip UseItemSound;
+    //-----------------------------------------------------------------//
+    private ItemUIGenerator itemUIGenerator; // 用於用來刷新背包的道具生成
+    private ItemInfoUI itemInfoUI; // 用於獲取當前選擇的道具資訊
+    private bool isInitialized = false;
 
 
     [System.Obsolete]
     void Start()
     {
-        InitializeWhenStart();
-        PackUIHandler.OnPackUIClosed += ResetDropdown; // 訂閱背包 UI 關閉事件
-    }
+        itemInfoUI = GetComponent<ItemInfoUI>();
+        itemUIGenerator = GetComponent<ItemUIGenerator>();
 
-    void OnDestroy()
-    {
-        PackUIHandler.OnPackUIClosed -= ResetDropdown; // 取消訂閱背包 UI 關閉事件
-    }
-
-    private void InitializeWhenStart()
-    {
         // 根據目前隊伍成員決定下拉選單的選項
         dropdown.options.Clear(); // 清空原有選項
 
         idolInstances = TeamDataUtility.IdolInstanceList;
-        var teamMembers = idolInstances.Select(idol => idol.GetComponent<PlayerControlMainWorld>()).ToList();
 
-        for (int i = 0; i < teamMembers.Count; i++) // 確保不會超出陣列範圍
+        foreach(var idol in idolInstances)
         {
-            string memberName = TeamDataUtility.CleanNameOfCharacterObject(teamMembers[i].name); // 取得隊伍成員名稱
+            string memberName = idol.idolIndex.ToString(); // 取得隊伍成員名稱
             dropdown.options.Add(new TMP_Dropdown.OptionData("給 " + memberName)); // 新增選單項目
         }
-        ResetDropdown();
+        ResetDropdown(); // 初始化下拉選單
+        isInitialized = true;
 
         // 設定下拉選單的事件監聽器
         dropdown.onValueChanged.AddListener(OnDropdownValueChanged);
 
-        // 設定按鈕的事件監聽器
-        GetComponent<Button>().onClick.AddListener(OnUseItem);
+        // 設定使用按鈕的事件監聽器
+        useButton.onClick.AddListener(OnUseItem);
+    }
+
+    void OnEnable()
+    {
+        if(isInitialized) ResetDropdown(); // 每次開啟時重置下拉選單
     }
 
     private void OnDropdownValueChanged(int index)
@@ -72,38 +72,37 @@ public class UseItem : MonoBehaviour
             return;
         }
 
-        for (int i = 0; i < idolInstances.Count; i++) // 確保不會超出陣列範圍
+        foreach (var idol in idolInstances)
         {
-            if (idolInstances[i].idolIndex == characterIndex) // 找到對應的偶像資料
+            if (idol.idolIndex == characterIndex) // 找到對應的偶像資料
             {
-                itemUser = idolInstances[i]; // 設定角色資訊
-                break; // 找到後跳出迴圈
+                // 設定角色資訊，找到後跳出迴圈
+                itemUser = idol; 
+                break;
             }
         }
 
         // 欲使用的道具（可從 itemInfoUI 獲取）
-        Item item = ItemInfoUI.SelectedItem;
+        Item item = itemInfoUI.SelectedItem;
         if (item == null)
         {
             Debug.LogWarning("未選擇任何道具，無法使用！");
             return;
         }
 
-        // 使用道具
+        // 使用道具（目前只有 Consumable 可以在背包內使用）
         if (item.itemType == ItemType.Consumable)
         {
             var itemToUse = item as ConsumableItem;
-            itemToUse.Use(itemUser);
-        }
-        else if (item.itemType == ItemType.Fans)
-        {
-            var itemToUse = item as FansItem;
-            itemToUse.Use(itemUser);
+            ResourceManager.Instance.UseItem(itemToUse, itemUser); // 透過 ResourceManager 處理道具使用邏輯
+            
+            // 刷新背包 UI 以反映道具數量變化 ＆ 重置詳細資訊顯示
+            itemUIGenerator.RefreshPackUI(); 
+            itemInfoUI.ResetItemInfo();
         }
         
         AudioManager.Instance.PlaySFX(UseItemSound); // 播放音效
-        // 生成使用道具提示
-        GameObject hintInstance = Instantiate(hintPrefab, backpackUI.transform);
+        GameObject hintInstance = Instantiate(hintPrefab, transform); // 生成使用道具提示
         hintInstance.GetComponent<HintTogglerForPack>().SetHintUI(characterName, item.itemName);
 
         // 裝備的使用尚未實作

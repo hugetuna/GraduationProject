@@ -7,7 +7,7 @@ using UnityEngine.UI;
 public class ItemUIGenerator : MonoBehaviour
 {
     private ResourceManager resourceManager; // 資源管理器，用於獲取道具清單
-    [SerializeField] private List<ItemStack> itemList = new(); // 儲存道具資訊的清單
+    private List<ItemStack> itemList = new(); // 儲存道具資訊的清單
     //-----------------------------------------------------------------//
     [SerializeField] private GameObject itemPrefab; // 用於生成道具項目的預製件
     [SerializeField] private Transform consumableContent; // 用於放置生成的道具物件的容器（消耗品）
@@ -19,7 +19,7 @@ public class ItemUIGenerator : MonoBehaviour
 
     void Awake()
     {
-        itemInfoUI = GetComponentInChildren<ItemInfoUI>();
+        itemInfoUI = GetComponent<ItemInfoUI>();
         resourceManager = ResourceManager.Instance;
     }
 

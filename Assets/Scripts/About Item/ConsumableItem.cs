@@ -6,6 +6,7 @@ public class ConsumableItem : Item
 {
     
     [SerializeField]
+    public string duration; // 持續天數
     public List<ItemEffect> effects;
     public override void Use(IdolInstance target)
     {

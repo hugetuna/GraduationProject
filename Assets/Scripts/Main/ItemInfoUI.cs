@@ -3,32 +3,45 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using Live2D.Cubism.Core;
 
-/* 掛在背包 UI 底下的 ItemInfo 上 */
+/* 掛在背包 UI 根部，管理道具按鈕及道具詳細資訊 */
 public class ItemInfoUI : MonoBehaviour
 {
     [SerializeField] private Image itemInfoIcon; // 道具詳細資訊的圖示
     [SerializeField] private TextMeshProUGUI itemInfoName; // 道具詳細資訊的名稱
     [SerializeField] private TextMeshProUGUI itemInfoDescription; // 道具詳細資訊的描述
+    [SerializeField] private TextMeshProUGUI itemInfoDuration; // 道具詳細資訊的持續天數
+    [SerializeField] private GameObject dropdownMenu; // 選擇道具使用對象的下拉選單
+    private TextMeshProUGUI dropdownLabel; // 下拉選單的標籤，用於顯示選擇的對象
+    private Image dropdownArrow; // 下拉選單的箭頭圖示
+    [SerializeField] private GameObject useItemButton; // 確認使用道具的按鈕
     //-----------------------------------------------------------------//
     private List<Button> itemButtons = new(); // 儲存所有道具項目按鈕
-    private static Item selectedItem = null; // 當前選擇的道具
-    public static Item SelectedItem { get { return selectedItem; } }
+    private Item selectedItem = null; // 當前選擇的道具
+    public Item SelectedItem { get { return selectedItem; } }
     //-----------------------------------------------------------------//
     private Vector2 originalPos = Vector2.zero; // 按鈕們的起始位置
     public Vector2 OriginalPos { get { return originalPos; } set { originalPos = value; } }
     private Vector2 offset = new(11.0f, 0); // 被按下的按鈕會往右移動的距離
+    //-----------------------------------------------------------------//
+    private bool isInitialized = false;
 
+    void Awake()
+    {
+        dropdownLabel = dropdownMenu.transform.Find("Label").GetComponent<TextMeshProUGUI>();
+        dropdownArrow = dropdownMenu.transform.Find("Arrow").GetComponent<Image>();
+    }
 
     void Start()
     {
-        ResetItemInfo(); // 初始化道具詳細資訊為空
-        PackUIHandler.OnPackUIClosed += ResetItemInfo; // 訂閱背包 UI 關閉事件
+        ResetItemInfo(); // 初始化道具詳細資訊
+        isInitialized = true;
     }
 
-    void OnDestroy()
+    void OnEnable()
     {
-        PackUIHandler.OnPackUIClosed -= ResetItemInfo; // 取消訂閱背包 UI 關閉事件
+        if (isInitialized) ResetItemInfo(); // 每次開啟時先清空道具詳細資訊
     }
 
     public void OnItemClicked(Button clickedButton)
@@ -49,6 +62,24 @@ public class ItemInfoUI : MonoBehaviour
         itemInfoDescription.text = selectedItem.description;
         itemInfoIcon.sprite = selectedItem.icon;
 
+        // 根據不同的道具類型顯示不同的資訊
+        if (selectedItem is ConsumableItem consumable)
+        {
+            itemInfoDuration.gameObject.SetActive(true);
+            itemInfoDuration.text = $"持續天數：{consumable.duration}";
+
+            SetDropdownInteractable(true);
+            useItemButton.GetComponent<Button>().interactable = true;
+        }
+        else
+        {
+            itemInfoDuration.text = "";
+            itemInfoDuration.gameObject.SetActive(false);
+
+            SetDropdownInteractable(false);
+            useItemButton.GetComponent<Button>().interactable = false;
+        }
+
         // 確保字型正確渲染
         itemInfoName.ForceMeshUpdate();
         itemInfoDescription.ForceMeshUpdate();
@@ -65,9 +96,16 @@ public class ItemInfoUI : MonoBehaviour
         // 重置道具詳細資訊，並確保字形能正確渲染
         itemInfoIcon.sprite = null;
         itemInfoName.text = "";
-        itemInfoName.ForceMeshUpdate();
         itemInfoDescription.text = "";
+        itemInfoDuration.text = "";
+        itemInfoDuration.gameObject.SetActive(false);
+
+        SetDropdownInteractable(false);
+        useItemButton.GetComponent<Button>().interactable = false;
+
+        itemInfoName.ForceMeshUpdate();
         itemInfoDescription.ForceMeshUpdate();
+        itemInfoDuration.ForceMeshUpdate();
 
         selectedItem = null;
     }
@@ -80,5 +118,14 @@ public class ItemInfoUI : MonoBehaviour
     public void ClearItemButtons()
     {
         itemButtons.Clear();
+    }
+
+    private void SetDropdownInteractable(bool interactable)
+    {
+        dropdownMenu.GetComponent<TMP_Dropdown>().interactable = interactable;
+        
+        byte alpha = interactable ? (byte)255 : (byte)128;
+        dropdownLabel.color = new Color32(50, 50, 50, alpha);
+        dropdownArrow.color = new Color32(255, 255, 255, alpha);
     }
 }
