@@ -127,6 +127,12 @@ MonoBehaviour:
   idolIndex: 0
   positionInTeam: 0
   basicStatus: {fileID: 0}
+  basicStatusList:
+  - {fileID: 11400000, guid: d15161467c084e1429c3155b5d36be6d, type: 2}
+  - {fileID: 11400000, guid: a8b952e84e0073849a2d817947bb270c, type: 2}
+  - {fileID: 11400000, guid: e14ab52a0b03c89419a4e9a8c75d38ed, type: 2}
+  - {fileID: 11400000, guid: 00af139ad43bc2e45975a437616b95ea, type: 2}
+  - {fileID: 11400000, guid: ed0a0d7139266dc449a0a3db6904da95, type: 2}
   vocal: 0
   dance: 0
   visual: 0
@@ -140,7 +146,25 @@ MonoBehaviour:
   vigourMax: 0
   fans: 0
   bondWithP: 0
+  equipmentItemNow: {fileID: 0}
+  equippedItemName: 
+  currentClothIndex: 0
+  plantVigourCost: 5
+  waterVigourCost: 3
   BHaveSetUp: 0
+  spriteQ: {fileID: 0}
+  spriteTachie: {fileID: 0}
+  basicTrainRecord: {fileID: 0}
+  trainRecord:
+    state: 0
+    position: {x: 0, y: 0}
+    droppedZoneType: 0
+    droppedZoneIndex: 0
+    vigourCost: 0
+    danceExp: 0
+    vocalExp: 0
+    visualExp: 0
+    isActive: 0
 --- !u!114 &8674817806172067076
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -154,11 +178,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   idolInstance: {fileID: 6438761890368787679}
+  idolPersonalPoint: 0
+  usedCards: []
   actionTimer: 0
   isAcion: 0
   applyingCard: {fileID: 0}
   StageStamina: 0
   StageStaminaMax: 0
+  StageVocal: 0
+  StageDance: 0
+  StageVisual: 0
+  stageManager: {fileID: 0}
   spriteRenderer: {fileID: 7756542665267888318}
   spriteAnimator: {fileID: 4705551645589446152}
   idleFrames: []

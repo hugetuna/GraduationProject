@@ -55,6 +55,7 @@ public class OnStageManager : MonoBehaviour
     [Header("有關卡片")]
     public List<ActionCard> deck;
     public List<GameObject> hands;
+    public List<ActionCard> Grave;//棄牌區
     public GameObject cardPrefab;//卡片ui預置件
     public Transform handArea; // UI 範圍 (Card 的父物件，例如是個 HorizontalLayoutGroup)
     [Header("有關音效")]
@@ -344,7 +345,10 @@ public class OnStageManager : MonoBehaviour
         bool drewAny = false;
         for (int i = 0; i < count; i++)
         {
-            if (deck.Count == 0) break;
+            if (deck.Count == 0)
+            {
+                ResetDeckFromGrave();
+            };
             if (hands.Count >= 5) break;
 
             // 1. 取出最上面的一張卡並複製
@@ -405,6 +409,16 @@ public class OnStageManager : MonoBehaviour
                 showDrawChanceCard[i].SetActive(false);
             }
         }
+    }
+    //將棄牌區的牌放回牌組並洗牌
+    public void ResetDeckFromGrave()
+    {
+        foreach(var card in Grave)
+        {
+            deck.Add(card);
+        }
+        Shuffle();
+        Grave.Clear();
     }
     //-----------------------------------計數----------------------------------------
     //得到分數

@@ -11,6 +11,7 @@ public class IdolInstance : MonoBehaviour
     public int positionInTeam;//站位編號
     //角色的基礎數值
     public Idols basicStatus;
+    public List<Idols> basicStatusList = new List<Idols>();//用來存放基本數值的列表，讀取時會根據idolIndex選擇對應的基本數值
     //實際運行的數值
     public int vocal;//歌唱力
     public int dance;//舞蹈力
@@ -92,7 +93,27 @@ public class IdolInstance : MonoBehaviour
     public void LoadData(IdolSaveData data)
     {
         idolIndex = data.idolIndex;
-        basicStatus = data.basicStatus;
+        switch(idolIndex)
+        {
+            case IdolWho.Kuma:
+                basicStatus = basicStatusList[0];
+                break;
+            case IdolWho.Karo:
+                basicStatus = basicStatusList[1];
+                break;
+            case IdolWho.Sirius:
+                basicStatus = basicStatusList[2];
+                break;
+            case IdolWho.Mizar:
+                basicStatus = basicStatusList[3];
+                break;
+            case IdolWho.Aicor:
+                basicStatus = basicStatusList[4];
+                break;
+            default:
+                Debug.LogError("讀取資料時，idolIndex不合法！");
+                return;
+        }
         vocal = data.vocal;
         dance = data.dance;
         visual = data.visual;
