@@ -94,11 +94,12 @@ public class UseItem : MonoBehaviour
         if (item.itemType == ItemType.Consumable)
         {
             var itemToUse = item as ConsumableItem;
-            ResourceManager.Instance.UseItem(itemToUse, itemUser); // 透過 ResourceManager 處理道具使用邏輯
+            var resourceManager = ResourceManager.Instance;
+            resourceManager.UseItem(itemToUse, itemUser); // 透過 ResourceManager 處理道具使用邏輯
             
             // 刷新背包 UI 以反映道具數量變化 ＆ 重置詳細資訊顯示
             itemUIGenerator.RefreshPackUI(); 
-            itemInfoUI.ResetItemInfo();
+            if(resourceManager.GetItemCount(itemToUse) <= 0) itemInfoUI.ResetItemInfo();
         }
         
         AudioManager.Instance.PlaySFX(UseItemSound); // 播放音效
