@@ -86,6 +86,7 @@ GameObject:
   - component: {fileID: 6929780561206435730}
   - component: {fileID: 6438761890368787679}
   - component: {fileID: 8674817806172067076}
+  - component: {fileID: 921062841349141846}
   - component: {fileID: 4705551645589446152}
   - component: {fileID: 5815928495896451706}
   m_Layer: 0
@@ -197,6 +198,21 @@ MonoBehaviour:
   circleClockUI: {fileID: 5175630986456535889}
   StageStaminaText: {fileID: 4128978340634264141}
   StaminaBarUI: {fileID: 1173987086274311177}
+--- !u!114 &921062841349141846
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 708269301796109116}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 602b7a2fb053c924b993121aeedc7ee5, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  bindIdol: {fileID: 8674817806172067076}
+  activeBuffs: []
+  testBuff: {fileID: 11400000, guid: 02a0960a301f1544585c07dde53e0aa2, type: 2}
 --- !u!114 &4705551645589446152
 MonoBehaviour:
   m_ObjectHideFlags: 0
