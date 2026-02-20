@@ -1,0 +1,12 @@
+#speaker:Aicor
+這層有兩間練習教室，我們大部分時間都在這裡。
+#speaker:Karo
+之前一直都是自主練習呢。
+#speaker:Sirius
+我可以先去練習嗎？
+#speaker:Aicor
+你太常泡在練習室了吧。
+#speaker:Karo
+如果讓大家現在都去練習就沒有人帶經紀人逛了呢...
+#speaker:Karo
+先讓西莉絲去練習，我們留下來吧～！

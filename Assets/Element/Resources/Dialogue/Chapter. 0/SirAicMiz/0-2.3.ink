@@ -1,0 +1,10 @@
+#speaker:Aicor
+這層有兩間練習教室，我們大部分時間都在這裡。
+#speaker:Mizar
+之前一直都是我們自己練習呢。
+#speaker:Sirius
+我可以先去練習嗎？
+#speaker:Aicor
+你太常泡在練習室了吧。
+#speaker:Mizar
+老闆叫我們幫忙導覽呢...那西莉絲先去練習，我們留下來繼續逛吧～

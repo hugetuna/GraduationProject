@@ -1,0 +1,14 @@
+#speaker:Kuma
+這層有兩間練習教室！我們很常待在這裡練習！
+#speaker:Mizar
+之前一直都是自主練習呢。
+#speaker:Aicor
+啊不妙...我這周核心的訓練還沒做。
+#speaker:Kuma
+欸？你要去練習了嗎～？
+#speaker:Mizar
+老闆叫我們幫忙導覽呢...。
+#speaker:Mizar
+艾可你可以先去練習，我們留下來吧繼續逛完吧～！
+#speaker:Aicor
+謝謝學姊。
