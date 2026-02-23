@@ -14,13 +14,13 @@ public class TrainingUIHandler : MonoBehaviour
     [Header("訓練 UI 元素")]
     [SerializeField] private GameObject trainingUI; // 直接使用場景中的，不必另外生成
     //-----------------------------------------------------------------//
-    [SerializeField] private Button panelBackground; // 點擊背景關閉 UI 的按鈕
+    // [SerializeField] private Button panelBackground; // 點擊背景關閉 UI 的按鈕
     [SerializeField] private Button closeButton; // 關閉 UI 的叉叉按鈕
     [SerializeField] private TextMeshProUGUI TypeText;
     [SerializeField] private TextMeshProUGUI TeacherText;
     [SerializeField] private TextMeshProUGUI VigourText;
     [SerializeField] private List<Image> characterImages = new(); //  UI 上的（角色）圖片插槽
-    [SerializeField] private Button confirmButton; // 確定指派按鈕
+    // [SerializeField] private Button confirmButton; // 確定指派按鈕
     //-----------------------------------------------------------------//
     [Header("相關音效")]
     [SerializeField] private AudioClip openSound; // 開啟訓練 UI 的音效
@@ -28,15 +28,16 @@ public class TrainingUIHandler : MonoBehaviour
     //-----------------------------------------------------------------//
     private TrainingUIData trainingUIData; // 訓練 UI 的資料 ScriptableObject
     private bool isInitialized = false; // 確保訓練 UI 只初始化一次
+    private string todayTeacherName = "";
     //-----------------------------------------------------------------//
     [Header("跳轉提示 UI 元素")]
     [SerializeField] private GameObject hintPrefab; // 跳轉提示的 prefab
 
     void Start()
     {
-        closeButton.onClick.AddListener(CloseTrainingUI); // 設定關閉按鈕的監聽事件
-        panelBackground.onClick.AddListener(CloseTrainingUI); // 設定背景按鈕的監聽事件
-        confirmButton.onClick.AddListener(ConfirmToAssign); // 設定指派按鈕的監聽事件
+        closeButton.onClick.AddListener(ConfirmToAssign); // 設定關閉按鈕的監聽事件
+        // panelBackground.onClick.AddListener(ConfirmToAssign); // 設定背景按鈕的監聽事件
+        // confirmButton.onClick.AddListener(ConfirmToAssign); // 設定指派按鈕的監聽事件
 
         trainingUI.SetActive(false); // 預設關閉訓練 UI
     }
@@ -50,14 +51,9 @@ public class TrainingUIHandler : MonoBehaviour
         AudioManager.Instance.PlaySFX(openSound);
 
         TypeText.text = trainingUIData.trainingType.ToString(); // 設定訓練類型的 UI 文字內容
-        if (trainingUIData.teacherName != null) // 設定老師的 UI 文字內容
-        {
-            TeacherText.text = $"老師：{trainingUIData.teacherName}"; // 暫時寫死老師的名稱
-        }
-        else
-        {
-            TeacherText.text = "老師：無";
-        }
+
+        FindTodayTeacher(); // 設定老師的 UI 文字內容
+
         VigourText.text = $"耗費體力：{trainingUIData.neededVigour}"; // 設定耗費體力的 UI 文字內容
 
         UpdateCharacterImagesAndPositions(); // 設定角色 UI 圖片及位置
@@ -72,9 +68,27 @@ public class TrainingUIHandler : MonoBehaviour
 
             var numbersController = trainingUI.GetComponent<NumbersController>();
             numbersController.InitializeSlots(trainingUIData); // 初始化數值顯示
-            
+
             isInitialized = true;
         }
+    }
+
+    private void FindTodayTeacher()
+    {
+        // 從預約資料中讀取今天的老師名稱
+        var teacherSaveData = GameManager.Instance.teacherSaveData;
+        var trainingType = trainingUIData.trainingType;
+        if (todayTeacherName == "")
+        {
+            todayTeacherName = teacherSaveData.GetTeacherNameByType(trainingType);
+        }
+        if (todayTeacherName != "無")
+        {
+            teacherSaveData.SetTeacherLessonCompleted(trainingType); // 標記老師為已使用，避免隔天重複預約
+        }
+        
+        TeacherText.text = $"老師：{todayTeacherName}";
+        Debug.Log($"今天的老師：{todayTeacherName}");
     }
 
     private void UpdateCharacterImagesAndPositions()
@@ -124,17 +138,18 @@ public class TrainingUIHandler : MonoBehaviour
     {
         Debug.Log("關閉訓練 UI");
         trainingUI.SetActive(false);
+
         OnTrainingUIClosed?.Invoke(); // 觸發訓練 UI 關閉事件
     }
 
     private void ConfirmToAssign()
     {
-        if(assignSound != null)
+        if (assignSound != null)
         {
             AudioManager.Instance.PlaySFX(assignSound);
         }
 
-        if(TrainingUIManager.Instance.GetMembers().Count == 0)
+        if (TrainingUIManager.Instance.GetMembers().Count == 0)
         {
             // 若全員皆去訓練，觸發可通往電腦場景的 UI
             var hintObj = Instantiate(hintPrefab, trainingUI.transform.parent); // 在 TrainingUI 的父物件下生成提示 UI

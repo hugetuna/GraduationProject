@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using System;
 using System.Linq;
+using UnityEngine.UI;
 
 [System.Serializable]
 public class StatsSlot
@@ -12,6 +13,7 @@ public class StatsSlot
     public TextMeshProUGUI dance;
     public TextMeshProUGUI vocal;
     public TextMeshProUGUI visual;
+    public Image equipmentIcon = null;
     public List<GameObject> buffList; // 顯示加成效果的物件列表（底下的文字和圖示另外設定）
     public IdolInstance currentIdol; // 這個 slot 目前放哪個角色
 }
@@ -134,11 +136,18 @@ public class NumbersController : MonoBehaviour
         var idol = TeamDataUtility.IdolDict[idolIndex];
         slot.currentIdol = idol;
 
-        // 更新文字
+        // 更新數值文字＆裝備圖示
+        if(slot.equipmentIcon != null){
+            if(idol.equipmentItemNow != null) slot.equipmentIcon.sprite = idol.equipmentItemNow.icon;
+            else slot.equipmentIcon.sprite = null;
+        }
         slot.fans.text = idol.fans.ToString();
-        slot.dance.text = (zoneType == DropZoneType.Dance) ? $"{idol.dance + data.withTeacherBenefit}▲" : idol.dance.ToString();
-        slot.vocal.text = (zoneType == DropZoneType.Vocal) ? $"{idol.vocal + data.withTeacherBenefit}▲" : idol.vocal.ToString();
-        slot.visual.text = (zoneType == DropZoneType.Visual) ? $"{idol.visual + data.withTeacherBenefit}▲" : idol.visual.ToString();
+        
+        var teacherName = GameManager.Instance.teacherSaveData.GetTeacherNameByType(data.trainingType);
+        int benefit = (teacherName != "無") ? data.withTeacherBenefit : data.basicBenefit;
+        slot.dance.text = (zoneType == DropZoneType.Dance) ? $"{idol.dance + benefit}▲" : idol.dance.ToString();
+        slot.vocal.text = (zoneType == DropZoneType.Vocal) ? $"{idol.vocal + benefit}▲" : idol.vocal.ToString();
+        slot.visual.text = (zoneType == DropZoneType.Visual) ? $"{idol.visual + benefit}▲" : idol.visual.ToString();
 
         // 顯示加成物件
         foreach (var buff in slot.buffList)
@@ -150,6 +159,7 @@ public class NumbersController : MonoBehaviour
     private void ClearSlotUI(StatsSlot slot)
     {
         slot.currentIdol = null;
+        if(slot.equipmentIcon != null) slot.equipmentIcon.sprite = null;
         slot.fans.text = "";
         slot.dance.text = "";
         slot.vocal.text = "";

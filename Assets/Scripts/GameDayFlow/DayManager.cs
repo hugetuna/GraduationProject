@@ -76,6 +76,8 @@ public class DayManager : MonoBehaviour
         Debug.Log($"結束一天 Date:{date}");
         onDayFinish = null;
         IsInStartOfDay = true;
+        // 重置預約狀態
+        GameManager.Instance.teacherSaveData.CleanTeacherAppointments();
         // 每天結束時大保存一次
         date++;
         GameManager.Instance.SaveDayData();

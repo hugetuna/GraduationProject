@@ -11,7 +11,7 @@ public class SaveDataWrapper
     public string sceneNameSave;
     public ResourceSaveData ResourceData;
     public ChatSaveData chatSaveData;
-    public AppointSaveData appointSaveData;
+    public TeacherSaveData teacherSaveData;
     public bool isElevatorUsedToday;
     // 劇情與舞台通常視需求決定是否永久存檔
     // DialogueSaveData dialogueSaveData;
