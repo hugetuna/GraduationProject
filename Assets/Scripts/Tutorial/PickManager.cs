@@ -98,7 +98,6 @@ public class PickManager : MonoBehaviour
     }
     public void  UpdatePickedMemberUI()
     {
-        
         //先清空已顯示的成員
         foreach (var member in PickedMemberList)
         {
@@ -126,7 +125,13 @@ public class PickManager : MonoBehaviour
         if (pickedIdolCount == 3)
         {
             isDone = true;
-            
+            //根據隊伍配置設定隊伍編號
+            List<int> pickedIds = new List<int>();
+            foreach (var whoPicked in whoPickedList)
+            {
+                if (whoPicked.isPicked == true) pickedIds.Add((int)whoPicked.pickedIdol);
+            }
+            GameManager.Instance.teamIndex = (int)CalculateTeamIndex(pickedIds);
             //實例化所選取的偶像
             int newIdolCount = 0; // 記錄目前已生成幾個角色（用於設定在訓練等介面裡的初始位置）
             foreach (var whoPicked in whoPickedList)
@@ -140,11 +145,30 @@ public class PickManager : MonoBehaviour
                     newIdolCount++;
                 }
             }
-            
             //直接進入主場景，SceneTransitionManager會處理好場景轉換與資料保存
             GameManager.Instance.SaveInkJSONAssetData(DialogueSaveData);
             SceneTransitionManager.Instance.teleportByTargetSceneName("Dialogue Scene");
         }
-        
+    }
+    private IdolTeamIndex CalculateTeamIndex(List<int> pickedIds)
+    {
+        pickedIds.Sort(); // 重要：確保順序一致
+        string key = string.Join("", pickedIds); // 變成 "012" 這樣的字串
+        Debug.Log("計算隊伍編號，選取的偶像ID組合: " + key);
+        // 對照你在 GameManager 定義的 IdolTeamIndex 順序
+        return key switch
+        {
+            "012" => IdolTeamIndex.Kuma_Sirius_Karo,
+            "024" => IdolTeamIndex.Kuma_Sirius_Aicor,
+            "023" => IdolTeamIndex.Kuma_Sirius_Mizar,
+            "014" => IdolTeamIndex.Kuma_Karo_Aicor,
+            "013" => IdolTeamIndex.Kuma_Karo_Mizar,
+            "034" => IdolTeamIndex.Kuma_Aicor_Mizar,
+            "124" => IdolTeamIndex.Sirius_Karo_Aicor,
+            "123" => IdolTeamIndex.Sirius_Karo_Mizar,
+            "234" => IdolTeamIndex.Sirius_Aicor_Mizar,
+            "134" => IdolTeamIndex.Karo_Aicor_Mizar,
+            _ => IdolTeamIndex.None
+        };
     }
 }

@@ -6,6 +6,7 @@ using UnityEngine;
 public class SaveDataWrapper
 {
     public List<SoilSaveData> soilDataList;
+    public int teamIndex;
     public List<IdolSaveData> idolDataList;
     public DaySaveData DayData;
     public string sceneNameSave;

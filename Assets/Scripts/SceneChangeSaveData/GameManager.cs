@@ -4,6 +4,20 @@ using UnityEngine;
 using UnityEngine.Events;
 using System.IO;
 
+public enum IdolTeamIndex
+{
+    None=-1,
+    Kuma_Sirius_Karo=0,
+    Kuma_Sirius_Aicor=1,
+    Kuma_Sirius_Mizar=2,
+    Kuma_Karo_Aicor=3,
+    Kuma_Karo_Mizar=4,
+    Kuma_Aicor_Mizar=5,
+    Sirius_Karo_Aicor=6,
+    Sirius_Karo_Mizar=7,
+    Sirius_Aicor_Mizar=8,
+    Karo_Aicor_Mizar= 9
+}
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -11,6 +25,7 @@ public class GameManager : MonoBehaviour
     public GameObject Canvas_Config;
     [Header("永久儲存資料")]
     public List<SoilSaveData> soilDataList = new List<SoilSaveData>();
+    public int teamIndex = (int)IdolTeamIndex.None;
     public List<IdolSaveData> idolDataList = new List<IdolSaveData>();
     public DaySaveData DayData;
     public string sceneNameSave = "";
@@ -148,6 +163,7 @@ public class GameManager : MonoBehaviour
         SaveDataWrapper wrapper = new SaveDataWrapper
         {
             soilDataList = this.soilDataList,
+            teamIndex = this.teamIndex,
             idolDataList = this.idolDataList,
             ResourceData = this.ResourceData,
             DayData = this.DayData,
@@ -183,6 +199,7 @@ public class GameManager : MonoBehaviour
 
         // 3. 還原到 GameManager
         this.soilDataList = wrapper.soilDataList;
+        this.teamIndex = wrapper.teamIndex;
         this.idolDataList = wrapper.idolDataList;
         this.ResourceData = wrapper.ResourceData;
         this.DayData = wrapper.DayData;
