@@ -51,7 +51,7 @@ public class NumbersController : MonoBehaviour
             int currentMaxIndex = group.Any() ? group.Max(x => x.trainRecord.droppedZoneIndex) : -1;
 
             // 用來記錄「已經發出去的號碼牌」
-            HashSet<int> occupiedIndices = new HashSet<int>();
+            HashSet<int> occupiedIndices = new();
 
             // 排序：先照 Index 排，如果 Index 一樣就照 ID 排 (保證每次執行結果順序固定)
             var sortedIdols = group
@@ -85,6 +85,29 @@ public class NumbersController : MonoBehaviour
 
                 // 根據位置資料更新 UI
                 HandleIdolPositionChanged(idol.idolIndex, group.Key, finalIndex, data);
+            }
+        }
+    }
+
+    public void RefreshSlots(TrainingUIData data)
+    {
+        // 刷新成員區
+        foreach (var slot in memberSlots)
+        {
+            if (slot.currentIdol != null)
+            {
+                FillSlotData(slot, slot.currentIdol.idolIndex, DropZoneType.Member, data);
+            }
+        }
+
+        // 刷新訓練區
+        foreach (var slot in traineeSlots)
+        {
+            if (slot.currentIdol != null)
+            {
+                // DropZoneType：Dance、Vocal、Visual = 1、2、3
+                // TrainingType：Dance、Vocal、Visual = 0、1、2
+                FillSlotData(slot, slot.currentIdol.idolIndex, (DropZoneType)(trainingType + 1), data);
             }
         }
     }
@@ -137,29 +160,40 @@ public class NumbersController : MonoBehaviour
         slot.currentIdol = idol;
 
         // 更新數值文字＆裝備圖示
-        if(slot.equipmentIcon != null){
-            if(idol.equipmentItemNow != null) slot.equipmentIcon.sprite = idol.equipmentItemNow.icon;
+        if (slot.equipmentIcon != null)
+        {
+            if (idol.equipmentItemNow != null) slot.equipmentIcon.sprite = idol.equipmentItemNow.icon;
             else slot.equipmentIcon.sprite = null;
         }
         slot.fans.text = idol.fans.ToString();
-        
+
         var teacherName = GameManager.Instance.teacherSaveData.GetTeacherNameByType(data.trainingType);
         int benefit = (teacherName != "無") ? data.withTeacherBenefit : data.basicBenefit;
-        slot.dance.text = (zoneType == DropZoneType.Dance) ? $"{idol.dance + benefit}▲" : idol.dance.ToString();
-        slot.vocal.text = (zoneType == DropZoneType.Vocal) ? $"{idol.vocal + benefit}▲" : idol.vocal.ToString();
-        slot.visual.text = (zoneType == DropZoneType.Visual) ? $"{idol.visual + benefit}▲" : idol.visual.ToString();
+        slot.dance.text = (zoneType == DropZoneType.Dance) ? $"{idol.dance + (int)(benefit * idol.daTrainingBonus)}▲" : idol.dance.ToString();
+        slot.vocal.text = (zoneType == DropZoneType.Vocal) ? $"{idol.vocal + (int)(benefit * idol.voTrainingBonus)}▲" : idol.vocal.ToString();
+        slot.visual.text = (zoneType == DropZoneType.Visual) ? $"{idol.visual + (int)(benefit * idol.viTrainingBonus)}▲" : idol.visual.ToString();
 
-        // 顯示加成物件
-        foreach (var buff in slot.buffList)
+        // 取得該角色目前有的訓練加成＆顯示加成物件
+        var buffNames = ItemEffectUtility.GetTrainingEffectDisplayNames(idolIndex, data.trainingType);
+        for (int i = 0; i < slot.buffList.Count; i++) // 以 buffBar 物件的數量為上限
         {
-            buff.SetActive(true);
+            if (i < buffNames.Count)
+            {
+                slot.buffList[i].SetActive(true);
+                var buffBar = slot.buffList[i].GetComponent<BuffBar>();
+                buffBar.UpdateBuffBar(buffNames[i]); // 更新 buffBar 上的文字（如果有圖示的話可以一起更新）
+            }
+            else
+            {
+                slot.buffList[i].SetActive(false); // 多出來的隱藏起來
+            }
         }
     }
 
     private void ClearSlotUI(StatsSlot slot)
     {
         slot.currentIdol = null;
-        if(slot.equipmentIcon != null) slot.equipmentIcon.sprite = null;
+        if (slot.equipmentIcon != null) slot.equipmentIcon.sprite = null;
         slot.fans.text = "";
         slot.dance.text = "";
         slot.vocal.text = "";

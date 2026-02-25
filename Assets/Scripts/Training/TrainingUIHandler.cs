@@ -4,6 +4,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
+using Ink.Parsed;
 
 /* 掛在 TrainingManager 底下，分別控制三種不同的 UI */
 public class TrainingUIHandler : MonoBehaviour
@@ -20,7 +21,6 @@ public class TrainingUIHandler : MonoBehaviour
     [SerializeField] private TextMeshProUGUI TeacherText;
     [SerializeField] private TextMeshProUGUI VigourText;
     [SerializeField] private List<Image> characterImages = new(); //  UI 上的（角色）圖片插槽
-    // [SerializeField] private Button confirmButton; // 確定指派按鈕
     //-----------------------------------------------------------------//
     [Header("相關音效")]
     [SerializeField] private AudioClip openSound; // 開啟訓練 UI 的音效
@@ -29,12 +29,15 @@ public class TrainingUIHandler : MonoBehaviour
     private TrainingUIData trainingUIData; // 訓練 UI 的資料 ScriptableObject
     private bool isInitialized = false; // 確保訓練 UI 只初始化一次
     private string todayTeacherName = "";
+    private NumbersController numbersController; // 用來控制數值顯示的腳本參考
     //-----------------------------------------------------------------//
     [Header("跳轉提示 UI 元素")]
     [SerializeField] private GameObject hintPrefab; // 跳轉提示的 prefab
 
     void Start()
     {
+        numbersController = trainingUI.GetComponent<NumbersController>();
+
         closeButton.onClick.AddListener(ConfirmToAssign); // 設定關閉按鈕的監聽事件
         // panelBackground.onClick.AddListener(ConfirmToAssign); // 設定背景按鈕的監聽事件
         // confirmButton.onClick.AddListener(ConfirmToAssign); // 設定指派按鈕的監聽事件
@@ -66,10 +69,13 @@ public class TrainingUIHandler : MonoBehaviour
                 dtl.Initialize(trainingUIData); // 初始化底下每一個 DragToLesson 元件
             }
 
-            var numbersController = trainingUI.GetComponent<NumbersController>();
             numbersController.InitializeSlots(trainingUIData); // 初始化數值顯示
 
             isInitialized = true;
+        }
+        else
+        {
+            numbersController.RefreshSlots(trainingUIData); // 刷新角色數值顯示
         }
     }
 

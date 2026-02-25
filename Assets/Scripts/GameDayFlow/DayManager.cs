@@ -72,6 +72,7 @@ public class DayManager : MonoBehaviour
         {
             idol.ResetTemporaryEffect();
         }
+        ItemEffectUtility.ResetTrainingEffects();
         // 重置事件狀態
         Debug.Log($"結束一天 Date:{date}");
         onDayFinish = null;

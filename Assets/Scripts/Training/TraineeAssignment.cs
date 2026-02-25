@@ -78,7 +78,10 @@ public class TraineeAssignment : MonoBehaviour
     // 計算並寫入訓練數值 (體力與經驗)
     private void CalculateAndSetTrainingStats(IdolInstance idol, TrainingUIData data)
     {
-        int benefit = DecideBenefitByTeacher(data); // 根據是否有老師來決定收益類型
+        // 根據是否有老師來決定收益類型
+        var teacherName = GameManager.Instance.teacherSaveData.GetTeacherNameByType(data.trainingType);
+        int benefit = teacherName != "無" ? data.withTeacherBenefit : data.basicBenefit;
+
         int finalDanceExp = 0;
         int finalVocalExp = 0;
         int finalVisualExp = 0;
@@ -104,20 +107,6 @@ public class TraineeAssignment : MonoBehaviour
             vocalExp: finalVocalExp,
             visualExp: finalVisualExp
         );
-    }
-
-    private int DecideBenefitByTeacher(TrainingUIData data)
-    {
-        // 從預約資料中尋找對應訓練類型的老師資訊
-        var teacherName = GameManager.Instance.teacherSaveData.GetTeacherNameByType(data.trainingType);
-        if(teacherName != "無")
-        {
-            return data.withTeacherBenefit;
-        }
-        else // 如果沒有找到對應的老師資訊，就使用基本收益
-        {
-            return data.basicBenefit;
-        }
     }
 
     // 重置訓練數值 (當角色不在訓練區)
