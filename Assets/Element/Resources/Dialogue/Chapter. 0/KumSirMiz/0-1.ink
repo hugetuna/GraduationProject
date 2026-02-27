@@ -37,7 +37,6 @@
 呵呵，老闆早安。
 
 #speaker:Boss
-#Tachie3_Character:Karo 
 真有活力呢，沒錯，這位就是你們的新經紀人。
 
 #speaker:Manager
@@ -61,7 +60,6 @@
 #Tachie2_Character:Sirius 
 #Tachie2_Emotion:Talk
 #emotion:Talk
-#Tachie3_Character:Karo 
 你好。我是西莉絲。
 
 #speaker:Kuma

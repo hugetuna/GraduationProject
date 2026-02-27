@@ -35,7 +35,6 @@
 應該就是這邊這位了吧，你好。
 
 #speaker:Boss
-#Tachie3_Character:Karo 
 沒錯，這位就是你們的新經紀人。
 
 #speaker:Manager
@@ -46,7 +45,7 @@
 #Tachie1_Emotion:Laugh
 #emotion:Laugh
 #Tachie1_Behavior:Shake
-初次見面，我叫米砂～。
+初次見面，我叫米沙～。
 
 #speaker:Karo
 #Tachie3_Character:Karo 
@@ -59,11 +58,9 @@
 #Tachie2_Character:Aicor 
 #Tachie2_Emotion:Talk
 #emotion:Talk
-#Tachie3_Character:Karo 
 哈囉，我叫艾可～。
 
 #speaker:Mizar
-#Tachie2_Character:Aicor
 #Tachie1_Character:Mizar 
 #Tachie1_Emotion:Laugh #Tachie1_Behavior:Shake
 #emotion:Laugh

@@ -35,7 +35,6 @@
 應該就是這邊這位了吧，你們好呀。
 
 #speaker:Boss
-#Tachie3_Character:Mizar 
 真有活力呢，沒錯，這位就是你們的新經紀人。
 
 #speaker:Manager
@@ -52,18 +51,15 @@
 #Tachie3_Character:Mizar 
 #Tachie3_Emotion:Laugh
 #emotion:Laugh
-#Tachie1_Character:Aicor
 我叫米砂，今後就請你多多指教了。
 
 #speaker:Sirius
 #Tachie2_Character:Sirius 
 #Tachie2_Emotion:Talk
 #emotion:Talk
-#Tachie3_Character:Mizar 
 你好。我是西莉絲。
 
 #speaker:Aicor
-#Tachie2_Character:Sirius
 #Tachie1_Character:Aicor 
 #Tachie1_Emotion:Laugh #Tachie1_Behavior:Shake
 #emotion:Laugh
