@@ -104,7 +104,7 @@ public class UseItem : MonoBehaviour
         
         AudioManager.Instance.PlaySFX(UseItemSound); // 播放音效
         GameObject hintInstance = Instantiate(hintPrefab, transform); // 生成使用道具提示
-        hintInstance.GetComponent<HintTogglerForPack>().SetHintUI(characterName, item.itemName);
+        hintInstance.GetComponent<PackHintToggler>().SetHintUI(characterName, item.itemName);
 
         // 裝備的使用尚未實作
     }

@@ -3,7 +3,7 @@ using UnityEngine.UI;
 using System;
 
 /* 掛在詢問要不要跳到電腦介面的提示 prefab 上 */
-public class HintTogglerForTraining : MonoBehaviour
+public class TrainingHintToggler : MonoBehaviour
 {
     [SerializeField] private Button yesButton; // 按下後會跳轉到電腦介面
     [SerializeField] private Button noButton; // 按下後會關閉提示

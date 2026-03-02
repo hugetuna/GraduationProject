@@ -50,7 +50,7 @@ public class SetSellUI : MonoBehaviour
         // 初始化販賣頁面（角色部分）- 2
         for (int i = 0; i < characterUIList.Count; i++)
         {
-            var characterUI = characterUIList[i].GetComponent<SetCharacterUIForSell>();
+            var characterUI = characterUIList[i].GetComponent<SetSellCharacterUI>();
             characterUI.Initialize(idolList[i], idolFansDict[idolList[i]]); // 場景角色和角色 UI 相對應
             Debug.Log($"初始化販賣頁面角色 UI：{idolList[i].idolIndex}");
         }

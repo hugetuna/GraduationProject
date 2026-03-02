@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 
 /* 掛在販賣頁面的各個角色根部 */
-public class SetCharacterUIForSell : MonoBehaviour
+public class SetSellCharacterUI : MonoBehaviour
 {
     [Header("UI 元素")]
     [SerializeField] private Image headImage;

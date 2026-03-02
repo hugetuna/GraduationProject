@@ -5,7 +5,7 @@ using TMPro;
 using UnityEngine.UI;
 
 /* 掛在提醒玩家已使用某道具的提示 prefab 上 */
-public class HintTogglerForPack : MonoBehaviour
+public class PackHintToggler : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI hintText; // 提示文字 UI 元素
     [SerializeField] private Button okButton; // 確認按鈕

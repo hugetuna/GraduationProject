@@ -11,13 +11,13 @@ public class TraineeAssignment : MonoBehaviour
     void Start()
     {
         TrainingUIHandler.OnTrainingUIConfirmed += AssignTrainees;
-        HintTogglerForTraining.OnGoToComputer += AssignTrainees;
+        TrainingHintToggler.OnGoToComputer += AssignTrainees;
     }
 
     void OnDestroy()
     {
         TrainingUIHandler.OnTrainingUIConfirmed -= AssignTrainees;
-        HintTogglerForTraining.OnGoToComputer -= AssignTrainees;
+        TrainingHintToggler.OnGoToComputer -= AssignTrainees;
     }
 
     public void AssignTrainees(TrainingUIData data) // 當任意訓練 UI 按下確定按鈕時呼叫

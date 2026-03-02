@@ -160,7 +160,7 @@ public class TrainingUIHandler : MonoBehaviour
             // 若全員皆去訓練，觸發可通往電腦場景的 UI
             var hintObj = Instantiate(hintPrefab, trainingUI.transform.parent); // 在 TrainingUI 的父物件下生成提示 UI
             hintObj.transform.SetAsLastSibling(); // 確保提示 UI 在最上層
-            hintObj.GetComponent<HintTogglerForTraining>().SetTrainingUIData(trainingUIData); // 若確定前往電腦介面可先進行訓練結算
+            hintObj.GetComponent<TrainingHintToggler>().SetTrainingUIData(trainingUIData); // 若確定前往電腦介面可先進行訓練結算
         }
         else
         {

@@ -2,16 +2,9 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems; // UI 和物件的拖曳寫法不同
 
-public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class DragToLesson : Drag
 {
-    private RectTransform rectTransform;
-    private Canvas canvas;
-    private CanvasGroup canvasGroup;
-    //-----------------------------------------------------------------//
-    [Header("拖曳後的偏移")]
-    [SerializeField] private Vector3 dropOffset = new(0f, 2f, 0f);
-    private Vector2 originalPosition;
-    //-----------------------------------------------------------------//
+    // [Header("位置資料")]
     // private bool isDragging = false;
     private DropZone lastDropZone = null; // 紀錄上一次成功放置的 DropZone
     private DropZone currentDropZone = null; // 當前放置的 DropZone
@@ -26,9 +19,7 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     [SerializeField] private GameObject vigourSlider;
     private VigourBar vigourBar; // 對應腳本參考
     //-----------------------------------------------------------------//
-    // [Header("訓練 UI 資料")]
     private TrainingUIData trainingUIData; // 目前訓練 UI 的資料
-    // private NumbersController numbersController;
     private string myName = "";
     private string MyName
     {
@@ -43,20 +34,13 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         }
     }
     private IdolWho MyIdolIndex => TeamDataUtility.GetIdolEnum(MyName);
-    //-----------------------------------------------------------------//
-    [Header("相關音效")]
-    [SerializeField] private AudioClip dragCompletedSound; // 拖曳成功的音效
 
-    void Awake()
+    protected override void Awake()
     {
-        rectTransform = GetComponent<RectTransform>();
-        canvas = GetComponentInParent<Canvas>();
-        canvasGroup = GetComponent<CanvasGroup>();
+        base.Awake();
 
         vigourBar = GetComponent<VigourBar>();
         // numbersController = GetComponentInParent<NumbersController>();
-
-        originalPosition = rectTransform.anchoredPosition;
     }
 
     public void Initialize(TrainingUIData data) // 僅在初次打開訓練介面時呼叫一次 
@@ -72,39 +56,20 @@ public class DragToLesson : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
         else vigourSlider.SetActive(false);
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
+    public override void OnBeginDrag(PointerEventData eventData)
     {
-        if (canvasGroup.interactable == false)
-        {
-            Debug.Log("無法拖曳");
-            return;
-        }
-
-        // isDragging = true;
-        canvasGroup.blocksRaycasts = false;
+        base.OnBeginDrag(eventData);
 
         // 開始拖曳時，隱藏角色底下的 UI 元素
         vigourSlider.SetActive(false);
     }
 
-    public void OnDrag(PointerEventData eventData)
-    {
-        // 將滑鼠位置轉成世界座標，直接設置物件位置
-        if (RectTransformUtility.ScreenPointToWorldPointInRectangle(
-            canvas.transform as RectTransform,
-            eventData.position,
-            eventData.pressEventCamera,
-            out Vector3 globalMousePos))
-        {
-            rectTransform.position = globalMousePos;
-        }
-    }
+    // public void OnDrag(PointerEventData eventData); // 使用父類別的預設內容
 
-    public void OnEndDrag(PointerEventData eventData)
+    public override void OnEndDrag(PointerEventData eventData)
     {
-        // isDragging = false;
-        canvasGroup.blocksRaycasts = true;
-
+        base.OnEndDrag(eventData);
+        
         // 拖曳成功，放到新的 DropZone
         DropZoneType currentZoneType;
         if (CurrentDropZone != null) // 更新最後成功 DropZone
