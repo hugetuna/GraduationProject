@@ -12,15 +12,20 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 78193e4c50c832142aa4cbd6ce9eb854, type: 3}
   m_Name: DayEvent_1_8
   m_EditorClassIdentifier: 
-  eventId: Day1_8_ShowUI
-  TriggerDay: 1
+  eventId: Day1_8_talk
+  TriggerPeople: -1
+  TriggerTeam: 
   TriggerTimeIndex: 8
-  Type: 3
-  DialogueWhenTrigger: {fileID: 0}
+  Type: 0
+  DialogueWhenTrigger: {fileID: 11400000, guid: 0f292e114eb33c645bcaefa2d7be9f0f, type: 2}
   onlyTriggerOnce: 1
-  UIToShow: {fileID: 8311229446971987146, guid: ee8aea9badc2cff4a84909c629294fa6, type: 3}
+  UIToShow: {fileID: 0}
   targetSceneName: 
-  targetPlayerPositionMin: {x: -3, y: -1, z: 8}
-  targetPlayerPositionMax: {x: 4, y: 1, z: 12}
+  targetPlayerPositionMin: {x: 0, y: 0, z: 0}
+  targetPlayerPositionMax: {x: 0, y: 0, z: 0}
   interactableObjectKey: 
-  description: "\u6559\u5B78\u7B2C1-8\u5E55\uFF0C\u986F\u793A2\u6A13\u7684\u4ECB\u7D39ui\n\u7B2C\u4E00\u5929"
+  waitSeconds: 0
+  targetIdol: 0
+  isHintEvent: 0
+  hint: 
+  description: "\u6559\u5B78\u7B2C1-8\u5E55\uFF0C\u57282\u6A13\u7684\u5C0D\u8A71\n\u7B2C\u4E00\u5929"

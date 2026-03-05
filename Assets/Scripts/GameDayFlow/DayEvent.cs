@@ -12,6 +12,7 @@ public enum EventType
     WaitUntilPlayerPosition,
     WaitUntilInteractWithObject,
     WaitForSeconds,
+    WaitUntilSpecificIdolTrained,
     WaitAfterDayEndEventStart,
     EndDay
 }
@@ -19,8 +20,8 @@ public enum EventType
 public class DayEvent : ScriptableObject
 {
     public string eventId;// 可用來查找避免重複
-    public int TriggerDay;//觸發的遊戲天數
-
+    public IdolWho TriggerPeople;//某人在隊伍中時才會觸發
+    public List<IdolTeamIndex> TriggerTeam;//某些隊伍時才會觸發
     //觸發的時間點序號
     //0~99: 白天事件
     //100:  WaitAfterDayEndEventStart事件
@@ -39,6 +40,7 @@ public class DayEvent : ScriptableObject
     public Vector3 targetPlayerPositionMax;
     public string interactableObjectKey;//若WaitUntilInteractWithObject->等待與目標互動物件互動
     public float waitSeconds;//若WaitForSeconds->等待秒數
+    public IdolWho targetIdol;//若WaitUntilSpecificIdolTrained->等待特定偶像培育完成
     [Header("提示系統")]
     public bool isHintEvent = false;//是否需要提示
     public string hint;//提示內容
