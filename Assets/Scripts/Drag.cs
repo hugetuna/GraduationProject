@@ -32,12 +32,6 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
 
     public virtual void OnBeginDrag(PointerEventData eventData)
     {
-        if (canvasGroup.interactable == false)
-        {
-            Debug.Log("無法拖曳");
-            return;
-        }
-
         // isDragging = true;
         canvasGroup.blocksRaycasts = false;
     }

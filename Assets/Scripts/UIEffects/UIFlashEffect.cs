@@ -1,6 +1,7 @@
 using System.Collections;
 using UnityEngine;
 
+/* 掛在需要閃爍效果的 UI 元素上 */
 public class UIFlashEffect : MonoBehaviour
 {
     private CanvasGroup canvasGroup;

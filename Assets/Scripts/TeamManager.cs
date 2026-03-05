@@ -50,6 +50,7 @@ public class TeamManager : MonoBehaviour
             }
             idol.SetActive(idolAbility.trainRecord.isActive);
         }
+
         //初始化位置編號
         SetUpTeamPosition();
     }

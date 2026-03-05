@@ -52,7 +52,10 @@ public class DragToLesson : Drag
 
         // 確保換場景後 UI 不會跑掉
         var state = TrainingUIManager.Instance.GetIdolState(MyIdolIndex);
-        if (state == IdolTrainingState.InTeam) vigourSlider.SetActive(true);
+        if (state == IdolTrainingState.InTeam || state == IdolTrainingState.Unable)
+        {
+            vigourSlider.SetActive(true);
+        }
         else vigourSlider.SetActive(false);
     }
 
@@ -69,7 +72,7 @@ public class DragToLesson : Drag
     public override void OnEndDrag(PointerEventData eventData)
     {
         base.OnEndDrag(eventData);
-        
+
         // 拖曳成功，放到新的 DropZone
         DropZoneType currentZoneType;
         if (CurrentDropZone != null) // 更新最後成功 DropZone
@@ -90,7 +93,7 @@ public class DragToLesson : Drag
             //     numbersController.ClearSlot(lastDropZone.zoneType, zoneIndex);
             //     Debug.Log($"清除原本位置的數值資料: {lastDropZone.zoneType}, {zoneIndex}");
             // }
-            
+
             lastDropZone = CurrentDropZone;
             currentZoneType = CurrentDropZone.zoneType;
             zoneIndex = CurrentDropZone.zoneIndex;
@@ -123,7 +126,7 @@ public class DragToLesson : Drag
         else vigourSlider.SetActive(false);
 
         // 同步更新 IdolInstance 的 trainRecord（備份用）
-        TraineeAssignment.UpdateTrainRecord(MyIdolIndex, 
+        TraineeAssignment.UpdateTrainRecord(MyIdolIndex,
                                             position: rectTransform.anchoredPosition,
                                             droppedZoneType: currentZoneType,
                                             droppedZoneIndex: zoneIndex);

@@ -35,4 +35,11 @@ public class TrainRecord
         if (visual != null) visualExp = visual.Value;
         if (isActive != null) this.isActive = isActive.Value;
     }
+
+    public void RestrictTrainingOneDay()
+    {
+        // 在一天開始將訓練狀態設為 Unable，表示這一整天都無法訓練
+        // 當天結束（結算時）IdolInstance 會自動重置成 IdolTrainingState.InTeam
+        state = IdolTrainingState.Unable;
+    }
 }

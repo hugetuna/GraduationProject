@@ -118,21 +118,28 @@ public class TrainingUIHandler : MonoBehaviour
             var idolInstance = TeamDataUtility.IdolDict.ElementAt(i).Value;
             var state = TrainingUIManager.Instance.GetIdolState(idolInstance.idolIndex);
 
+            // 根據角色的訓練狀態決定圖片是否顯示（在訓練中或在隊伍中的角色才顯示）
             bool isActive = false;
             TrainingType type = trainingUIData.trainingType;
             if (type == TrainingType.Dance)
             {
-                isActive = state == IdolTrainingState.InTeam || state == IdolTrainingState.InDance;
+                isActive = state == IdolTrainingState.InTeam || state == IdolTrainingState.InDance || state == IdolTrainingState.Unable;
             }
             else if (type == TrainingType.Vocal)
             {
-                isActive = state == IdolTrainingState.InTeam || state == IdolTrainingState.InVocal;
+                isActive = state == IdolTrainingState.InTeam || state == IdolTrainingState.InVocal || state == IdolTrainingState.Unable;
             }
             else if (type == TrainingType.Visual)
             {
-                isActive = state == IdolTrainingState.InTeam || state == IdolTrainingState.InVisual;
+                isActive = state == IdolTrainingState.InTeam || state == IdolTrainingState.InVisual || state == IdolTrainingState.Unable;
             }
             img.gameObject.SetActive(isActive);
+
+            if(state == IdolTrainingState.Unable) // 處理當天無法訓練的角色
+            {
+                img.GetComponent<CanvasGroup>().blocksRaycasts = false; // 無法拖曳
+                img.GetComponent<UIGrayEffect>().SetGrayScale(true); // 使用灰階效果
+            }
 
             // 還原上次的位置
             Vector2 position = idolInstance.trainRecord.position;

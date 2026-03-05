@@ -9,6 +9,7 @@ public enum IdolTrainingState
     InDance = 1,
     InVocal = 2,
     InVisual = 3,
+    Unable = 4 // 在隊伍裡，但無法訓練的特殊狀態
 }
 
 /* 掛在 TrainingManager 上，統一管理三種不同的 UI（Singleton） */
@@ -103,8 +104,7 @@ public class TrainingUIManager : MonoBehaviour
 
     public void SetIdolState(IdolWho idol, IdolTrainingState state) // 設定角色的訓練狀態
     {
-        if (!characterStates.ContainsKey(idol)) characterStates.Add(idol, state);
-        else characterStates[idol] = state;
+        characterStates[idol] = state;
 
         // 同步更新 IdolInstance 的 trainRecord（備份用）
         TraineeAssignment.UpdateTrainRecord(idol, state);
@@ -118,20 +118,20 @@ public class TrainingUIManager : MonoBehaviour
             .ToList();
     }
 
-    public List<IdolWho> GetTrainees() // 取得目前所有訓練角色清單
-    {
-        return characterStates
-            .Where(x => x.Value != IdolTrainingState.InTeam)
-            .Select(x => x.Key)
-            .ToList();
-    }
+    // public List<IdolWho> GetTrainees() // 取得目前所有訓練角色清單
+    // {
+    //     return characterStates
+    //         .Where(x => x.Value != IdolTrainingState.InTeam)
+    //         .Select(x => x.Key)
+    //         .ToList();
+    // }
 
-    public List<IdolWho> GetTrainees(IdolTrainingState room) // 取得目前在特定訓練室的角色清單
-    {
-        return characterStates
-            .Where(x => x.Value == room)
-            .Select(x => x.Key)
-            .ToList();
-    }
+    // public List<IdolWho> GetTrainees(IdolTrainingState room) // 取得目前在特定訓練室的角色清單
+    // {
+    //     return characterStates
+    //         .Where(x => x.Value == room)
+    //         .Select(x => x.Key)
+    //         .ToList();
+    // }
 }
 
