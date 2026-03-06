@@ -123,15 +123,15 @@ public class TrainingUIHandler : MonoBehaviour
             TrainingType type = trainingUIData.trainingType;
             if (type == TrainingType.Dance)
             {
-                isActive = state == IdolTrainingState.InTeam || state == IdolTrainingState.InDance || state == IdolTrainingState.Unable;
+                isActive = idolInstance.trainRecord.IsInTeamScope() || state == IdolTrainingState.InDance;
             }
             else if (type == TrainingType.Vocal)
             {
-                isActive = state == IdolTrainingState.InTeam || state == IdolTrainingState.InVocal || state == IdolTrainingState.Unable;
+                isActive = idolInstance.trainRecord.IsInTeamScope() || state == IdolTrainingState.InVocal;
             }
             else if (type == TrainingType.Visual)
             {
-                isActive = state == IdolTrainingState.InTeam || state == IdolTrainingState.InVisual || state == IdolTrainingState.Unable;
+                isActive = idolInstance.trainRecord.IsInTeamScope() || state == IdolTrainingState.InVisual;
             }
             img.gameObject.SetActive(isActive);
 

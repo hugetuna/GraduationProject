@@ -275,7 +275,7 @@ public class DayEventManager : MonoBehaviour
                 // 如果 ID 對上了
                 if ((int)idol.idolIndex == (int)target)
                 {
-                    if (idol.trainRecord.state != IdolTrainingState.None&& idol.trainRecord.state != IdolTrainingState.InTeam)
+                    if (!idol.trainRecord.IsInTeamScope())
                     {
                         conditionMet = true;
                         Debug.Log($"教學條件達成：{target} 已進入練習位");

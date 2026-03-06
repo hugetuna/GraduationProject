@@ -51,8 +51,8 @@ public class DragToLesson : Drag
         vigourBar.Initialize(trainingUIData, MyIdolIndex);
 
         // 確保換場景後 UI 不會跑掉
-        var state = TrainingUIManager.Instance.GetIdolState(MyIdolIndex);
-        if (state == IdolTrainingState.InTeam || state == IdolTrainingState.Unable)
+        var idol = TeamDataUtility.IdolDict[MyIdolIndex];
+        if (idol.trainRecord.IsInTeamScope())
         {
             vigourSlider.SetActive(true);
         }
@@ -140,7 +140,7 @@ public class DragToLesson : Drag
             DropZoneType.Dance => IdolTrainingState.InDance,
             DropZoneType.Vocal => IdolTrainingState.InVocal,
             DropZoneType.Visual => IdolTrainingState.InVisual,
-            _ => IdolTrainingState.InTeam
+            _ => IdolTrainingState.None
         };
 
         TrainingUIManager.Instance.SetIdolState(MyIdolIndex, newState);
