@@ -48,10 +48,12 @@ public class TrainingUIHandler : MonoBehaviour
     public void ShowTrainingUI(TrainingUIData data)
     {
         trainingUIData = data;
+        trainingUI.SetActive(true);
 
         Debug.Log("開啟訓練 UI");
-        trainingUI.SetActive(true);
         AudioManager.Instance.PlaySFX(openSound);
+
+        //-----------------------------------------------------------------//
 
         TypeText.text = trainingUIData.trainingType.ToString(); // 設定訓練類型的 UI 文字內容
 
@@ -77,6 +79,10 @@ public class TrainingUIHandler : MonoBehaviour
         {
             numbersController.RefreshSlots(trainingUIData); // 刷新角色數值顯示
         }
+
+        //-----------------------------------------------------------------//
+
+        CheckUnableState(); // 檢查是否有無法訓練的角色，並套用灰階效果
     }
 
     private void FindTodayTeacher()
@@ -92,7 +98,7 @@ public class TrainingUIHandler : MonoBehaviour
         {
             teacherSaveData.SetTeacherLessonCompleted(trainingType); // 標記老師為已使用，避免隔天重複預約
         }
-        
+
         TeacherText.text = $"老師：{todayTeacherName}";
         Debug.Log($"今天的老師：{todayTeacherName}");
     }
@@ -135,15 +141,26 @@ public class TrainingUIHandler : MonoBehaviour
             }
             img.gameObject.SetActive(isActive);
 
-            if(state == IdolTrainingState.Unable) // 處理當天無法訓練的角色
-            {
-                img.GetComponent<CanvasGroup>().blocksRaycasts = false; // 無法拖曳
-                img.GetComponent<UIGrayEffect>().SetGrayScale(true); // 使用灰階效果
-            }
-
             // 還原上次的位置
             Vector2 position = idolInstance.trainRecord.position;
             if (position != Vector2.zero) img.transform.localPosition = position;
+        }
+    }
+
+    private void CheckUnableState()
+    {
+        for (int i = 0; i < characterImages.Count; i++)
+        {
+            Image img = characterImages[i];
+            var idolInstance = TeamDataUtility.IdolDict.ElementAt(i).Value;
+            var state = TrainingUIManager.Instance.GetIdolState(idolInstance.idolIndex);
+
+            if (state == IdolTrainingState.Unable) // 處理當天無法訓練的角色
+            {
+                Debug.Log($"角色 {idolInstance.idolIndex} 無法參與訓練，已設為灰階");
+                var grayEffect = img.GetComponent<UIGrayEffect>();
+                grayEffect.SetGrayScale(true, false); // 使用灰階效果＆禁止拖曳
+            }
         }
     }
 

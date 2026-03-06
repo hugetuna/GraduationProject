@@ -1,3 +1,4 @@
+using UnityEditor.SceneManagement;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -5,16 +6,12 @@ using UnityEngine.UI;
 public class UIGrayEffect : MonoBehaviour
 {
     [SerializeField] private Material grayMaterial;
-    private Graphic graphic;
+    [SerializeField] private Image graphic;
+    [SerializeField] private CanvasGroup canvasGroup;
 
-    void Awake()
+    public void SetGrayScale(bool shouldBeGray, bool shouldBeDragged)
     {
-        graphic = GetComponent<Graphic>();
-    }
-
-    public void SetGrayScale(bool shouldBeGray)
-    {
-        if (graphic == null) return;
         graphic.material = shouldBeGray ? grayMaterial : null;
+        canvasGroup.blocksRaycasts = shouldBeDragged;
     }
 }

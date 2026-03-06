@@ -22,7 +22,7 @@ public class TrainingUIManager : MonoBehaviour
     private TrainingUIHandler current = null; // 目前開著的 UI
     //-----------------------------------------------------------------//
     private Dictionary<IdolWho, IdolTrainingState> characterStates = new(); // 角色名稱＆訓練狀態對應表
-    private bool isInitialized = false;
+    // private bool isInitialized = false;
 
 
     void Awake()
@@ -38,7 +38,7 @@ public class TrainingUIManager : MonoBehaviour
         TrainingUIHandler.OnTrainingUIClosed += OneOneUIClosed;
     }
 
-    public void InitializeTeamData()
+    public void UpdateTeamData()
     {
         characterStates.Clear();
 
@@ -61,12 +61,7 @@ public class TrainingUIManager : MonoBehaviour
 
     private void OpenOneUI(TrainingUIData data)
     {
-        if (isInitialized == false) 
-        {
-            // 第一次開啟訓練 UI 時都能初始化隊伍資料
-            InitializeTeamData();
-            isInitialized = true;
-        }
+        UpdateTeamData(); // 每次打開 UI 都檢查資料是否與存檔同步
 
         TrainingType type = data.trainingType; // None=-1, Dance=0, Vocal=1, Visual=2
 

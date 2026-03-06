@@ -52,15 +52,14 @@ public class VigourBar : MonoBehaviour
             if (characterInfo.vigour < trainingUIData.neededVigour)
             {
                 // isAbleToTrain = false; // 體力不足無法訓練
-                canvasGroup.blocksRaycasts = false;
-                grayEffect.SetGrayScale(true); // 使用灰階效果
+                grayEffect.SetGrayScale(true, false); // 使用灰階效果＆禁止拖曳
                 // fillImage.color = new Color32(240, 58, 106, 255); // 將不足以訓練的體力設成桃紅色
             }
             else
             {
                 // isAbleToTrain = true; // 有足夠體力進行訓練
                 canvasGroup.blocksRaycasts = true;
-                grayEffect.SetGrayScale(false); // 取消灰階效果
+                grayEffect.SetGrayScale(false, true); // 取消灰階效果＆允許拖曳
                 // fillImage.color = new Color32(255, 255, 255, 255); // 預設白色（不影響圖片顯示）
             }
         }
