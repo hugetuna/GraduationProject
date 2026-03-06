@@ -42,6 +42,35 @@ public class DayManager : MonoBehaviour
         else if (SceneName == "Floor_4"&&date == 1&& IsInStartOfDay == true)
         {
             StartDay();
+            IdolInstance[] allIdols = FindObjectsByType<IdolInstance>(FindObjectsSortMode.None);
+            //第一天，封鎖特定偶像的行動
+            IdolInstance whoGoesToTeain = null;
+            // 根據優先順序選擇偶像：Sirius > Aicor > Kuma
+            foreach (var idol in allIdols)
+            {
+                if (idol.idolIndex == IdolWho.Sirius)
+                {
+                    whoGoesToTeain = idol;
+                    break;
+                }
+                else if (idol.idolIndex == IdolWho.Aicor&&  whoGoesToTeain?.idolIndex!= IdolWho.Sirius)
+                {
+                    whoGoesToTeain = idol;
+                }
+                else if (idol.idolIndex == IdolWho.Kuma&& whoGoesToTeain?.idolIndex != IdolWho.Sirius&& whoGoesToTeain?.idolIndex != IdolWho.Aicor)
+                {
+                    whoGoesToTeain = idol;
+                }
+            }
+            //封鎖隊裡的其他人
+            foreach (var idol in allIdols)
+            {
+                if (idol != whoGoesToTeain)
+                {
+                    idol.trainRecord.RestrictTrainingOneDay();
+                }
+            }
+            Debug.Log($"第一天，封鎖了{whoGoesToTeain.idolIndex}以外的練習");
         }
         if (SceneName == "Floor_4"|| SceneName == "Floor_3" || SceneName == "Floor_2" || SceneName == "Floor_1" || SceneName == "Floor_B1")
         {

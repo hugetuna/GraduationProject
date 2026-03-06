@@ -33,7 +33,6 @@ public class DayEventManager : MonoBehaviour
                 todayEvents = dayEventSet.todayEvents;
             }
         }
-
         // 將符合條件(角色、隊伍)的事件加入隊列->過濾事件列
         List<DayEvent> filteredTodayEvents = new List<DayEvent>();
         foreach (var dayEvent in todayEvents) {
