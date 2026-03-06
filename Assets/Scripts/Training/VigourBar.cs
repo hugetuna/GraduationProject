@@ -47,7 +47,7 @@ public class VigourBar : MonoBehaviour
 
         var state = characterInfo.trainRecord.state;
 
-        if (state == IdolTrainingState.InTeam) // 只有在隊伍中才須做體力判定
+        if (characterInfo.trainRecord.IsInTeamScope()) // 只要角色在隊伍中就做體力判定
         {
             if (characterInfo.vigour < trainingUIData.neededVigour)
             {

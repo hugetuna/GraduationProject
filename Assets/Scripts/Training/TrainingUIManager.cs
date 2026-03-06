@@ -12,6 +12,7 @@ public enum IdolTrainingState
     Unable = 4 // 在隊伍裡，但無法訓練的特殊狀態
 }
 
+
 /* 掛在 TrainingManager 上，統一管理三種不同的 UI（Singleton） */
 public class TrainingUIManager : MonoBehaviour
 {
@@ -99,7 +100,7 @@ public class TrainingUIManager : MonoBehaviour
     {
         return characterStates.ContainsKey(idol)
             ? characterStates[idol]
-            : IdolTrainingState.InTeam;
+            : IdolTrainingState.None;
     }
 
     public void SetIdolState(IdolWho idol, IdolTrainingState state) // 設定角色的訓練狀態
@@ -112,8 +113,13 @@ public class TrainingUIManager : MonoBehaviour
 
     public List<IdolWho> GetMembers() // 取得目前隊伍成員清單
     {
+        static bool IsInTeamScope(IdolTrainingState state)
+        {
+            return state == IdolTrainingState.InTeam || state == IdolTrainingState.Unable;
+        }
+
         return characterStates
-            .Where(x => x.Value == IdolTrainingState.InTeam)
+            .Where(x => IsInTeamScope(x.Value))
             .Select(x => x.Key)
             .ToList();
     }
@@ -121,7 +127,7 @@ public class TrainingUIManager : MonoBehaviour
     // public List<IdolWho> GetTrainees() // 取得目前所有訓練角色清單
     // {
     //     return characterStates
-    //         .Where(x => x.Value != IdolTrainingState.InTeam)
+    //         .Where(x => x.Value != IdolTrainingState.InTeam && x.Value != IdolTrainingState.Unable)
     //         .Select(x => x.Key)
     //         .ToList();
     // }
