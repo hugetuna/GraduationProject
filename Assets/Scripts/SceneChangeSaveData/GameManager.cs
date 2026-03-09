@@ -3,7 +3,20 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
 using System.IO;
-
+public enum IdolTeamIndex
+{
+    None=-1,
+    Kuma_Sirius_Karo=0,
+    Kuma_Sirius_Aicor=1,
+    Kuma_Sirius_Mizar=2,
+    Kuma_Karo_Aicor=3,
+    Kuma_Karo_Mizar=4,
+    Kuma_Aicor_Mizar=5,
+    Sirius_Karo_Aicor=6,
+    Sirius_Karo_Mizar=7,
+    Sirius_Aicor_Mizar=8,
+    Karo_Aicor_Mizar= 9
+}
 public class GameManager : MonoBehaviour
 {
     public static GameManager Instance;
@@ -11,12 +24,13 @@ public class GameManager : MonoBehaviour
     public GameObject Canvas_Config;
     [Header("永久儲存資料")]
     public List<SoilSaveData> soilDataList = new List<SoilSaveData>();
+    public int teamIndex = (int)IdolTeamIndex.None;
     public List<IdolSaveData> idolDataList = new List<IdolSaveData>();
     public DaySaveData DayData;
     public string sceneNameSave = "";
     public ResourceSaveData ResourceData;
     public ChatSaveData chatSaveData = new();
-    public AppointSaveData appointSaveData = new();
+    public TeacherSaveData teacherSaveData = new();
 
     [Header("臨時儲存資料")]
     public DialogueSaveData dialogueSaveData;
@@ -127,15 +141,15 @@ public class GameManager : MonoBehaviour
     }
 
     //聊天視窗專用儲存
-    public void SaveChatData(ChatSaveData data)
+    public void SaveChatData(UserRuntime user)
     {
-        chatSaveData = data;
+        chatSaveData.users.Add(user);
     }
 
-    // 預約相關儲存（例如老師）
-    public void SaveAppointData(AppointSaveData data)
+    // 預約相關儲存
+    public void SaveTeacherData(TeacherInfo teacherInfo)
     {
-        appointSaveData = data;
+        teacherSaveData.trainingTeachers.Add(teacherInfo);
     }
 
     /*本地存檔相關*/
@@ -148,12 +162,13 @@ public class GameManager : MonoBehaviour
         SaveDataWrapper wrapper = new SaveDataWrapper
         {
             soilDataList = this.soilDataList,
+            teamIndex = this.teamIndex,
             idolDataList = this.idolDataList,
             ResourceData = this.ResourceData,
             DayData = this.DayData,
             sceneNameSave = this.sceneNameSave,
             chatSaveData = this.chatSaveData,
-            appointSaveData = this.appointSaveData,
+            teacherSaveData = this.teacherSaveData,
             isElevatorUsedToday = this.isElevatorUsedToday,
             //dialogueSaveData = this.dialogueSaveData
         };
@@ -183,11 +198,13 @@ public class GameManager : MonoBehaviour
 
         // 3. 還原到 GameManager
         this.soilDataList = wrapper.soilDataList;
+        this.teamIndex = wrapper.teamIndex;
         this.idolDataList = wrapper.idolDataList;
         this.ResourceData = wrapper.ResourceData;
         this.DayData = wrapper.DayData;
         this.sceneNameSave = wrapper.sceneNameSave;
         this.chatSaveData = wrapper.chatSaveData;
+        this.teacherSaveData = wrapper.teacherSaveData;
         this.isElevatorUsedToday = wrapper.isElevatorUsedToday;
         //this.dialogueSaveData = wrapper.dialogueSaveData;
 

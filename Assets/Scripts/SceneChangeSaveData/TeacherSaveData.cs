@@ -1,0 +1,52 @@
+using System.Collections.Generic;
+
+
+/* 用來儲存預約老師的資訊（與 GameManager 連接以跨場景保存資料） */
+[System.Serializable]
+public class TeacherSaveData
+{
+    public List<TeacherInfo> trainingTeachers = new(); // 記錄已預約的老師用戶名稱＆性質
+    // 部分預約資料可能需要每天更新，之後再寫就好
+
+    public void CleanTeacherAppointments()
+    {
+        var newList = new List<TeacherInfo>();
+        foreach (var teacher in trainingTeachers)
+        {
+            if (!teacher.hasCameToLesson) // 保留尚未完成課程的老師們
+            {
+                newList.Add(teacher);
+            }
+        }
+        trainingTeachers = newList;
+    }
+
+    public string GetTeacherNameByType(TrainingType trainingType)
+    {
+        var teacher = trainingTeachers.Find(t => t.trainingType == trainingType);
+        return teacher != null ? teacher.teacherName : "無";
+    }
+
+    public void SetTeacherLessonCompleted(TrainingType trainingType)
+    {
+        var teacher = trainingTeachers.Find(t => t.trainingType == trainingType);
+        if (teacher != null)
+        {
+            teacher.hasCameToLesson = true;
+        }
+    }
+}
+
+[System.Serializable]
+public class TeacherInfo
+{
+    public TrainingType trainingType;
+    public string teacherName;
+    public bool hasCameToLesson; // 預設為 false，可用於記錄當天的課程是否完成
+    public TeacherInfo(string teacherName, TrainingType trainingType, bool hasCameToLesson = false)
+    {
+        this.teacherName = teacherName;
+        this.trainingType = trainingType;
+        this.hasCameToLesson = hasCameToLesson;
+    }
+}

@@ -2,16 +2,8 @@ using UnityEngine;
 using UnityEngine.EventSystems; // UI 和物件的拖曳寫法不同
 
 /* 掛在販賣頁面的粉絲 prefab 上 */
-public class DragToSell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler
+public class DragToSell : Drag
 {
-    private RectTransform rectTransform;
-    private Canvas canvas;
-    private CanvasGroup canvasGroup;
-    //-----------------------------------------------------------------//
-    [Header("拖曳後的偏移")]
-    [SerializeField] private Vector3 dropOffset = new(0f, 0f, 0f);
-    private Vector2 originalPosition;
-    //-----------------------------------------------------------------//
     [Header("位置資料")]
     // private bool isDragging = false;
     [SerializeField] private FansDropZoneType ownerType; // 該粉絲的擁有者
@@ -29,54 +21,28 @@ public class DragToSell : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDr
     [Header("拖曳時受影響的 UI 元素")]
     [SerializeField] private GameObject fansNameText;
     [SerializeField] private GameObject fansOwnerIcon;
-    //-----------------------------------------------------------------//
-    [Header("相關音效")]
-    [SerializeField] private AudioClip dragCompletedSound; // 拖曳成功的音效
 
-    void Awake()
+    protected override void Awake()
     {
-        rectTransform = GetComponent<RectTransform>();
-        canvas = GetComponentInParent<Canvas>();
-        canvasGroup = GetComponent<CanvasGroup>();
+        base.Awake();
 
         // 粉絲物件的 prefab 都放在 Sell UI 底下
         sellController = GetComponentInParent<SellController>();
-
-        originalPosition = rectTransform.anchoredPosition;
     }
 
-    public void OnBeginDrag(PointerEventData eventData)
+    public override void OnBeginDrag(PointerEventData eventData)
     {
-        if (canvasGroup.interactable == false)
-        {
-            Debug.Log("無法拖曳");
-            return;
-        }
-
-        // isDragging = true;
-        canvasGroup.blocksRaycasts = false;
+        base.OnBeginDrag(eventData);
 
         fansNameText.SetActive(false);
         fansOwnerIcon.SetActive(false);
     }
 
-    public void OnDrag(PointerEventData eventData)
-    {
-        // 將滑鼠位置轉成世界座標，直接設置物件位置
-        if (RectTransformUtility.ScreenPointToWorldPointInRectangle(
-            canvas.transform as RectTransform,
-            eventData.position,
-            eventData.pressEventCamera,
-            out Vector3 globalMousePos))
-        {
-            rectTransform.position = globalMousePos;
-        }
-    }
+    // public void OnDrag(PointerEventData eventData); // 使用父類別的預設內容
 
-    public void OnEndDrag(PointerEventData eventData)
+    public override void OnEndDrag(PointerEventData eventData)
     {
-        // isDragging = false;
-        canvasGroup.blocksRaycasts = true;
+        base.OnEndDrag(eventData);
 
         bool isSellZone = currentDropZone != null && currentDropZone.zoneType == FansDropZoneType.Sell;
         bool isOwnerZone = currentDropZone != null && currentDropZone.zoneType == OwnerType;

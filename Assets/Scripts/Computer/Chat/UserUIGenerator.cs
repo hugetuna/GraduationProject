@@ -65,17 +65,17 @@ public class UserUIGenerator : MonoBehaviour
             {
                 // 新用戶邏輯：建立新的 UserRuntime 並初始化
                 UserRuntime newRuntime = new() { user = user, id = user.id };
-                newRuntime.Initialize(); // 初始化 Ink 故事
+                newRuntime.ReloadState(); // 初始化 Ink 故事
 
                 userRuntimes.Add(newRuntime); // 加入動態清單
-                savedUserList.Add(newRuntime); // 自動同步存檔
+                GameManager.Instance.SaveChatData(newRuntime); // 自動同步存檔
             }
             else
             {
                 // 存檔中已存在用戶邏輯：重新連線 SO 與 Story
                 UserRuntime runtime = savedUserList.Find(r => r.id == user.id);
                 runtime.user = user;
-                runtime.Initialize(); // 初始化 Ink 故事（會自動載入存檔）
+                runtime.ReloadState(); // 初始化 Ink 故事（會自動載入存檔）
                 
                 userRuntimes.Add(runtime); // 加入動態清單
             }

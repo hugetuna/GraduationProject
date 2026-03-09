@@ -1,10 +1,11 @@
+using Ink.Runtime;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
-using UnityEngine.Events;
 using TMPro;
-using Ink.Runtime;
+using Unity.Collections.LowLevel.Unsafe;
+using UnityEngine;
+using UnityEngine.Events;
+using UnityEngine.UI;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -89,6 +90,10 @@ public class DialogueManager : MonoBehaviour
         inkJSONAsset = GameManager.Instance.dialogueSaveData.inkJSONAsset;
         onDialogueEndScene = GameManager.Instance.dialogueSaveData.backToSceneName;
         story = new Story(inkJSONAsset.text);
+        if(TrySetVariable<int>("teamID", (int)GameManager.Instance.teamIndex)==false)
+        {
+            Debug.Log("本段劇情沒有teamID變數或不因隊伍而有所差分");
+        }
         ContinueStory();
     }
     //設置愈顯示的劇本

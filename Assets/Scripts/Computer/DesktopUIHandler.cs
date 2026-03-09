@@ -81,4 +81,12 @@ public class DesktopUIHandler : MonoBehaviour
         //     member.gameObject.SetActive(true); // 正常顯示角色
         // }
     }
+
+    [ContextMenu("Test-Appoint Teacher")] // 加快測試流程用
+    public void AppointTestTeacher()
+    {
+        var teacher = new TeacherInfo("Michael", TrainingType.Dance);
+        GameManager.Instance.SaveTeacherData(teacher); // 同步更新存檔
+        Debug.Log($"預約了測試用老師：{teacher.teacherName}，訓練類型：{teacher.trainingType}");
+    }
 }

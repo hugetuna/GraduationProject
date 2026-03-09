@@ -2,7 +2,7 @@ using UnityEngine;
 
 
 /* 用來儲存角色訓練成果（與 IdolInstance 連接，並透過 GameManager 跨場景保存資料） */
-[System.Serializable] 
+[System.Serializable]
 public class TrainRecord
 {
     public IdolTrainingState state; // 在隊伍或者特定訓練室
@@ -34,5 +34,19 @@ public class TrainRecord
         if (vocal != null) vocalExp = vocal.Value;
         if (visual != null) visualExp = visual.Value;
         if (isActive != null) this.isActive = isActive.Value;
+    }
+
+    public void RestrictTrainingOneDay()
+    {
+        // 在一天開始將訓練狀態設為 Unable，表示這一整天都無法訓練
+        // 當天結束（結算時）IdolInstance 會自動重置成 IdolTrainingState.InTeam
+        state = IdolTrainingState.Unable;
+    }
+
+    // 在隊伍裡的角色都算在可訓練範圍內（包含無法訓練的特殊狀態）
+    public bool IsInTeamScope()
+    {
+        // if (state == IdolTrainingState.None) Debug.LogError("訓練紀錄的狀態未設定！");
+        return state == IdolTrainingState.InTeam || state == IdolTrainingState.Unable;
     }
 }

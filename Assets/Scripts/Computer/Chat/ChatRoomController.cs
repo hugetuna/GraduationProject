@@ -20,13 +20,10 @@ public class ChatRoomController : MonoBehaviour
     [SerializeField] private float firstLineDelay = 0.5f;
     private float autoPlayInterval;
     private Coroutine continueCoroutine = null; // 記錄 Coroutine 以方便取消
-    //-----------------------------------------------------------------//
-    private AppointSaveData appointSaveData; // 預約相關資料（例如老師）
 
     void Start()
     {
         chatBubbleManager = ChatBubbleManager.Instance;
-        appointSaveData = GameManager.Instance.appointSaveData;
     }
 
     void OnEnable() // 僅限同檔案同天同場景的視窗開關
@@ -233,12 +230,9 @@ public class ChatRoomController : MonoBehaviour
         // 處理預約訓練老師
         if (teacherName != "" && teacherType != TrainingType.None)
         {
-            var teacher = new TeacherInfo
-            {
-                teacherName = teacherName,
-                trainingType = teacherType
-            };
-            appointSaveData.trainingTeachers.Add(teacher); // 同步更新存檔
+            var teacher = new TeacherInfo(teacherName, teacherType);
+            GameManager.Instance.SaveTeacherData(teacher); // 同步更新存檔
+            Debug.Log($"預約了老師：{teacherName}，訓練類型：{teacherType}");
         }
     }
 

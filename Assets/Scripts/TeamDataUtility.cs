@@ -74,7 +74,7 @@ public class TeamDataUtility
         }
     }
 
-    public static void RefreshIdolInstances()
+    private static void RefreshIdolInstances()
     {
         var instances = Object.FindObjectsByType<IdolInstance>(FindObjectsInactive.Include, FindObjectsSortMode.None);
         var dict = instances.ToDictionary(i => i.idolIndex, i => i);

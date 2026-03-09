@@ -6,7 +6,7 @@ using UnityEngine.Events;
 using UnityEngine.UI;
 public class DayEventManager : MonoBehaviour
 {
-    public List<DayEvent> allDayEvents; // 用來保存所有的日常事件
+    public List<DayEventSet> allDayEventSets; // 用來保存所有的日常事件
     public Queue<DayEvent> eventQueue = new Queue<DayEvent>();//當天需觸發的所有事件
     public DayEvent currentEvent; // 當前正在處理的事件
     private HashSet<string> triggeredEvents = new HashSet<string>(); // 紀錄已觸發事件避免重複觸發
@@ -24,13 +24,55 @@ public class DayEventManager : MonoBehaviour
         Debug.Log($"今天是第 {currentDay} 天");
         EventedNumberToday = 0;
         eventQueue.Clear();
-        for(int timeIndex=startTimeIndex; timeIndex<200; timeIndex++)
+        // 根據當前天數從 allDayEventSets 中找到對應的事件集合
+        List<DayEvent> todayEvents=new List<DayEvent>();
+        foreach (var dayEventSet in allDayEventSets)
         {
-            foreach (var dayEvent in allDayEvents)
+            if (dayEventSet.dayIndex == currentDay)
             {
-                if (dayEvent.TriggerDay == currentDay && dayEvent.TriggerTimeIndex == timeIndex)
+                todayEvents = dayEventSet.todayEvents;
+            }
+        }
+        // 將符合條件(角色、隊伍)的事件加入隊列->過濾事件列
+        List<DayEvent> filteredTodayEvents = new List<DayEvent>();
+        foreach (var dayEvent in todayEvents) {
+            // 加入沒有條件的事件
+            if (dayEvent.TriggerPeople==IdolWho.none&& dayEvent.TriggerTeam.Count == 0)
+            {
+                filteredTodayEvents.Add(dayEvent);
+            }
+            else if (dayEvent.TriggerPeople != IdolWho.none)
+            {
+                // 有角色條件的事件
+                foreach(var character in GameManager.Instance.idolDataList)
                 {
-                    Debug.Log($"加入事件: {dayEvent.eventId} at time {timeIndex}");
+                    if (character.idolIndex == dayEvent.TriggerPeople)
+                    {
+                        filteredTodayEvents.Add(dayEvent);
+                        break;
+                    }
+                }
+            }
+            else if (dayEvent.TriggerTeam.Count !=0)
+            {
+                // 有隊伍條件的事件
+                foreach(var teamIndex in dayEvent.TriggerTeam)
+                {
+                    if ((int)teamIndex ==GameManager.Instance.teamIndex)
+                    {
+                        filteredTodayEvents.Add(dayEvent);
+                        break;
+                    }
+                }
+            }
+        }
+        for (int timeIndex=startTimeIndex; timeIndex<200; timeIndex++)
+        {
+            // 根據時間順序將過濾後的事件組加入隊列
+            foreach (var dayEvent in filteredTodayEvents)
+            {
+                if (dayEvent.TriggerTimeIndex == timeIndex)
+                {
                     eventQueue.Enqueue(dayEvent);
                 }
             }
@@ -44,7 +86,6 @@ public class DayEventManager : MonoBehaviour
         // 最後加上結束一天事件
         var endDayEvent = CreateEndDayEvent();
         eventQueue.Enqueue(endDayEvent);
-
         isAllEventDone = false;
     }
     private DayEvent CreateWaitAfterDayEndEventStartEvent()
@@ -164,6 +205,11 @@ public class DayEventManager : MonoBehaviour
         {
             StartCoroutine(WaitForSec(dayEvent.waitSeconds, onFinish));
         }
+        else if (dayEvent.Type == EventType.WaitUntilSpecificIdolTrained)
+        {
+            // 啟動監控協程
+            StartCoroutine(MonitorIdolTraining(dayEvent.targetIdol, onFinish));
+        }
         else if (dayEvent.Type == EventType.WaitAfterDayEndEventStart)
         {
             // 電腦結算頁面後
@@ -214,5 +260,34 @@ public class DayEventManager : MonoBehaviour
                 teamManager.currentLeaderIndex].enabled = true;
         }
         onEnd?.Invoke();
-    } 
+    }
+    private IEnumerator MonitorIdolTraining(IdolWho target, System.Action onFinish)
+    {
+        bool conditionMet = false;
+
+        while (!conditionMet)
+        {
+            // 方案 A：檢查場景中所有的 IdolInstance
+            IdolInstance[] allIdols = FindObjectsByType<IdolInstance>(FindObjectsSortMode.None);
+            foreach (var idol in allIdols)
+            {
+                // 如果 ID 對上了
+                if ((int)idol.idolIndex == (int)target)
+                {
+                    if (!idol.trainRecord.IsInTeamScope())
+                    {
+                        conditionMet = true;
+                        Debug.Log($"教學條件達成：{target} 已進入練習位");
+                        break;
+                    }
+                }
+            }
+            if (conditionMet) break;
+
+            // 每 0.5 秒檢查一次，節省效能
+            yield return new WaitForSeconds(0.5f);
+        }
+        // 條件達成，呼叫回調通知事件結束
+        onFinish?.Invoke();
+    }
 }

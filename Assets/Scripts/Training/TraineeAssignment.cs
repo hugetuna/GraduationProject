@@ -11,13 +11,13 @@ public class TraineeAssignment : MonoBehaviour
     void Start()
     {
         TrainingUIHandler.OnTrainingUIConfirmed += AssignTrainees;
-        HintTogglerForTraining.OnGoToComputer += AssignTrainees;
+        TrainingHintToggler.OnGoToComputer += AssignTrainees;
     }
 
     void OnDestroy()
     {
         TrainingUIHandler.OnTrainingUIConfirmed -= AssignTrainees;
-        HintTogglerForTraining.OnGoToComputer -= AssignTrainees;
+        TrainingHintToggler.OnGoToComputer -= AssignTrainees;
     }
 
     public void AssignTrainees(TrainingUIData data) // 當任意訓練 UI 按下確定按鈕時呼叫
@@ -74,11 +74,14 @@ public class TraineeAssignment : MonoBehaviour
             }
         }
     }
-
+    
     // 計算並寫入訓練數值 (體力與經驗)
     private void CalculateAndSetTrainingStats(IdolInstance idol, TrainingUIData data)
     {
-        int benefit = data.withTeacherBenefit;
+        // 根據是否有老師來決定收益類型
+        var teacherName = GameManager.Instance.teacherSaveData.GetTeacherNameByType(data.trainingType);
+        int benefit = teacherName != "無" ? data.withTeacherBenefit : data.basicBenefit;
+
         int finalDanceExp = 0;
         int finalVocalExp = 0;
         int finalVisualExp = 0;

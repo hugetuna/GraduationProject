@@ -6,12 +6,13 @@ using UnityEngine;
 public class SaveDataWrapper
 {
     public List<SoilSaveData> soilDataList;
+    public int teamIndex;
     public List<IdolSaveData> idolDataList;
     public DaySaveData DayData;
     public string sceneNameSave;
     public ResourceSaveData ResourceData;
     public ChatSaveData chatSaveData;
-    public AppointSaveData appointSaveData;
+    public TeacherSaveData teacherSaveData;
     public bool isElevatorUsedToday;
     // 劇情與舞台通常視需求決定是否永久存檔
     // DialogueSaveData dialogueSaveData;

@@ -8,7 +8,7 @@ public class TrainingUIData : ScriptableObject
 {
     /* 訓練 UI 的基本介紹部分 */
     public TrainingType trainingType = TrainingType.None; // 訓練類型
-    public string teacherName = ""; // 老師名稱，預設為無
+    //public string teacherName = ""; // 老師名稱，預設為無 => 動態資料，改為直接從 AppointSaveData 讀取
     public int neededVigour = 20; // 訓練所需的體力值，預設為 20
     public int basicBenefit = 60; // 訓練的基本收益，預設為 60
     public int withTeacherBenefit = 100; // 有老師協助訓練的收益，預設為 100
