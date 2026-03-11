@@ -214,7 +214,6 @@ public class DayEventManager : MonoBehaviour
         {
             // 電腦結算頁面後
             DayManager.Instance.onDayFinish = onFinish;
-            
         }
         else if (dayEvent.Type == EventType.EndDay)
         {
@@ -264,7 +263,6 @@ public class DayEventManager : MonoBehaviour
     private IEnumerator MonitorIdolTraining(IdolWho target, System.Action onFinish)
     {
         bool conditionMet = false;
-
         while (!conditionMet)
         {
             // 方案 A：檢查場景中所有的 IdolInstance
