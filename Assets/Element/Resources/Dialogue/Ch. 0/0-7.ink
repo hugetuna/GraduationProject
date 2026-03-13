@@ -1,21 +1,5 @@
 VAR teamID = 0  // 由 Unity 端傳入
 
-#speaker:Empty #bgm:StarlightParade
-#background:CGKKS #sfx:Kansei
-（舞台上的熱量一陣陣傳來）
-
-#speaker:Manager
-雖然表演上還有點青澀，但那股熱情...
-#speaker:Manager
-明明才剛組成，卻已經像是一個完整的團體了。
-#speaker:Manager
-...Era，你有看到嗎？  
-#speaker:Manager
-我一定...會帶她們成功的。
-
-#speaker:Empty
-#background:Black
-（回到了後台）
 
 { teamID:
 - 0: -> team0_kuma_sirius_karo
@@ -31,6 +15,23 @@ VAR teamID = 0  // 由 Unity 端傳入
 }
 
 ===team0_kuma_sirius_karo===
+#speaker:Empty #bgm:StarlightParade
+#background:CG1_00 #sfx:Kansei
+（舞台上的熱量一陣陣傳來）
+
+#speaker:Manager
+雖然表演上還有點青澀，但那股熱情...
+#speaker:Manager
+明明才剛組成，卻已經像是一個完整的團體了。
+#speaker:Manager
+...Era，你有看到嗎？  
+#speaker:Manager
+我一定...會帶她們成功的。
+
+#speaker:Empty
+#background:Black
+（回到了後台）
+
 #background:DressingRoom
 #speaker:Kuma
 #Tachie1_Character:Kuma
@@ -165,6 +166,22 @@ VAR teamID = 0  // 由 Unity 端傳入
 ->end_part
 
 ===team1_kuma_sirius_aicor===
+#speaker:Empty #bgm:StarlightParade
+#background:CG1_01 #sfx:Kansei
+（舞台上的熱量一陣陣傳來）
+
+#speaker:Manager
+雖然表演上還有點青澀，但那股熱情...
+#speaker:Manager
+明明才剛組成，卻已經像是一個完整的團體了。
+#speaker:Manager
+...Era，你有看到嗎？  
+#speaker:Manager
+我一定...會帶她們成功的。
+
+#speaker:Empty
+#background:Black
+（回到了後台）
 #background:DressingRoom
 #speaker:Kuma
 #Tachie1_Character:Kuma
@@ -299,6 +316,22 @@ VAR teamID = 0  // 由 Unity 端傳入
 ->end_part
 
 ===team2_kuma_sirius_mizar===
+#speaker:Empty #bgm:StarlightParade
+#background:CG1_02 #sfx:Kansei
+（舞台上的熱量一陣陣傳來）
+
+#speaker:Manager
+雖然表演上還有點青澀，但那股熱情...
+#speaker:Manager
+明明才剛組成，卻已經像是一個完整的團體了。
+#speaker:Manager
+...Era，你有看到嗎？  
+#speaker:Manager
+我一定...會帶她們成功的。
+
+#speaker:Empty
+#background:Black
+（回到了後台）
 #background:DressingRoom
 #speaker:Kuma
 #Tachie1_Character:Kuma
@@ -433,6 +466,22 @@ VAR teamID = 0  // 由 Unity 端傳入
 ->end_part
 
 ===team3_kuma_karo_aicor===
+#speaker:Empty #bgm:StarlightParade
+#background:CG1_03 #sfx:Kansei
+（舞台上的熱量一陣陣傳來）
+
+#speaker:Manager
+雖然表演上還有點青澀，但那股熱情...
+#speaker:Manager
+明明才剛組成，卻已經像是一個完整的團體了。
+#speaker:Manager
+...Era，你有看到嗎？  
+#speaker:Manager
+我一定...會帶她們成功的。
+
+#speaker:Empty
+#background:Black
+（回到了後台）
 #background:DressingRoom
 #speaker:Kuma
 #Tachie1_Character:Kuma
@@ -568,6 +617,22 @@ VAR teamID = 0  // 由 Unity 端傳入
 ->end_part
 
 ===team4_kuma_karo_mizar===
+#speaker:Empty #bgm:StarlightParade
+#background:CG1_04 #sfx:Kansei
+（舞台上的熱量一陣陣傳來）
+
+#speaker:Manager
+雖然表演上還有點青澀，但那股熱情...
+#speaker:Manager
+明明才剛組成，卻已經像是一個完整的團體了。
+#speaker:Manager
+...Era，你有看到嗎？  
+#speaker:Manager
+我一定...會帶她們成功的。
+
+#speaker:Empty
+#background:Black
+（回到了後台）
 #background:DressingRoom
 #speaker:Kuma
 #Tachie1_Character:Kuma
@@ -703,6 +768,22 @@ VAR teamID = 0  // 由 Unity 端傳入
 ->end_part
 
 ===team5_kuma_aicor_mizar===
+#speaker:Empty #bgm:StarlightParade
+#background:CG1_05 #sfx:Kansei
+（舞台上的熱量一陣陣傳來）
+
+#speaker:Manager
+雖然表演上還有點青澀，但那股熱情...
+#speaker:Manager
+明明才剛組成，卻已經像是一個完整的團體了。
+#speaker:Manager
+...Era，你有看到嗎？  
+#speaker:Manager
+我一定...會帶她們成功的。
+
+#speaker:Empty
+#background:Black
+（回到了後台）
 #background:DressingRoom
 #speaker:Kuma
 #Tachie1_Character:Kuma
@@ -838,6 +919,22 @@ VAR teamID = 0  // 由 Unity 端傳入
 ->end_part
 
 ===team6_sirius_karo_aicor===
+#speaker:Empty #bgm:StarlightParade
+#background:CG1_06 #sfx:Kansei
+（舞台上的熱量一陣陣傳來）
+
+#speaker:Manager
+雖然表演上還有點青澀，但那股熱情...
+#speaker:Manager
+明明才剛組成，卻已經像是一個完整的團體了。
+#speaker:Manager
+...Era，你有看到嗎？  
+#speaker:Manager
+我一定...會帶她們成功的。
+
+#speaker:Empty
+#background:Black
+（回到了後台）
 #background:DressingRoom
 #speaker:Aicor
 #Tachie1_Character:Aicor
@@ -972,6 +1069,22 @@ VAR teamID = 0  // 由 Unity 端傳入
 ->end_part
 
 ===team7_sirius_karo_mizar===
+#speaker:Empty #bgm:StarlightParade
+#background:CG1_07 #sfx:Kansei
+（舞台上的熱量一陣陣傳來）
+
+#speaker:Manager
+雖然表演上還有點青澀，但那股熱情...
+#speaker:Manager
+明明才剛組成，卻已經像是一個完整的團體了。
+#speaker:Manager
+...Era，你有看到嗎？  
+#speaker:Manager
+我一定...會帶她們成功的。
+
+#speaker:Empty
+#background:Black
+（回到了後台）
 #background:DressingRoom
 #speaker:Mizar
 #Tachie1_Character:Mizar
@@ -1107,6 +1220,22 @@ VAR teamID = 0  // 由 Unity 端傳入
 ->end_part
 
 ===team8_sirius_aicor_mizar===
+#speaker:Empty #bgm:StarlightParade
+#background:CG1_08 #sfx:Kansei
+（舞台上的熱量一陣陣傳來）
+
+#speaker:Manager
+雖然表演上還有點青澀，但那股熱情...
+#speaker:Manager
+明明才剛組成，卻已經像是一個完整的團體了。
+#speaker:Manager
+...Era，你有看到嗎？  
+#speaker:Manager
+我一定...會帶她們成功的。
+
+#speaker:Empty
+#background:Black
+（回到了後台）
 #background:DressingRoom
 #speaker:Aicor
 #Tachie1_Character:Aicor
@@ -1240,6 +1369,22 @@ VAR teamID = 0  // 由 Unity 端傳入
 ->end_part
 
 ===team9_karo_aicor_mizar===
+#speaker:Empty #bgm:StarlightParade
+#background:CG1_09 #sfx:Kansei
+（舞台上的熱量一陣陣傳來）
+
+#speaker:Manager
+雖然表演上還有點青澀，但那股熱情...
+#speaker:Manager
+明明才剛組成，卻已經像是一個完整的團體了。
+#speaker:Manager
+...Era，你有看到嗎？  
+#speaker:Manager
+我一定...會帶她們成功的。
+
+#speaker:Empty
+#background:Black
+（回到了後台）
 #background:DressingRoom
 #speaker:Mizar
 #Tachie1_Character:Mizar
