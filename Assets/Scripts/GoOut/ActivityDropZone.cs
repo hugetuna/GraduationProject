@@ -6,6 +6,7 @@ public class ActivityDropZone : Drop
 {
     public ActivityDropZoneType zoneType; // 直接在 Inspector 設定即可
     public int zoneIndex; // 同一類型的區域可能有多個，從 0 開始編號
+    private DragToActivity currentIdol; // 目前待在這格的角色
 
 
     // void Awake(); // 使用父類別的預設內容
@@ -23,7 +24,8 @@ public class ActivityDropZone : Drop
         var drag = draggedObject.GetComponent<DragToActivity>();
         if (drag != null)
         {
-            drag.CurrentDropZone = this; 
+            if (currentIdol != null && currentIdol != drag) return;
+            drag.CurrentDropZone = this;
         }
     }
 
@@ -43,4 +45,11 @@ public class ActivityDropZone : Drop
             drag.CurrentDropZone = null;
         }
     }
+    
+    public void SetCurrentIdol(DragToActivity draggedIdol)
+    {
+        currentIdol = draggedIdol;
+    }
+
+    public void ClearCurrentIdol() => currentIdol = null;
 }
