@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e83923c3a7fa624d963a42420400f48, type: 3}
+  m_Name: Stage_1-3
+  m_EditorClassIdentifier: 
+  stageID: 103
+  stageName: "1-D3 \u7D9C\u85DD\u7BC0\u76EE"
+  backgroundImage: {fileID: 21300000, guid: 43e4db8643b2d5f45bbf3385c59b4f48, type: 3}
+  backgroundMusic: {fileID: 8300000, guid: 911f7ed00eae506459afe0bf2b36e5a3, type: 3}
+  musicName: Starlight Parade
+  actionCardStacks:
+  - actionCard: {fileID: 11400000, guid: 22a8c2367c86b974e8829c8d141b1659, type: 2}
+    quantity: 2
+  - actionCard: {fileID: 11400000, guid: 083e055a3f4cc204f8f363e67fcb57aa, type: 2}
+    quantity: 2
+  - actionCard: {fileID: 11400000, guid: 65d1a8d65ccd5954991ae4aa1a50301b, type: 2}
+    quantity: 2
+  - actionCard: {fileID: 11400000, guid: 9833eca181cf41e44a2e26e47b595f65, type: 2}
+    quantity: 2
+  - actionCard: {fileID: 11400000, guid: 305e9d97475e90b4cad1d4a66077a9d3, type: 2}
+    quantity: 2
+  - actionCard: {fileID: 11400000, guid: 49818d436f712b444a5a176ec876bc5f, type: 2}
+    quantity: 2
+  - actionCard: {fileID: 11400000, guid: 1886cb4c67710af49bbb7cfafbe2bab3, type: 2}
+    quantity: 2
+  roundMax: 3
+  secPerRound: 30
+  fansBonusSets:
+  - fansRequire: 3000
+    BonusPoint: 700
+  - fansRequire: 1200
+    BonusPoint: 300
+  clearDialogue: {fileID: 0}
+  nextSceneName: Floor_1
+  rewardSets:
+  - rewardSetPoint: 5000
+    rewardFans: 2000
+    rewardMoney: 9500
+    rewardItems:
+    - item: {fileID: 11400000, guid: 5900a8d823486444382b35559b4cddd0, type: 2}
+      quantity: 1
+    - item: {fileID: 11400000, guid: 252985ec69161a547a724b40117052d1, type: 2}
+      quantity: 1
+  - rewardSetPoint: 3000
+    rewardFans: 2000
+    rewardMoney: 8000
+    rewardItems: []
+  description: "\u7B2C\u4E00\u7AE0\u7B2C\u4E09\u5929-\u7D9C\u85DD\u7BC0\u76EE"

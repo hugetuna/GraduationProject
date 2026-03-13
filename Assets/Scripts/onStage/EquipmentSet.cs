@@ -8,13 +8,15 @@ using UnityEngine.EventSystems;
 public class EquipmentSet : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHandler, IDropHandler
 {
     public Image showIdol;
-    public int stageSpot; 
+    public int stageSpot;
+    public OnStageManager stageManager;
     private Vector3 originalPosition;
     private CanvasGroup canvasGroup;
     void Awake()
     {
         //紀錄位置
         originalPosition = transform.localPosition;
+        stageManager = FindAnyObjectByType<OnStageManager>();
         canvasGroup = GetComponent<CanvasGroup>();
     }
     public void OnBeginDrag(PointerEventData eventData)
@@ -44,7 +46,7 @@ public class EquipmentSet : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
     }
     public void OnDrop(PointerEventData eventData)
     {
-        var idolDataList = GameManager.Instance.idolDataList;
+        var idolDataList = stageManager.onStageIdols;
         EquipmentSet draggedSetUI = eventData.pointerDrag?.GetComponent<EquipmentSet>();
 
         if (draggedSetUI != null && draggedSetUI != this) // 確保不是放回自己身上
@@ -56,7 +58,7 @@ public class EquipmentSet : MonoBehaviour, IBeginDragHandler, IDragHandler, IEnd
             // 2. 交換資料層的數值 (如果資料存在的話)
             if (idolA != null) idolA.positionInTeam = draggedSetUI.stageSpot;
             if (idolB != null) idolB.positionInTeam = this.stageSpot;
-
+            Debug.Log($"Swapped positions: IdolA is now at {idolA?.positionInTeam}, IdolB is now at {idolB?.positionInTeam}");
             // 3. 交換 UI 表現 (建議把這段包成 Function)
             SwapUI(this, draggedSetUI);
         }

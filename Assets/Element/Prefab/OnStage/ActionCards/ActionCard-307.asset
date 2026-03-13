@@ -10,19 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 74d35f7311eceae4e8796cc13cc76f92, type: 3}
-  m_Name: ActionCard-302
+  m_Name: ActionCard-307
   m_EditorClassIdentifier: 
-  cardId: 302
-  cardName: "\u7B11\u5BB9"
+  cardId: 307
+  cardName: "\u4EBA\u8A2D"
   cardPic: {fileID: 0}
-  voGate: 270
-  daGate: 230
-  viGate: 500
-  fanGate: 0
-  point: 500
-  effectString: 
-  applyDuration: 3
-  staminaCost: 4
+  voGate: 400
+  daGate: 350
+  viGate: 350
+  fanGate: 7000
+  point: 300
+  effectString: "(\u6D88\u53BB:\u9019\u5F35\u5361\u4F7F\u7528\u5F8C\u6703\u6D88\u5931)
+    \u7C89\u7D727000\u4EE5\u4E0A\u6642\uFF0C\u5176\u4ED6\u6240\u6709\u5076\u50CF\u7684vo\u5728\u672C\u6B21\u6F14\u51FA+80"
+  applyDuration: 4
+  staminaCost: 2
   effects:
   - {fileID: 11400000, guid: 12a281837dbb9324586bf3798ec9e8e5, type: 2}
-  isBanishCard: 0
+  - {fileID: 11400000, guid: d1ae38e223bcda14789d7af191eeb5f3, type: 2}
+  isBanishCard: 1
