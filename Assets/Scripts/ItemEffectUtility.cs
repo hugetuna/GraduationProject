@@ -9,7 +9,7 @@ public class ItemEffectInfo
 
 public class ItemEffectUtility
 {
-    /* 訓練效果專區 */
+    /* 訓練效果專區（會因角色有所區別） */
     private static Dictionary<IdolWho, List<ItemEffectInfo>> trainingEffects = new(); // 儲存各角色目前啟用的訓練加成效果 ID 和 displayName
 
     public static void SaveTrainingEffect(IdolWho idol, ItemEffectInfo effectInfo)
@@ -47,5 +47,31 @@ public class ItemEffectUtility
 
     //-----------------------------------------------------------------//
 
+    /* 全域效果專區（不會因角色有所區別）*/
+    private static List<ItemEffectInfo> globalEffects = new(); // 儲存目前啟用的全域效果 ID 和 displayName
+    public static void SaveGlobalEffect(ItemEffectInfo effectInfo)
+    {
+        if (!globalEffects.Any(e => e.id == effectInfo.id))
+        {
+            globalEffects.Add(effectInfo);
+        }
+    }
 
+    public static List<string> GetGlobalEffectDisplayNames()
+    {
+        return globalEffects.Select(e => e.displayName).ToList();
+    }
+
+    public static void ResetGlobalEffects()
+    {
+        globalEffects.Clear(); // 跟一般加成一起在每天結束後重置
+    }
+
+    //-----------------------------------------------------------------//
+
+    public static void ResetAllEffects()
+    {
+        ResetTrainingEffects();
+        ResetGlobalEffects();
+    }
 }
