@@ -17,7 +17,9 @@ public class ActivityUIHandler : MonoBehaviour
     [SerializeField] private TextMeshProUGUI MoneyGainText; // 商演收益文字
     [SerializeField] private List<Image> characterImages; // 角色圖片槽
     [SerializeField] private List<ActivityDropZone> characterDropZones; // 角色初始放置的 DropZone 
+    //-----------------------------------------------------------------//
     [SerializeField] private Button confirmBtn; // 確認出發的按鈕
+    public static event Action OnActivityConfirmed; // 定義確認出發事件
     //-----------------------------------------------------------------//
     [Header("相關音效")]
     [SerializeField] private AudioClip openSound; // 開啟介面的音效
@@ -108,6 +110,6 @@ public class ActivityUIHandler : MonoBehaviour
 
     private void ConfirmToActivity()
     {
-        // 指派商演
+        OnActivityConfirmed?.Invoke(); // 觸發確認出發事件，指派角色外出商演
     }
 }
