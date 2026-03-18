@@ -2163,6 +2163,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showIdol: {fileID: 5425806354784462074}
   stageSpot: 1
+  stageManager: {fileID: 0}
 --- !u!225 &8928069390481637199
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -2667,6 +2668,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showIdol: {fileID: 610596963942779428}
   stageSpot: 0
+  stageManager: {fileID: 0}
 --- !u!225 &8619616218447467880
 CanvasGroup:
   m_ObjectHideFlags: 0
@@ -2688,6 +2690,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1553000527826193739}
+  - component: {fileID: 8488167946084000092}
   m_Layer: 5
   m_Name: IdolsWorriorFace
   m_TagString: Untagged
@@ -2717,6 +2720,28 @@ RectTransform:
   m_AnchoredPosition: {x: 0.000030517578, y: 0}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!114 &8488167946084000092
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3993559520194625669}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2ee6fa1403d0baf47b5e00cb8eb1a967, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Images:
+  - {fileID: 2558899624985916181}
+  - {fileID: 4493247682176221862}
+  - {fileID: 8234436336173531573}
+  AllIdolSprites:
+  - {fileID: 21300000, guid: 7607534b8fcdb6a4791517b39f5df814, type: 3}
+  - {fileID: 21300000, guid: 0c677fee26883014a8897e742aa3db9e, type: 3}
+  - {fileID: 21300000, guid: 1ec61cb826619f84aa435225c69963d2, type: 3}
+  - {fileID: 21300000, guid: 060e566c0d7a03b48aedfda65be1a92f, type: 3}
+  - {fileID: 21300000, guid: a9ece40370ce84b4c9ccdcee6364807a, type: 3}
 --- !u!1 &4218483220144877842
 GameObject:
   m_ObjectHideFlags: 0
@@ -4986,6 +5011,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   showIdol: {fileID: 252589919983848052}
   stageSpot: 2
+  stageManager: {fileID: 0}
 --- !u!225 &2161883787676127505
 CanvasGroup:
   m_ObjectHideFlags: 0
