@@ -1,12 +1,12 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 
-public enum ActivityDropZoneType { None = -1, Member = 0, Activity = 1 }
-public class ActivityDropZone : Drop
+public enum BaitoDropZoneType { None = -1, Member = 0, Baito = 1 }
+public class BaitoDropZone : Drop
 {
-    public ActivityDropZoneType zoneType; // 直接在 Inspector 設定即可
+    public BaitoDropZoneType zoneType; // 直接在 Inspector 設定即可
     public int zoneIndex; // 同一類型的區域可能有多個，從 0 開始編號
-    private DragToActivity currentIdol; // 目前待在這格的角色
+    private DragToBaito currentIdol; // 目前待在這格的角色
 
 
     // void Awake(); // 使用父類別的預設內容
@@ -21,7 +21,7 @@ public class ActivityDropZone : Drop
         if (draggedObject == null) return;
 
         // 重點設定
-        var drag = draggedObject.GetComponent<DragToActivity>();
+        var drag = draggedObject.GetComponent<DragToBaito>();
         if (drag != null)
         {
             if (currentIdol != null && currentIdol != drag) return;
@@ -39,14 +39,14 @@ public class ActivityDropZone : Drop
         if (draggedObject == null) return;
 
         // 重點設定
-        var drag = draggedObject.GetComponent<DragToActivity>();
+        var drag = draggedObject.GetComponent<DragToBaito>();
         if (drag != null && drag.CurrentDropZone == this)
         {
             drag.CurrentDropZone = null;
         }
     }
     
-    public void SetCurrentIdol(DragToActivity draggedIdol)
+    public void SetCurrentIdol(DragToBaito draggedIdol)
     {
         currentIdol = draggedIdol;
     }
