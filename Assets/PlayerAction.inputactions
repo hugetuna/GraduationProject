@@ -154,6 +154,54 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "Dialogue",
+            "id": "2ade7749-cdfc-4d83-9f6f-3eb5952d2559",
+            "actions": [
+                {
+                    "name": "Advance",
+                    "type": "Button",
+                    "id": "615d6004-e3e0-4c68-9dc8-a6b47754a5a3",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "CallLog",
+                    "type": "Button",
+                    "id": "c828ad4b-ccc7-492a-aff4-526573c00f09",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "aa0dfff8-f3ab-4e58-a19e-306e60d60e48",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Advance",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "91c7c9ae-ce8d-49e1-b68f-3eaf634c782e",
+                    "path": "<Keyboard>/tab",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "CallLog",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                }
+            ]
         }
     ],
     "controlSchemes": []

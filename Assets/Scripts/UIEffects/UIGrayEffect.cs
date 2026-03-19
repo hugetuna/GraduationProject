@@ -9,7 +9,7 @@ public class UIGrayEffect : MonoBehaviour
     [SerializeField] private Image graphic;
     [SerializeField] private CanvasGroup canvasGroup;
 
-    public void SetGrayScale(bool shouldBeGray, bool shouldBeDragged)
+    public void SetGrayScale(bool shouldBeGray, bool shouldBeDragged = true)
     {
         graphic.material = shouldBeGray ? grayMaterial : null;
         canvasGroup.blocksRaycasts = shouldBeDragged;

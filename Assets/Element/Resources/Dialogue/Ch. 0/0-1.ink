@@ -142,6 +142,7 @@ VAR teamID = 0  // 由 Unity 端傳入
 #speaker:Kuma 
 有新經紀人了？是真的嗎？？真的假的？？？
 #speaker:Aicor
+#emotion:Talk
 等一下啦！！！太快了我追不上！！！
 
 #speaker:Kuma 
@@ -168,6 +169,7 @@ VAR teamID = 0  // 由 Unity 端傳入
 
 #speaker:Kuma
 #Tachie1_Character:Kuma 
+#Tachie3_Character:Aicor
 #Tachie1_Emotion:Laugh
 #emotion:Laugh
 #Tachie1_Behavior:Shake
@@ -188,6 +190,7 @@ VAR teamID = 0  // 由 Unity 端傳入
 哈囉～
 
 #speaker:Sirius
+#Tachie3_Character:Aicor
 #Tachie2_Character:Sirius 
 #Tachie2_Emotion:Talk
 #emotion:Talk
@@ -347,8 +350,10 @@ VAR teamID = 0  // 由 Unity 端傳入
 #speaker:Kuma 
 有新經紀人了？是真的嗎？？真的假的？？？
 #speaker:Karo
+#emotion:Angry
 呼...等一下，你跑太快了...老闆還沒說可以進去...
 #speaker:Aicor
+#emotion:Talk
 太快了...我跟不上...
 
 
@@ -357,15 +362,16 @@ VAR teamID = 0  // 由 Unity 端傳入
 老闆早安！我們來了！
 
 #speaker:Karo
-#Tachie2_Move:((-500,0),0.5)
+#Tachie1_Move:((-500,0),0.5)
 #Tachie3_Character:Karo 
 #Tachie3_Emotion:Angry
 #emotion:Angry
 ...唉。
 
 #speaker:Aicor
-#Tachie1_Move:((500,0),0.5)
+#Tachie3_Move:((500,0),0.5)
 #Tachie2_Character:Aicor 
+#Tachie2_Emotion:Angry
 呼...呼...。
 
 
@@ -399,8 +405,8 @@ VAR teamID = 0  // 由 Unity 端傳入
 
 #speaker:Aicor
 #Tachie2_Character:Aicor 
-#Tachie2_Emotion:Talk
-#emotion:Talk
+#Tachie2_Emotion:Laugh
+#emotion:Laugh
 #Tachie3_Character:Karo 
 哈囉。
 

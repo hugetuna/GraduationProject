@@ -32,6 +32,7 @@ public class DestoryCardOnDrag : MonoBehaviour, IDropHandler
             {
                 Debug.Log($"丟棄卡片 {incomingCard.cardName}！");
                 stageManager.hands.Remove(draggedCardUI.gameObject);
+                stageManager.Grave.Add(incomingCard);
                 Destroy(draggedCardUI.gameObject); // 卡片被使用後消失
                 AudioManager.Instance.PlaySFX(dropCardSFX);
             }

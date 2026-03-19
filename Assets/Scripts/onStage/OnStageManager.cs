@@ -56,6 +56,7 @@ public class OnStageManager : MonoBehaviour
     public List<ActionCard> deck;
     public List<GameObject> hands;
     public List<ActionCard> Grave;//棄牌區
+    public List<ActionCard> Banish;//驅逐區
     public GameObject cardPrefab;//卡片ui預置件
     public Transform handArea; // UI 範圍 (Card 的父物件，例如是個 HorizontalLayoutGroup)
     [Header("有關音效")]
@@ -245,6 +246,18 @@ public class OnStageManager : MonoBehaviour
     public void LoadStage(StageAttribute stageData)
     {
         currentStageData = stageData;
+        //跟據position in team改變偶像位置
+        onStageIdols.Sort((a, b) => a.positionInTeam.CompareTo(b.positionInTeam));
+        for (int i = 0; i < 3; i++)
+        {
+            foreach(var idol in onStageIdols)
+            {
+                if(idol.positionInTeam==i)
+                {
+                    idol.transform.position = spawnPoints[i].position;
+                }
+            }
+        }
         // 設定背景圖
         backgroundRenderer.sprite = stageData.backgroundImage;
 
@@ -252,11 +265,14 @@ public class OnStageManager : MonoBehaviour
         AudioManager.Instance.SetMusic(stageData.backgroundMusic);
 
         //建立卡組並打亂
+        // 建立卡組時，立刻實例化，不要直接存 SO
         foreach (var singleStack in stageData.actionCardStacks)
         {
             for (int i = 0; i < singleStack.quantity; i++)
             {
-                deck.Add(singleStack.actionCard);
+                // 重點：直接在進牌組前就 CreateCardInstance
+                ActionCard runtimeCard = CardFactory.CreateCardInstance(singleStack.actionCard);
+                deck.Add(runtimeCard);
             }
         }
         Shuffle();
@@ -268,12 +284,29 @@ public class OnStageManager : MonoBehaviour
         gameBreak = true;
         Debug.Log("進入回合間休息時間");
         float breakTimer = 0;
+        GainFanBonusPoint();//回合間休息時根據粉絲數給予分數獎勵
         while (breakTimer <= breakTime)
         {
             breakTimer += Time.deltaTime;
             yield return null;
         }
         gameBreak = false;
+    }
+    public void GainFanBonusPoint()
+    {
+        foreach (var idol in onStageIdols)
+        {
+            IdolOnStage idolOnStage= idol.gameObject.GetComponent<IdolOnStage>();
+            for (int i = 0;i<currentStageData.fansBonusSets.Count;i++)
+            {
+                if (idol.fans>= currentStageData.fansBonusSets[i].fansRequire)
+                {
+                    GainPoint(currentStageData.fansBonusSets[i].BonusPoint,idolOnStage.StageFansPointMutiplier);
+                    break;
+                }
+            }
+            idolOnStage.StageFansPointMutiplier = 1;//每回合結束重置粉絲點數倍率，避免疊加過高
+        }
     }
     public void PauseGame()
     {
@@ -307,9 +340,16 @@ public class OnStageManager : MonoBehaviour
         gameEnded = true;
         //設置並顯示結算畫面
         endStageName.text= currentStageData.stageName;
-        endFansRewardText.text= $"{currentStageData.baseRewardFans}";
-        endMoneyRewardText.text= $"{currentStageData.baseRewardMoney}";
-        foreach(var idol in onStageIdols)
+        for (int i = 0;i<currentStageData.rewardSets.Count;i++)
+        {
+            if(playerPoint>= currentStageData.rewardSets[i].rewardSetPoint)
+            {
+                endFansRewardText.text= $"{currentStageData.rewardSets[i].rewardFans}";
+                endMoneyRewardText.text= $"{currentStageData.rewardSets[i].rewardMoney}";
+                break;
+            }
+        }
+        foreach (var idol in onStageIdols)
         {
             idol.transform.gameObject.SetActive(false);
         }
@@ -321,8 +361,11 @@ public class OnStageManager : MonoBehaviour
     // 結束演出：計算表演得分並更新 GameManager / ResourceManager
     public void EndAndLeave()
     {
-        //TODO:用關卡資料動態回歸場景
-        if(currentStageData.clearDialogue!=null) GameManager.Instance.SaveInkJSONAssetData(currentStageData.clearDialogue);
+        if(currentStageData.nextSceneName=="Floor_4"|| currentStageData.nextSceneName == "Dialogue Scene") //如果下一關是Floor_4，代表演出結束，回到主世界，給予獎勵
+        {
+            SceneTransitionManager.Instance.triggerComputerAfterLoad = true;//告訴轉場管理器在讀取Floor_4後直接進入日結算畫面
+        }
+        if (currentStageData.clearDialogue!=null) GameManager.Instance.SaveInkJSONAssetData(currentStageData.clearDialogue);
         SceneTransitionManager.Instance.teleportByTargetSceneName(currentStageData.nextSceneName);
     }
     
@@ -351,22 +394,14 @@ public class OnStageManager : MonoBehaviour
             };
             if (hands.Count >= 5) break;
 
-            // 1. 取出最上面的一張卡並複製
-            ActionCard drawnCard = deck[0];
+            // 1. 直接取出已經是實例的卡片
+            ActionCard runtimeCard = deck[0];
             deck.RemoveAt(0);
-            ActionCard runtimeCard = CardFactory.CreateCardInstance(drawnCard);
-            if (runtimeCard == null)
-            {
-                Debug.LogError("複製卡片失敗！");
-                continue;
-            }
             // 2. 實例化一個卡片 UI
             GameObject cardGO = Instantiate(cardPrefab, handArea);
-
             // 3. 設定卡片資料（你需要一個 Script 來顯示卡片內容）
             SetCardUI ui = cardGO.GetComponent<SetCardUI>();
             ui.SetCard(runtimeCard);
-
             // 4. 加進手牌列表
             hands.Add(cardGO);
             drewAny = true;
@@ -434,4 +469,3 @@ public class OnStageManager : MonoBehaviour
     }
     
 }
-

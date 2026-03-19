@@ -12,6 +12,7 @@ public class ActionCard : ScriptableObject
     public int voGate;
     public int daGate;
     public int viGate;
+    public int fanGate;
     //加分量和效果文
     public int point;
     public string effectString;
@@ -19,4 +20,5 @@ public class ActionCard : ScriptableObject
     public float applyDuration = 2f; // 動作時間
     public int staminaCost = 0;
     public List<CardEffectBase> effects;    // 效果引用
+    public bool isBanishCard = false;//是否為驅逐卡
 }

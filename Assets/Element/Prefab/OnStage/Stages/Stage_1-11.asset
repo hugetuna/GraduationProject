@@ -1,0 +1,57 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8e83923c3a7fa624d963a42420400f48, type: 3}
+  m_Name: Stage_1-11
+  m_EditorClassIdentifier: 
+  stageID: 111
+  stageName: "1-D11 \u6148\u5584\u665A\u6703"
+  backgroundImage: {fileID: 21300000, guid: 43e4db8643b2d5f45bbf3385c59b4f48, type: 3}
+  backgroundMusic: {fileID: 8300000, guid: 911f7ed00eae506459afe0bf2b36e5a3, type: 3}
+  musicName: Starlight Parade
+  actionCardStacks:
+  - actionCard: {fileID: 11400000, guid: 9833eca181cf41e44a2e26e47b595f65, type: 2}
+    quantity: 2
+  - actionCard: {fileID: 11400000, guid: 305e9d97475e90b4cad1d4a66077a9d3, type: 2}
+    quantity: 2
+  - actionCard: {fileID: 11400000, guid: 49818d436f712b444a5a176ec876bc5f, type: 2}
+    quantity: 2
+  - actionCard: {fileID: 11400000, guid: c367203cd5b1a89479586b969a70db5d, type: 2}
+    quantity: 1
+  - actionCard: {fileID: 11400000, guid: 654e28f1f8711b74282776d36e0d794e, type: 2}
+    quantity: 1
+  - actionCard: {fileID: 11400000, guid: 463dc807b99a6c741bae735f07bf49f6, type: 2}
+    quantity: 4
+  - actionCard: {fileID: 11400000, guid: 96e4b5dc2fe7e0c48a0575923fd1546c, type: 2}
+    quantity: 1
+  - actionCard: {fileID: 11400000, guid: 78bff8ff23f56bc478cb35664144ed9b, type: 2}
+    quantity: 2
+  roundMax: 3
+  secPerRound: 30
+  fansBonusSets:
+  - fansRequire: 16000
+    BonusPoint: 1200
+  - fansRequire: 11000
+    BonusPoint: 900
+  - fansRequire: 8000
+    BonusPoint: 700
+  clearDialogue: {fileID: 0}
+  nextSceneName: Floor_4
+  rewardSets:
+  - rewardSetPoint: 10000
+    rewardFans: 2500
+    rewardMoney: 7000
+    rewardItems: []
+  - rewardSetPoint: 7000
+    rewardFans: 1500
+    rewardMoney: 6000
+    rewardItems: []
+  description: "\u7B2C\u4E00\u7AE0\u7B2C\u5341\u4E00\u5929-\u6148\u5584\u665A\u6703"

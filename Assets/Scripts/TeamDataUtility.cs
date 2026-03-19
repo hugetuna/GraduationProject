@@ -25,6 +25,25 @@ public class TeamDataUtility
         }
     }
 
+    private static readonly Dictionary<IdolWho, string> enumToNameTW
+        = new()
+    {
+        { IdolWho.Kuma, "小熊" },
+        { IdolWho.Karo, "卡羅" },
+        { IdolWho.Sirius, "西莉絲" },
+        { IdolWho.Mizar, "米紗" },
+        { IdolWho.Aicor, "艾可" }
+    };
+
+    public static string GetIdolNameTW(IdolWho idolIndex)
+    {
+        if (enumToNameTW.TryGetValue(idolIndex, out string name)) return name;
+        else{
+            Debug.LogWarning($"找不到對應的角色名稱，enum 值：{idolIndex}");
+            return "";
+        }
+    }
+
     //-----------------------------------------------------------------//
     
     /* 所有已選角色（三個，也包含隱藏於場景的角色） */

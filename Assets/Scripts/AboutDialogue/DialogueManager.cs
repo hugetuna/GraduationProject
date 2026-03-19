@@ -6,6 +6,7 @@ using Unity.Collections.LowLevel.Unsafe;
 using UnityEngine;
 using UnityEngine.Events;
 using UnityEngine.UI;
+using UnityEngine.InputSystem;
 
 public class DialogueManager : MonoBehaviour
 {
@@ -32,6 +33,7 @@ public class DialogueManager : MonoBehaviour
     public List<sfxFile> sfxFiles;
     public BackGroundSetter backGroundSetter;
     [Header("Log相關")]
+    public GameObject LogCanvas;
     public GameObject LogBlock;
     public List<GameObject> LogBlocks;
     public Transform LogContent;
@@ -45,6 +47,17 @@ public class DialogueManager : MonoBehaviour
     public string onDialogueEndScene;
     [Header("為了EventManager")]
     public System.Action onDialogueFinish = null;
+    [Header("更改玩家操作")]
+    public PlayerInput playerInput; // 在 Inspector 中拖入包含 PlayerInput 組件的物件
+    //安全切換 Map
+    private void SwitchActionMap(string mapName)
+    {
+        if (playerInput != null)
+        {
+            playerInput.SwitchCurrentActionMap(mapName);
+            Debug.Log($"Action Map 切換至: {mapName}");
+        }
+    }
     //單例物件生成
     public static DialogueManager Instance { get; private set; }
     void Awake()
@@ -80,6 +93,8 @@ public class DialogueManager : MonoBehaviour
     }
     public void DialogueStart()
     {
+        //切換 Action Map 到對話專用
+        SwitchActionMap("Dialogue");
         //關閉玩家操作、ui顯示
         if (dialogueType==false) {
             dialogueCanvas.SetActive(true);
@@ -95,6 +110,27 @@ public class DialogueManager : MonoBehaviour
             Debug.Log("本段劇情沒有teamID變數或不因隊伍而有所差分");
         }
         ContinueStory();
+    }
+    //對話相關鍵盤輸入------------------------------------------------------
+    public void OnAdvance(InputAction.CallbackContext context)
+    {
+        // 只有在按下且對話框顯示時才觸發
+        if (context.performed && dialogueCanvas.activeSelf)
+        {
+            // 如果目前有選項，不能使用空白鍵，
+            // 讓 ContinueStory 處理「有選項時不自動推進」的邏輯
+            if (story.currentChoices.Count == 0)
+            {
+                ContinueStory();
+            }
+        }
+    }
+    public void OnCallLog(InputAction.CallbackContext context)
+    {
+        if (context.performed && dialogueCanvas.activeSelf)
+        {
+            ToggleLogCanvas();
+        }
     }
     //設置愈顯示的劇本
     public void SetStoryJSON(TextAsset newInkJSONAsset)
@@ -344,6 +380,18 @@ public class DialogueManager : MonoBehaviour
         }
         rt.localPosition = start; // 保證回到原點
     }
+    public void ToggleLogCanvas()
+    {
+        if (LogCanvas.activeSelf)
+        {
+            LogCanvas.SetActive(false);
+        }
+        else
+        {
+            LogCanvas.SetActive(true);
+            ScrollToButtom();
+        }
+    }
     //追加LogBlock
     public void AddLogBlock()
     {
@@ -419,6 +467,7 @@ public class DialogueManager : MonoBehaviour
     }
     private void OnDialougeEnd()
     {
+        SwitchActionMap("PlayerActionMain"); //切換回玩家操作的 Action Map
         AudioManager.Instance.StopSFX();
         if (dialogueType == true) {
             SceneTransitionManager.Instance.teleportByTargetSceneName(onDialogueEndScene);

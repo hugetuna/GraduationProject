@@ -19,6 +19,7 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
     public int StageVocal;
     public int StageDance;
     public int StageVisual;
+    public float StageFansPointMutiplier=1;
     [SerializeField]
     private OnStageManager stageManager;
     //不同的偶像有不同的視覺呈現，在此以連續圖片列表模擬動畫
@@ -74,7 +75,11 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
             StageVisual+= idolInstance.equipmentItemNow.visualBonus;
             StageStaminaMax+= idolInstance.equipmentItemNow.staminaBonus;
             StageStamina = StageStaminaMax;//裝備後補滿血
-            stageManager.deck.AddRange(idolInstance.equipmentItemNow.actionCardsAddByEquipment);
+            foreach (var singleStack in idolInstance.equipmentItemNow.actionCardsAddByEquipment)
+            {
+                ActionCard runtimeCard = CardFactory.CreateCardInstance(singleStack);
+                stageManager.deck.Add(runtimeCard);
+            }
             stageManager.Shuffle();
         }
         else
@@ -137,10 +142,13 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
             //如果有過標準就結算效果
             if (StageVocal >= applyingCard.voGate && StageDance >= applyingCard.daGate && StageVisual >= applyingCard.viGate)
             {
-                foreach (var applyEffect in applyingCard.effects)
+                if (idolInstance.fans >= applyingCard.fanGate)
                 {
-                    applyEffect.OnApply(this, stageManager);
-                }
+                    foreach (var applyEffect in applyingCard.effects)
+                    {
+                        applyEffect.OnApply(this, stageManager);
+                    }
+                }   
             }
             spriteRenderer.flipX = true;//因為要轉身但還是要保持正確方向
             spriteAnimator.SetFrames(actionFrames);//變成動作姿勢
@@ -162,11 +170,14 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
         //如果有過標準就結算效果
         if (StageVocal>=applyingCard.voGate&& StageDance >= applyingCard.daGate&& StageVisual >= applyingCard.viGate)
         {
-            foreach (var endEffect in applyingCard.effects)
+            if (idolInstance.fans >= applyingCard.fanGate)
             {
-                usedCards.Add(applyingCard);
-                endEffect.OnEnd(this, stageManager);
-            }
+                foreach (var endEffect in applyingCard.effects)
+                {
+                    usedCards.Add(applyingCard);
+                    endEffect.OnEnd(this, stageManager);
+                }
+            }   
         }
         spriteRenderer.flipX = false;//轉回去
         spriteAnimator.SetFrames(idleFrames);
@@ -220,7 +231,8 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
                 stageManager.hands.Remove(draggedCardUI.gameObject);
                 if (draggedCardUI.isCard)
                 {
-                    stageManager.Grave.Add(incomingCard);
+                    if(incomingCard.isBanishCard==false) stageManager.Grave.Add(incomingCard);
+                    else stageManager.Banish.Add(incomingCard);
                     Destroy(draggedCardUI.gameObject); // 卡片被使用後消失
                 }
             }
