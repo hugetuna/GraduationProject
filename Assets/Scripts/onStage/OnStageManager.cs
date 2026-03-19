@@ -361,7 +361,11 @@ public class OnStageManager : MonoBehaviour
     // 結束演出：計算表演得分並更新 GameManager / ResourceManager
     public void EndAndLeave()
     {
-        if(currentStageData.clearDialogue!=null) GameManager.Instance.SaveInkJSONAssetData(currentStageData.clearDialogue);
+        if(currentStageData.nextSceneName=="Floor_4"|| currentStageData.nextSceneName == "Dialogue Scene") //如果下一關是Floor_4，代表演出結束，回到主世界，給予獎勵
+        {
+            SceneTransitionManager.Instance.triggerComputerAfterLoad = true;//告訴轉場管理器在讀取Floor_4後直接進入日結算畫面
+        }
+        if (currentStageData.clearDialogue!=null) GameManager.Instance.SaveInkJSONAssetData(currentStageData.clearDialogue);
         SceneTransitionManager.Instance.teleportByTargetSceneName(currentStageData.nextSceneName);
     }
     

@@ -12,13 +12,14 @@ public class SceneTransitionManager : MonoBehaviour
     [Header("轉場動畫")]
     public Animator transitionAnimator; // Animator 應該包含 CoverIn / CoverOut 兩個 Trigger
     public Image imageTransition; // 用於圖片轉場的組件
-
     [Header("轉場設定")]
     public float minimumShowTime = 1.0f; // 最少顯示 CoverIn 的時間（避免讀取太快）
     private bool isTransitioning = false;
     [Header("為了EventManager")]
     public System.Action onDialogueFinish = null;
     public string waitSceneName = "";
+    [Header("自動化觸發電腦介面")]
+    public bool triggerComputerAfterLoad = false;
     [Header("背景音樂")]
     public AudioClip b1;
     public AudioClip otherFloors;
@@ -139,6 +140,14 @@ public class SceneTransitionManager : MonoBehaviour
         float coverOutTime = GetAnimationClipLength("CoverOut");
         yield return new WaitForSeconds(coverOutTime > 0 ? coverOutTime : 0.5f);
         isTransitioning = false;
+        // 這裡檢查自定義的 triggerComputerAfterLoad 旗標
+        if (triggerComputerAfterLoad)
+        {
+            triggerComputerAfterLoad = false; // 重置旗標避免重複觸發
+            // 觸發事件
+            Debug.Log("自動觸發電腦互動事件");
+            ComputerInteraction.TriggerOnComputerInteracted();
+        }
         // 7. 處理背景音樂 by Cake
         // 播放新場景的背景音樂
         string sceneNameLower = sceneName.ToLower();
@@ -146,6 +155,7 @@ public class SceneTransitionManager : MonoBehaviour
         else if(sceneNameLower.Any(c => c >= '1' && c <= '4')) AudioManager.Instance.SetMusic(otherFloors);
         // 8.通知DayManager場景已載入
         DayManager.Instance.OnSceneLoaded(sceneName);
+        
     }
 
     //取得動畫片段長度
