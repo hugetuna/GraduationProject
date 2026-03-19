@@ -2,7 +2,7 @@ using UnityEngine;
 using UnityEngine.UI;
 
 /* 掛在有裝備槽的 DropZone 上 */
-public class ActivityEquipments : MonoBehaviour
+public class BaitoEquipments : MonoBehaviour
 {
     [SerializeField] private Image equipmentSlot; // 這格對應的裝備槽（圖片）
 

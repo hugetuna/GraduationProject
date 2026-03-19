@@ -1,11 +1,11 @@
 using UnityEngine.EventSystems;
 using UnityEngine;
 
-public class DragToActivity : Drag
+public class DragToBaito : Drag
 {
-    private ActivityDropZone lastDropZone = null; // 紀錄上一次成功放置的 DropZone
-    private ActivityDropZone currentDropZone = null; // 當前放置的 DropZone
-    public ActivityDropZone CurrentDropZone
+    private BaitoDropZone lastDropZone = null; // 紀錄上一次成功放置的 DropZone
+    private BaitoDropZone currentDropZone = null; // 當前放置的 DropZone
+    public BaitoDropZone CurrentDropZone
     {
         get { return currentDropZone; }
         set { currentDropZone = value; }
@@ -14,17 +14,17 @@ public class DragToActivity : Drag
     //-----------------------------------------------------------------//
     [Header("拖曳時受影響的 UI 元素")]
     [SerializeField] private GameObject vigourBar;
-    private ActivityVigourBar vigourBarComponent;
-    private ActivityNumbers numbersComponent;
+    private BaitoVigourBar vigourBarComponent;
+    private BaitoNumbers numbersComponent;
 
     protected override void Awake()
     {
         base.Awake();
-        vigourBarComponent = GetComponent<ActivityVigourBar>();
-        numbersComponent = GetComponent<ActivityNumbers>();
+        vigourBarComponent = GetComponent<BaitoVigourBar>();
+        numbersComponent = GetComponent<BaitoNumbers>();
     }
 
-    public void Initialize(Activity data, IdolWho idolIndex, ActivityDropZone zone) // 僅在初次打開外出商演介面時呼叫一次 
+    public void Initialize(Baito data, IdolWho idolIndex, BaitoDropZone zone) // 僅在初次打開打工介面時呼叫一次 
     {
         myIdolIndex = idolIndex;
         lastDropZone = currentDropZone = zone;
@@ -43,7 +43,7 @@ public class DragToActivity : Drag
         if (lastDropZone != null)
         {
             // 清空上個 DropZone 的角色參考與裝備顯示
-            var display = lastDropZone.GetComponent<ActivityEquipments>();
+            var display = lastDropZone.GetComponent<BaitoEquipments>();
             if (display != null) display.UpdateEquipment();
             lastDropZone.ClearCurrentIdol();
         }
@@ -59,7 +59,7 @@ public class DragToActivity : Drag
         base.OnEndDrag(eventData);
 
         // 拖曳成功，放到新的 DropZone
-        ActivityDropZoneType currentZoneType;
+        BaitoDropZoneType currentZoneType;
         if (currentDropZone != null) // 更新最後成功 DropZone
         {
             AudioManager.Instance.PlaySFX(dragCompletedSound, 0.5f); // 播放拖曳成功音效
@@ -76,14 +76,14 @@ public class DragToActivity : Drag
         else // 拖曳失敗，沒有上個 DropZone，回到原始位置
         {
             rectTransform.anchoredPosition = originalPosition + (Vector2)dropOffset;
-            currentZoneType = ActivityDropZoneType.Member;
+            currentZoneType = BaitoDropZoneType.Member;
         }
 
         // 結束拖曳時，顯示角色其他 UI 元素並適度更新
         if (lastDropZone != null)
         {
             lastDropZone.SetCurrentIdol(this);
-            var display = lastDropZone.GetComponent<ActivityEquipments>();
+            var display = lastDropZone.GetComponent<BaitoEquipments>();
             if (display != null) display.UpdateEquipment(myIdolIndex);
         }
 
