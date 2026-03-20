@@ -1,11 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
-using UnityEngine.UI;
 using TMPro;
+using UnityEngine;
 using UnityEngine.EventSystems;
+using UnityEngine.SocialPlatforms;
+using UnityEngine.UI;
 
-public class IdolOnStage : MonoBehaviour, IDropHandler
+public class IdolOnStage : MonoBehaviour, IDropHandler,IPointerEnterHandler, IPointerExitHandler
 {
     [Header("上台的偶像資料")]
     public IdolInstance idolInstance;
@@ -242,5 +243,28 @@ public class IdolOnStage : MonoBehaviour, IDropHandler
             }
         }
     }
+    //滑鼠進入與出
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        if (eventData.pointerDrag != null)
+        {
+            // 2. 嘗試取得該物件上的卡片資訊
+            SetCardUI cardUI = eventData.pointerDrag?.GetComponent<SetCardUI>();
+            // 3. 如果卡片可使用，使其發光
+            if (cardUI != null && cardUI.cardData != null)
+            {
+                if (StageVocal >= cardUI.cardData.voGate && StageDance >= cardUI.cardData.daGate && StageVisual >= cardUI.cardData.viGate)
+                {
+                    Debug.Log($"滑鼠進入 {idolInstance.name}，檢查卡片 {cardUI.cardData.cardName} 可用...");
+                    cardUI.ShowGlowEffect(true);
+                }
+            }
+        }
+    }
 
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        SetCardUI cardUI = eventData.pointerDrag?.GetComponent<SetCardUI>();
+        cardUI?.ShowGlowEffect(false);
+    }
 }

@@ -184,22 +184,22 @@ public class DialogueManager : MonoBehaviour
         int letterCount = 0;
         int lineCount = 1;
 
-        sb.Append($"<indent={currentIndent}%>");
+        //sb.Append($"<indent={currentIndent}%>");
 
         foreach (char letter in line.ToCharArray())
         {
             sb.Append(letter);
             letterCount++;
 
-            if (letterCount >= lettersPerLine && lineCount < maxLines)
-            {
-                sb.AppendLine();
-                lineCount++;
-                letterCount = 0;
+            //if (letterCount >= lettersPerLine && lineCount < maxLines)
+            //{
+            //    sb.AppendLine();
+            //    lineCount++;
+            //    letterCount = 0;
 
-                currentIndent = Mathf.Max(0, currentIndent - indentStep);
-                sb.Append($"<indent={currentIndent}%>");
-            }
+            //    currentIndent = Mathf.Max(0, currentIndent - indentStep);
+            //    sb.Append($"<indent={currentIndent}%>");
+            //}
         }
         return sb.ToString();
     }
@@ -296,7 +296,7 @@ public class DialogueManager : MonoBehaviour
                     //恢復預設
                     dialogueText.fontStyle = FontStyles.Normal;
                     dialogueText.fontSize = 36;
-                    dialogueText.color = Color.black;
+                    dialogueText.color = Color.white;
                 }
             }
         }
