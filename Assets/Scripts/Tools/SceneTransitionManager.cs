@@ -141,7 +141,7 @@ public class SceneTransitionManager : MonoBehaviour
         yield return new WaitForSeconds(coverOutTime > 0 ? coverOutTime : 0.5f);
         isTransitioning = false;
         // 這裡檢查自定義的 triggerComputerAfterLoad 旗標
-        if (triggerComputerAfterLoad)
+        if (triggerComputerAfterLoad&&sceneName== "Floor_4")
         {
             triggerComputerAfterLoad = false; // 重置旗標避免重複觸發
             // 觸發事件
