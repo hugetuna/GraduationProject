@@ -20,7 +20,8 @@ public class SetCardUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     public TextMeshProUGUI voGateText;
     public TextMeshProUGUI daGateText;
     public TextMeshProUGUI viGateText;
-
+    //發光效果
+    public Image glowEffect;
     [Header("卡片資料")]
     public ActionCard cardData;
     //元物件與位置
@@ -45,7 +46,13 @@ public class SetCardUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         //紀錄位置
         originalParent = transform.parent;
         originalPosition = transform.localPosition;
-        
+    }
+    public void ShowGlowEffect(bool show)
+    {
+        if (glowEffect != null)
+        {
+            glowEffect.gameObject.SetActive(show);
+        }
     }
     //紀錄原位置及卡片資訊
     public void SetCard(ActionCard cardToSet)
@@ -100,7 +107,7 @@ public class SetCardUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
     {
         if (!isInteractive) return;
         isDragging = true;
-
+        
         // 恢復原位 (避免 hover offset 干擾)
         transform.localPosition = originalPosition;
 
