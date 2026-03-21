@@ -25,7 +25,7 @@ public class BaitoVigourBar : MonoBehaviour
         grayEffect = GetComponent<UIGrayEffect>();
         vigourRect = vigourSlider.GetComponent<RectTransform>();
     }
-    
+
     void Start()
     {
         SetBaitoUI.OnBaitoChanged += ChangeCurrentBaito; // 訂閱打工選擇變更事件
@@ -52,24 +52,27 @@ public class BaitoVigourBar : MonoBehaviour
         currentZoneType = zoneType; // 更新位置
         if (characterInfo == null || currentBaitoData == null) return; // 簡單的防呆檢查
 
-        vigourSlider.maxValue = characterInfo.vigourMax; // 設定體力值 UI 的最大值
+        // 基礎數值計算
+        float max = characterInfo.vigourMax;
+        float current = characterInfo.vigour;
+        float cost = currentBaitoData.vigourCost;
+
+        vigourSlider.maxValue = max; // 設定體力值 UI 的最大值
 
         if (zoneType == BaitoDropZoneType.Member)
         {
             vigourRect.anchoredPosition = teamPosition; // 移回隊伍位置
 
-            vigourSlider.value = characterInfo.vigour; // 更新體力值 UI 的當前值
-            lastFillImage.rectTransform.anchorMax = new Vector2(0, 1);
-            lastFillImage.rectTransform.offsetMax = Vector2.zero; // 確保圖片緊貼錨點
+            vigourSlider.value = current; // 更新體力值 UI 的當前值
+            lastFillImage.fillAmount = 0; // 不須顯示體力變化
         }
         else // BaitoDropZoneType.Baito（先不管 None）
         {
             vigourRect.anchoredPosition = sendPosition; // 移動到外出打工位置
 
-            vigourSlider.value = characterInfo.vigour - currentBaitoData.vigourCost;
-            var ratio = (float)characterInfo.vigour / characterInfo.vigourMax;
-            lastFillImage.rectTransform.anchorMax = new Vector2(ratio, 1);
-            lastFillImage.rectTransform.offsetMax = Vector2.zero; // 確保圖片緊貼錨點
+            vigourSlider.value = current - cost; // 更新體力值 UI 的當前值
+            var ratio = Mathf.Clamp01(current / max); // 計算長度比例 (確保不低於 0)
+            lastFillImage.fillAmount = ratio; // 顯示體力變化
         }
 
         ApplyGrayEffect(); // 根據體力狀態更新灰階效果
@@ -81,7 +84,7 @@ public class BaitoVigourBar : MonoBehaviour
 
         // 檢查體力是否足夠
         bool isTooTired = characterInfo.vigour < currentBaitoData.vigourCost;
-        Debug.Log($"Applying gray effect on {characterInfo.idolIndex}: Vigour={characterInfo.vigour}, Cost={currentBaitoData.vigourCost}");
+        // Debug.Log($"對 {characterInfo.idolIndex} 使用灰階效果: 體力={characterInfo.vigour}, 耗體={currentBaitoData.vigourCost}");
 
         if (currentZoneType == BaitoDropZoneType.Member)
         {
@@ -93,7 +96,7 @@ public class BaitoVigourBar : MonoBehaviour
         else // Baito 區（先不管 None）
         {
             // 取消灰階（不論體力狀態）
-            grayEffect.SetGrayScale(false); 
+            grayEffect.SetGrayScale(false);
             fillImage.GetComponent<UIGrayEffect>().SetGrayScale(false);
             drag.enabled = true; // 啟用拖曳功能
         }
