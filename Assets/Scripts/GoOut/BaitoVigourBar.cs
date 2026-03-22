@@ -5,7 +5,7 @@ using UnityEngine.UI;
 public class BaitoVigourBar : MonoBehaviour
 {
     private IdolInstance characterInfo; // 該角色的數值資料
-    private BaitoDropZoneType currentZoneType; // 目前所在的 DropZone 類型
+    private BaitoDropZoneType currentZoneType = BaitoDropZoneType.None; // 目前所在的 DropZone 類型
     private Baito currentBaitoData; // 目前打工的資訊
     //-----------------------------------------------------------------//
     [Header("體力 UI")]
@@ -16,7 +16,7 @@ public class BaitoVigourBar : MonoBehaviour
     private DragToBaito drag; // 拖曳元件參考
     private UIGrayEffect grayEffect; // 灰階效果參考
     private RectTransform vigourRect; // 體力條的 RectTransform 參考
-    private Vector2 teamPosition; // 角色在隊伍裡，體力條的位置（初始位置）
+    [SerializeField] private Vector2 teamPosition; // 角色在隊伍裡，體力條的位置（初始位置）
     [SerializeField] private Vector2 sendPosition; // 角色準備外出商演時，體力條的位置（拖曳後的位置）
 
     void Awake()
@@ -38,8 +38,6 @@ public class BaitoVigourBar : MonoBehaviour
 
     public void Initialize(Baito baitoData, IdolWho myIdolIndex)
     {
-        teamPosition = vigourRect.anchoredPosition; // 記錄初始位置
-
         currentBaitoData = baitoData; // 更新目前打工資訊
         characterInfo = TeamDataUtility.IdolDict[myIdolIndex]; // 尋找對應的角色資料
         currentZoneType = BaitoDropZoneType.Member; // 預設在隊伍裡
@@ -47,8 +45,18 @@ public class BaitoVigourBar : MonoBehaviour
         UpdateVigourBar(currentZoneType); // 初始化體力條顯示
     }
 
-    public void UpdateVigourBar(BaitoDropZoneType zoneType)
+    public void UpdateVigourBar(BaitoDropZoneType zoneType = BaitoDropZoneType.None)
     {
+        if(zoneType == BaitoDropZoneType.None)
+        {
+            if(currentZoneType == BaitoDropZoneType.None)
+            {
+                Debug.LogWarning("無法更新體力條：缺少當前區域類型資訊");
+                return;
+            }
+            zoneType = currentZoneType; // 如果沒有提供新的區域類型，使用當前的類型
+        }
+
         currentZoneType = zoneType; // 更新位置
         if (characterInfo == null || currentBaitoData == null) return; // 簡單的防呆檢查
 

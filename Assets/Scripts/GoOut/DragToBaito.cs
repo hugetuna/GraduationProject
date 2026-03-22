@@ -15,24 +15,25 @@ public class DragToBaito : Drag
     [Header("拖曳時受影響的 UI 元素")]
     [SerializeField] private GameObject vigourBar;
     private BaitoVigourBar vigourBarComponent;
-    private BaitoNumbers numbersComponent;
+    private GoOutNumbers numbersComponent;
 
     protected override void Awake()
     {
         base.Awake();
         vigourBarComponent = GetComponent<BaitoVigourBar>();
-        numbersComponent = GetComponent<BaitoNumbers>();
+        numbersComponent = GetComponent<GoOutNumbers>();
     }
 
-    public void Initialize(Baito data, IdolWho idolIndex, BaitoDropZone zone) // 僅在初次打開打工介面時呼叫一次 
+    public void Initialize(IdolWho idolIndex, BaitoDropZone zone) // 僅在初次打開打工介面時呼叫一次 
     {
         myIdolIndex = idolIndex;
         lastDropZone = currentDropZone = zone;
 
-        // 傳遞該角色名稱給其他元件進行初始化
-        vigourBarComponent.Initialize(data, idolIndex);
-        numbersComponent.Initialize(idolIndex);
+        // 傳遞該角色名稱給其他元件進行初始化 => 交給 SetBaitoUI 統一呼叫
+        // vigourBarComponent.Initialize(data, idolIndex);
+        // numbersComponent.Initialize(idolIndex);
 
+        // 同場景的 UI 重置已經寫了
         // 換場景 UI 就會重置，不用特別還原位置
     }
 

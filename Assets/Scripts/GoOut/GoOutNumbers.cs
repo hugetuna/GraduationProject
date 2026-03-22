@@ -5,7 +5,7 @@ using UnityEngine.EventSystems;
 
 
 /* 掛在角色 UI 上 */
-public class BaitoNumbers : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class GoOutNumbers : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [SerializeField] private TextMeshProUGUI nameText; // 角色名稱
     [SerializeField] private TextMeshProUGUI performanceText; // 角色演技數值

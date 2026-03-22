@@ -70,5 +70,6 @@ public class GoOutUIHandler : MonoBehaviour
         selectionUI.SetActive(true);
         baitoUI.SetActive(false);
         activityUI.SetActive(true);
+        activityUI.GetComponent<SetActivityUI>().OpenActivityUI();
     }
 }

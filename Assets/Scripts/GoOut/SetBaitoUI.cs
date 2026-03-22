@@ -18,17 +18,23 @@ public class SetBaitoUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI VigourCostText; // 打工耗體文字
     [SerializeField] private TextMeshProUGUI MoneyGainText; // 打工收益文字
     //-----------------------------------------------------------------//
-    [SerializeField] private List<Image> characterImages; // 角色圖片槽
-    [SerializeField] private List<BaitoDropZone> characterDropZones; // 角色初始放置的 DropZone 
+    [SerializeField] private List<Image> characterImages = new(); // 角色圖片槽
+    private List<Vector2> originalPositions = new(); // 角色圖片的初始位置列表
+    [SerializeField] private List<BaitoDropZone> characterDropZones = new(); // 角色初始放置的 DropZone
     //-----------------------------------------------------------------//
     [SerializeField] private Button confirmBtn; // 確認出發的按鈕
     public static event Action OnBaitoConfirmed; // 定義確認出發事件
     //-----------------------------------------------------------------//
     [Header("打工資訊")]
-    [SerializeField] private List<Baito> baitoList; // 可選的打工列表
+    [SerializeField] private List<Baito> baitoList = new(); // 可選的打工列表
     private int currentBaitoIndex = 0; // 目前選擇的打工索引
     private bool isInitialized = false;
     public static event Action<Baito> OnBaitoChanged; // 定義變更打工選擇事件
+
+    void Start()
+    {
+        InitializeButtonEvents(); // 初始化按鈕事件
+    }
 
     public void OpenBaitoUI() // 每次開啟介面時都會執行一次
     {
@@ -36,15 +42,19 @@ public class SetBaitoUI : MonoBehaviour
         currentBaitoIndex = 0;
         UpdateBaitoInfo(baitoList[currentBaitoIndex]);
 
-        UpdateCharacterImagesAndPositions(); // 設定角色 UI 圖片及位置（不必隨時存檔，派出去再處理就好）
-
         if (!isInitialized)
         {
-            InitializeButtonEvents(); // 初始化按鈕事件
-            InitializeDragSystem(); // 初始化拖曳系統
+            foreach (var img in characterImages) // 儲存角色圖片的初始位置
+            {
+                originalPositions.Add(img.rectTransform.anchoredPosition);
+            }
 
             isInitialized = true;
         }
+
+        UpdateCharacterImagesAndPositions(); // 設定角色 UI 圖片及位置（不必隨時存檔，派出去再處理就好）
+
+        RefreshDragSystem(); // 刷新拖曳系統
     }
 
     private void UpdateBaitoInfo(Baito baitoData)
@@ -111,23 +121,28 @@ public class SetBaitoUI : MonoBehaviour
             bool isInTeam = TeamDataUtility.IdolObjectList[i].activeSelf;
             img.gameObject.SetActive(isInTeam);
 
-            // 每次開啟介面都會重置圖片位置，不用特別還原
+            // 重置圖片位置
+            img.rectTransform.anchoredPosition = originalPositions[i];
         }
     }
 
-    private void InitializeDragSystem()
+    private void RefreshDragSystem()
     {
         var idolInstanceList = TeamDataUtility.IdolInstanceList;
         for (int i = 0; i < characterImages.Count; i++)
         {
             var drag = characterImages[i].GetComponentInChildren<DragToBaito>();
+            var vigourBar = characterImages[i].GetComponentInChildren<BaitoVigourBar>();
+            var numbers = characterImages[i].GetComponentInChildren<GoOutNumbers>();
+
             var idol = idolInstanceList[i].idolIndex;
             var data = baitoList[currentBaitoIndex];
             var characterDropZone = characterDropZones[i];
 
-            // 依序初始化角色底下的拖曳元件＆登記角色的初始 DropZone 位置
-            drag.Initialize(data, idol, characterDropZone);
-            characterDropZone.SetCurrentIdol(drag);
+            drag.Initialize(idol, characterDropZone); // 初始化角色底下的拖曳元件
+            characterDropZone.SetCurrentIdol(drag); // 登記角色的初始 DropZone 位置
+            vigourBar.Initialize(data, idol); // 初始化角色底下的體力條
+            numbers.Initialize(idol); // 初始化角色底下的數值顯示
         }
     }
 }
