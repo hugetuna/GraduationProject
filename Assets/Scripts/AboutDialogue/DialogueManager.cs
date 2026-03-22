@@ -23,6 +23,7 @@ public class DialogueManager : MonoBehaviour
     public TextMeshProUGUI dialogueText;
     public Transform dialogueChoices;
     public GameObject ChoiceButtomPrefab;
+    public Button skipButton;
     [Header("應應tag改變演示")]
     public List<CharacterDialogueProfile> characterDialogueProfiles;
     public TachieManager tachieManager;
@@ -93,6 +94,8 @@ public class DialogueManager : MonoBehaviour
     }
     public void DialogueStart()
     {
+        //開啟跳過鍵
+        skipButton.interactable = true;
         //切換 Action Map 到對話專用
         SwitchActionMap("Dialogue");
         //關閉玩家操作、ui顯示
@@ -467,6 +470,8 @@ public class DialogueManager : MonoBehaviour
     }
     private void OnDialougeEnd()
     {
+        skipButton.interactable = false;//關閉跳過鍵，以免重複點擊
+        if (skipButton.interactable == true) return;
         SwitchActionMap("PlayerActionMain"); //切換回玩家操作的 Action Map
         AudioManager.Instance.StopSFX();
         if (dialogueType == true) {
