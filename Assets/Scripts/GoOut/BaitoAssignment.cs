@@ -19,7 +19,7 @@ public class BaitoAssignment : MonoBehaviour
     
     public void AssignToBaito()
     {
-        
+        Debug.Log("指派外出打工");
         
     }
 }
