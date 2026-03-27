@@ -53,6 +53,15 @@ public class DialogueManager : MonoBehaviour
     //安全切換 Map
     private void SwitchActionMap(string mapName)
     {
+        if (teamManager != null)
+        {
+            PlayerInput captain = teamManager?.teamMembers[
+            teamManager.currentLeaderIndex].GetComponent<PlayerInput>();
+            if (captain != null)
+            {
+                captain.SwitchCurrentActionMap(mapName);
+            }
+        }
         if (playerInput != null)
         {
             playerInput.SwitchCurrentActionMap(mapName);
@@ -178,7 +187,7 @@ public class DialogueManager : MonoBehaviour
             OnDialougeEnd();
         }
     }
-    //字串加工，使其有縮排
+    //字串加工，使其有縮排(縮排功能目前關掉了)
     private string BuildStairText(string line, int indentStart = 10, int lettersPerLine = 25, int indentStep = 5, int maxLines = 3)
     {
         System.Text.StringBuilder sb = new System.Text.StringBuilder();

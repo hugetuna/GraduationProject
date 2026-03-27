@@ -794,6 +794,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: 2F_v3
       objectReference: {fileID: 0}
+    - target: {fileID: 5733911823876726600, guid: 9c66c4e8c5a6426408da1bc12ffea996, type: 3}
+      propertyPath: m_Lightmapping
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects:
@@ -1003,6 +1007,7 @@ GameObject:
   - component: {fileID: 605463037}
   - component: {fileID: 605463039}
   - component: {fileID: 605463038}
+  - component: {fileID: 605463040}
   m_Layer: 0
   m_Name: Collider3
   m_TagString: Untagged
@@ -1059,6 +1064,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.0630589, y: 0, z: 3.4514918}
   m_Center: {x: -0.6624594, y: -0.49999988, z: -0.10214782}
+--- !u!114 &605463040
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 605463036}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16defcab490c8724e9b4572d055ae02d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hintPrefab: {fileID: 1776773948414331192, guid: 1f68213dbd0f542449843e0e85fa0aa1, type: 3}
+  SpwanPoint: {x: 0, y: 0, z: 0}
+  XDeg: 45
 --- !u!1001 &745907529
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2630,6 +2650,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: GameMangerGen
       objectReference: {fileID: 0}
+    - target: {fileID: 6814912132265877993, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: idolDataList.Array.data[0].basicTrainRecord
+      value: 
+      objectReference: {fileID: 11400000, guid: 6430773534cda664291cf9a5b910875f, type: 2}
+    - target: {fileID: 6814912132265877993, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: idolDataList.Array.data[1].basicTrainRecord
+      value: 
+      objectReference: {fileID: 11400000, guid: 6430773534cda664291cf9a5b910875f, type: 2}
+    - target: {fileID: 6814912132265877993, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: idolDataList.Array.data[2].basicTrainRecord
+      value: 
+      objectReference: {fileID: 11400000, guid: 6430773534cda664291cf9a5b910875f, type: 2}
+    - target: {fileID: 6814912132265877993, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: idolDataList.Array.data[0].trainRecord.isActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6814912132265877993, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: idolDataList.Array.data[1].trainRecord.isActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6814912132265877993, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: idolDataList.Array.data[2].trainRecord.isActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7896774796638631959, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
       propertyPath: m_LocalPosition.x
       value: -8.386003
@@ -3049,7 +3093,7 @@ PrefabInstance:
     - target: {fileID: 6818318229001809294, guid: b7d5987cdaab6274a996b3366f323931, type: 3}
       propertyPath: dialogueCanvas
       value: 
-      objectReference: {fileID: 0}
+      objectReference: {fileID: 1922609402}
     - target: {fileID: 6818318229001809294, guid: b7d5987cdaab6274a996b3366f323931, type: 3}
       propertyPath: dialogueChoices
       value: 
@@ -3180,6 +3224,7 @@ GameObject:
   - component: {fileID: 1492109299}
   - component: {fileID: 1492109301}
   - component: {fileID: 1492109300}
+  - component: {fileID: 1492109302}
   m_Layer: 0
   m_Name: Collider2
   m_TagString: Untagged
@@ -3236,6 +3281,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.0630589, y: 0, z: 3.4514918}
   m_Center: {x: -0.6624594, y: -0.49999988, z: -0.10214782}
+--- !u!114 &1492109302
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1492109298}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16defcab490c8724e9b4572d055ae02d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hintPrefab: {fileID: 1776773948414331192, guid: 1f68213dbd0f542449843e0e85fa0aa1, type: 3}
+  SpwanPoint: {x: 0, y: 0, z: 0}
+  XDeg: 45
 --- !u!1001 &1492901762
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3344,7 +3404,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   hintPrefab: {fileID: 1776773948414331192, guid: 1f68213dbd0f542449843e0e85fa0aa1, type: 3}
   SpwanPoint: {x: 0, y: 3.5, z: -1.5}
-  XDeg: 0
+  XDeg: 45
 --- !u!1 &1540165314 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 5802433420958930063, guid: 9c66c4e8c5a6426408da1bc12ffea996, type: 3}
@@ -4022,6 +4082,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1922609402 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 531864311598564429, guid: b7d5987cdaab6274a996b3366f323931, type: 3}
+  m_PrefabInstance: {fileID: 1306290555}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1979587524
 GameObject:
   m_ObjectHideFlags: 0
@@ -4033,6 +4098,7 @@ GameObject:
   - component: {fileID: 1979587525}
   - component: {fileID: 1979587527}
   - component: {fileID: 1979587526}
+  - component: {fileID: 1979587528}
   m_Layer: 0
   m_Name: Collider1
   m_TagString: Untagged
@@ -4089,6 +4155,21 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 3.0630589, y: 0, z: 3.4514918}
   m_Center: {x: -0.6624594, y: -0.49999988, z: -0.10214782}
+--- !u!114 &1979587528
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1979587524}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16defcab490c8724e9b4572d055ae02d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hintPrefab: {fileID: 1776773948414331192, guid: 1f68213dbd0f542449843e0e85fa0aa1, type: 3}
+  SpwanPoint: {x: 0, y: 0, z: 0}
+  XDeg: 45
 --- !u!1 &1987706713
 GameObject:
   m_ObjectHideFlags: 0
@@ -4257,6 +4338,10 @@ PrefabInstance:
     - target: {fileID: 4782329735121765458, guid: fe7419af4a455bc498a18b5c8fb526dc, type: 3}
       propertyPath: teamMembers.Array.size
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4782329735121765458, guid: fe7419af4a455bc498a18b5c8fb526dc, type: 3}
+      propertyPath: 'teamMembers.Array.data[0]'
+      value: 
       objectReference: {fileID: 0}
     - target: {fileID: 4844826841340400612, guid: fe7419af4a455bc498a18b5c8fb526dc, type: 3}
       propertyPath: m_Name
@@ -4635,8 +4720,8 @@ SceneRoots:
   - {fileID: 19826677}
   - {fileID: 1461001671}
   - {fileID: 1085316732}
-  - {fileID: 1655445053}
+  - {fileID: 1609001900}
+  - {fileID: 925387798}
   - {fileID: 1306290555}
   - {fileID: 1780306759}
-  - {fileID: 925387798}
-  - {fileID: 1609001900}
+  - {fileID: 1655445053}

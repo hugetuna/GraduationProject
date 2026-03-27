@@ -13,7 +13,8 @@ public class TeamManager : MonoBehaviour
     public float followDistance = 3f; // 角色之間的距離
     public float followSpeed = 5f; // 角色跟隨速度
     private bool isSwitchingLeader = false; // SwitchLeader執行時為真
-
+    [SerializeField]
+    private Vector3 startPosition; // 起始位置
     private void Start()
     {
         BuildUpIdolsTeam();
@@ -35,7 +36,7 @@ public class TeamManager : MonoBehaviour
         for (int i = 0; i < idolDataList.Count; i++)
         {
             var data = idolDataList[i];
-            var idol = Instantiate(allIdols[(int)data.idolIndex], Vector3.forward, Quaternion.identity);
+            var idol = Instantiate(allIdols[(int)data.idolIndex], startPosition, Quaternion.identity);
             var idolAbility = idol.GetComponent<IdolInstance>();
             //手動把資料填回去
             idolAbility.LoadData(data);
@@ -89,9 +90,8 @@ public class TeamManager : MonoBehaviour
             // 移動到忙碌列表
             busyMembers.Add(member);
             teamMembers.Remove(member);
-
             // 如果移除的是隊長，就要換新隊長
-            if (wasLeader && teamMembers.Count > 0)
+            if (wasLeader && teamMembers.Count > 0|| teamMembers.Count > 0 && currentLeaderIndex >= teamMembers.Count)
             {
                 currentLeaderIndex = 0;
                 //封鎖隊長外的PlayerControlMainWorld
