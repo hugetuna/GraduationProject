@@ -51,7 +51,7 @@ public class TraineeAssignment : MonoBehaviour
                 idol.SetActive(false);
 
                 // 更新跨場景狀態
-                UpdateTrainRecord(idolEnum, isActive: false);
+                UpdateIdolTrainRecord(idolEnum, isActive: false);
             }
             // 情況二：這個角色在「成員區」(可能是剛被移出訓練，或者原本就沒事)
             else if (trainRecord.droppedZoneType == DropZoneType.Member)
@@ -64,7 +64,7 @@ public class TraineeAssignment : MonoBehaviour
                 idol.SetActive(true);
 
                 // 更新跨場景狀態
-                UpdateTrainRecord(idolEnum, isActive: true);
+                UpdateIdolTrainRecord(idolEnum, isActive: true);
             }
             // 情況三：這個角色在其他 UI 的訓練區（例如角色在 Vocal，而玩家正處於 Dance）
             else
@@ -74,7 +74,7 @@ public class TraineeAssignment : MonoBehaviour
             }
         }
     }
-    
+
     // 計算並寫入訓練數值 (體力與經驗)
     private void CalculateAndSetTrainingStats(IdolInstance idol, TrainingUIData data)
     {
@@ -101,7 +101,8 @@ public class TraineeAssignment : MonoBehaviour
         }
 
         // 寫入 Record (這裡只是紀錄「將會」發生什麼事，還沒真正扣體力)
-        UpdateTrainRecord(idol.idolIndex,
+        UpdateIdolTrainRecord(
+            idol.idolIndex,
             vigourCost: data.neededVigour,
             danceExp: finalDanceExp,
             vocalExp: finalVocalExp,
@@ -112,7 +113,8 @@ public class TraineeAssignment : MonoBehaviour
     // 重置訓練數值 (當角色不在訓練區)
     private void ClearTrainingStats(IdolInstance idol)
     {
-        UpdateTrainRecord(idol.idolIndex,
+        UpdateIdolTrainRecord(
+            idol.idolIndex,
             vigourCost: 0,
             danceExp: 0,
             vocalExp: 0,
@@ -121,16 +123,18 @@ public class TraineeAssignment : MonoBehaviour
     }
 
     // 在指派訓練成員的同時備份狀態變化
-    public static void UpdateTrainRecord(IdolWho name, // 第一項引述必填
-                                         IdolTrainingState state = IdolTrainingState.None,
-                                         Vector2? position = null,
-                                         DropZoneType droppedZoneType = DropZoneType.None,
-                                         int? droppedZoneIndex = null,
-                                         int? vigourCost = null,
-                                         int? danceExp = null,
-                                         int? vocalExp = null,
-                                         int? visualExp = null,
-                                         bool? isActive = null)
+    public static void UpdateIdolTrainRecord(
+        IdolWho name, // 第一項引述必填
+        IdolTrainingState state = IdolTrainingState.None,
+        Vector2? position = null,
+        DropZoneType droppedZoneType = DropZoneType.None,
+        int? droppedZoneIndex = null,
+        int? vigourCost = null,
+        int? danceExp = null,
+        int? vocalExp = null,
+        int? visualExp = null,
+        bool? isActive = null
+    )
     {
         var idol = TeamDataUtility.IdolDict[name];
         var trainRecord = idol.trainRecord;
@@ -143,6 +147,7 @@ public class TraineeAssignment : MonoBehaviour
         if (danceExp != null) trainRecord.danceExp = danceExp.Value;
         if (vocalExp != null) trainRecord.vocalExp = vocalExp.Value;
         if (visualExp != null) trainRecord.visualExp = visualExp.Value;
-        if (isActive != null) trainRecord.isActive = isActive.Value;
+
+        if (isActive != null) idol.isAvailable = isActive.Value;
     }
 }

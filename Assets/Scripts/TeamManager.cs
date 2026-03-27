@@ -38,10 +38,11 @@ public class TeamManager : MonoBehaviour
             var data = idolDataList[i];
             var idol = Instantiate(allIdols[(int)data.idolIndex], startPosition, Quaternion.identity);
             var idolAbility = idol.GetComponent<IdolInstance>();
+            var isActive = data.isAvailable;
             //手動把資料填回去
             idolAbility.LoadData(data);
             //idolAbility.positionInTeam = i;
-            if (idolAbility.trainRecord.isActive) //判斷是否在隊伍中
+            if (isActive) //判斷是否在隊伍中
             {
                 teamMembers.Add(idol.GetComponent<PlayerControlMainWorld>());
             }
@@ -49,7 +50,7 @@ public class TeamManager : MonoBehaviour
             {
                 busyMembers.Add(idol.GetComponent<PlayerControlMainWorld>());
             }
-            idol.SetActive(idolAbility.trainRecord.isActive);
+            idol.SetActive(isActive);
         }
 
         //初始化位置編號
@@ -66,7 +67,7 @@ public class TeamManager : MonoBehaviour
         {
             // 因為寫在 DayManager 的 EndDay 似乎沒用，於是直接寫在這
             IdolInstance idol = member.GetComponent<IdolInstance>();
-            idol.gameObject.SetActive(idol.trainRecord.isActive);
+            idol.gameObject.SetActive(idol.isAvailable);
         }
     }
 

@@ -72,7 +72,7 @@ public class NumbersController : MonoBehaviour
                     finalIndex = currentMaxIndex;
 
                     // 同步到跨場景資料
-                    TraineeAssignment.UpdateTrainRecord(idol.idolIndex, droppedZoneIndex: finalIndex);
+                    TraineeAssignment.UpdateIdolTrainRecord(idol.idolIndex, droppedZoneIndex: finalIndex);
                 }
                 // 如果 currentMaxIndex 比現在的 index 小記得更新
                 else if (finalIndex > currentMaxIndex)

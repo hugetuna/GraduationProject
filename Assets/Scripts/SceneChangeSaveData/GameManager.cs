@@ -101,6 +101,8 @@ public class GameManager : MonoBehaviour
                 BHaveSetUp = true,
                 basicTrainRecord = idol.basicTrainRecord,
                 trainRecord = idol.trainRecord,
+                baitoRecord = idol.baitoRecord,
+                isAvailable = idol.isAvailable,
                 equippedItemName = idol.equipmentItemNow != null ? idol.equipmentItemNow.itemName : ""
             };
             idolDataList.Add(data);

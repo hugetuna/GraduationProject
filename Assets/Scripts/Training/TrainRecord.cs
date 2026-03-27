@@ -13,7 +13,7 @@ public class TrainRecord
     public int danceExp; // 舞蹈收益
     public int vocalExp; // 歌唱收益
     public int visualExp; // 表現力收益
-    public bool isActive; //是否在場景中啟用
+    // public bool isActive; //是否在場景中啟用
 
     public void SetTrainRecord(IdolTrainingState state = IdolTrainingState.None,
                                Vector2? position = null,
@@ -22,8 +22,8 @@ public class TrainRecord
                                int? vigourCost = null,
                                int? dance = null,
                                int? vocal = null,
-                               int? visual = null,
-                               bool? isActive = null)
+                               int? visual = null
+                               /*bool? isActive = null*/)
     {
         if (state != IdolTrainingState.None) this.state = state;
         if (position != null) this.position = position.Value;
@@ -33,7 +33,7 @@ public class TrainRecord
         if (dance != null) danceExp = dance.Value;
         if (vocal != null) vocalExp = vocal.Value;
         if (visual != null) visualExp = visual.Value;
-        if (isActive != null) this.isActive = isActive.Value;
+        // if (isActive != null) this.isActive = isActive.Value;
     }
 
     public void RestrictTrainingOneDay()

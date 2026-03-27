@@ -103,7 +103,7 @@ public class TrainingUIManager : MonoBehaviour
         characterStates[idol] = state;
 
         // 同步更新 IdolInstance 的 trainRecord（備份用）
-        TraineeAssignment.UpdateTrainRecord(idol, state);
+        TraineeAssignment.UpdateIdolTrainRecord(idol, state);
     }
 
     public List<IdolWho> GetMembers() // 取得目前隊伍成員清單

@@ -68,6 +68,7 @@ public class SetSettleUI : MonoBehaviour
         foreach (var idol in idolInstances)
         {
             idol.SettleTrainRecord(); // 換天前搞定訓練結算
+            idol.isAvailable = true;
         }
         DayManager.Instance.AfterDayEndEventStart();
     }
