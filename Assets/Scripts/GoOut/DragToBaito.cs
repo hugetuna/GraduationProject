@@ -11,22 +11,23 @@ public class DragToBaito : Drag
         set { currentDropZone = value; }
     }
     private IdolWho myIdolIndex;
+    public IdolWho MyIdolIndex { get { return myIdolIndex; } }
+    private IdolInstance myIdolInstance; // 方便存取用
     //-----------------------------------------------------------------//
     [Header("拖曳時受影響的 UI 元素")]
     [SerializeField] private GameObject vigourBar;
     private BaitoVigourBar vigourBarComponent;
-    private GoOutNumbers numbersComponent;
 
     protected override void Awake()
     {
         base.Awake();
         vigourBarComponent = GetComponent<BaitoVigourBar>();
-        numbersComponent = GetComponent<GoOutNumbers>();
     }
 
     public void Initialize(IdolWho idolIndex, BaitoDropZone zone) // 僅在初次打開打工介面時呼叫一次 
     {
         myIdolIndex = idolIndex;
+        myIdolInstance = TeamDataUtility.IdolDict[myIdolIndex];
         lastDropZone = currentDropZone = zone;
 
         // 傳遞該角色名稱給其他元件進行初始化 => 交給 SetBaitoUI 統一呼叫
@@ -61,6 +62,7 @@ public class DragToBaito : Drag
 
         // 拖曳成功，放到新的 DropZone
         BaitoDropZoneType currentZoneType;
+        bool success = false;
         if (currentDropZone != null) // 更新最後成功 DropZone
         {
             AudioManager.Instance.PlaySFX(dragCompletedSound, 0.5f); // 播放拖曳成功音效
@@ -68,13 +70,14 @@ public class DragToBaito : Drag
 
             lastDropZone = currentDropZone;
             currentZoneType = currentDropZone.zoneType;
+            success = true;
         }
         else if (lastDropZone != null) // 拖曳失敗，回到上個 DropZone
         {
             rectTransform.position = lastDropZone.MyRect.position + dropOffset;
             currentZoneType = lastDropZone.zoneType;
         }
-        else // 拖曳失敗，沒有上個 DropZone，回到原始位置
+        else // 拖曳失敗，沒有上個 DropZone，回到原始位置 => 理論上不會發生，除非一開始沒有正確初始化
         {
             rectTransform.anchoredPosition = originalPosition + (Vector2)dropOffset;
             currentZoneType = BaitoDropZoneType.Member;
@@ -90,6 +93,14 @@ public class DragToBaito : Drag
 
         vigourBar.SetActive(true);
         vigourBarComponent.UpdateVigourBar(currentZoneType);
+
+        // 跨場景同步
+        myIdolInstance.baitoRecord.SetBaitoRecord(
+            null, // 不動
+            rectTransform.anchoredPosition, // 更新位置
+            currentZoneType, // 更新區域類型
+            success ? currentDropZone.zoneIndex : lastDropZone.zoneIndex // 更新區域索引
+        );
     }
 
 }

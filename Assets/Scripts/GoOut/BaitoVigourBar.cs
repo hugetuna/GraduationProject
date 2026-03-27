@@ -15,6 +15,7 @@ public class BaitoVigourBar : MonoBehaviour
     //-----------------------------------------------------------------//
     private DragToBaito drag; // 拖曳元件參考
     private UIGrayEffect grayEffect; // 灰階效果參考
+    private UIGrayEffect fillGrayEffect; // 體力條圖片的灰階效果參考
     private RectTransform vigourRect; // 體力條的 RectTransform 參考
     [SerializeField] private Vector2 teamPosition; // 角色在隊伍裡，體力條的位置（初始位置）
     [SerializeField] private Vector2 sendPosition; // 角色準備外出商演時，體力條的位置（拖曳後的位置）
@@ -23,6 +24,7 @@ public class BaitoVigourBar : MonoBehaviour
     {
         drag = GetComponent<DragToBaito>();
         grayEffect = GetComponent<UIGrayEffect>();
+        fillGrayEffect = fillImage.GetComponent<UIGrayEffect>();
         vigourRect = vigourSlider.GetComponent<RectTransform>();
     }
 
@@ -40,16 +42,16 @@ public class BaitoVigourBar : MonoBehaviour
     {
         currentBaitoData = baitoData; // 更新目前打工資訊
         characterInfo = TeamDataUtility.IdolDict[myIdolIndex]; // 尋找對應的角色資料
-        currentZoneType = BaitoDropZoneType.Member; // 預設在隊伍裡
+        currentZoneType = characterInfo.baitoRecord.zoneType; // 根據角色的打工紀錄設定區域類型
 
         UpdateVigourBar(currentZoneType); // 初始化體力條顯示
     }
 
     public void UpdateVigourBar(BaitoDropZoneType zoneType = BaitoDropZoneType.None)
     {
-        if(zoneType == BaitoDropZoneType.None)
+        if (zoneType == BaitoDropZoneType.None)
         {
-            if(currentZoneType == BaitoDropZoneType.None)
+            if (currentZoneType == BaitoDropZoneType.None)
             {
                 Debug.LogWarning("無法更新體力條：缺少當前區域類型資訊");
                 return;
@@ -78,9 +80,12 @@ public class BaitoVigourBar : MonoBehaviour
         {
             vigourRect.anchoredPosition = sendPosition; // 移動到外出打工位置
 
-            vigourSlider.value = current - cost; // 更新體力值 UI 的當前值
-            var ratio = Mathf.Clamp01(current / max); // 計算長度比例 (確保不低於 0)
-            lastFillImage.fillAmount = ratio; // 顯示體力變化
+            if (!characterInfo.baitoRecord.isWorking)
+            {
+                vigourSlider.value = current - cost; // 更新體力值 UI 的當前值
+                var ratio = Mathf.Clamp01(current / max); // 計算長度比例 (確保不低於 0)
+                lastFillImage.fillAmount = ratio; // 顯示體力變化
+            }
         }
 
         ApplyGrayEffect(); // 根據體力狀態更新灰階效果
@@ -98,15 +103,23 @@ public class BaitoVigourBar : MonoBehaviour
         {
             // 在 Member 區才需要根據體力變灰
             grayEffect.SetGrayScale(isTooTired);
-            fillImage.GetComponent<UIGrayEffect>().SetGrayScale(isTooTired);
+            fillGrayEffect.SetGrayScale(isTooTired);
             drag.enabled = !isTooTired; // 體力不足時禁用拖曳功能
         }
         else // Baito 區（先不管 None）
         {
             // 取消灰階（不論體力狀態）
             grayEffect.SetGrayScale(false);
-            fillImage.GetComponent<UIGrayEffect>().SetGrayScale(false);
-            drag.enabled = true; // 啟用拖曳功能
+            fillGrayEffect.SetGrayScale(false);
+            // 根據有無出發去打工，決定是否啟用拖曳
+            if (characterInfo.baitoRecord.isWorking)
+            {
+                drag.enabled = false; // 已出發打工，禁用拖曳功能
+            }
+            else
+            {
+                drag.enabled = true; // 沒有出發打工，啟用拖曳功能（角色圖片的透明效果則交給 BaitoStatusEffect）
+            }
         }
     }
 

@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.Rendering.VirtualTexturing;
 using UnityEngine.U2D.Animation;
 
-public enum IdolWho { none = -1, Kuma = 0, Karo = 1, Sirius = 2 ,Mizar=3,Aicor=4}
+public enum IdolWho { none = -1, Kuma = 0, Karo = 1, Sirius = 2, Mizar = 3, Aicor = 4 }
 public class IdolInstance : MonoBehaviour
 {
     public IdolWho idolIndex;
@@ -29,21 +29,23 @@ public class IdolInstance : MonoBehaviour
     public int fans;
     public int bondWithP;//與玩家的羈絆
     //裝備
-    public EquipmentItem equipmentItemNow=null;
+    public EquipmentItem equipmentItemNow = null;
     public string equippedItemName; //用來存裝備的名字(unity無法直接存OS)
     //衣服編號->string字典
     public Dictionary<int, string> clothesDict = new Dictionary<int, string>();
     public int currentClothIndex = 0;//目前穿著的衣服編號
     //道具相關
     public int plantVigourCost = 5;
-    public int waterVigourCost=3;
+    public int waterVigourCost = 3;
     //是否已經完成初始化
     public bool BHaveSetUp = false;
 
     public Sprite spriteQ; // 角色 UI 圖片（Q 版）
     public Sprite spriteTachie; // 角色 UI 圖片（立繪）
     public BasicTrainRecord basicTrainRecord; // 初始值存放地
-    public TrainRecord trainRecord = new(); // 訓練紀錄
+    public TrainRecord trainRecord; // 訓練紀錄
+    public BaitoRecord baitoRecord; // 打工紀錄
+    public bool isAvailable; // 是否可用（在隊伍中；在場景中啟用）
 
     // Start is called before the first frame update
     void Start()
@@ -73,27 +75,37 @@ public class IdolInstance : MonoBehaviour
         performance = basicStatus.performance;
         vigour = vigourMax = basicStatus.vigour;
         fans = 0;
-        
+
         if (basicTrainRecord == null)
         {
             Debug.LogError("基本狀態 (basicTrainRecord) 未設定！");
             return;
         }
-        trainRecord.SetTrainRecord(basicTrainRecord.state, 
-                                   basicTrainRecord.position,
-                                   basicTrainRecord.droppedZoneType,
-                                   basicTrainRecord.droppedZoneIndex,
-                                   basicTrainRecord.vigourCost,
-                                   basicTrainRecord.danceExp,
-                                   basicTrainRecord.vocalExp,
-                                   basicTrainRecord.visualExp,
-                                   basicTrainRecord.isActive);
+        isAvailable = true;
+        trainRecord.SetTrainRecord(
+            basicTrainRecord.state,
+            basicTrainRecord.position,
+            basicTrainRecord.droppedZoneType,
+            basicTrainRecord.droppedZoneIndex,
+            basicTrainRecord.vigourCost,
+            basicTrainRecord.danceExp,
+            basicTrainRecord.vocalExp,
+            basicTrainRecord.visualExp
+            /* basicTrainRecord.isActive */
+        );
+        baitoRecord.SetBaitoRecord(
+            null, 
+            Vector2.zero,
+            BaitoDropZoneType.Member,
+            -1,
+            false
+        );
     }
     //填入讀取的資料組
     public void LoadData(IdolSaveData data)
     {
         idolIndex = data.idolIndex;
-        switch(idolIndex)
+        switch (idolIndex)
         {
             case IdolWho.Kuma:
                 basicStatus = basicStatusList[0];
@@ -150,7 +162,10 @@ public class IdolInstance : MonoBehaviour
         // 訓練紀錄
         basicTrainRecord = data.basicTrainRecord;
         trainRecord = data.trainRecord;
-                                  
+        // 打工紀錄
+        baitoRecord = data.baitoRecord;
+        isAvailable = data.isAvailable;
+
         positionInTeam = data.positionInTeam;
     }
     public bool costVigour(int Amount)
@@ -255,15 +270,31 @@ public class IdolInstance : MonoBehaviour
         visual += trainRecord.visualExp;
 
         // 重置必須清空的訓練紀錄（三種訓練數值）
-        trainRecord.SetTrainRecord(IdolTrainingState.InTeam,
-                                   Vector2.zero,
-                                   DropZoneType.Member,
-                                   -1,
-                                   basicTrainRecord.vigourCost,
-                                   basicTrainRecord.danceExp,
-                                   basicTrainRecord.vocalExp,
-                                   basicTrainRecord.visualExp,
-                                   true);
+        trainRecord.SetTrainRecord(
+            IdolTrainingState.InTeam,
+            Vector2.zero,
+            DropZoneType.Member,
+            -1,
+            basicTrainRecord.vigourCost,
+            basicTrainRecord.danceExp,
+            basicTrainRecord.vocalExp,
+            basicTrainRecord.visualExp
+            /* true */
+        );
+    }
+    // 進入電腦頁面時打工收益進帳＆記錄重置
+    public void SettleBaitoRecord()
+    {
+        ResourceManager.Instance.Money += baitoRecord.selectedBaito.MoneyGain;
+
+        // 重置必須清空的打工紀錄
+        baitoRecord.SetBaitoRecord(
+            null, 
+            Vector2.zero,
+            BaitoDropZoneType.Member,
+            -1,
+            false
+        );
     }
     [ContextMenu("TestEquip")]
     public void TestEquip()

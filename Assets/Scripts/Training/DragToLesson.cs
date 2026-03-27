@@ -126,10 +126,12 @@ public class DragToLesson : Drag
         else vigourSlider.SetActive(false);
 
         // 同步更新 IdolInstance 的 trainRecord（備份用）
-        TraineeAssignment.UpdateTrainRecord(MyIdolIndex,
-                                            position: rectTransform.anchoredPosition,
-                                            droppedZoneType: currentZoneType,
-                                            droppedZoneIndex: zoneIndex);
+        TraineeAssignment.UpdateIdolTrainRecord(
+            MyIdolIndex,
+            position: rectTransform.anchoredPosition,
+            droppedZoneType: currentZoneType,
+            droppedZoneIndex: zoneIndex
+        );
     }
 
     private void UpdateTeamStatus(DropZoneType newZoneType)

@@ -14,5 +14,5 @@ public class BasicTrainRecord : ScriptableObject
     public int danceExp = 0; // 舞蹈收益
     public int vocalExp = 0; // 歌唱收益
     public int visualExp = 0; // 表現力收益
-    public bool isActive = true; //是否在場景中啟用
+    // public bool isActive = true; //是否在場景中啟用
 }

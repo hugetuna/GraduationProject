@@ -32,7 +32,9 @@ public class IdolSaveData
     //使否初始化過
     public bool BHaveSetUp;
 
-    // 訓練記錄
-    public BasicTrainRecord basicTrainRecord; // 初始值存放地
+    public BasicTrainRecord basicTrainRecord; // 訓練記錄初始值
     public TrainRecord trainRecord; // 訓練紀錄
+    public BaitoRecord baitoRecord; // 打工紀錄
+
+    public bool isAvailable; // 是否可用（在隊伍中；在場景中啟用）
 }
