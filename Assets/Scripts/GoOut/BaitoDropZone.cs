@@ -6,7 +6,7 @@ public class BaitoDropZone : Drop
 {
     public BaitoDropZoneType zoneType; // 直接在 Inspector 設定即可
     public int zoneIndex; // 同一類型的區域可能有多個，從 0 開始編號
-    private DragToBaito currentIdol; // 目前待在這格的角色
+    // private DragToBaito currentIdol; // 目前待在這格的角色
 
 
     // void Awake(); // 使用父類別的預設內容
@@ -24,7 +24,7 @@ public class BaitoDropZone : Drop
         var drag = draggedObject.GetComponent<DragToBaito>();
         if (drag != null)
         {
-            if (currentIdol != null && currentIdol != drag) return;
+            // if (currentIdol != null && currentIdol != drag) return;
             drag.CurrentDropZone = this;
         }
     }
@@ -46,10 +46,10 @@ public class BaitoDropZone : Drop
         }
     }
     
-    public void SetCurrentIdol(DragToBaito draggedIdol)
-    {
-        currentIdol = draggedIdol;
-    }
+    // public void SetCurrentIdol(DragToBaito draggedIdol)
+    // {
+    //     currentIdol = draggedIdol;
+    // }
 
-    public void ClearCurrentIdol() => currentIdol = null;
+    // public void ClearCurrentIdol() => currentIdol = null;
 }

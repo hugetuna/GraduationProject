@@ -1,4 +1,4 @@
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,6 +11,7 @@ public class GoOutUIHandler : MonoBehaviour
     [Header("UI 元素")]
     [SerializeField] private GameObject selectionUI; // 外出選擇介面
     [SerializeField] private Button closeButton; // 關閉整個外出介面的按鈕
+    public static event Action OnBaitoOrActivityUIClosed; // 定義外出打工或商演介面關閉事件
     //-----------------------------------------------------------------//
     [SerializeField] private Button baitoButton; // 打工按鈕
     [SerializeField] private Button activityButton; // 商演按鈕
@@ -23,8 +24,9 @@ public class GoOutUIHandler : MonoBehaviour
     void Start()
     {
         GoOutInteraction.OnExitInteracted += ShowSelectionUI; // 訂閱出門事件
-        closeButton.onClick.AddListener(CloseGoOutUI); // 為關閉按鈕添加點擊事件
+        OnBaitoOrActivityUIClosed += RecallSelectionUI; // 訂閱打工或商演介面關閉事件
 
+        closeButton.onClick.AddListener(CloseGoOutUI); // 為關閉按鈕添加點擊事件
         baitoButton.onClick.AddListener(ShowBaitoUI); // 為打工按鈕添加點擊事件
         activityButton.onClick.AddListener(ShowActivityUI); // 為商演按鈕添加點擊事件
 
@@ -34,6 +36,7 @@ public class GoOutUIHandler : MonoBehaviour
     void OnDestroy()
     {
         GoOutInteraction.OnExitInteracted -= ShowSelectionUI; // 取消訂閱出門事件
+        OnBaitoOrActivityUIClosed -= RecallSelectionUI; // 取消訂閱打工或商演介面關閉事件
     }
 
     private void ShowSelectionUI()
@@ -44,6 +47,15 @@ public class GoOutUIHandler : MonoBehaviour
         selectionUI.SetActive(true);
         baitoUI.SetActive(false);
         activityUI.SetActive(false);
+    }
+
+    private void RecallSelectionUI()
+    {
+        Debug.Log("返回選擇介面");
+        selectionUI.SetActive(true);
+        // 介面自行處理
+        // baitoUI.SetActive(false); 
+        // activityUI.SetActive(false);
     }
 
     private void CloseGoOutUI()
@@ -57,7 +69,7 @@ public class GoOutUIHandler : MonoBehaviour
     {
         Debug.Log("選擇打工");
         AudioManager.Instance.PlaySFX(openSound);
-        selectionUI.SetActive(true);
+        selectionUI.SetActive(false);
         baitoUI.SetActive(true);
         baitoUI.GetComponent<SetBaitoUI>().OpenBaitoUI();
         activityUI.SetActive(false);
@@ -67,9 +79,14 @@ public class GoOutUIHandler : MonoBehaviour
     {
         Debug.Log("選擇商演");
         AudioManager.Instance.PlaySFX(openSound);
-        selectionUI.SetActive(true);
+        selectionUI.SetActive(false);
         baitoUI.SetActive(false);
         activityUI.SetActive(true);
         activityUI.GetComponent<SetActivityUI>().OpenActivityUI();
+    }
+
+    public static void TriggerUIsClosedEvent()
+    {
+        OnBaitoOrActivityUIClosed?.Invoke();
     }
 }

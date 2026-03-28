@@ -79,13 +79,10 @@ public class BaitoVigourBar : MonoBehaviour
         else // BaitoDropZoneType.Baito（先不管 None）
         {
             vigourRect.anchoredPosition = sendPosition; // 移動到外出打工位置
-
-            if (!characterInfo.baitoRecord.isWorking)
-            {
-                vigourSlider.value = current - cost; // 更新體力值 UI 的當前值
-                var ratio = Mathf.Clamp01(current / max); // 計算長度比例 (確保不低於 0)
-                lastFillImage.fillAmount = ratio; // 顯示體力變化
-            }
+            
+            vigourSlider.value = current - cost; // 更新體力值 UI 的當前值
+            var ratio = Mathf.Clamp01(current / max); // 計算長度比例 (確保不低於 0)
+            lastFillImage.fillAmount = ratio; // 顯示體力變化
         }
 
         ApplyGrayEffect(); // 根據體力狀態更新灰階效果
@@ -111,15 +108,7 @@ public class BaitoVigourBar : MonoBehaviour
             // 取消灰階（不論體力狀態）
             grayEffect.SetGrayScale(false);
             fillGrayEffect.SetGrayScale(false);
-            // 根據有無出發去打工，決定是否啟用拖曳
-            if (characterInfo.baitoRecord.isWorking)
-            {
-                drag.enabled = false; // 已出發打工，禁用拖曳功能
-            }
-            else
-            {
-                drag.enabled = true; // 沒有出發打工，啟用拖曳功能（角色圖片的透明效果則交給 BaitoStatusEffect）
-            }
+            drag.enabled = true; // 始終允許拖曳功能
         }
     }
 

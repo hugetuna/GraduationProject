@@ -47,6 +47,7 @@ public class SetActivityUI : MonoBehaviour
     private void CloseActivityUI()
     {
         gameObject.SetActive(false);
+        GoOutUIHandler.TriggerUIsClosedEvent(); // 觸發事件，返回選擇介面
     }
 
     private void ConfirmToActivity()

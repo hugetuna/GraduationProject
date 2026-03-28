@@ -19,10 +19,10 @@ public class SetBaitoUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI MoneyGainText; // 打工收益文字
     //-----------------------------------------------------------------//
     [SerializeField] private List<Image> characterImages = new(); // 角色圖片槽
-    [SerializeField]private List<BaitoDropZone> memberDropZones = new();
-    [SerializeField]private List<BaitoDropZone> baitoDropZones = new();
+    [SerializeField] private List<BaitoDropZone> memberDropZones = new();
+    [SerializeField] private List<BaitoDropZone> baitoDropZones = new();
     //-----------------------------------------------------------------//
-    [SerializeField] private Button confirmBtn; // 確認出發的按鈕
+    // [SerializeField] private Button confirmBtn; // 確認出發的按鈕
     public static event Action<Baito> OnBaitoConfirmed; // 定義確認出發事件
     //-----------------------------------------------------------------//
     [Header("打工資訊")]
@@ -41,6 +41,7 @@ public class SetBaitoUI : MonoBehaviour
         UpdateBaitoInfo(baitoList[currentBaitoIndex]);
 
         UpdateCharacterImagesAndPositions(); // 設定角色 UI 圖片及位置
+        UpdateCharacterDisplay(); // （根據打工類型）設定角色顯示
 
         RefreshDragSystem(); // 刷新拖曳系統
     }
@@ -51,18 +52,20 @@ public class SetBaitoUI : MonoBehaviour
         descriptionText.text = baitoData.description;
         VigourCostText.text = $"{baitoData.vigourCost} 體";
         MoneyGainText.text = $"{baitoData.MoneyGain} 錢";
+
+        UpdateCharacterDisplay(); // （根據打工類型）更新角色顯示
     }
 
     private void InitializeButtonEvents()
     {
-        closeButton.onClick.AddListener(CloseBaitoUI); // 為關閉按鈕添加點擊事件
+        closeButton.onClick.AddListener(ConfirmToBaito); // 為關閉按鈕添加點擊事件
         lastButton.onClick.AddListener(ChooseLastBaito); // 為上一個選項按鈕添加點擊事件
         nextButton.onClick.AddListener(ChooseNextBaito); // 為下一個選項按鈕添加點擊事件
-        confirmBtn.onClick.AddListener(ConfirmToBaito); // 為確認出發按鈕添加點擊事件
     }
 
     private void CloseBaitoUI()
     {
+        GoOutUIHandler.TriggerUIsClosedEvent(); // 觸發事件，關閉整個外出介面
         gameObject.SetActive(false);
     }
 
@@ -86,6 +89,8 @@ public class SetBaitoUI : MonoBehaviour
     {
         Debug.Log("指派外出打工");
         OnBaitoConfirmed?.Invoke(baitoList[currentBaitoIndex]); // 觸發確認出發事件，指派角色外出打工
+
+        CloseBaitoUI(); // 關閉打工介面
     }
 
     private void UpdateCharacterImagesAndPositions()
@@ -94,6 +99,7 @@ public class SetBaitoUI : MonoBehaviour
         {
             Image img = characterImages[i];
             IdolInstance idol = TeamDataUtility.IdolInstanceList[i];
+            BaitoRecord baitoRecord = idol.baitoRecord;
 
             // 為圖片插槽放置角色圖片
             if (i < TeamDataUtility.idolCount)
@@ -108,14 +114,31 @@ public class SetBaitoUI : MonoBehaviour
             }
 
             // 還原上次圖片位置，如果沒有初始化
-            if(idol.baitoRecord.position != Vector2.zero)
+            if (baitoRecord.position != Vector2.zero)
             {
-                img.rectTransform.anchoredPosition = idol.baitoRecord.position;
+                img.rectTransform.anchoredPosition = baitoRecord.position;
             }
             else
             {
-                idol.baitoRecord.position = img.rectTransform.anchoredPosition;
+                baitoRecord.position = img.rectTransform.anchoredPosition;
             }
+        }
+    }
+
+    private void UpdateCharacterDisplay()
+    {
+        // 處理不同打工類型的角色顯示
+        for (int i = 0; i < characterImages.Count; i++)
+        {
+            Image img = characterImages[i];
+            IdolInstance idol = TeamDataUtility.IdolInstanceList[i];
+            BaitoRecord baitoRecord = idol.baitoRecord;
+
+            // 根據角色的打工紀錄決定是否顯示圖片
+            bool isCurrentBaito = baitoRecord.zoneType == BaitoDropZoneType.Baito &&
+                                  baitoRecord.selectedBaito != null &&
+                                  baitoRecord.selectedBaito.baitoName == baitoList[currentBaitoIndex].baitoName;
+            img.gameObject.SetActive(baitoRecord.zoneType == BaitoDropZoneType.Member || isCurrentBaito);
         }
     }
 
@@ -127,37 +150,42 @@ public class SetBaitoUI : MonoBehaviour
             var drag = characterImages[i].GetComponentInChildren<DragToBaito>();
             var vigourBar = characterImages[i].GetComponentInChildren<BaitoVigourBar>();
             var numbers = characterImages[i].GetComponentInChildren<GoOutNumbers>();
-            var assignEffect = characterImages[i].GetComponentInChildren<BaitoAssignEffect>();
 
             var idol = idolInstanceList[i];
             var idolIndex = idol.idolIndex;
+            var baitoRecord = idol.baitoRecord;
+
             var data = baitoList[currentBaitoIndex];
-            
-            if(idol.baitoRecord.zoneIndex == -1) // 只要有一人是 -1，就代表全員尚未初始化
+
+            if (baitoRecord.zoneIndex == -1) // 只要有一人是 -1，就代表全員尚未初始化
             {
-                idol.baitoRecord.zoneIndex = i; // 預設分配到對應的圖片位置
+                baitoRecord.zoneIndex = i; // 預設分配到對應的圖片位置
                 // 其他預設值就不特別碰了
             }
-            
+
             // 刷新前先清空上次位置
-            memberDropZones.ForEach(zone => zone.ClearCurrentIdol()); 
-            baitoDropZones.ForEach(zone => zone.ClearCurrentIdol());
+            // memberDropZones.ForEach(zone => zone.ClearCurrentIdol());
+            // baitoDropZones.ForEach(zone => zone.ClearCurrentIdol());
             BaitoDropZone characterDropZone; // 正式還原＆分配位置
-            if(idol.baitoRecord.zoneType == BaitoDropZoneType.Baito) 
+            if (baitoRecord.zoneType == BaitoDropZoneType.Baito)
             {
-                characterDropZone = baitoDropZones.FirstOrDefault(zone => zone.zoneIndex == idol.baitoRecord.zoneIndex);
+                characterDropZone = baitoDropZones.FirstOrDefault(zone => zone.zoneIndex == baitoRecord.zoneIndex);
             }
             else
             {
-                characterDropZone = memberDropZones.FirstOrDefault(zone => zone.zoneIndex == idol.baitoRecord.zoneIndex);
+                characterDropZone = memberDropZones.FirstOrDefault(zone => zone.zoneIndex == baitoRecord.zoneIndex);
             }
 
             // 初始化拖曳元件、體力條、數值顯示並登記 DropZone 位置
             drag.Initialize(idolIndex, characterDropZone);
-            characterDropZone.SetCurrentIdol(drag);
+            // characterDropZone.SetCurrentIdol(drag);
             vigourBar.Initialize(data, idolIndex);
             numbers.Initialize(idolIndex);
-            assignEffect.Initialize(idol.baitoRecord.selectedBaito);
         }
+    }
+
+    public Baito GetCurrentSelectedBaito()
+    {
+        return baitoList[currentBaitoIndex];
     }
 }

@@ -285,6 +285,7 @@ public class IdolInstance : MonoBehaviour
     // 進入電腦頁面時打工收益進帳＆記錄重置
     public void SettleBaitoRecord()
     {
+        vigour -= trainRecord.vigourCost; // 隔天主 UI 會同步此變化
         ResourceManager.Instance.Money += baitoRecord.selectedBaito.MoneyGain;
 
         // 重置必須清空的打工紀錄
