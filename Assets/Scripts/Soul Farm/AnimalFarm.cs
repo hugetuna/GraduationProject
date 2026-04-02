@@ -33,6 +33,8 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     public Button harvestSeedButton;
     public Button exitButton;
     private GameObject lastSelected; // 紀錄最後一個選取的物件
+    [Header("外部 UI 阻斷")]
+    public CanvasGroup mainUICanvasGroup; // 拖入主畫面的 CanvasGroup
     [Header("更改玩家操作")]
     public PlayerInput playerInput;
     [Header("Manager")]
@@ -43,6 +45,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     public AudioClip audio_PlantSeed;
     public AudioClip audio_WaterSeed;
     public AudioClip audio_HarvestSeed;
+    
     private void Start()
     {
         teamManager = FindAnyObjectByType<TeamManager>();
@@ -96,6 +99,12 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     {
         //顯示並選取按鈕
         SwitchActionMap("FarmConfig");
+        // 讓主畫面 UI 看得到但點不到，且不接受鍵盤導覽
+        if (mainUICanvasGroup != null)
+        {
+            mainUICanvasGroup.interactable = false;
+            mainUICanvasGroup.blocksRaycasts = false;
+        }
         farmCanvas.gameObject.SetActive(true);
         StartCoroutine(SelectButtonWithDelay());// 等待一幀再選取按鈕，確保不會被當前的空白鍵觸發 onClick
     }
@@ -113,6 +122,12 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     public void HideInteractionUI()
     {
         SwitchActionMap("PlayerActionMain");
+        // 讓主畫面 UI 看得到但點不到，且不接受鍵盤導覽
+        if (mainUICanvasGroup != null)
+        {
+            mainUICanvasGroup.interactable = true;
+            mainUICanvasGroup.blocksRaycasts = true;
+        }
         farmCanvas.gameObject.SetActive(false);
     }
     void IInteractable.Interact(int toolType) // 互動行為

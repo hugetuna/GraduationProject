@@ -721,7 +721,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2941810755754915106, guid: 103882bfe476b6849a05d0a2accee92d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 487994086}
   m_SourcePrefab: {fileID: 100100000, guid: 103882bfe476b6849a05d0a2accee92d, type: 3}
 --- !u!114 &487994072 stripped
 MonoBehaviour:
@@ -793,6 +796,18 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 2941810755754915106, guid: 103882bfe476b6849a05d0a2accee92d, type: 3}
   m_PrefabInstance: {fileID: 487994071}
   m_PrefabAsset: {fileID: 0}
+--- !u!225 &487994086
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 487994079}
+  m_Enabled: 1
+  m_Alpha: 1
+  m_Interactable: 1
+  m_BlocksRaycasts: 1
+  m_IgnoreParentGroups: 0
 --- !u!1001 &563690675
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2985,6 +3000,10 @@ PrefabInstance:
       propertyPath: playerInput
       value: 
       objectReference: {fileID: 1120345955}
+    - target: {fileID: 1732921002793514286, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
+      propertyPath: mainUICanvasGroup
+      value: 
+      objectReference: {fileID: 487994086}
     - target: {fileID: 2338596099040995790, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
       propertyPath: m_Name
       value: AnimalFarm_Normal
