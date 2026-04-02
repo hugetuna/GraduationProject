@@ -49,7 +49,7 @@ public class DialogueManager : MonoBehaviour
     [Header("為了EventManager")]
     public System.Action onDialogueFinish = null;
     [Header("更改玩家操作")]
-    public PlayerInput playerInput; // 在 Inspector 中拖入包含 PlayerInput 組件的物件
+    public PlayerInput playerInput;
     //安全切換 Map
     private void SwitchActionMap(string mapName)
     {

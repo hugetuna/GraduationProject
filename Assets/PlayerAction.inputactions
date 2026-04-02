@@ -202,6 +202,98 @@
                     "isPartOfComposite": false
                 }
             ]
+        },
+        {
+            "name": "FarmConfig",
+            "id": "447d4938-e569-431e-a5ba-19d1aae64fc9",
+            "actions": [
+                {
+                    "name": "Trigger Lock",
+                    "type": "Button",
+                    "id": "cc631bbe-de86-49c6-9687-e1214688c4a1",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
+                },
+                {
+                    "name": "Maps",
+                    "type": "Value",
+                    "id": "20e29e00-14bd-4e81-8816-e4a6822dc0bc",
+                    "expectedControlType": "Vector2",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": true
+                }
+            ],
+            "bindings": [
+                {
+                    "name": "",
+                    "id": "c18068e8-bc55-4b94-8ada-40590bd8acdd",
+                    "path": "<Keyboard>/space",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Trigger Lock",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "2D Vector",
+                    "id": "1e0da899-3680-47bc-8a2c-ad90018c8d30",
+                    "path": "2DVector",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Maps",
+                    "isComposite": true,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "up",
+                    "id": "fc59fdd8-f131-4450-bbe9-3a91ffe0f9b8",
+                    "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Maps",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "f3f4dec7-cdae-4e9e-9804-1fa2cce8c907",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Maps",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "left",
+                    "id": "85ae5693-835b-4011-9e09-f27487367800",
+                    "path": "<Keyboard>/a",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Maps",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "right",
+                    "id": "1ecd417d-9c64-4dd6-aecc-35c7cc0c8613",
+                    "path": "<Keyboard>/d",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "Maps",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                }
+            ]
         }
     ],
     "controlSchemes": []
