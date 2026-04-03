@@ -43,8 +43,9 @@ public class IdolInstance : MonoBehaviour
     public Sprite spriteQ; // 角色 UI 圖片（Q 版）
     public Sprite spriteTachie; // 角色 UI 圖片（立繪）
     public BasicTrainRecord basicTrainRecord; // 初始值存放地
-    public TrainRecord trainRecord; // 訓練紀錄
-    public BaitoRecord baitoRecord; // 打工紀錄
+    public TrainRecord trainRecord = new(); // 訓練紀錄
+    public BaitoRecord baitoRecord = new(); // 打工紀錄
+    public ActivityRecord activityRecord = new(); // 商演紀錄
     public bool isAvailable; // 是否可用（在隊伍中；在場景中啟用）
 
     // Start is called before the first frame update
@@ -91,15 +92,15 @@ public class IdolInstance : MonoBehaviour
             basicTrainRecord.danceExp,
             basicTrainRecord.vocalExp,
             basicTrainRecord.visualExp
-            /* basicTrainRecord.isActive */
+        /* basicTrainRecord.isActive */
         );
         baitoRecord.SetBaitoRecord(
-            null, 
+            null,
             Vector2.zero,
             BaitoDropZoneType.Member,
-            -1,
-            false
+            -1
         );
+        activityRecord.SetActivityRecord(null);
     }
     //填入讀取的資料組
     public void LoadData(IdolSaveData data)
@@ -164,6 +165,8 @@ public class IdolInstance : MonoBehaviour
         trainRecord = data.trainRecord;
         // 打工紀錄
         baitoRecord = data.baitoRecord;
+        // 商演紀錄
+        activityRecord = data.activityRecord;
         isAvailable = data.isAvailable;
 
         positionInTeam = data.positionInTeam;
@@ -262,12 +265,36 @@ public class IdolInstance : MonoBehaviour
     }
 
     // 每天結束時的訓練結算＆記錄重置
-    public void SettleTrainRecord()
+    public void SettleRecords()
     {
-        vigour -= trainRecord.vigourCost; // 隔天主 UI 會同步此變化
-        dance += trainRecord.danceExp;
-        vocal += trainRecord.vocalExp;
-        visual += trainRecord.visualExp;
+        bool hasGoneToActivity = activityRecord.selectedActivity != null;
+
+        SettleActivityRecord(hasGoneToActivity);
+        SettleTrainRecord(!hasGoneToActivity); // 如果有商演就不結算訓練，反之則結算訓練
+        SettleBaitoRecord(!hasGoneToActivity); // 如果有商演就不結算打工，反之則結算打工
+    }
+
+    public void SettleActivityRecord(bool isSettling)
+    {
+        if(isSettling && activityRecord.selectedActivity != null)
+        {
+            vigour -= activityRecord.selectedActivity.vigourCost; // 隔天主 UI 會同步此變化
+            ResourceManager.Instance.Money += activityRecord.selectedActivity.MoneyGain;
+        }
+
+        // 重置必須清空的商演紀錄
+        activityRecord.SetActivityRecord(null);
+    }
+
+    public void SettleTrainRecord(bool isSettling)
+    {
+        if (isSettling)
+        {
+            vigour -= trainRecord.vigourCost; // 隔天主 UI 會同步此變化
+            dance += trainRecord.danceExp;
+            vocal += trainRecord.vocalExp;
+            visual += trainRecord.visualExp;
+        }
 
         // 重置必須清空的訓練紀錄（三種訓練數值）
         trainRecord.SetTrainRecord(
@@ -283,18 +310,20 @@ public class IdolInstance : MonoBehaviour
         );
     }
     // 進入電腦頁面時打工收益進帳＆記錄重置
-    public void SettleBaitoRecord()
+    public void SettleBaitoRecord(bool isSettling)
     {
-        vigour -= trainRecord.vigourCost; // 隔天主 UI 會同步此變化
-        ResourceManager.Instance.Money += baitoRecord.selectedBaito.MoneyGain;
+        if (isSettling && baitoRecord.selectedBaito != null)
+        {
+            vigour -= baitoRecord.selectedBaito.vigourCost; // 隔天主 UI 會同步此變化
+            ResourceManager.Instance.Money += baitoRecord.selectedBaito.MoneyGain;
+        }
 
         // 重置必須清空的打工紀錄
         baitoRecord.SetBaitoRecord(
-            null, 
+            null,
             Vector2.zero,
             BaitoDropZoneType.Member,
-            -1,
-            false
+            -1
         );
     }
     [ContextMenu("TestEquip")]

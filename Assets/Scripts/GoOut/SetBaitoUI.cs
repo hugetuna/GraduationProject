@@ -29,6 +29,11 @@ public class SetBaitoUI : MonoBehaviour
     [SerializeField] private List<Baito> baitoList = new(); // 可選的打工列表
     private int currentBaitoIndex = 0; // 目前選擇的打工索引
     public static event Action<Baito> OnBaitoChanged; // 定義變更打工選擇事件
+    //-----------------------------------------------------------------//
+    [Header("打工提示 UI")]
+    [SerializeField] private GameObject hintObject; // 全員打工的提示物件
+    [SerializeField] private Button hintNoBtn; // 提示的 "否" 按鈕
+    [SerializeField] private Button hintYesBtn; // 提示的 "是" 按鈕
 
     void Start()
     {
@@ -61,11 +66,14 @@ public class SetBaitoUI : MonoBehaviour
         closeButton.onClick.AddListener(ConfirmToBaito); // 為關閉按鈕添加點擊事件
         lastButton.onClick.AddListener(ChooseLastBaito); // 為上一個選項按鈕添加點擊事件
         nextButton.onClick.AddListener(ChooseNextBaito); // 為下一個選項按鈕添加點擊事件
+
+        hintNoBtn.onClick.AddListener(CloseHintUI); // 為提示的 "否" 按鈕添加點擊事件
+        hintYesBtn.onClick.AddListener(JumpToComputer); // 為提示的 "是" 按鈕添加點擊事件
     }
 
     private void CloseBaitoUI()
     {
-        GoOutUIHandler.TriggerUIsClosedEvent(); // 觸發事件，關閉整個外出介面
+        GoOutUIHandler.TriggerUIsClosedEvent(); // 觸發事件，返回選擇介面
         gameObject.SetActive(false);
     }
 
@@ -85,12 +93,49 @@ public class SetBaitoUI : MonoBehaviour
         OnBaitoChanged?.Invoke(baitoList[currentBaitoIndex]);
     }
 
+    private void CloseHintUI()
+    {
+        hintObject.SetActive(false);
+    }
+
+    private void JumpToComputer()
+    {
+        Debug.Log("跳轉到電腦介面");
+
+        // 補派全員打工，先 mark 起來免得串接前執行會出錯
+        // OnBaitoConfirmed?.Invoke(baitoList[currentBaitoIndex]);
+
+        // 實際跳轉待串接
+    }
+
     private void ConfirmToBaito()
     {
         Debug.Log("指派外出打工");
-        OnBaitoConfirmed?.Invoke(baitoList[currentBaitoIndex]); // 觸發確認出發事件，指派角色外出打工
+        if (CheckAreAllToBaito())
+        {
+            // 若全員皆去打工，觸發可通往電腦場景的提示 UI
+            hintObject.SetActive(true);
+        }
+        else
+        {
+            // 正常處理打工指派事件
+            OnBaitoConfirmed?.Invoke(baitoList[currentBaitoIndex]);
+            CloseBaitoUI();
+        }
+    }
 
-        CloseBaitoUI(); // 關閉打工介面
+    private bool CheckAreAllToBaito()
+    {
+        int idolsToBaito = 0;
+        foreach(var img in characterImages)
+        {
+            var drag = img.GetComponent<DragToBaito>();
+            if(drag.CurrentDropZone.zoneType == BaitoDropZoneType.Baito)
+            {
+                idolsToBaito++;
+            }
+        }
+        return idolsToBaito == TeamDataUtility.idolCount; // 全員都在打工區才回傳 true
     }
 
     private void UpdateCharacterImagesAndPositions()

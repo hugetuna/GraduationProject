@@ -16,7 +16,6 @@ public class DragToBaito : Drag
     //-----------------------------------------------------------------//
     [Header("拖曳時受影響的 UI 元素")]
     [SerializeField] private GameObject vigourBar;
-    [SerializeField] private GameObject statHintText;
     private BaitoVigourBar vigourBarComponent;
     private SetBaitoUI setBaitoUI;
 
@@ -55,7 +54,6 @@ public class DragToBaito : Drag
 
         // 開始拖曳時，隱藏角色其他 UI 元素
         vigourBar.SetActive(false);
-        statHintText.SetActive(false);
     }
 
     // public void OnDrag(PointerEventData eventData); // 使用父類別的預設內容
@@ -97,7 +95,6 @@ public class DragToBaito : Drag
 
         vigourBar.SetActive(true);
         vigourBarComponent.UpdateVigourBar(currentZoneType);
-        statHintText.SetActive(true);
 
         // 跨場景同步
         Baito selectedBaito;

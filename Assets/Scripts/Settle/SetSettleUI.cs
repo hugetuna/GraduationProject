@@ -67,8 +67,7 @@ public class SetSettleUI : MonoBehaviour
     {
         foreach (var idol in idolInstances)
         {
-            idol.SettleTrainRecord(); // 換天前搞定訓練結算
-            idol.SettleBaitoRecord(); // 同上，這是打工結算
+            idol.SettleRecords(); // 結算角色的訓練、打工和商演紀錄
             idol.isAvailable = true;
         }
         DayManager.Instance.AfterDayEndEventStart();

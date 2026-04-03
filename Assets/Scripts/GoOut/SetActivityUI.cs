@@ -14,9 +14,11 @@ public class SetActivityUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI descriptionText; // 商演說明文字
     [SerializeField] private List<Image> characterImages = new(); // 角色圖片槽
     [SerializeField] private List<Image> characterEquipments = new(); // 角色裝備圖片槽
+    [SerializeField] private TextMeshProUGUI VigourCostText; // 商演耗體文字
+    [SerializeField] private TextMeshProUGUI MoneyGainText; // 商演收益文字
     //-----------------------------------------------------------------//
     [SerializeField] private Button confirmBtn; // 確認出發的按鈕
-    public static event Action OnActivityConfirmed; // 定義確認出發事件
+    public static event Action<Activity> OnActivityConfirmed; // 定義確認出發事件
     //-----------------------------------------------------------------//
 
     [Header("商演資料（測試用）")]
@@ -33,6 +35,8 @@ public class SetActivityUI : MonoBehaviour
         // 根據預約紀錄顯示商演資訊（暫時先用測試資料）
         activityText.text = ActivityForTest.activityName;
         descriptionText.text = ActivityForTest.description;
+        VigourCostText.text = $"{ActivityForTest.vigourCost} 體";
+        MoneyGainText.text = $"{ActivityForTest.MoneyGain} 錢";
 
         UpdateCharacterImagesAndEquipments(); // 設定角色 UI 與裝備欄圖片
         RefreshCharacterStats(); // 刷新體力狀態與角色數值
@@ -46,13 +50,14 @@ public class SetActivityUI : MonoBehaviour
 
     private void CloseActivityUI()
     {
-        gameObject.SetActive(false);
         GoOutUIHandler.TriggerUIsClosedEvent(); // 觸發事件，返回選擇介面
+        gameObject.SetActive(false);
     }
 
     private void ConfirmToActivity()
     {
-        OnActivityConfirmed?.Invoke(); // 觸發確認出發事件，指派全員外出商演
+        Debug.Log("指派外出商演");
+        OnActivityConfirmed?.Invoke(ActivityForTest); // 觸發確認出發事件，指派全員外出商演
     }
 
     private void UpdateCharacterImagesAndEquipments()
@@ -75,14 +80,16 @@ public class SetActivityUI : MonoBehaviour
                 continue;
             }
 
-            // 判斷該角色是否在隊伍裡（或是已經被指派去做其他事）=> 若沒有全員到齊就不得出發商演
-            bool isInTeam = idol.gameObject.activeSelf;
-            img.gameObject.SetActive(isInTeam);
+            // 判斷該角色是否在隊伍裡（或是已經被指派去做其他事）
+            // => 全員都會顯示，不在隊伍的人會變半透明 
+            // => 若要去商演，不論角色在做什麼都會強制召回
+            bool isAvailable = idol.isAvailable;
+            img.color = isAvailable ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0.5f);
 
             // 圖片位置不會動所以不用設定
 
             // 設定裝備圖片（因為不會太複雜所以寫在一起）
-            if (isInTeam && idol.equipmentItemNow != null)
+            if (idol.equipmentItemNow != null)
             {
                 equip.sprite = idol.equipmentItemNow.icon;
             }

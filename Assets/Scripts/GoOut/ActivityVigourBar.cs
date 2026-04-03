@@ -35,18 +35,23 @@ public class ActivityVigourBar : MonoBehaviour
 
         vigourSlider.maxValue = max; // 設定體力值 UI 的最大值
 
-        vigourSlider.value = preview; // 更新體力值 UI 的當前值
-        var ratio = Mathf.Clamp01(current / max); // 計算長度比例 (確保不低於 0)
-        lastFillImage.fillAmount = ratio; // 顯示體力變化
-        
-        if(preview < 0)
+        if (preview < 0)
         {
+            vigourSlider.value = current; // 更新體力值 UI 的當前值
             fillImage.color = tiredColor; // 體力不足，改變顏色
+
+            lastFillImage.fillAmount = 0; // 不顯示體力變化
+
             tireEffect.SetActive(true); // 顯示疲勞特效
         }
         else
         {
+            vigourSlider.value = preview < 0 ? 0 : preview; // 更新體力值 UI 的當前值
             fillImage.color = normalColor; // 體力足夠，恢復正常顏色
+
+            var ratio = Mathf.Clamp01(current / max); // 計算長度比例 (確保不低於 0)
+            lastFillImage.fillAmount = ratio; // 顯示體力變化
+
             tireEffect.SetActive(false); // 隱藏疲勞特效
         }
     }

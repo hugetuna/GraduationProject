@@ -1,6 +1,6 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 /* 掛在 UIManager 上 */
 public class BaitoAssignment : MonoBehaviour
@@ -36,7 +36,6 @@ public class BaitoAssignment : MonoBehaviour
 
                 // 跨場景存檔
                 baitoRecord.selectedBaito = selectedBaito;
-                baitoRecord.isWorking = true;
                 idol.isAvailable = false;
             }
             // 若不在打工區，將角色送回隊伍
@@ -48,7 +47,6 @@ public class BaitoAssignment : MonoBehaviour
 
                 // 跨場景存檔
                 baitoRecord.selectedBaito = null;
-                baitoRecord.isWorking = false;
                 idol.isAvailable = true;
             }
         }
