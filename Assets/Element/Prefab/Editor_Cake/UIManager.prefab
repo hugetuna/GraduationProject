@@ -1,5 +1,90 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &4549451018048604359
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 3507481087254683134}
+  - component: {fileID: 1049746107457160736}
+  - component: {fileID: 521221383074588066}
+  - component: {fileID: 2197749000687245499}
+  m_Layer: 0
+  m_Name: GoOutManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 0
+--- !u!4 &3507481087254683134
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4549451018048604359}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -11.74879, y: -2.936679, z: 9.366594}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2351415514315673017}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1049746107457160736
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4549451018048604359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 7b2282e019a181d438bcd72189ff7867, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  goOutUI: {fileID: 0}
+  selectionUI: {fileID: 0}
+  closeButton: {fileID: 0}
+  baitoButton: {fileID: 0}
+  activityButton: {fileID: 0}
+  baitoUI: {fileID: 0}
+  activityUI: {fileID: 0}
+  openSound: {fileID: 8300000, guid: 21f166225243f354694ab2a00d2f107a, type: 3}
+--- !u!114 &521221383074588066
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4549451018048604359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 37c79c2dfe029ef429888950b7b1389e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dragToBaito: []
+  teamManager: {fileID: 0}
+  goBaitoSound: {fileID: 0}
+--- !u!114 &2197749000687245499
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4549451018048604359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c605a9f1c7e57174ab0d356b895dfd3a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hintObject: {fileID: 0}
+  hintNoBtn: {fileID: 0}
+  hintYesBtn: {fileID: 0}
+  teamManager: {fileID: 0}
 --- !u!1 &5643304229247252531
 GameObject:
   m_ObjectHideFlags: 0
@@ -113,6 +198,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 3507481087254683134}
   - {fileID: 3008712774371568531}
   - {fileID: 5045429849357545934}
   - {fileID: 1440891963045996029}

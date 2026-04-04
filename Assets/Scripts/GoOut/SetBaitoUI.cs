@@ -23,7 +23,7 @@ public class SetBaitoUI : MonoBehaviour
     [SerializeField] private List<BaitoDropZone> baitoDropZones = new();
     //-----------------------------------------------------------------//
     // [SerializeField] private Button confirmBtn; // 確認出發的按鈕
-    public static event Action<Baito> OnBaitoConfirmed; // 定義確認出發事件
+    public static event Action<Baito, bool> OnBaitoConfirmed; // 定義確認出發事件
     //-----------------------------------------------------------------//
     [Header("打工資訊")]
     [SerializeField] private List<Baito> baitoList = new(); // 可選的打工列表
@@ -102,10 +102,15 @@ public class SetBaitoUI : MonoBehaviour
     {
         Debug.Log("跳轉到電腦介面");
 
-        // 補派全員打工，先 mark 起來免得串接前執行會出錯
-        // OnBaitoConfirmed?.Invoke(baitoList[currentBaitoIndex]);
+        // 補派全員打工
+        OnBaitoConfirmed?.Invoke(baitoList[currentBaitoIndex], true);
 
-        // 實際跳轉待串接
+        // 前往電腦介面
+        // SceneTransitionManager.Instance.triggerComputerAfterLoad = true;
+        // if (SceneTransitionManager.Instance != null)
+        // {
+        //     SceneTransitionManager.Instance.teleportByTargetSceneName("Floor_4");
+        // }   
     }
 
     private void ConfirmToBaito()
@@ -119,23 +124,23 @@ public class SetBaitoUI : MonoBehaviour
         else
         {
             // 正常處理打工指派事件
-            OnBaitoConfirmed?.Invoke(baitoList[currentBaitoIndex]);
+            OnBaitoConfirmed?.Invoke(baitoList[currentBaitoIndex], false);
             CloseBaitoUI();
         }
     }
 
     private bool CheckAreAllToBaito()
     {
-        int idolsToBaito = 0;
-        foreach(var img in characterImages)
+        foreach (var img in characterImages)
         {
-            var drag = img.GetComponent<DragToBaito>();
-            if(drag.CurrentDropZone.zoneType == BaitoDropZoneType.Baito)
+            var drag = img.GetComponentInChildren<DragToBaito>();
+
+            if (drag.CurrentDropZone.zoneType != BaitoDropZoneType.Baito)
             {
-                idolsToBaito++;
+                return false; // 只要有一個人不在打工區，就直接回傳 false
             }
         }
-        return idolsToBaito == TeamDataUtility.idolCount; // 全員都在打工區才回傳 true
+        return true; // 全員都在打工區才回傳 true
     }
 
     private void UpdateCharacterImagesAndPositions()

@@ -42,7 +42,7 @@ public class ActivityAssignment : MonoBehaviour
     public void AssignToActivity() 
     {
         // 必須全員一起去商演，若有人體力不足預計會減少收益
-        Debug.Log("全員商演 Go");
+        Debug.Log("跳轉到 Live 小遊戲");
 
         var idolList = TeamDataUtility.IdolInstanceList;
         foreach (var idol in idolList)
@@ -57,6 +57,10 @@ public class ActivityAssignment : MonoBehaviour
             idol.isAvailable = true;
 
             // 前往 live 小遊戲
+            // if (SceneTransitionManager.Instance != null)
+            // {
+            //     SceneTransitionManager.Instance.teleportByTargetSceneName("OnStageScene");
+            // }        
         }
     }
 }

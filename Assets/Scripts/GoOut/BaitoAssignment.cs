@@ -19,39 +19,41 @@ public class BaitoAssignment : MonoBehaviour
         SetBaitoUI.OnBaitoConfirmed -= AssignToBaito;
     }
 
-    public void AssignToBaito(Baito selectedBaito)
+    public void AssignToBaito(Baito selectedBaito, bool areAllToBaito)
     {
         foreach (var drag in dragToBaito)
         {
             var idol = TeamDataUtility.IdolDict[drag.MyIdolIndex];
-            var baitoRecord = idol.baitoRecord;
-            var control = idol.GetComponent<PlayerControlMainWorld>();
 
-            // 如果角色在打工區，則指派外出打工
-            if (drag.CurrentDropZone.zoneType == BaitoDropZoneType.Baito)
-            {
-                // 隱藏場景中的角色
-                teamManager.AddBusyMember(control); // 標記為忙碌並隱藏角色物件
-                idol.gameObject.SetActive(false);
+            bool isInBaitoZone = drag.CurrentDropZone.zoneType == BaitoDropZoneType.Baito;
+            bool isAssigned = areAllToBaito || isInBaitoZone; // 是否計算打工數值
+            bool isVisibleInWorld = areAllToBaito || !isInBaitoZone; // 是否在場景中顯示
 
-                // 跨場景存檔
-                baitoRecord.selectedBaito = selectedBaito;
-                idol.isAvailable = false;
-            }
-            // 若不在打工區，將角色送回隊伍
-            else
-            {
-                // 顯示場景中的角色
-                teamManager.RemoveBusyMember(control); // 取消忙碌標記並顯示角色物件
-                idol.gameObject.SetActive(true);
-
-                // 跨場景存檔
-                baitoRecord.selectedBaito = null;
-                idol.isAvailable = true;
-            }
+            UpdateBaitoStatus(idol, isAssigned ? selectedBaito : null, isVisibleInWorld);
         }
+
 
         // 播放音效
         if (goBaitoSound != null) AudioManager.Instance.PlaySFX(goBaitoSound);
     }
+
+    public void UpdateBaitoStatus(IdolInstance idol, Baito baitoData, bool isActive)
+    {
+        var control = idol.GetComponent<PlayerControlMainWorld>();
+
+        if (isActive)
+        {
+            teamManager.RemoveBusyMember(control);
+            idol.gameObject.SetActive(true);
+        }
+        else
+        {
+            teamManager.AddBusyMember(control);
+            idol.gameObject.SetActive(false);
+        }
+
+        idol.baitoRecord.SetBaitoRecord(baitoData);
+        idol.isAvailable = isActive;
+    }
 }
+
