@@ -23,7 +23,7 @@ public class GameManager : MonoBehaviour
     public ResolutionManager ResolutionManager;
     public GameObject Canvas_Config;
     [Header("永久儲存資料")]
-    public List<SoilSaveData> soilDataList = new List<SoilSaveData>();
+    public List<AnimalSaveData> animalDataList = new List<AnimalSaveData>();
     public int teamIndex = (int)IdolTeamIndex.None;
     public List<IdolSaveData> idolDataList = new List<IdolSaveData>();
     public DaySaveData DayData;
@@ -52,25 +52,23 @@ public class GameManager : MonoBehaviour
         }
     }
     //土地專用儲存
-    public void SaveSoilData(List<Soil> soils)
+    public void SaveSoilData(List<AnimalFarm> Farms)
     {
-        soilDataList.Clear();
-        foreach (var soil in soils)
+        animalDataList.Clear();
+        foreach (var Farm in Farms)
         {
-            var data = new SoilSaveData
+            foreach(var animal in Farm.seedsOnThisSoil)
             {
-                position = soil.transform.position,
-                isPlantable = soil.isPlantable,
-                isPlanting = soil.isPlanting
-            };
-            if (soil.seedOnThisSoil != null)
-            {
-                data.plantedSeedName = soil.seedOnThisSoil.seedData.seedName;
-                data.isWatered = soil.seedOnThisSoil.GetIsWateredToday();
-                data.daysGrown = soil.seedOnThisSoil.GetDaysGrown();
-                data.currentRewardPoint = soil.seedOnThisSoil.GetRewardPoint();
+                var data = new AnimalSaveData
+                {
+                    farmLV=Farm.farmLV,
+                    isWatered=animal.GetIsWateredToday(),
+                    plantedSeedName=animal.seedData.seedName,
+                    daysGrown=animal.GetDaysGrown(),
+                    currentRewardPoint=animal.GetRewardPoint()
+                };
+                animalDataList.Add(data);
             }
-            soilDataList.Add(data);
         }
     }
     //偶像專用儲存
@@ -164,7 +162,7 @@ public class GameManager : MonoBehaviour
         // 1. 準備包裝好的資料
         SaveDataWrapper wrapper = new SaveDataWrapper
         {
-            soilDataList = this.soilDataList,
+            animalDataList = this.animalDataList,
             teamIndex = this.teamIndex,
             idolDataList = this.idolDataList,
             ResourceData = this.ResourceData,
@@ -200,7 +198,7 @@ public class GameManager : MonoBehaviour
         SaveDataWrapper wrapper = JsonUtility.FromJson<SaveDataWrapper>(json);
 
         // 3. 還原到 GameManager
-        this.soilDataList = wrapper.soilDataList;
+        this.animalDataList = wrapper.animalDataList;
         this.teamIndex = wrapper.teamIndex;
         this.idolDataList = wrapper.idolDataList;
         this.ResourceData = wrapper.ResourceData;

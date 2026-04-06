@@ -53,11 +53,11 @@ public class SceneTransitionManager : MonoBehaviour
     /// <summary>
     public void teleportByTargetSceneName(string targetSceneName)
     {
-        // 儲存土壤資料
-        Soil[] allSoils = FindObjectsByType<Soil>(FindObjectsSortMode.None);
-        if (allSoils.Length != 0)
+        // 儲存農場資料
+        AnimalFarm[] allFarms = FindObjectsByType<AnimalFarm>(FindObjectsSortMode.None);
+        if (allFarms.Length != 0)
         {
-            GameManager.Instance.SaveSoilData(new List<Soil>(allSoils));
+            GameManager.Instance.SaveSoilData(new List<AnimalFarm>(allFarms));
         }
         //儲存偶像資料
         IdolInstance[] allIdolInstances = FindObjectsByType<IdolInstance>(

@@ -1032,6 +1032,10 @@ PrefabInstance:
       value: GameMangerGen
       objectReference: {fileID: 0}
     - target: {fileID: 6814912132265877993, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: animalDataList.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6814912132265877993, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
       propertyPath: idolDataList.Array.data[0].BHaveSetUp
       value: 1
       objectReference: {fileID: 0}
@@ -1041,6 +1045,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6814912132265877993, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
       propertyPath: idolDataList.Array.data[2].BHaveSetUp
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6814912132265877993, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: animalDataList.Array.data[0].daysGrown
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6814912132265877993, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: animalDataList.Array.data[0].isWatered
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6814912132265877993, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: animalDataList.Array.data[1].daysGrown
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6814912132265877993, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: animalDataList.Array.data[1].isWatered
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6814912132265877993, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
@@ -1054,6 +1074,22 @@ PrefabInstance:
     - target: {fileID: 6814912132265877993, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
       propertyPath: idolDataList.Array.data[2].isAvailable
       value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6814912132265877993, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: animalDataList.Array.data[0].plantedSeedName
+      value: NormalSeed
+      objectReference: {fileID: 0}
+    - target: {fileID: 6814912132265877993, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: animalDataList.Array.data[1].plantedSeedName
+      value: NormalSeed
+      objectReference: {fileID: 0}
+    - target: {fileID: 6814912132265877993, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: animalDataList.Array.data[0].currentRewardPoint
+      value: 300
+      objectReference: {fileID: 0}
+    - target: {fileID: 6814912132265877993, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
+      propertyPath: animalDataList.Array.data[1].currentRewardPoint
+      value: 300
       objectReference: {fileID: 0}
     - target: {fileID: 7896774796638631959, guid: 1e9b9a321702ced4288b37286ba3e303, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1805,17 +1841,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b547c6cf2503c8f4b90e12b848747bd6, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
---- !u!114 &1120345955 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 8203359086119792079, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
-  m_PrefabInstance: {fileID: 1368854883475877118}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62899f850307741f2a39c98a8b639597, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!1 &1153078485
@@ -2591,6 +2616,14 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4237359387044955137, guid: 36160bf213958cd4194c589cd9a13cf2, type: 3}
+      propertyPath: animalFarms.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4237359387044955137, guid: 36160bf213958cd4194c589cd9a13cf2, type: 3}
+      propertyPath: 'animalFarms.Array.data[0]'
+      value: 
+      objectReference: {fileID: 1368854883475877119}
+    - target: {fileID: 4237359387044955137, guid: 36160bf213958cd4194c589cd9a13cf2, type: 3}
       propertyPath: harvestGachaPools.Array.size
       value: 9
       objectReference: {fileID: 0}
@@ -2997,10 +3030,6 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1732921002793514286, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
-      propertyPath: playerInput
-      value: 
-      objectReference: {fileID: 1120345955}
-    - target: {fileID: 1732921002793514286, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
       propertyPath: mainUICanvasGroup
       value: 
       objectReference: {fileID: 487994086}
@@ -3008,15 +3037,22 @@ PrefabInstance:
       propertyPath: m_Name
       value: AnimalFarm_Normal
       objectReference: {fileID: 0}
-    - target: {fileID: 8203359086119792079, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
-      propertyPath: m_UIInputModule
-      value: 
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
+--- !u!114 &1368854883475877119 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 1732921002793514286, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
+  m_PrefabInstance: {fileID: 1368854883475877118}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec345aea01573cc41bf08e518a5774e4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0

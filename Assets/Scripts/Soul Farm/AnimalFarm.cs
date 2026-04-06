@@ -134,8 +134,14 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     {
         ShowInteractionUI();
     }
+    //按下種植按鈕(因為按鈕回傳值不能是SeedInstanceScript_Animal所以千套)
+    public void pressPlantButton()
+    {
+        PlantSeed();
+        //AudioManager.Instance.PlaySFX(audio_PlantSeed);
+    }
     //種植個種子
-    public void PlantSeed()
+    public SeedInstanceScript_Animal PlantSeed()
     {
         if (seedsOnThisSoil.Count < maxSeedAmount)
         {
@@ -144,12 +150,14 @@ public class AnimalFarm : MonoBehaviour, IInteractable
             GameObject newSeed = Instantiate(seedPrefabs[(int)farmLV], seedSpawnPoint.position, rotation);
             seedsOnThisSoil.Add(newSeed.GetComponent<SeedInstanceScript_Animal>());
             //消耗體力
-            IdolInstance leader = teamManager.teamMembers[teamManager.currentLeaderIndex].GetComponent<IdolInstance>();
-            leader.costVigour(leader.plantVigourCost);
+            //IdolInstance leader = teamManager.teamMembers[teamManager.currentLeaderIndex].GetComponent<IdolInstance>();
+            //leader.costVigour(leader.plantVigourCost);
+            return newSeed.GetComponent<SeedInstanceScript_Animal>();
         }
         else
         {
             Debug.Log("此農場已達最大種植數量");
+            return null;
         }
     }
     //補充食物欄位

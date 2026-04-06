@@ -3,11 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 
 [System.Serializable]
-public class SoilSaveData
+public class AnimalSaveData
 {
-    public Vector3 position;
-    public bool isPlantable;
-    public bool isPlanting;
+    public FarmLV farmLV;
     public bool isWatered;
     public string plantedSeedName;
     public int daysGrown;

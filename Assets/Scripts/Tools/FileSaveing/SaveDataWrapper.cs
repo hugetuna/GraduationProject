@@ -5,7 +5,7 @@ using UnityEngine;
 [System.Serializable]
 public class SaveDataWrapper
 {
-    public List<SoilSaveData> soilDataList;
+    public List<AnimalSaveData> animalDataList;
     public int teamIndex;
     public List<IdolSaveData> idolDataList;
     public DaySaveData DayData;
