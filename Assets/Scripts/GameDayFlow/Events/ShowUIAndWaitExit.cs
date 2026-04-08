@@ -1,8 +1,9 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using static UnityEditor.PlayerSettings;
+//using static UnityEditor.PlayerSettings;
 using UnityEngine.UI;
+
 public class ShowUIAndWaitExit : MonoBehaviour
 {
     private System.Action onFinish;

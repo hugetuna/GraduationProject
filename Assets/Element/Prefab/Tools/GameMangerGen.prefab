@@ -48,14 +48,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   ResolutionManager: {fileID: 2127634012987873847}
   Canvas_Config: {fileID: 1304131427542922853}
-  soilDataList:
-  - position: {x: -3, y: -1.5, z: -8}
-    isPlantable: 0
-    isPlanting: 0
-    isWatered: 0
-    plantedSeedName: 
-    daysGrown: 0
-    currentRewardPoint: 0
+  FarmsDataList: []
+  animalDataList: []
+  teamIndex: -1
   idolDataList:
   - positionInTeam: 0
     idolIndex: 0
@@ -73,6 +68,7 @@ MonoBehaviour:
     vigourMax: 0
     fans: 0
     bondWithP: 0
+    equippedItemName: 
     currentClothIndex: 1
     BHaveSetUp: 0
     basicTrainRecord: {fileID: 11400000, guid: d3a131f41f6629544a1ec71dfd859083, type: 2}
@@ -85,7 +81,14 @@ MonoBehaviour:
       danceExp: 0
       vocalExp: 0
       visualExp: 0
-      isActive: 0
+    baitoRecord:
+      selectedBaito: {fileID: 0}
+      position: {x: 0, y: 0}
+      zoneType: 0
+      zoneIndex: 0
+    activityRecord:
+      selectedActivity: {fileID: 0}
+    isAvailable: 0
   - positionInTeam: 1
     idolIndex: 1
     basicStatus: {fileID: 11400000, guid: a8b952e84e0073849a2d817947bb270c, type: 2}
@@ -102,6 +105,7 @@ MonoBehaviour:
     vigourMax: 0
     fans: 0
     bondWithP: 0
+    equippedItemName: 
     currentClothIndex: 1
     BHaveSetUp: 0
     basicTrainRecord: {fileID: 11400000, guid: d3a131f41f6629544a1ec71dfd859083, type: 2}
@@ -114,7 +118,14 @@ MonoBehaviour:
       danceExp: 0
       vocalExp: 0
       visualExp: 0
-      isActive: 0
+    baitoRecord:
+      selectedBaito: {fileID: 0}
+      position: {x: 0, y: 0}
+      zoneType: 0
+      zoneIndex: 0
+    activityRecord:
+      selectedActivity: {fileID: 0}
+    isAvailable: 0
   - positionInTeam: 2
     idolIndex: 2
     basicStatus: {fileID: 11400000, guid: e14ab52a0b03c89419a4e9a8c75d38ed, type: 2}
@@ -131,6 +142,7 @@ MonoBehaviour:
     vigourMax: 0
     fans: 0
     bondWithP: 0
+    equippedItemName: 
     currentClothIndex: 1
     BHaveSetUp: 0
     basicTrainRecord: {fileID: 11400000, guid: d3a131f41f6629544a1ec71dfd859083, type: 2}
@@ -143,7 +155,14 @@ MonoBehaviour:
       danceExp: 0
       vocalExp: 0
       visualExp: 0
-      isActive: 0
+    baitoRecord:
+      selectedBaito: {fileID: 0}
+      position: {x: 0, y: 0}
+      zoneType: 0
+      zoneIndex: 0
+    activityRecord:
+      selectedActivity: {fileID: 0}
+    isAvailable: 0
   DayData:
     day: 0
     currentEventIndex: 0
@@ -165,7 +184,11 @@ MonoBehaviour:
       idolB: {fileID: 0}
       bondValue: 0
     items: []
-  chatSaveData: {fileID: 0}
+    allEqupmentNames: []
+  chatSaveData:
+    users: []
+  teacherSaveData:
+    trainingTeachers: []
   dialogueSaveData: {fileID: 11400000, guid: 807d617339645774091bd803e13c01d6, type: 2}
   onStageStage: {fileID: 11400000, guid: 95b26892d80cf3742b7f8e1da627351f, type: 2}
   isElevatorUsedToday: 0
@@ -244,7 +267,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 573251480080987408, guid: 91938d23bb0c7724bb42126d8ebad949, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -11.059031
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 573251480080987408, guid: 91938d23bb0c7724bb42126d8ebad949, type: 3}
       propertyPath: m_LocalRotation.w
@@ -252,23 +275,23 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 573251480080987408, guid: 91938d23bb0c7724bb42126d8ebad949, type: 3}
       propertyPath: m_LocalRotation.x
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 573251480080987408, guid: 91938d23bb0c7724bb42126d8ebad949, type: 3}
       propertyPath: m_LocalRotation.y
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 573251480080987408, guid: 91938d23bb0c7724bb42126d8ebad949, type: 3}
       propertyPath: m_LocalRotation.z
-      value: -0
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 573251480080987408, guid: 91938d23bb0c7724bb42126d8ebad949, type: 3}
       propertyPath: m_AnchoredPosition.x
-      value: 8.386003
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 573251480080987408, guid: 91938d23bb0c7724bb42126d8ebad949, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: 1.8920879
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 573251480080987408, guid: 91938d23bb0c7724bb42126d8ebad949, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
