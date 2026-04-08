@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public ResolutionManager ResolutionManager;
     public GameObject Canvas_Config;
     [Header("永久儲存資料")]
+    public List<AnimalFarmSaveData> FarmsDataList;
     public List<AnimalSaveData> animalDataList = new List<AnimalSaveData>();
     public int teamIndex = (int)IdolTeamIndex.None;
     public List<IdolSaveData> idolDataList = new List<IdolSaveData>();
@@ -54,10 +55,20 @@ public class GameManager : MonoBehaviour
     //土地專用儲存
     public void SaveSoilData(List<AnimalFarm> Farms)
     {
+        FarmsDataList.Clear();
         animalDataList.Clear();
         foreach (var Farm in Farms)
         {
-            foreach(var animal in Farm.seedsOnThisSoil)
+            var farmData = new AnimalFarmSaveData
+            {
+                farmLV = Farm.farmLV,
+                isActivated=Farm.isActivated,
+                maxSeedAmount=Farm.maxSeedAmount,
+                foodBarn=Farm.foodBarn,
+                foodBarnMax=Farm.foodBarnMax
+            };
+            FarmsDataList.Add(farmData);
+            foreach (var animal in Farm.seedsOnThisSoil)
             {
                 var data = new AnimalSaveData
                 {
@@ -65,9 +76,43 @@ public class GameManager : MonoBehaviour
                     isWatered=animal.GetIsWateredToday(),
                     plantedSeedName=animal.seedData.seedName,
                     daysGrown=animal.GetDaysGrown(),
-                    currentRewardPoint=animal.GetRewardPoint()
+                    currentRewardPoint=animal.GetRewardPoint(),
+                    RewardPointPerdrop=animal.seedData.wateredMinus
                 };
                 animalDataList.Add(data);
+            }
+        }
+    }
+    [ContextMenu("end a day test")]
+    //意識到換天時場景不會在農場，所以需要一個方法專門在換天時更新農場和植物的資料
+    public void UpdateFarmAndAnimalAtDayEnd()
+    {
+        foreach (var Farm in FarmsDataList)
+        {
+            foreach (var animal in animalDataList)
+            {
+                //只更新同一塊土地上的動物、每個動物消耗一次水分、成長一天、更新獎勵點數
+                if (Farm.farmLV == animal.farmLV)
+                {
+                    //根據飼料儲量餵食
+                    if (Farm.foodBarn > 0&&animal.isWatered == false)
+                    {
+                        animal.isWatered = true;
+                        Farm.foodBarn -= 1;
+                    }
+                    else
+                    {
+                        animal.isWatered = false;
+                        Farm.foodBarn = 0;
+                    }
+                    //成長一天，如果有被澆水則獎勵點數不下降
+                    animal.daysGrown += 1;
+                    if (animal.isWatered==false)
+                    {
+                        animal.currentRewardPoint -= animal.RewardPointPerdrop;
+                    }
+                    animal.isWatered = false; //每天結束時都要把水分狀態重置，因為每天都要重新澆水
+                }
             }
         }
     }
@@ -163,6 +208,7 @@ public class GameManager : MonoBehaviour
         SaveDataWrapper wrapper = new SaveDataWrapper
         {
             animalDataList = this.animalDataList,
+            FarmsDataList = this.FarmsDataList,
             teamIndex = this.teamIndex,
             idolDataList = this.idolDataList,
             ResourceData = this.ResourceData,
@@ -199,6 +245,7 @@ public class GameManager : MonoBehaviour
 
         // 3. 還原到 GameManager
         this.animalDataList = wrapper.animalDataList;
+        this.FarmsDataList = wrapper.FarmsDataList;
         this.teamIndex = wrapper.teamIndex;
         this.idolDataList = wrapper.idolDataList;
         this.ResourceData = wrapper.ResourceData;

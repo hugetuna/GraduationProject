@@ -10,5 +10,6 @@ public class AnimalSaveData
     public string plantedSeedName;
     public int daysGrown;
     public int currentRewardPoint;
+    public int RewardPointPerdrop;
 }
 

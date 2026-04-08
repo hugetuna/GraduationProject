@@ -106,6 +106,8 @@ public class DayManager : MonoBehaviour
         Debug.Log($"結束一天 Date:{date}");
         onDayFinish = null;
         IsInStartOfDay = true;
+        //更新農場狀態
+        GameManager.Instance.UpdateFarmAndAnimalAtDayEnd();
         // 重置預約狀態
         GameManager.Instance.teacherSaveData.CleanTeacherAppointments();
         // 每天結束時大保存一次

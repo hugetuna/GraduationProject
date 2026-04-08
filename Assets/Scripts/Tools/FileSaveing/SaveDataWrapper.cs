@@ -6,6 +6,7 @@ using UnityEngine;
 public class SaveDataWrapper
 {
     public List<AnimalSaveData> animalDataList;
+    public List<AnimalFarmSaveData> FarmsDataList;
     public int teamIndex;
     public List<IdolSaveData> idolDataList;
     public DaySaveData DayData;

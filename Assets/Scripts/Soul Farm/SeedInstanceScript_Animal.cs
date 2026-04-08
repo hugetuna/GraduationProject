@@ -101,7 +101,7 @@ public class SeedInstanceScript_Animal : MonoBehaviour
         }
         wateredToday = false;
     }
-    private void CheckIsDead()
+    public void CheckIsDead()
     {
         if (currentRewardPoint < seedData.rewardPointMin)
         {

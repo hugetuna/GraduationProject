@@ -17,6 +17,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     public string InteractionKey => "TGrow"; // 這個字串用來指定動畫 key
 
     public FarmLV farmLV;
+    public bool isActivated = false; // 是否已經開啟這個農場的使用權
     public Transform seedSpawnPoint; // 種子的生成位置
     public GameObject[] seedPrefabs; // 儲存不同種類的種子預製體
     
@@ -137,6 +138,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     //按下種植按鈕(因為按鈕回傳值不能是SeedInstanceScript_Animal所以千套)
     public void pressPlantButton()
     {
+        //種植種子(消耗玩家道具)
         PlantSeed();
         //AudioManager.Instance.PlaySFX(audio_PlantSeed);
     }
