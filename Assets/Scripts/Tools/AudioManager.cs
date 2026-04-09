@@ -69,7 +69,7 @@ public class AudioManager : MonoBehaviour
         musicSource.volume = volume * musicVolume;
     }
     // 播放音效
-    public void PlaySFX(AudioClip clip, float setVolume = 1f)
+    public void PlaySFX(AudioClip clip, float setVolume = 1f, float setPitch = 1f)
     {
         if (clip == null) return;
 
@@ -77,6 +77,7 @@ public class AudioManager : MonoBehaviour
         AudioSource src = sfxPool.Dequeue();
         src.clip = clip;
         src.volume = volume * sfxVolume * setVolume;
+        src.pitch = setPitch;
         src.Play();
         playingSFXs.Add(src);
         // 播完自動放回池中

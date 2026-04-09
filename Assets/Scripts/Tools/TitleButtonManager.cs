@@ -11,6 +11,8 @@ public class TitleButtonManager : MonoBehaviour
     public Button LoadButton;
     public Button ConfigButton;
     public Button ExitButton;
+    public AudioClip MainTitleBtnSnd;
+    public AudioClip SecTitleBtnSnd;
     public void Start()
     {
         StartButton.onClick.AddListener(OnStartButtonClicked);
@@ -20,20 +22,24 @@ public class TitleButtonManager : MonoBehaviour
     }
     private void OnStartButtonClicked()
     {
+        AudioManager.Instance.PlaySFX(MainTitleBtnSnd, setPitch: 1.2f);
         GameManager.Instance.SaveInkJSONAssetData(dialogueSaveDataNewgame);
         SceneTransitionManager.Instance.teleportByTargetSceneName("Dialogue Scene");
     }
     private void OnLoadButtonClicked()
     {
+        AudioManager.Instance.PlaySFX(MainTitleBtnSnd);
         GameManager.Instance.LoadFromFile();
     }
     private void OnConfigButtonClicked()
     {
+        AudioManager.Instance.PlaySFX(SecTitleBtnSnd);
         GameManager.Instance.Canvas_Config.SetActive(true);
         titleCanvas.gameObject.SetActive(false);
     }
     public void OnExitButtonClicked()
     {
+        AudioManager.Instance.PlaySFX(SecTitleBtnSnd, setPitch: 0.8f); // 雖然好像在發出音效前就退出了，但還是寫一下
         GameManager.Instance.QuitGame();
     }
 }
