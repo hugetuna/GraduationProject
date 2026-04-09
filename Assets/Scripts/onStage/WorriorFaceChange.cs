@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class WorriorFaceChange : MonoBehaviour
 {
     [SerializeField]
-    public List<Image> Images;//需要更换表情的Image组件列表
+    public Image Image;//需要更换表情的Image组件
     public List<Sprite> AllIdolSprites;//所有偶像的表情圖
     void Start()
     {
@@ -14,11 +14,6 @@ public class WorriorFaceChange : MonoBehaviour
     }
     public void ChangeFace()
     {
-        for (int i = 0; i < Images.Count; i++)
-        {
-            Image image = Images[i];
-            int targetIndex = (int)GameManager.Instance.idolDataList[i].idolIndex;
-            image.sprite= AllIdolSprites[targetIndex];
-        }
+        Image.sprite = AllIdolSprites[GameManager.Instance.teamIndex];
     }
 }
