@@ -29,7 +29,8 @@ public class BaitoAssignment : MonoBehaviour
             bool isAssigned = areAllToBaito || isInBaitoZone; // 是否計算打工數值
             bool isVisibleInWorld = areAllToBaito || !isInBaitoZone; // 是否在場景中顯示
 
-            UpdateBaitoStatus(idol, isAssigned ? selectedBaito : null, isVisibleInWorld);
+            bool isActive = isVisibleInWorld && idol.isAvailable; // 需考慮角色是否在隊伍裡
+            UpdateBaitoStatus(idol, isAssigned ? selectedBaito : null, isActive);
         }
 
 
