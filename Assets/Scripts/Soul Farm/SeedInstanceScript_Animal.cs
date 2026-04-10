@@ -22,6 +22,8 @@ public class SeedInstanceScript_Animal : MonoBehaviour
     {
         VisualUpdate();
         currentRewardPoint = seedData.rewardPoint;
+        //開始時運動一次
+        moveTimer=moveInterval-0.2f; // 讓它一開始就能選擇方向移動
     }
     void Update()
     {
@@ -39,10 +41,20 @@ public class SeedInstanceScript_Animal : MonoBehaviour
         if (moveTimer >= moveInterval + 1f) // 移動持續1秒
         {
             moveTimer = 0f; // 重置計時器
+            moveInterval=Random.Range(3f, 6f); // 隨機下一次移動的間隔時間
             isMoving = false;
         }
     }
     //漫遊邏輯
+    //當碰撞到牆壁時，立刻重新計算一個隨機方向
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.CompareTag("Boundary"))
+        {
+            // 撞到牆了，立刻重新計算一個隨機方向
+            moveDirection = ChooseRandomDirection();
+        }
+    }
     //生成一個隨機方向
     public Vector3 ChooseRandomDirection()
     {
@@ -52,6 +64,14 @@ public class SeedInstanceScript_Animal : MonoBehaviour
     //移動
     public void Move(Vector3 direction, float speed)
     {
+        if (direction.x > 0)
+        {
+            this.gameObject.transform.localScale = new Vector3(-1, 1, 1); // 向右移動，保持正常大小
+        }
+        else if (direction.x < 0)
+        {
+            this.gameObject.transform.localScale = new Vector3(1, 1, 1); // 向左移動，翻轉圖片
+        }
         transform.Translate(direction * speed * Time.deltaTime);
     }
     public void Grown(int days)//成長

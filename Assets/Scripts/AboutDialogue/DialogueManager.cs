@@ -58,7 +58,7 @@ public class DialogueManager : MonoBehaviour
             playerInput.SwitchCurrentActionMap(mapName);
             Debug.Log($"Action Map 切換至: {mapName}");
         }
-        // 在切換 Action Map 前，檢查是否有任何農場的互動UI正在顯示
+        // 在切換玩家小人的Action Map 前，檢查是否有任何農場的互動UI正在顯示
         AnimalFarm[] chackIsFarming = FindObjectsByType<AnimalFarm>(
             FindObjectsInactive.Include,
             FindObjectsSortMode.None);
