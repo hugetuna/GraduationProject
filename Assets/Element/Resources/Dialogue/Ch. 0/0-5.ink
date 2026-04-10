@@ -28,13 +28,13 @@
 #speaker:Akuma
 很簡單的啦！
 #speaker:Akuma
-這裡已經被我改造成一個像培養皿的東西了，超級適合靈魂成長！
+這裡的環境已經被我改造成一個像培養皿的東西了，超級適合靈魂成長！
 
 #speaker:Manager
 ...你這樣講更恐怖了。
 
 #speaker:Akuma　#sfx:Whistling1
-嘻嘻，由我提供「我特別蒐集的的夢幻靈魂」作為「種子」。
+嘻嘻，由我提供「特別蒐集的夢幻靈魂」作為「種子」。
 #speaker:Akuma
 你只要讓偶像們「照顧靈魂」，餵點情感、努力、目標之類的東西...
 #speaker:Akuma

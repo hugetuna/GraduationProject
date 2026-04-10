@@ -27,7 +27,7 @@ VAR teamID = 0  // 由 Unity 端傳入
 公司大概就這樣，小小的。
 
 #speaker:Aicor
-你接下來就回四樓的辦公室吧！
+你接下來就回三樓的辦公室吧！
 ->end_part
 
 ===team2_kuma_sirius_mizar===

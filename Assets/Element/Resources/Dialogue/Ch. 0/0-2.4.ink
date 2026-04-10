@@ -16,19 +16,19 @@ VAR teamID = 0  // 由 Unity 端傳入
 ===team0_kuma_sirius_karo===
 #speaker:Karo
 總之先下樓四處轉轉吧，這層都是辦公室，我們也不常來呢。
+#speaker:Sirius
+雖然更衣間也設在這，但其實裡面沒多少衣服...
 #speaker:Kuma
-只有找老闆的時候會來~
-#speaker:Kuma
-但之後說不定也會為了找製作人上來!
+之後說不定會為了找製作人上來!
 #speaker:Sirius
 沒什麼事我們就先下去吧。
 ->end_part
 
 ===team1_kuma_sirius_aicor===
 #speaker:Aicor
-我對四樓不熟欸，超少上來。
-#speaker:Kuma
-只有找老闆的時候會來~
+我對三樓不熟欸，超少上來。
+#speaker:Sirius
+雖然更衣間也設在這，但其實裡面沒多少衣服...。
 #speaker:Kuma
 但之後說不定也會為了找製作人上來!
 #speaker:Sirius
@@ -38,8 +38,8 @@ VAR teamID = 0  // 由 Unity 端傳入
 ===team2_kuma_sirius_mizar===
 #speaker:Mizar
 總之先下樓四處轉轉吧，這層都是辦公室，我們也不常來呢。
-#speaker:Kuma
-只有找老闆的時候會來~
+#speaker:Sirius
+雖然更衣間也設在這，但其實裡面沒多少衣服...。
 #speaker:Kuma
 但之後說不定也會為了找製作人上來!
 #speaker:Sirius
@@ -49,8 +49,8 @@ VAR teamID = 0  // 由 Unity 端傳入
 ===team3_kuma_karo_aicor===
 #speaker:Karo
 總之先下樓四處轉轉吧，這層都是辦公室，我們也不常來呢。
-#speaker:Kuma
-只有找老闆的時候會來~
+#speaker:Aicor
+是有更衣室啦，但衣服比我家還少。
 #speaker:Kuma
 但之後說不定也會為了找製作人上來!
 #speaker:Aicor
@@ -60,8 +60,8 @@ VAR teamID = 0  // 由 Unity 端傳入
 ===team4_kuma_karo_mizar===
 #speaker:Karo
 總之先下樓四處轉轉吧，這層都是辦公室，我們也不常來呢。
-#speaker:Kuma
-只有找老闆的時候會來~
+#speaker:Karo
+其他的...就更衣室吧，但也沒幾件衣服。
 #speaker:Kuma
 但之後說不定也會為了找製作人上來!
 #speaker:Mizar
@@ -70,9 +70,9 @@ VAR teamID = 0  // 由 Unity 端傳入
 
 ===team5_kuma_aicor_mizar===
 #speaker:Mizar
-總之先下樓四處轉轉吧，這層都是辦公室，我們也不常來呢。
-#speaker:Kuma
-只有找老闆的時候會來~
+總之先下樓四處轉轉吧，這層都是辦公室我們也不常來呢。
+#speaker:Aicor
+是有更衣室啦，但衣服比我家還少。
 #speaker:Kuma
 但之後說不定也會為了找製作人上來!
 #speaker:Aicor
@@ -83,6 +83,8 @@ VAR teamID = 0  // 由 Unity 端傳入
 #speaker:Karo
 總之先下樓四處轉轉吧，這層都是辦公室，我們也不常來呢。
 #speaker:Aicor
+是有更衣室啦，但衣服比我家還少。
+#speaker:Aicor
 我對這裡超不熟，只有找老闆的時候會來。
 #speaker:Sirius
 沒什麼事我們就先下去吧。
@@ -91,6 +93,8 @@ VAR teamID = 0  // 由 Unity 端傳入
 ===team7_sirius_karo_mizar===
 #speaker:Karo
 總之先下樓四處轉轉吧，這層都是辦公室，我們也不常來呢。
+#speaker:Karo
+其他的...就更衣室吧，但也沒幾件衣服。
 #speaker:Mizar
 很少來這裡呢，只有找老闆的時候會來。
 #speaker:Sirius
@@ -101,6 +105,8 @@ VAR teamID = 0  // 由 Unity 端傳入
 #speaker:Mizar
 總之先下樓四處轉轉吧，這層都是辦公室我們也不常來呢。
 #speaker:Aicor
+是有更衣室啦，但衣服比我家還少。
+#speaker:Aicor
 我對這裡超不熟，只有找老闆的時候會來。
 #speaker:Sirius
 沒什麼事我們就先下去吧。
@@ -109,6 +115,8 @@ VAR teamID = 0  // 由 Unity 端傳入
 ===team9_karo_aicor_mizar===
 #speaker:Karo
 總之先下樓四處轉轉吧，這層都是辦公室，我們也不常來呢。
+#speaker:Karo
+其他的...就更衣室吧，但也沒幾件衣服。
 #speaker:Mizar
 很少來這裡呢，只有找老闆的時候會來。
 #speaker:Aicor

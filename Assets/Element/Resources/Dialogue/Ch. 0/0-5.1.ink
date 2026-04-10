@@ -1,7 +1,7 @@
 #speaker:Empty #sfx:AkumaMagic
 （眼前一道光閃過）
 #speaker:Empty
-（壺內微微發著光，剛種下的種子在一瞬間內瘋狂增長）
+（剛剛才放下的靈魂在一瞬間內瘋狂增長）
 
 #speaker:Manager
 欸？這是？突然就變大了...

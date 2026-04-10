@@ -2,7 +2,7 @@
 #speaker:Manager
 這樣就採收了靈魂嗎...
 #speaker:Manager
-欸？長的跟在壺裡不一樣了...
+長的跟原本不一樣了...
 
 #speaker:Akuma #sfx:AkumaAppear
 好耶～收成成功！
@@ -35,7 +35,7 @@
 #speaker:Akuma
 只要把他們培育成熟，再經過特殊加工弄得碎碎的送回去，這些情感就能超級自然、毫無負擔的植入體內啦～
 #speaker:Akuma
-當然種子之間的品質有差也會影響到能感染多少粉絲就是了。
+當然種子之間的品質也會影響到能感染多少粉絲就是了。
 
 #speaker:Manager
 怎麼感覺不太人道。

@@ -15,7 +15,7 @@ VAR teamID = 0  // 由 Unity 端傳入
 
 ===team0_kuma_sirius_karo===
 #speaker:Kuma
-這層有兩間練習教室！我們很常待在這裡練習！
+這層都是練習教室！我們很常待在這裡練習！
 #speaker:Karo
 之前一直都是自主練習呢。
 #speaker:Sirius
@@ -30,7 +30,7 @@ VAR teamID = 0  // 由 Unity 端傳入
 
 ===team1_kuma_sirius_aicor===
 #speaker:Kuma
-這層有兩間練習教室！我們很常待在這裡練習！
+這層都是練習教室！我們很常待在這裡練習！
 #speaker:Aicor
 之前都是自主練習，除了我們沒別人了。
 #speaker:Sirius
@@ -44,7 +44,7 @@ VAR teamID = 0  // 由 Unity 端傳入
 
 ===team2_kuma_sirius_mizar===
 #speaker:Kuma
-這層有兩間練習教室！我們很常待在這裡練習！
+這層都是練習教室！我們很常待在這裡練習！
 #speaker:Mizar
 之前一直都是自主練習呢。
 #speaker:Sirius
@@ -57,7 +57,7 @@ VAR teamID = 0  // 由 Unity 端傳入
 
 ===team3_kuma_karo_aicor===
 #speaker:Kuma
-這層有兩間練習教室！我們很常待在這裡練習！
+這層都是練習教室！我們很常待在這裡練習！
 #speaker:Karo
 之前一直都是自主練習呢。
 #speaker:Aicor
@@ -74,7 +74,7 @@ VAR teamID = 0  // 由 Unity 端傳入
 
 ===team4_kuma_karo_mizar===
 #speaker:Kuma
-這層有兩間練習教室！我們很常待在這裡練習！
+這層都是練習教室！我們很常待在這裡練習！
 #speaker:Karo
 之前一直都是自主練習呢。
 #speaker:Kuma
@@ -91,7 +91,7 @@ VAR teamID = 0  // 由 Unity 端傳入
 
 ===team5_kuma_aicor_mizar===
 #speaker:Kuma
-這層有兩間練習教室！我們很常待在這裡練習！
+這層都是練習教室！我們很常待在這裡練習！
 #speaker:Mizar
 之前一直都是自主練習呢。
 #speaker:Aicor
@@ -109,7 +109,7 @@ VAR teamID = 0  // 由 Unity 端傳入
 
 ===team6_sirius_karo_aicor===
 #speaker:Aicor
-這層有兩間練習教室，我們大部分時間都在這裡。
+這層都是練習教室，我們大部分時間都在這裡。
 #speaker:Karo
 之前一直都是自主練習呢。
 #speaker:Sirius
@@ -124,7 +124,7 @@ VAR teamID = 0  // 由 Unity 端傳入
 
 ===team7_sirius_karo_mizar===
 #speaker:Mizar
-這層有兩間練習教室，我們大部分時間都會待在這裡練習。
+這層都是練習教室，我們大部分時間都會待在這裡練習。
 #speaker:Karo
 之前一直都是自主練習呢。
 #speaker:Sirius
@@ -139,7 +139,7 @@ VAR teamID = 0  // 由 Unity 端傳入
 
 ===team8_sirius_aicor_mizar===
 #speaker:Aicor
-這層有兩間練習教室，我們大部分時間都在這裡。
+這層都是練習教室，我們大部分時間都在這裡。
 #speaker:Mizar
 之前一直都是我們自己練習呢。
 #speaker:Sirius
@@ -152,10 +152,9 @@ VAR teamID = 0  // 由 Unity 端傳入
 
 ===team9_karo_aicor_mizar===
 #speaker:Mizar
-這層有兩間練習教室，我們大部分時間都會待在這裡練習。
+這層都是練習教室，我們大部分時間都會待在這裡練習。
 #speaker:Karo
 之前一直都是自主練習呢。
-
 #speaker:Aicor
 啊不妙...我這周核心的訓練還沒做。
 #speaker:Mizar
