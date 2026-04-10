@@ -98,7 +98,6 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     }
     public void ShowInteractionUI()
     {
-        //顯示並選取按鈕
         SwitchActionMap("FarmConfig");
         // 讓主畫面 UI 看得到但點不到，且不接受鍵盤導覽
         if (mainUICanvasGroup != null)

@@ -53,6 +53,22 @@ public class DialogueManager : MonoBehaviour
     //安全切換 Map
     private void SwitchActionMap(string mapName)
     {
+        if (playerInput != null)
+        {
+            playerInput.SwitchCurrentActionMap(mapName);
+            Debug.Log($"Action Map 切換至: {mapName}");
+        }
+        // 在切換 Action Map 前，檢查是否有任何農場的互動UI正在顯示
+        AnimalFarm[] chackIsFarming = FindObjectsByType<AnimalFarm>(
+            FindObjectsInactive.Include,
+            FindObjectsSortMode.None);
+        foreach (AnimalFarm farm in chackIsFarming)
+        {
+            if (farm.farmCanvas.gameObject.activeInHierarchy)
+            {
+                return; // 如果有任何一個農場的互動UI正在顯示，就不切換Action Map
+            }
+        }
         if (teamManager != null)
         {
             PlayerInput captain = teamManager?.teamMembers[
@@ -61,11 +77,6 @@ public class DialogueManager : MonoBehaviour
             {
                 captain.SwitchCurrentActionMap(mapName);
             }
-        }
-        if (playerInput != null)
-        {
-            playerInput.SwitchCurrentActionMap(mapName);
-            Debug.Log($"Action Map 切換至: {mapName}");
         }
     }
     //單例物件生成
