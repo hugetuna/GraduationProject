@@ -21,6 +21,8 @@ public class DesktopUIHandler : MonoBehaviour
     [Header("相關音效")]
     [SerializeField] private AudioClip turnOnSound;
     //-----------------------------------------------------------------//
+    [Header("受影響的物件")]
+    [SerializeField] private GameObject sceneObjects; // 避免場景物件和電腦介面彼此穿模
     // public static event Action OnDesktopUIClosed; // 關閉桌面 UI 事件
 
     void Awake()
@@ -46,6 +48,7 @@ public class DesktopUIHandler : MonoBehaviour
     private void ShowDesktopUI()
     {
         UIAndPlayerInput.DisableAllPlayerInputs(); // 禁用所有玩家的輸入系統
+        sceneObjects.SetActive(false); // 隱藏場景物件避免穿模（進結算換天後就會恢復了）
 
         desktopUI.SetActive(true); // 顯示桌面 UI
         AudioManager.Instance.PlaySFX(turnOnSound); // 播放開機音效

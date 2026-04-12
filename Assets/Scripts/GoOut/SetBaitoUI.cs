@@ -185,10 +185,12 @@ public class SetBaitoUI : MonoBehaviour
             BaitoRecord baitoRecord = idol.baitoRecord;
 
             // 根據角色的打工紀錄決定是否顯示圖片
+            // 沒有在隊伍裡的就固定不顯示
             bool isCurrentBaito = baitoRecord.zoneType == BaitoDropZoneType.Baito &&
                                   baitoRecord.selectedBaito != null &&
                                   baitoRecord.selectedBaito.baitoName == baitoList[currentBaitoIndex].baitoName;
-            img.gameObject.SetActive(baitoRecord.zoneType == BaitoDropZoneType.Member || isCurrentBaito);
+            bool isActive = idol.isAvailable && (baitoRecord.zoneType == BaitoDropZoneType.Member || isCurrentBaito);
+            img.gameObject.SetActive(isActive);
         }
     }
 
