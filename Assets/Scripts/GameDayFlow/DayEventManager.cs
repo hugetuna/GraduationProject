@@ -210,6 +210,10 @@ public class DayEventManager : MonoBehaviour
             // 啟動監控協程
             StartCoroutine(MonitorIdolTraining(dayEvent.targetIdol, onFinish));
         }
+        else if (dayEvent.Type == EventType.WaitUntilSpecificButtonPressed)
+        {
+            Debug.Log($"等待按鈕 {dayEvent.targetButtonName} 被按下...");
+        }
         else if (dayEvent.Type == EventType.WaitAfterDayEndEventStart)
         {
             // 電腦結算頁面後
@@ -287,5 +291,13 @@ public class DayEventManager : MonoBehaviour
         }
         // 條件達成，呼叫回調通知事件結束
         onFinish?.Invoke();
+    }
+    public void PressEventButton(string buttonName)
+    {
+        if(currentEvent!=null && currentEvent.Type == EventType.WaitUntilSpecificButtonPressed && currentEvent.targetButtonName == buttonName)
+        {
+            // 按鈕被按下，事件完成
+            TriggerNextEvent();
+        }
     }
 }

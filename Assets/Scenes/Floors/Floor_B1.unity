@@ -3277,6 +3277,34 @@ PrefabInstance:
       propertyPath: m_Center.z
       value: 0.69307256
       objectReference: {fileID: 0}
+    - target: {fileID: 1169328245796380068, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1169328245796380068, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 1169328245796380068, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1368854883475877123}
+    - target: {fileID: 1169328245796380068, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1169328245796380068, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: NotifyManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 1169328245796380068, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: EventButtonHelper, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 1169328245796380068, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 1170197900401384185, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
       propertyPath: m_LocalScale.x
       value: 0.35
@@ -3381,6 +3409,34 @@ PrefabInstance:
       propertyPath: mainUICanvasGroup
       value: 
       objectReference: {fileID: 487994086}
+    - target: {fileID: 2133221576762154430, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2133221576762154430, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 2133221576762154430, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 1368854883475877121}
+    - target: {fileID: 2133221576762154430, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 2133221576762154430, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: NotifyManager
+      objectReference: {fileID: 0}
+    - target: {fileID: 2133221576762154430, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: EventButtonHelper, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 2133221576762154430, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     - target: {fileID: 2338596099040995790, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
       propertyPath: m_Name
       value: AnimalFarm_Normal
@@ -3392,7 +3448,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 493996216269901186, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1368854883475877121}
+    - targetCorrespondingSourceObject: {fileID: 2887214354111735638, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1368854883475877123}
   m_SourcePrefab: {fileID: 100100000, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
 --- !u!114 &1368854883475877119 stripped
 MonoBehaviour:
@@ -3405,6 +3467,42 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec345aea01573cc41bf08e518a5774e4, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!1 &1368854883475877120 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 493996216269901186, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
+  m_PrefabInstance: {fileID: 1368854883475877118}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1368854883475877121
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1368854883475877120}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea4d0b44c92612047a9027e7efe3dfbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonName: LowFarmButton_Plant
+--- !u!1 &1368854883475877122 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2887214354111735638, guid: 4c31836374603154fa495dfd7919d96b, type: 3}
+  m_PrefabInstance: {fileID: 1368854883475877118}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1368854883475877123
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1368854883475877122}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ea4d0b44c92612047a9027e7efe3dfbb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ButtonName: LowFarmButton_Harvest
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
