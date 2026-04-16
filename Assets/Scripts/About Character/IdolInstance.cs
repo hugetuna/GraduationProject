@@ -215,14 +215,14 @@ public class IdolInstance : MonoBehaviour
         {
             TargetTransform = transform.Find("SiriusQ2.0");
         }
-        //if (TargetTransform == null)
-        //{
-        //    TargetTransform = transform.Find("MizarQ2.0");
-        //}
-        //if (TargetTransform == null)
-        //{
-        //    TargetTransform = transform.Find("AicorQ2.0");
-        //}
+        if (TargetTransform == null)
+        {
+            TargetTransform = transform.Find("MizarQ2.0");
+        }
+        if (TargetTransform == null)
+        {
+            TargetTransform = transform.Find("AicorQ2.0");
+        }
         if (TargetTransform == null)
         {
             return;

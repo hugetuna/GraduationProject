@@ -13,8 +13,10 @@ public class TitleButtonManager : MonoBehaviour
     public Button ExitButton;
     public AudioClip MainTitleBtnSnd;
     public AudioClip SecTitleBtnSnd;
+    public AudioClip TitleSong;
     public void Start()
     {
+        AudioManager.Instance.SetMusic(TitleSong);
         StartButton.onClick.AddListener(OnStartButtonClicked);
         LoadButton.onClick.AddListener(OnLoadButtonClicked);
         ConfigButton.onClick.AddListener(OnConfigButtonClicked);
@@ -35,7 +37,7 @@ public class TitleButtonManager : MonoBehaviour
     {
         AudioManager.Instance.PlaySFX(SecTitleBtnSnd);
         GameManager.Instance.Canvas_Config.SetActive(true);
-        titleCanvas.gameObject.SetActive(false);
+        //titleCanvas.gameObject.SetActive(false);
     }
     public void OnExitButtonClicked()
     {

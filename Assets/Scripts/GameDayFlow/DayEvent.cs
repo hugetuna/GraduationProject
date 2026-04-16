@@ -13,6 +13,7 @@ public enum EventType
     WaitUntilInteractWithObject,
     WaitForSeconds,
     WaitUntilSpecificIdolTrained,
+    WaitUntilSpecificButtonPressed,
     WaitAfterDayEndEventStart,
     EndDay
 }
@@ -41,6 +42,7 @@ public class DayEvent : ScriptableObject
     public string interactableObjectKey;//若WaitUntilInteractWithObject->等待與目標互動物件互動
     public float waitSeconds;//若WaitForSeconds->等待秒數
     public IdolWho targetIdol;//若WaitUntilSpecificIdolTrained->等待特定偶像培育完成
+    public string targetButtonName;//若WaitUntilSpecificButtonPressed->等待特定按鈕被按下
     [Header("提示系統")]
     public bool isHintEvent = false;//是否需要提示
     public string hint;//提示內容
