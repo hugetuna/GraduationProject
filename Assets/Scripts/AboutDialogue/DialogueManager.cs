@@ -41,6 +41,7 @@ public class DialogueManager : MonoBehaviour
     public ScrollRect scrollRect;
     [Header("打字機效果用")]
     public float typingSpeed = 0.05f;    // 每個字的間隔時間
+    public GameObject ContinueIndicator;
     private Coroutine typingCoroutine;
     private bool isTyping = false;
     //對話結束時呼叫的函式
@@ -172,6 +173,7 @@ public class DialogueManager : MonoBehaviour
                 isTyping = false;
                 string text = story.currentText;
                 dialogueText.text = BuildStairText(text.Trim());
+                ContinueIndicator.SetActive(true);
             }
             else
             {
@@ -189,6 +191,7 @@ public class DialogueManager : MonoBehaviour
                 isTyping = false;
                 string text = story.currentText;
                 dialogueText.text = BuildStairText(text.Trim());
+                ContinueIndicator.SetActive(true);
             }
             dialogueChoices.gameObject.SetActive(true);
             ShowChoices();
@@ -230,6 +233,7 @@ public class DialogueManager : MonoBehaviour
     {
         isTyping = true;
         dialogueText.text = "";
+        ContinueIndicator.SetActive(false);//先關掉繼續指示器，等打字機效果結束再開
 
         string processed = line;
         int i = 0;
@@ -255,6 +259,7 @@ public class DialogueManager : MonoBehaviour
         }
 
         isTyping = false;
+        ContinueIndicator.SetActive(true);
     }
     //改立繪與頭像
     void ApplyTags(List<string> tags)

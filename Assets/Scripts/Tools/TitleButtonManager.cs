@@ -30,7 +30,7 @@ public class TitleButtonManager : MonoBehaviour
     }
     private void OnLoadButtonClicked()
     {
-        AudioManager.Instance.PlaySFX(MainTitleBtnSnd);
+        AudioManager.Instance.PlaySFX(MainTitleBtnSnd, setPitch: 1.2f);
         GameManager.Instance.LoadFromFile();
     }
     private void OnConfigButtonClicked()
@@ -41,7 +41,7 @@ public class TitleButtonManager : MonoBehaviour
     }
     public void OnExitButtonClicked()
     {
-        AudioManager.Instance.PlaySFX(SecTitleBtnSnd, setPitch: 0.8f); // 雖然好像在發出音效前就退出了，但還是寫一下
+        // AudioManager.Instance.PlaySFX(SecTitleBtnSnd, setPitch: 0.8f); // 在發出音效前就會退出了
         GameManager.Instance.QuitGame();
     }
 }

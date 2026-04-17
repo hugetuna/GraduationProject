@@ -161,12 +161,6 @@ public class PlayerControlMainWorld : MonoBehaviour
 
                 if (interactable != null)
                 {
-                    // **撥放動畫**
-                    if (interactable.InteractionKey== "TGrow")
-                    {
-                        animator.SetTrigger(interactable.InteractionKey);
-                        StartCoroutine(InteractionAnimation(GetAnimationLength(toolAnimationName[interactable.InteractionKey])));
-                    }
                     interactable.Interact(itemOnHandIndex);
                     Debug.Log("與 " + hit.gameObject.name + "互動");
                     if (interactable.InteractionKey == waitInteractionKey)
@@ -182,6 +176,12 @@ public class PlayerControlMainWorld : MonoBehaviour
 
             Debug.Log("附近沒有可互動的物件");
         }
+    }
+    //因為現在改成按按鈕觸發動畫，所以新增一個種植專用的動畫觸發函式
+    public void OnFarmAnimation()
+    {
+        animator.SetTrigger("TGrow");
+        StartCoroutine(InteractionAnimation(GetAnimationLength(toolAnimationName["TGrow"])));
     }
     //根據名字找到一動畫的長度
     float GetAnimationLength(string animName)
