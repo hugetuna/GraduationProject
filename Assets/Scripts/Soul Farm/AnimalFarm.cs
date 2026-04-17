@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.InputSystem;
@@ -30,7 +31,9 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     [Header("介面")]
     public Canvas farmCanvas;//互動按鈕介面
     public Button plantSeedButton;
+    public TextMeshProUGUI plantCounting;
     public Button addFoodBarnButton;
+    public TextMeshProUGUI foodBarnCounting;
     public Button harvestSeedButton;
     public Button exitButton;
     private GameObject lastSelected; // 紀錄最後一個選取的物件
@@ -154,6 +157,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
             //消耗體力
             //IdolInstance leader = teamManager.teamMembers[teamManager.currentLeaderIndex].GetComponent<IdolInstance>();
             //leader.costVigour(leader.plantVigourCost);
+            UpdateCountingText();
             return newSeed.GetComponent<SeedInstanceScript_Animal>();
         }
         else
@@ -161,6 +165,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
             Debug.Log("此農場已達最大種植數量");
             return null;
         }
+        
     }
     //補充食物欄位
     public void AddFoodBarn(int amount)
@@ -179,6 +184,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
             foodBarn = foodBarnMax;
             Debug.Log("食物欄位已滿");
         }
+        UpdateCountingText();
     }
     //種子消耗食物欄位(每天結束時)
     public void SeedsConsumeBarn()
@@ -231,12 +237,16 @@ public class AnimalFarm : MonoBehaviour, IInteractable
                 // 重要：從 List 移除並銷毀物件
                 seedsOnThisSoil.RemoveAt(i);
                 Destroy(seed.gameObject);
-
+                UpdateCountingText();
                 return; // 成功收割一個就跳出
             }
         }
         Debug.Log("沒有可以收割的種子");
     }
-
+    public void UpdateCountingText()
+    {
+        plantCounting.text = $"{seedsOnThisSoil.Count}/{maxSeedAmount}";
+        foodBarnCounting.text = $"{foodBarn}/{foodBarnMax}";
+    }
 
 }

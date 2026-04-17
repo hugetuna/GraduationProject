@@ -17,6 +17,7 @@ public class SeedInstanceScript_Animal : MonoBehaviour
     public float moveSpeed = 10f; // 移動速度
     public Vector3 moveDirection=new Vector3(0,0,0); // 移動持續時間
     public bool isMoving = false; // 是否正在移動
+    public Animator animator; // 用來控制動畫的組件
     public OrderSet orderSeter;
     void Start()
     {
@@ -35,6 +36,7 @@ public class SeedInstanceScript_Animal : MonoBehaviour
             {
                 moveDirection = ChooseRandomDirection();
                 isMoving = true;
+                animator.SetBool("B_Run", true); // 開始移動動畫
             }
             Move(moveDirection, moveSpeed);
         }
@@ -42,6 +44,7 @@ public class SeedInstanceScript_Animal : MonoBehaviour
         {
             moveTimer = 0f; // 重置計時器
             moveInterval=Random.Range(3f, 6f); // 隨機下一次移動的間隔時間
+            animator.SetBool("B_Run", false); // 停止移動動畫
             isMoving = false;
         }
     }
@@ -89,18 +92,19 @@ public class SeedInstanceScript_Animal : MonoBehaviour
         {
             growthStages[i].SetActive(false); // 先關掉所有
         }
-        if (daysGrown == 0)
-        {
+        //if (daysGrown == 0)
+        //{
             growthStages[0].SetActive(true); // 顯示幼苗階段
-        }
-        else if (daysGrown >= seedData.growthDays)
-        {
-            growthStages[2].SetActive(true); // 顯示成熟階段
-        }
-        else
-        {
-            growthStages[1].SetActive(true); // 顯示中期階段
-        }
+            animator= growthStages[0].GetComponent<Animator>();
+        //}
+        //else if (daysGrown >= seedData.growthDays)
+        //{
+        //    growthStages[2].SetActive(true); // 顯示成熟階段
+        //}
+        //else
+        //{
+        //    growthStages[1].SetActive(true); // 顯示中期階段
+        //}
     }
 
     [ContextMenu("water")]
