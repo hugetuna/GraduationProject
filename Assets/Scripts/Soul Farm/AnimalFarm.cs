@@ -139,6 +139,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     {
         //種植種子(消耗玩家道具)
         PlantSeed();
+        teamManager?.teamMembers[teamManager.currentLeaderIndex].GetComponent<PlayerControlMainWorld>().OnFarmAnimation();
         //AudioManager.Instance.PlaySFX(audio_PlantSeed);
     }
     //種植個種子
@@ -164,12 +165,14 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     //補充食物欄位
     public void AddFoodBarn(int amount)
     {
+
         if (foodBarn + amount <= foodBarnMax)
         {
             foodBarn += amount;
             //消耗體力
             IdolInstance leader = teamManager.teamMembers[teamManager.currentLeaderIndex].GetComponent<IdolInstance>();
             leader.costVigour(leader.waterVigourCost);
+            leader.gameObject.GetComponent<PlayerControlMainWorld>().OnFarmAnimation();
         }
         else
         {
