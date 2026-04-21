@@ -47,7 +47,7 @@ public class DragToBaito : Drag
         if (lastDropZone != null)
         {
             // 清空上個 DropZone 的角色參考與裝備顯示
-            var display = lastDropZone.GetComponent<BaitoEquipments>();
+            var display = lastDropZone.GetComponent<SetEquipmentUI>();
             if (display != null) display.UpdateEquipment();
             // lastDropZone.ClearCurrentIdol();
         }
@@ -89,7 +89,7 @@ public class DragToBaito : Drag
         if (lastDropZone != null)
         {
             // lastDropZone.SetCurrentIdol(this);
-            var display = lastDropZone.GetComponent<BaitoEquipments>();
+            var display = lastDropZone.GetComponent<SetEquipmentUI>();
             if (display != null) display.UpdateEquipment(myIdolIndex);
         }
 

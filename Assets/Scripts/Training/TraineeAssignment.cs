@@ -11,16 +11,21 @@ public class TraineeAssignment : MonoBehaviour
     void Start()
     {
         TrainingUIHandler.OnTrainingUIConfirmed += AssignTrainees;
-        TrainingHintToggler.OnGoToComputer += AssignTrainees;
+        TrainingHintToggler.OnGoToComputer += AssignAllToTrain;
     }
 
     void OnDestroy()
     {
         TrainingUIHandler.OnTrainingUIConfirmed -= AssignTrainees;
-        TrainingHintToggler.OnGoToComputer -= AssignTrainees;
+        TrainingHintToggler.OnGoToComputer -= AssignAllToTrain;
     }
 
-    public void AssignTrainees(TrainingUIData data) // 當任意訓練 UI 按下確定按鈕時呼叫
+    public void AssignAllToTrain(TrainingUIData data)
+    {
+        AssignTrainees(data, true);
+    }
+
+    public void AssignTrainees(TrainingUIData data, bool areAllToTrain) // 當任意訓練 UI 按下確定按鈕時呼叫
     {
         // 取得該訓練 UI 類型
         string currentTrainingType = data.trainingType.ToString();
@@ -47,6 +52,7 @@ public class TraineeAssignment : MonoBehaviour
                 CalculateAndSetTrainingStats(idolData, data);
 
                 // 標記為忙碌並隱藏角色物件
+                if (areAllToTrain) continue; // 全員訓練不隱藏角色
                 teamManager.AddBusyMember(idolControl);
                 idol.SetActive(false);
 
@@ -69,7 +75,13 @@ public class TraineeAssignment : MonoBehaviour
             // 情況三：這個角色在其他 UI 的訓練區（例如角色在 Vocal，而玩家正處於 Dance）
             else
             {
-                // 不做任何處理（維持原狀）
+                if (areAllToTrain) // 全員訓練不隱藏角色
+                {
+                    teamManager.RemoveBusyMember(idolControl);
+                    idol.SetActive(true);
+                    UpdateIdolTrainRecord(idolEnum, isActive: true);
+                }
+                // 不做其他處理（維持原狀）
                 continue;
             }
         }

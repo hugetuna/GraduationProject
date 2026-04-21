@@ -4,13 +4,12 @@ using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
 using System.Linq;
-using Ink.Parsed;
 
 /* 掛在 TrainingManager 底下，分別控制三種不同的 UI */
 public class TrainingUIHandler : MonoBehaviour
 {
     public static event Action OnTrainingUIClosed; // 定義訓練 UI 關閉事件
-    public static event Action<TrainingUIData> OnTrainingUIConfirmed; // 定義確定指派訓練成員事件
+    public static event Action<TrainingUIData, bool> OnTrainingUIConfirmed; // 定義確定指派訓練成員事件
     //-----------------------------------------------------------------//
     [Header("訓練 UI 元素")]
     [SerializeField] private GameObject trainingUI; // 直接使用場景中的，不必另外生成
@@ -29,15 +28,12 @@ public class TrainingUIHandler : MonoBehaviour
     private TrainingUIData trainingUIData; // 訓練 UI 的資料 ScriptableObject
     private bool isInitialized = false; // 確保訓練 UI 只初始化一次
     private string todayTeacherName = "";
-    private NumbersController numbersController; // 用來控制數值顯示的腳本參考
     //-----------------------------------------------------------------//
     [Header("跳轉提示 UI 元素")]
     [SerializeField] private GameObject hintPrefab; // 跳轉提示的 prefab
 
     void Start()
     {
-        numbersController = trainingUI.GetComponent<NumbersController>();
-
         closeButton.onClick.AddListener(ConfirmToAssign); // 設定關閉按鈕的監聽事件
         // panelBackground.onClick.AddListener(ConfirmToAssign); // 設定背景按鈕的監聽事件
         // confirmButton.onClick.AddListener(ConfirmToAssign); // 設定指派按鈕的監聽事件
@@ -56,28 +52,15 @@ public class TrainingUIHandler : MonoBehaviour
         //-----------------------------------------------------------------//
 
         TypeText.text = trainingUIData.trainingType.ToString(); // 設定訓練類型的 UI 文字內容
-
         FindTodayTeacher(); // 設定老師的 UI 文字內容
-
         VigourText.text = $"耗費體力：{trainingUIData.neededVigour}"; // 設定耗費體力的 UI 文字內容
 
         UpdateCharacterImagesAndPositions(); // 設定角色 UI 圖片及位置
 
         if (!isInitialized)
         {
-            DragToLesson[] dragToLessons = trainingUI.GetComponentsInChildren<DragToLesson>();
-            foreach (DragToLesson dtl in dragToLessons)
-            {
-                dtl.Initialize(trainingUIData); // 初始化底下每一個 DragToLesson 元件
-            }
-
-            numbersController.InitializeSlots(trainingUIData); // 初始化數值顯示
-
+            InitializeDragSystem();
             isInitialized = true;
-        }
-        else
-        {
-            numbersController.RefreshSlots(trainingUIData); // 刷新角色數值顯示
         }
 
         //-----------------------------------------------------------------//
@@ -172,13 +155,25 @@ public class TrainingUIHandler : MonoBehaviour
         OnTrainingUIClosed?.Invoke(); // 觸發訓練 UI 關閉事件
     }
 
+    private void InitializeDragSystem()
+    {
+        for (int i = 0; i < characterImages.Count; i++)
+        {
+            var img = characterImages[i];
+
+            DragToLesson dtl = img.GetComponentInChildren<DragToLesson>();
+            TrainingVigourBar vb = img.GetComponentInChildren<TrainingVigourBar>();
+            TrainingNumbers tn = img.GetComponentInChildren<TrainingNumbers>();
+
+            var idol = TeamDataUtility.IdolInstanceList[i];
+            dtl.Initialize(idol.idolIndex); // 初始化每個角色的拖曳功能
+            vb.Initialize(trainingUIData, idol.idolIndex); // 初始化每個角色的體力條
+            tn.Initialize(idol.idolIndex, trainingUIData, todayTeacherName != "無"); // 初始化每個角色的數值顯示
+        }
+    }
+
     private void ConfirmToAssign()
     {
-        if (assignSound != null)
-        {
-            AudioManager.Instance.PlaySFX(assignSound);
-        }
-
         if (TrainingUIManager.Instance.GetMembers().Count == 0)
         {
             // 若全員皆去訓練，觸發可通往電腦場景的 UI
@@ -190,7 +185,8 @@ public class TrainingUIHandler : MonoBehaviour
         {
             // 若無人去訓練，就什麼也不做（交由 TraineeAssignment 處理）
             // 有任何人去訓練，即可觸發指派訓練成員事件
-            OnTrainingUIConfirmed?.Invoke(trainingUIData);
+            if (assignSound != null) AudioManager.Instance.PlaySFX(assignSound);
+            OnTrainingUIConfirmed?.Invoke(trainingUIData, false);
             CloseTrainingUI();
         }
     }
