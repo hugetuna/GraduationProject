@@ -147,6 +147,7 @@ public class GameManager : MonoBehaviour
                 baitoRecord = idol.baitoRecord,
                 activityRecord = idol.activityRecord,
                 isAvailable = idol.isAvailable,
+                currentAction = idol.currentAction,
                 equippedItemName = idol.equipmentItemNow != null ? idol.equipmentItemNow.itemName : ""
             };
             idolDataList.Add(data);

@@ -37,5 +37,6 @@ public class IdolSaveData
     public BaitoRecord baitoRecord; // 打工紀錄
     public ActivityRecord activityRecord; // 商演紀錄
 
-    public bool isAvailable; // 是否可用（在隊伍中；在場景中啟用）
+    public bool isAvailable; // 是否可用（在場景中啟用）
+    public AvailableAction currentAction; // 當前行動狀態（空閒、訓練、打工、商演）
 }

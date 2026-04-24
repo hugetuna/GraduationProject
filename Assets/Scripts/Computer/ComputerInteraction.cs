@@ -17,12 +17,12 @@ public class ComputerInteraction : MonoBehaviour, IInteractable
     {
         if (CheckCanInteract())
         {
-            Debug.Log("電腦互動提示已啟用");
+            // Debug.Log("電腦互動提示已啟用");
             boxCollider.enabled = true; // 啟用電腦互動
         }
         else
         {
-            Debug.Log("電腦互動提示已禁用");
+            // Debug.Log("電腦互動提示已禁用");
             boxCollider.enabled = false; // 禁用電腦互動
         }
     }

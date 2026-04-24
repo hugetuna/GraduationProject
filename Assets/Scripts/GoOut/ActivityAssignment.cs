@@ -6,6 +6,7 @@ using TMPro;
 public class ActivityAssignment : MonoBehaviour
 {
     private Activity todayActivity; // 從 SetActivityUI 的事件接收的商演資訊
+    private StageAttribute todayStage; // 從 SetActivityUI 的事件接收的舞台資訊
     //-----------------------------------------------------------------//
     [Header("商演提示 UI")]
     [SerializeField] private GameObject hintObject; // 全員商演的提示物件
@@ -28,10 +29,11 @@ public class ActivityAssignment : MonoBehaviour
         SetActivityUI.OnActivityConfirmed -= ShowHintUI;
     }
 
-    public void ShowHintUI(Activity todayActivity)
+    public void ShowHintUI(Activity todayActivity, StageAttribute todayStage)
     {
         hintObject.SetActive(true); // 先跳出提示，告知玩家必須全員商演的狀況
         this.todayActivity = todayActivity; // 儲存商演資訊以供後續指派使用
+        this.todayStage = todayStage; // 儲存舞台資訊以利轉場
     }
 
     public void CloseHintUI()
@@ -55,12 +57,14 @@ public class ActivityAssignment : MonoBehaviour
             teamManager.RemoveBusyMember(control);
             idol.gameObject.SetActive(true);
             idol.isAvailable = true;
+            idol.currentAction = AvailableAction.Activity;
 
             // 前往 live 小遊戲
-            // if (SceneTransitionManager.Instance != null)
-            // {
-            //     SceneTransitionManager.Instance.teleportByTargetSceneName("OnStageScene");
-            // }        
+            GameManager.Instance.SaveStageAttribute(todayStage);
+            if (SceneTransitionManager.Instance != null)
+            {
+                SceneTransitionManager.Instance.teleportByTargetSceneName("OnStageScene");
+            }        
         }
     }
 }

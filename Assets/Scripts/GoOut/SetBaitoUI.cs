@@ -23,7 +23,7 @@ public class SetBaitoUI : MonoBehaviour
     [SerializeField] private List<BaitoDropZone> baitoDropZones = new();
     //-----------------------------------------------------------------//
     // [SerializeField] private Button confirmBtn; // 確認出發的按鈕
-    public static event Action<Baito, bool> OnBaitoConfirmed; // 定義確認出發事件
+    public static event Action<bool> OnBaitoConfirmed; // 定義確認出發事件
     //-----------------------------------------------------------------//
     [Header("打工資訊")]
     [SerializeField] private List<Baito> baitoList = new(); // 可選的打工列表
@@ -55,8 +55,8 @@ public class SetBaitoUI : MonoBehaviour
     {
         baitoText.text = baitoData.baitoName;
         descriptionText.text = baitoData.description;
-        VigourCostText.text = $"{baitoData.vigourCost} 體";
-        MoneyGainText.text = $"{baitoData.MoneyGain} 錢";
+        VigourCostText.text = $"{baitoData.vigourCost} 體/人";
+        MoneyGainText.text = $"{baitoData.MoneyGain} 錢/人";
 
         UpdateCharacterDisplay(); // （根據打工類型）更新角色顯示
     }
@@ -102,45 +102,51 @@ public class SetBaitoUI : MonoBehaviour
     {
         Debug.Log("跳轉到電腦介面");
 
-        // 補派全員打工
-        OnBaitoConfirmed?.Invoke(baitoList[currentBaitoIndex], true);
+        // 把該指派的都派一派
+        OnBaitoConfirmed?.Invoke(true);
 
         // 前往電腦介面
-        // SceneTransitionManager.Instance.triggerComputerAfterLoad = true;
-        // if (SceneTransitionManager.Instance != null)
-        // {
-        //     SceneTransitionManager.Instance.teleportByTargetSceneName("Floor_4");
-        // }   
+        SceneTransitionManager.Instance.triggerComputerAfterLoad = true;
+        if (SceneTransitionManager.Instance != null)
+        {
+            SceneTransitionManager.Instance.teleportByTargetSceneName("Floor_4");
+        }   
     }
 
     private void ConfirmToBaito()
     {
         Debug.Log("指派外出打工");
-        if (CheckAreAllToBaito())
+        if (CheckAreAllGone())
         {
-            // 若全員皆去打工，觸發可通往電腦場景的提示 UI
+            // 若全員皆離開隊伍，觸發可通往電腦場景的提示 UI
             hintObject.SetActive(true);
         }
         else
         {
             // 正常處理打工指派事件
-            OnBaitoConfirmed?.Invoke(baitoList[currentBaitoIndex], false);
+            OnBaitoConfirmed?.Invoke(false); // 拖曳時角色就會記錄打工類型，所以這裡不用再另外傳遞
             CloseBaitoUI();
         }
     }
 
-    private bool CheckAreAllToBaito()
+    private bool CheckAreAllGone()
     {
-        foreach (var img in characterImages)
+        int goneIdolCount = 0;
+        foreach (var idol in TeamDataUtility.IdolInstanceList)
         {
-            var drag = img.GetComponentInChildren<DragToBaito>();
-
-            if (drag.CurrentDropZone.zoneType != BaitoDropZoneType.Baito)
+            if(!idol.CanShowInTheAction(AvailableAction.Baito))
             {
-                return false; // 只要有一個人不在打工區，就直接回傳 false
+                goneIdolCount++;
+            }
+            else
+            {
+                if(idol.baitoRecord.zoneType == BaitoDropZoneType.Baito)
+                {
+                    goneIdolCount++;
+                }
             }
         }
-        return true; // 全員都在打工區才回傳 true
+        return goneIdolCount == TeamDataUtility.idolCount; // 全員都不在隊伍裡才會回傳 true
     }
 
     private void UpdateCharacterImagesAndPositions()
@@ -184,12 +190,15 @@ public class SetBaitoUI : MonoBehaviour
             IdolInstance idol = TeamDataUtility.IdolInstanceList[i];
             BaitoRecord baitoRecord = idol.baitoRecord;
 
-            // 根據角色的打工紀錄決定是否顯示圖片
-            // 沒有在隊伍裡的就固定不顯示
-            bool isCurrentBaito = baitoRecord.zoneType == BaitoDropZoneType.Baito &&
-                                  baitoRecord.selectedBaito != null &&
-                                  baitoRecord.selectedBaito.baitoName == baitoList[currentBaitoIndex].baitoName;
-            bool isActive = idol.isAvailable && (baitoRecord.zoneType == BaitoDropZoneType.Member || isCurrentBaito);
+            // 根據角色的打工紀錄決定是否顯示圖片（在打工中或在隊伍中的角色才顯示）
+            bool isActive = false;
+            if (idol.CanShowInTheAction(AvailableAction.Baito))
+            {
+                bool isCurrentBaito = baitoRecord.zoneType == BaitoDropZoneType.Baito &&
+                                      baitoRecord.selectedBaito != null &&
+                                      baitoRecord.selectedBaito.baitoName == baitoList[currentBaitoIndex].baitoName;
+                isActive = baitoRecord.zoneType == BaitoDropZoneType.Member || isCurrentBaito;
+            }
             img.gameObject.SetActive(isActive);
         }
     }

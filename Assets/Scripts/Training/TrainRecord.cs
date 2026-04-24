@@ -15,20 +15,20 @@ public class TrainRecord
     public int visualExp; // 表現力收益
     // public bool isActive; //是否在場景中啟用
 
-    public void SetTrainRecord(IdolTrainingState state = IdolTrainingState.None,
+    public void SetTrainRecord(IdolTrainingState? state = null,
                                Vector2? position = null,
-                               DropZoneType droppedZoneType = DropZoneType.None,
-                               int droppedZoneIndex = -1,
+                               DropZoneType? droppedZoneType = null,
+                               int? droppedZoneIndex = null,
                                int? vigourCost = null,
                                int? dance = null,
                                int? vocal = null,
                                int? visual = null
                                /*bool? isActive = null*/)
     {
-        if (state != IdolTrainingState.None) this.state = state;
+        if (state != null) this.state = state.Value;
         if (position != null) this.position = position.Value;
-        if (droppedZoneType != DropZoneType.None) this.droppedZoneType = droppedZoneType;
-        if (droppedZoneIndex != -1) this.droppedZoneIndex = droppedZoneIndex;
+        if (droppedZoneType != null) this.droppedZoneType = droppedZoneType.Value;
+        if (droppedZoneIndex != null) this.droppedZoneIndex = droppedZoneIndex.Value;
         if (vigourCost != null) this.vigourCost = vigourCost.Value;
         if (dance != null) danceExp = dance.Value;
         if (vocal != null) vocalExp = vocal.Value;

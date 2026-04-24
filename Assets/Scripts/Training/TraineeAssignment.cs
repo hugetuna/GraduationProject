@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using System.Linq;
 
 /* 掛在 TrainingManager 上，負責指派訓練成員並備份資料 */
 public class TraineeAssignment : MonoBehaviour
@@ -33,10 +30,13 @@ public class TraineeAssignment : MonoBehaviour
         // 遍歷所有角色來檢查狀態
         foreach (var idol in TeamDataUtility.IdolObjectList)
         {
-            // 取得角色的訓練資料
-            string idolName = TeamDataUtility.CleanNameOfCharacterObject(idol.name);
-            IdolWho idolEnum = TeamDataUtility.GetIdolEnum(idolName);
-            IdolInstance idolData = TeamDataUtility.IdolDict[idolEnum];
+            IdolInstance idolData = idol.GetComponent<IdolInstance>();
+
+            // 如果角色根本不應該出現在訓練介面，就直接跳過（比如說她正好在打工）
+            if(!idolData.CanShowInTheAction(AvailableAction.Train)) continue; 
+            
+            /* 取得角色的訓練資料 */
+            IdolWho idolEnum = idolData.idolIndex;
             var trainRecord = idolData.trainRecord;
 
             // 取得角色的控制腳本
@@ -58,6 +58,7 @@ public class TraineeAssignment : MonoBehaviour
 
                 // 更新跨場景狀態
                 UpdateIdolTrainRecord(idolEnum, isActive: false);
+                idolData.currentAction = AvailableAction.Train;
             }
             // 情況二：這個角色在「成員區」(可能是剛被移出訓練，或者原本就沒事)
             else if (trainRecord.droppedZoneType == DropZoneType.Member)
@@ -71,6 +72,7 @@ public class TraineeAssignment : MonoBehaviour
 
                 // 更新跨場景狀態
                 UpdateIdolTrainRecord(idolEnum, isActive: true);
+                idolData.currentAction = AvailableAction.Free;
             }
             // 情況三：這個角色在其他 UI 的訓練區（例如角色在 Vocal，而玩家正處於 Dance）
             else
@@ -80,9 +82,10 @@ public class TraineeAssignment : MonoBehaviour
                     teamManager.RemoveBusyMember(idolControl);
                     idol.SetActive(true);
                     UpdateIdolTrainRecord(idolEnum, isActive: true);
+                    idolData.currentAction = AvailableAction.Train; // 但還是要登記為訓練中
                 }
-                // 不做其他處理（維持原狀）
-                continue;
+
+                continue; // 不做其他處理（維持原狀）
             }
         }
     }
@@ -136,10 +139,10 @@ public class TraineeAssignment : MonoBehaviour
 
     // 在指派訓練成員的同時備份狀態變化
     public static void UpdateIdolTrainRecord(
-        IdolWho name, // 第一項引述必填
-        IdolTrainingState state = IdolTrainingState.None,
+        IdolWho name, // 第一項引數必填
+        IdolTrainingState? state = null,
         Vector2? position = null,
-        DropZoneType droppedZoneType = DropZoneType.None,
+        DropZoneType? droppedZoneType = null,
         int? droppedZoneIndex = null,
         int? vigourCost = null,
         int? danceExp = null,
@@ -151,9 +154,9 @@ public class TraineeAssignment : MonoBehaviour
         var idol = TeamDataUtility.IdolDict[name];
         var trainRecord = idol.trainRecord;
 
-        if (state != IdolTrainingState.None) trainRecord.state = state;
+        if (state != null) trainRecord.state = state.Value;
         if (position != null) trainRecord.position = position.Value;
-        if (droppedZoneType != DropZoneType.None) trainRecord.droppedZoneType = droppedZoneType;
+        if (droppedZoneType != null) trainRecord.droppedZoneType = droppedZoneType.Value;
         if (droppedZoneIndex != null) trainRecord.droppedZoneIndex = droppedZoneIndex.Value;
         if (vigourCost != null) trainRecord.vigourCost = vigourCost.Value;
         if (danceExp != null) trainRecord.danceExp = danceExp.Value;

@@ -109,18 +109,17 @@ public class TrainingUIHandler : MonoBehaviour
 
             // 根據角色的訓練狀態決定圖片是否顯示（在訓練中或在隊伍中的角色才顯示）
             bool isActive = false;
+            bool isInTeamScope = idolInstance.trainRecord.IsInTeamScope();
             TrainingType type = trainingUIData.trainingType;
-            if (type == TrainingType.Dance)
+            if (idolInstance.CanShowInTheAction(AvailableAction.Train))
             {
-                isActive = idolInstance.trainRecord.IsInTeamScope() || state == IdolTrainingState.InDance;
-            }
-            else if (type == TrainingType.Vocal)
-            {
-                isActive = idolInstance.trainRecord.IsInTeamScope() || state == IdolTrainingState.InVocal;
-            }
-            else if (type == TrainingType.Visual)
-            {
-                isActive = idolInstance.trainRecord.IsInTeamScope() || state == IdolTrainingState.InVisual;
+                isActive = type switch
+                {
+                    TrainingType.Dance => isInTeamScope || state == IdolTrainingState.InDance,
+                    TrainingType.Vocal => isInTeamScope || state == IdolTrainingState.InVocal,
+                    TrainingType.Visual => isInTeamScope || state == IdolTrainingState.InVisual,
+                    _ => false
+                };
             }
             img.gameObject.SetActive(isActive);
 
@@ -135,7 +134,7 @@ public class TrainingUIHandler : MonoBehaviour
         for (int i = 0; i < characterImages.Count; i++)
         {
             Image img = characterImages[i];
-            var idolInstance = TeamDataUtility.IdolDict.ElementAt(i).Value;
+            var idolInstance = TeamDataUtility.IdolInstanceList[i];
             var state = TrainingUIManager.Instance.GetIdolState(idolInstance.idolIndex);
 
             if (state == IdolTrainingState.Unable) // 處理當天無法訓練的角色
