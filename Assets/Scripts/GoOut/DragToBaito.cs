@@ -101,10 +101,10 @@ public class DragToBaito : Drag
         if(currentZoneType == BaitoDropZoneType.Baito) selectedBaito = setBaitoUI.GetCurrentSelectedBaito();
         else selectedBaito = null; // 成員區 + 其他
         characterInfo.baitoRecord.SetBaitoRecord(
-            selectedBaito: selectedBaito, // 更新打工類型
-            position: rectTransform.anchoredPosition, // 更新位置
-            zoneType: currentZoneType, // 更新區域類型
-            zoneIndex: success ? currentDropZone.zoneIndex : lastDropZone.zoneIndex // 更新區域索引
+            /*selectedBaito:*/ selectedBaito, // 更新打工類型
+            /*position:*/ rectTransform.anchoredPosition, // 更新位置
+            /*zoneType:*/ currentZoneType, // 更新區域類型
+            /*zoneIndex:*/ success ? currentDropZone.zoneIndex : lastDropZone.zoneIndex // 更新區域索引
         );
     }
 

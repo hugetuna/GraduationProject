@@ -18,11 +18,12 @@ public class SetActivityUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI MoneyGainText; // 商演收益文字
     //-----------------------------------------------------------------//
     [SerializeField] private Button confirmBtn; // 確認出發的按鈕
-    public static event Action<Activity> OnActivityConfirmed; // 定義確認出發事件
+    public static event Action<Activity, StageAttribute> OnActivityConfirmed; // 定義確認出發事件
     //-----------------------------------------------------------------//
 
     [Header("商演資料（測試用）")]
     [SerializeField] private Activity ActivityForTest;
+    [SerializeField] private StageAttribute StageAttributeForTest; // 對應的舞台資料
     // private bool isInitialized = false;
 
     void Start()
@@ -57,7 +58,7 @@ public class SetActivityUI : MonoBehaviour
     private void ConfirmToActivity()
     {
         Debug.Log("指派外出商演");
-        OnActivityConfirmed?.Invoke(ActivityForTest); // 觸發確認出發事件，指派全員外出商演
+        OnActivityConfirmed?.Invoke(ActivityForTest, StageAttributeForTest); // 觸發確認出發事件，指派全員外出商演
     }
 
     private void UpdateCharacterImagesAndEquipments()
@@ -80,9 +81,10 @@ public class SetActivityUI : MonoBehaviour
                 continue;
             }
 
-            // 判斷該角色是否在隊伍裡（或是已經被指派去做其他事）
+            // 判斷該角色是否在隊伍裡（已經被指派去做其他事）
             // => 全員都會顯示，不在隊伍的人會變半透明 
             // => 若要去商演，不論角色在做什麼都會強制召回
+            // 要用 idol.CanShowInTheAction(AvailableAction.Activity) 來判斷也行，但這裡既然沒問題就不想改了
             bool isAvailable = idol.isAvailable;
             img.color = isAvailable ? new Color(1, 1, 1, 1) : new Color(1, 1, 1, 0.5f);
 

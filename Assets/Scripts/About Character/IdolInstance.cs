@@ -5,6 +5,7 @@ using UnityEngine.Rendering.VirtualTexturing;
 using UnityEngine.U2D.Animation;
 
 public enum IdolWho { none = -1, Kuma = 0, Karo = 1, Sirius = 2, Mizar = 3, Aicor = 4 }
+public enum AvailableAction { Free, Train, Baito, Activity }
 public class IdolInstance : MonoBehaviour
 {
     public IdolWho idolIndex;
@@ -46,7 +47,9 @@ public class IdolInstance : MonoBehaviour
     public TrainRecord trainRecord = new(); // 訓練紀錄
     public BaitoRecord baitoRecord = new(); // 打工紀錄
     public ActivityRecord activityRecord = new(); // 商演紀錄
-    public bool isAvailable; // 是否可用（在隊伍中；在場景中啟用）
+    public bool isAvailable; // 是否可用（在場景中啟用）
+    public AvailableAction currentAction; // 當前行動狀態（空閒、訓練、打工、商演）
+
 
     // Start is called before the first frame update
     void Start()
@@ -83,6 +86,7 @@ public class IdolInstance : MonoBehaviour
             return;
         }
         isAvailable = true;
+        currentAction = AvailableAction.Free;
         trainRecord.SetTrainRecord(
             basicTrainRecord.state,
             basicTrainRecord.position,
@@ -167,7 +171,9 @@ public class IdolInstance : MonoBehaviour
         baitoRecord = data.baitoRecord;
         // 商演紀錄
         activityRecord = data.activityRecord;
+
         isAvailable = data.isAvailable;
+        currentAction = data.currentAction;
 
         positionInTeam = data.positionInTeam;
     }
@@ -264,20 +270,51 @@ public class IdolInstance : MonoBehaviour
         Debug.Log($"{idolIndex}的粉絲數增加了{increseAmount}，目前粉絲數為{fans}");
     }
 
+    // 判斷角色是否可以在特定的介面中顯示（訓練、打工、商演介面）
+    public bool CanShowInTheAction(AvailableAction actionType)
+    {
+        // 1. 如果角色是閒置的，在哪個介面都可以顯示
+        if (currentAction == AvailableAction.Free) return true;
+
+        // 2. 如果角色正在忙，只有「對應的活動」可以顯示他
+        return currentAction == actionType;
+    }
+
     // 每天結束時的訓練結算＆記錄重置
     public void SettleRecords()
     {
-        bool hasGoneToActivity = activityRecord.selectedActivity != null;
+        if (currentAction == AvailableAction.Activity)
+        {
+            SettleActivityRecord(true); // 如果有商演，以下兩種行動不會結算並直接重置
+            SettleTrainRecord(false);
+            SettleBaitoRecord(false);
+        }
+        else if (currentAction == AvailableAction.Train)
+        {
+            SettleTrainRecord(true);
+            SettleActivityRecord(false);
+            SettleBaitoRecord(false);
+        }
+        else if (currentAction == AvailableAction.Baito)
+        {
+            SettleBaitoRecord(true);
+            SettleActivityRecord(false);
+            SettleTrainRecord(false);
+        }
+        else // Free 狀態則不結算任何東西，直接重置
+        {
+            SettleBaitoRecord(false);
+            SettleActivityRecord(false);
+            SettleTrainRecord(false);
+        }
 
-        SettleActivityRecord(hasGoneToActivity);
-        SettleTrainRecord(!hasGoneToActivity); // 如果有商演就不結算訓練，反之則結算訓練
-        SettleBaitoRecord(!hasGoneToActivity); // 如果有商演就不結算打工，反之則結算打工
     }
 
     public void SettleActivityRecord(bool isSettling)
     {
-        if(isSettling && activityRecord.selectedActivity != null)
+        if (isSettling && activityRecord.selectedActivity != null)
         {
+            Debug.Log($"結算 {idolIndex} 的商演");
             vigour -= activityRecord.selectedActivity.vigourCost; // 隔天主 UI 會同步此變化
             ResourceManager.Instance.Money += activityRecord.selectedActivity.MoneyGain;
         }
@@ -290,6 +327,7 @@ public class IdolInstance : MonoBehaviour
     {
         if (isSettling)
         {
+            Debug.Log($"結算 {idolIndex} 的訓練");
             vigour -= trainRecord.vigourCost; // 隔天主 UI 會同步此變化
             dance += trainRecord.danceExp;
             vocal += trainRecord.vocalExp;
@@ -298,15 +336,15 @@ public class IdolInstance : MonoBehaviour
 
         // 重置必須清空的訓練紀錄（三種訓練數值）
         trainRecord.SetTrainRecord(
-            IdolTrainingState.InTeam,
-            Vector2.zero,
-            DropZoneType.Member,
-            -1,
+            basicTrainRecord.state,
+            basicTrainRecord.position,
+            basicTrainRecord.droppedZoneType,
+            basicTrainRecord.droppedZoneIndex,
             basicTrainRecord.vigourCost,
             basicTrainRecord.danceExp,
             basicTrainRecord.vocalExp,
             basicTrainRecord.visualExp
-            /* true */
+        /* true */
         );
     }
     // 進入電腦頁面時打工收益進帳＆記錄重置
@@ -314,6 +352,7 @@ public class IdolInstance : MonoBehaviour
     {
         if (isSettling && baitoRecord.selectedBaito != null)
         {
+            Debug.Log($"結算 {idolIndex} 的打工");
             vigour -= baitoRecord.selectedBaito.vigourCost; // 隔天主 UI 會同步此變化
             ResourceManager.Instance.Money += baitoRecord.selectedBaito.MoneyGain;
         }

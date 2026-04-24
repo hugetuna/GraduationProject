@@ -113,10 +113,18 @@ public class TrainingUIManager : MonoBehaviour
             return state == IdolTrainingState.InTeam || state == IdolTrainingState.Unable;
         }
 
-        return characterStates
-            .Where(x => IsInTeamScope(x.Value))
-            .Select(x => x.Key)
-            .ToList();
+        List<IdolWho> members = new();
+
+        foreach(var kvp in characterStates)
+        {
+            var idol = TeamDataUtility.IdolDict[kvp.Key];
+            if(idol.CanShowInTheAction(AvailableAction.Train) && IsInTeamScope(kvp.Value))
+            {
+                members.Add(kvp.Key);
+            }
+        }
+
+        return members;
     }
 
     // public List<IdolWho> GetTrainees() // 取得目前所有訓練角色清單
