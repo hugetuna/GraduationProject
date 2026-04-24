@@ -48,6 +48,8 @@ public class PlayerControlMainWorld : MonoBehaviour
             waitInteractionKey = DayManager.Instance.dayEventManager.currentEvent.interactableObjectKey;
             onInteractionFinish =() =>
             {
+                DayManager.Instance.dayEventManager.isWaitingForInteract = false;
+                DayManager.Instance.dayEventManager.interactObjectKey = "";
                 DayManager.Instance.dayEventManager.TriggerNextEvent();
             };
         }

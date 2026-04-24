@@ -67,6 +67,14 @@ public class DialogueManager : MonoBehaviour
         {
             if (farm.farmCanvas.gameObject.activeInHierarchy)
             {
+                if (mapName == "Dialogue")
+                {
+                    StartCoroutine(farm.ControlAllButtons(false));
+                }
+                else if (mapName == "PlayerActionMain")
+                {
+                    StartCoroutine(farm.ControlAllButtons(true));
+                }    
                 return; // 如果有任何一個農場的互動UI正在顯示，就不切換Action Map
             }
         }

@@ -4,7 +4,7 @@ using UnityEngine;
 /* 掛在一樓出口（玩家互動對象）上 */
 public class GoOutInteraction : MonoBehaviour, IInteractable
 {
-    public string InteractionKey => null; // 這個字串用來指定動畫 key
+    public string InteractionKey => "Gate"; // 這個字串用來指定動畫 key
     //-----------------------------------------------------------------//
     public static event Action OnExitInteracted; // 定義在出口範圍內，按下互動鍵跳出 UI 的事件
 

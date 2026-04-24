@@ -80,7 +80,6 @@ public class AnimalFarm : MonoBehaviour, IInteractable
                 }
             }
         }
-        updateFarmButtonInteractable();
     }
     public void updateFarmButtonInteractable()
     {
@@ -129,6 +128,16 @@ public class AnimalFarm : MonoBehaviour, IInteractable
         // 這時候再選取，就不會被當前的空白鍵觸發 onClick 了
         plantSeedButton.Select();
     }
+    public IEnumerator ControlAllButtons(bool enable)
+    {
+        EventSystem.current.SetSelectedGameObject(null);
+        WaitForSeconds wait = new WaitForSeconds(0.5f); // 0.5秒的延遲
+        yield return wait; // 等待延遲時間
+        plantSeedButton.interactable = enable;
+        addFoodBarnButton.interactable = enable;
+        harvestSeedButton.interactable = enable;
+        exitButton.interactable = enable;
+    }
     public void HideInteractionUI()
     {
         SwitchActionMap("PlayerActionMain");
@@ -171,6 +180,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
             //IdolInstance leader = teamManager.teamMembers[teamManager.currentLeaderIndex].GetComponent<IdolInstance>();
             //leader.costVigour(leader.plantVigourCost);
             UpdateCountingText();
+            updateFarmButtonInteractable();
             return newSeed.GetComponent<SeedInstanceScript_Animal>();
         }
         else
@@ -198,6 +208,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
             Debug.Log("食物欄位已滿");
         }
         UpdateCountingText();
+        updateFarmButtonInteractable();
         StartCoroutine(ButtonCooldown(addFoodBarnButton, 0.2f));
     }
     //種子消耗食物欄位(每天結束時)
@@ -252,6 +263,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
                 seedsOnThisSoil.RemoveAt(i);
                 Destroy(seed.gameObject);
                 UpdateCountingText();
+                updateFarmButtonInteractable();
                 return; // 成功收割一個就跳出
             }
         }
