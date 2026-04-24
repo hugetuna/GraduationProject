@@ -80,6 +80,12 @@ public class AnimalFarm : MonoBehaviour, IInteractable
                 }
             }
         }
+        updateFarmButtonInteractable();
+    }
+    public void updateFarmButtonInteractable()
+    {
+        plantSeedButton.interactable = !(seedsOnThisSoil.Count == maxSeedAmount);
+        addFoodBarnButton.interactable = !(foodBarn >= foodBarnMax);
     }
     //安全切換 Map
     private void SwitchActionMap(string mapName)
@@ -143,7 +149,14 @@ public class AnimalFarm : MonoBehaviour, IInteractable
         //種植種子(消耗玩家道具)
         PlantSeed();
         teamManager?.teamMembers[teamManager.currentLeaderIndex].GetComponent<PlayerControlMainWorld>().OnFarmAnimation();
+        StartCoroutine(ButtonCooldown(plantSeedButton, 0.2f)); // 種植按鈕冷卻0.2秒
         //AudioManager.Instance.PlaySFX(audio_PlantSeed);
+    }
+    public IEnumerator ButtonCooldown(Button button, float cooldownTime)
+    {
+        button.interactable = false; // 禁用按鈕
+        yield return new WaitForSeconds(cooldownTime); // 等待冷卻時間
+        button.interactable = true; // 重新啟用按鈕
     }
     //種植個種子
     public SeedInstanceScript_Animal PlantSeed()
@@ -185,6 +198,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
             Debug.Log("食物欄位已滿");
         }
         UpdateCountingText();
+        StartCoroutine(ButtonCooldown(addFoodBarnButton, 0.2f));
     }
     //種子消耗食物欄位(每天結束時)
     public void SeedsConsumeBarn()
@@ -242,6 +256,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
             }
         }
         Debug.Log("沒有可以收割的種子");
+        StartCoroutine(ButtonCooldown(harvestSeedButton, 0.2f));
     }
     public void UpdateCountingText()
     {
