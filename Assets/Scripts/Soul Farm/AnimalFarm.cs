@@ -114,6 +114,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
             mainUICanvasGroup.interactable = false;
             mainUICanvasGroup.blocksRaycasts = false;
         }
+        UpdateCountingText();
         farmCanvas.gameObject.SetActive(true);
         StartCoroutine(SelectButtonWithDelay());// 等待一幀再選取按鈕，確保不會被當前的空白鍵觸發 onClick
     }
@@ -131,7 +132,6 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     public void HideInteractionUI()
     {
         SwitchActionMap("PlayerActionMain");
-        // 讓主畫面 UI 看得到但點不到，且不接受鍵盤導覽
         if (mainUICanvasGroup != null)
         {
             mainUICanvasGroup.interactable = true;

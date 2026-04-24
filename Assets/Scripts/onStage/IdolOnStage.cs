@@ -182,6 +182,7 @@ public class IdolOnStage : MonoBehaviour, IDropHandler,IPointerEnterHandler, IPo
         }
         spriteRenderer.flipX = false;//轉回去
         spriteAnimator.SetFrames(idleFrames);
+        FindAnyObjectByType<MonitorEffect>()?.SetIdolInMonitor(idolInstance.idolIndex);
         actionTimer = 0;
         isAcion = false;
         applyingCard = null;

@@ -9,13 +9,18 @@ public class LerpChange : MonoBehaviour
     public TextMeshProUGUI scoreText;  // UI 元件
     public float lerpSpeed = 5f;       // 插值速度（數字越大越快）
 
-    private int newText;           // 目標數(同時也是)
-    private float beforeText;        // 畫面上顯示的數（用 float 來插值）
+    public int newText;           // 目標數
+    public float beforeText;        // 畫面上顯示的數（用 float 來插值）
     // Start is called before the first frame update
     void Start()
     {
-        newText = 0;
-        beforeText = 0;
+        
+    }
+    public void Init(int initialText)
+    {
+        newText = initialText;
+        beforeText = initialText;
+        UpdateScoreText();
     }
     // Update is called once per frame
     void Update()

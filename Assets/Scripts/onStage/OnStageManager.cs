@@ -23,6 +23,7 @@ public class OnStageManager : MonoBehaviour
     public GameObject gameStartUIPanel;
     public GameObject gameOngoingUIPanel;
     public GameObject gamePauseUIPanel;
+    public GameObject gameBreakUIPanel;
     public GameObject gameEndUIPanel;
     public GameObject Monitor;
     //public bool gamePaused = false;
@@ -48,6 +49,10 @@ public class OnStageManager : MonoBehaviour
     [Header("遊戲開始UI")]
     public List<Sprite> showStageIdolPrefabs;
     public List<EquipmentSet> showStageIdolSet;
+    [Header("休息時間 UI")]
+    public Image breakTimerFillImg;
+    public TextMeshProUGUI breakTimerText; // 顯示剩餘秒數
+    public TextMeshProUGUI fansBonusText; 
     [Header("遊戲結束UI")]
     public TextMeshProUGUI endStageName;
     public TextMeshProUGUI endFansRewardText;
@@ -80,6 +85,7 @@ public class OnStageManager : MonoBehaviour
         //寫字
         roundText.text = "ROUND " + round.ToString();
         musicNameText.text = "music: "+currentStageData.musicName;
+        playerPointText.GetComponent<LerpChange>().Init(0);
         LoadIdolsToStage();
         //生成回合塊
         roundBlocks = new GameObject[currentStageData.roundMax];
@@ -282,18 +288,27 @@ public class OnStageManager : MonoBehaviour
     private IEnumerator Break()
     {
         gameBreak = true;
-        Debug.Log("進入回合間休息時間");
-        float breakTimer = 0;
-        GainFanBonusPoint();//回合間休息時根據粉絲數給予分數獎勵
+        fansBonusText.GetComponent<LerpChange>().Init(0);//每次進入休息時間重置粉絲獎勵顯示
+        gameBreakUIPanel.SetActive(true);
+        int totalFanBonusPoints = GainFanBonusPoint();//回合間休息時根據粉絲數給予分數獎勵
+        fansBonusText.GetComponent<LerpChange>().SetText(totalFanBonusPoints);
+
+        Debug.Log($"進入回合間休息時間，粉絲獎勵: {totalFanBonusPoints}");
+
+        float breakTimer = 0;//休息時間計時器
         while (breakTimer <= breakTime)
         {
             breakTimer += Time.deltaTime;
+            breakTimerText.text = $"{(int)(breakTime - breakTimer)}";
+            breakTimerFillImg.fillAmount = breakTimer / breakTime;
             yield return null;
         }
         gameBreak = false;
+        gameBreakUIPanel.SetActive(false);
     }
-    public void GainFanBonusPoint()
+    public int GainFanBonusPoint()
     {
+        int totalPoint = 0;
         foreach (var idol in onStageIdols)
         {
             IdolOnStage idolOnStage= idol.gameObject.GetComponent<IdolOnStage>();
@@ -301,12 +316,13 @@ public class OnStageManager : MonoBehaviour
             {
                 if (idol.fans>= currentStageData.fansBonusSets[i].fansRequire)
                 {
-                    GainPoint(currentStageData.fansBonusSets[i].BonusPoint,idolOnStage.StageFansPointMutiplier);
+                    totalPoint += GainPoint(currentStageData.fansBonusSets[i].BonusPoint,idolOnStage.StageFansPointMutiplier);
                     break;
                 }
             }
             idolOnStage.StageFansPointMutiplier = 1;//每回合結束重置粉絲點數倍率，避免疊加過高
         }
+        return totalPoint;
     }
     public void PauseGame()
     {
@@ -457,11 +473,12 @@ public class OnStageManager : MonoBehaviour
     }
     //-----------------------------------計數----------------------------------------
     //得到分數
-    public void GainPoint(int point,float mutiply)
+    public int GainPoint(int point,float mutiply)
     {
         playerPoint += (int)(point * mutiply);
         playerPointText.GetComponent<LerpChange>().SetText(playerPoint);
         AudioManager.Instance.PlaySFX(gainPointSFX);
+        return (int)(point * mutiply);
     }
     public void GaindrawCharge(int amount)
     {
