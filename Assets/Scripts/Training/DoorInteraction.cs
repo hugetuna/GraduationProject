@@ -4,7 +4,7 @@ using UnityEngine;
 /* 掛在訓練室的門（玩家互動對象）上 */
 public class DoorInteraction : MonoBehaviour, IInteractable
 {
-    public string InteractionKey => null; // 這個字串用來指定動畫 key
+    public string InteractionKey => "Training"; // 這個字串用來指定動畫 key
     //-----------------------------------------------------------------//
     [SerializeField] private TrainingUIData trainingUIData;
     public static event Action<TrainingUIData> OnDoorInteracted; // 定義碰到門，按下互動鍵跳出 UI 的事件
