@@ -8,6 +8,8 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     protected RectTransform rectTransform;
     protected Canvas canvas;
     protected CanvasGroup canvasGroup;
+    protected Transform originalParent;
+    [SerializeField] protected Transform dragParent;
     //-----------------------------------------------------------------//
     [Header("拖曳後的偏移")]
     [SerializeField] protected Vector3 dropOffset = new(0f, 0f, 0f);
@@ -20,8 +22,8 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     {
         rectTransform = GetComponent<RectTransform>();
         canvas = GetComponentInParent<Canvas>();
-    
-        if(GetComponent<CanvasGroup>() == null)
+
+        if (GetComponent<CanvasGroup>() == null)
         {
             gameObject.AddComponent<CanvasGroup>();
         }
@@ -34,6 +36,11 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     {
         // isDragging = true;
         canvasGroup.blocksRaycasts = false;
+
+        originalParent = rectTransform.parent;
+
+        // 移到拖曳圖層，worldPositionStays 設為 true，避免物件位置跑掉
+        transform.SetParent(dragParent, true);
     }
 
     public virtual void OnDrag(PointerEventData eventData)
@@ -53,5 +60,8 @@ public class Drag : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDragHand
     {
         // isDragging = false;
         canvasGroup.blocksRaycasts = true;
+        
+        // 回到原本的父物件底下，worldPositionStays 設為 true，避免物件位置跑掉
+        transform.SetParent(originalParent, true);
     }
 }

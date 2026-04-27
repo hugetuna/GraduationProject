@@ -1304,6 +1304,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3dac3b3f5979044ac5dc74a75f4a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragParent: {fileID: 5125825266766717048}
   dropOffset: {x: 0, y: 0, z: 0}
   dragCompletedSound: {fileID: 8300000, guid: cd439cdb02554b64b8d2415bacbdf4f8, type: 3}
   vigourSlider: {fileID: 6337712452970723413}
@@ -1327,7 +1328,7 @@ MonoBehaviour:
   buffBars:
   - {fileID: 2123934584148787525}
   - {fileID: 4086442797505878092}
-  afterColor: {r: 1, g: 0.81960785, b: 0.39215687, a: 1}
+  afterColor: {r: 0.93333334, g: 0.80784315, b: 0.19215687, a: 1}
 --- !u!114 &8275854916236950926
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3483,6 +3484,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3dac3b3f5979044ac5dc74a75f4a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragParent: {fileID: 5125825266766717048}
   dropOffset: {x: 0, y: 0, z: 0}
   dragCompletedSound: {fileID: 8300000, guid: cd439cdb02554b64b8d2415bacbdf4f8, type: 3}
   vigourSlider: {fileID: 5275642006839457327}
@@ -3506,7 +3508,7 @@ MonoBehaviour:
   buffBars:
   - {fileID: 7495002158234781959}
   - {fileID: 6014202735723607031}
-  afterColor: {r: 1, g: 0.81960785, b: 0.39215687, a: 1}
+  afterColor: {r: 0.93333334, g: 0.80784315, b: 0.19215687, a: 1}
 --- !u!114 &7908577184693217934
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -4637,6 +4639,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3dac3b3f5979044ac5dc74a75f4a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragParent: {fileID: 5125825266766717048}
   dropOffset: {x: 0, y: 0, z: 0}
   dragCompletedSound: {fileID: 8300000, guid: cd439cdb02554b64b8d2415bacbdf4f8, type: 3}
   vigourSlider: {fileID: 9142033549317151989}
@@ -4660,7 +4663,7 @@ MonoBehaviour:
   buffBars:
   - {fileID: 2123934584148787525}
   - {fileID: 4086442797505878092}
-  afterColor: {r: 1, g: 0.81960785, b: 0.39215687, a: 1}
+  afterColor: {r: 0.93333334, g: 0.80784315, b: 0.19215687, a: 1}
 --- !u!114 &6138053428306156333
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7056,6 +7059,8 @@ GameObject:
   - component: {fileID: 4796802524058380268}
   - component: {fileID: 5696389294379508767}
   - component: {fileID: 957720780370637872}
+  - component: {fileID: 8044326073196668818}
+  - component: {fileID: 7697261427623000971}
   m_Layer: 5
   m_Name: Image1
   m_TagString: Untagged
@@ -7160,6 +7165,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3dac3b3f5979044ac5dc74a75f4a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragParent: {fileID: 5125825266766717048}
   dropOffset: {x: 0, y: 0, z: 0}
   dragCompletedSound: {fileID: 8300000, guid: cd439cdb02554b64b8d2415bacbdf4f8, type: 3}
   vigourSlider: {fileID: 228838690086822602}
@@ -7183,7 +7189,7 @@ MonoBehaviour:
   buffBars:
   - {fileID: 4201538452200573983}
   - {fileID: 4691020258790165702}
-  afterColor: {r: 1, g: 0.81960785, b: 0.39215687, a: 1}
+  afterColor: {r: 0.93333334, g: 0.80784315, b: 0.19215687, a: 1}
 --- !u!114 &957720780370637872
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -7201,6 +7207,46 @@ MonoBehaviour:
   lastFillImage: {fileID: 1419791362023135715}
   teamPosition: {x: 0, y: 57}
   sendPosition: {x: 0, y: -68}
+--- !u!223 &8044326073196668818
+Canvas:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3537987530507185598}
+  m_Enabled: 1
+  serializedVersion: 3
+  m_RenderMode: 2
+  m_Camera: {fileID: 0}
+  m_PlaneDistance: 100
+  m_PixelPerfect: 0
+  m_ReceivesEvents: 1
+  m_OverrideSorting: 0
+  m_OverridePixelPerfect: 0
+  m_SortingBucketNormalizedSize: 0
+  m_VertexColorAlwaysGammaSpace: 1
+  m_AdditionalShaderChannelsFlag: 0
+  m_UpdateRectTransformForStandalone: 0
+  m_SortingLayerID: 0
+  m_SortingOrder: 0
+  m_TargetDisplay: 0
+--- !u!114 &7697261427623000971
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3537987530507185598}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dc42784cf147c0c48a680349fa168899, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_IgnoreReversedGraphics: 1
+  m_BlockingObjects: 0
+  m_BlockingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
 --- !u!1 &3575082272541670555
 GameObject:
   m_ObjectHideFlags: 0
@@ -7965,6 +8011,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3dac3b3f5979044ac5dc74a75f4a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragParent: {fileID: 5125825266766717048}
   dropOffset: {x: 0, y: 0, z: 0}
   dragCompletedSound: {fileID: 8300000, guid: cd439cdb02554b64b8d2415bacbdf4f8, type: 3}
   vigourSlider: {fileID: 427828165821681956}
@@ -7988,7 +8035,7 @@ MonoBehaviour:
   buffBars:
   - {fileID: 7495002158234781959}
   - {fileID: 6014202735723607031}
-  afterColor: {r: 1, g: 0.81960785, b: 0.39215687, a: 1}
+  afterColor: {r: 0.93333334, g: 0.80784315, b: 0.19215687, a: 1}
 --- !u!114 &593659409135583994
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -10977,6 +11024,7 @@ RectTransform:
   - {fileID: 8944254614185789003}
   - {fileID: 3083855958685865493}
   - {fileID: 4281037622224365680}
+  - {fileID: 5125825266766717048}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
@@ -11973,6 +12021,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3dac3b3f5979044ac5dc74a75f4a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragParent: {fileID: 5125825266766717048}
   dropOffset: {x: 0, y: 0, z: 0}
   dragCompletedSound: {fileID: 8300000, guid: cd439cdb02554b64b8d2415bacbdf4f8, type: 3}
   vigourSlider: {fileID: 8060220113050785247}
@@ -11996,7 +12045,7 @@ MonoBehaviour:
   buffBars:
   - {fileID: 2123934584148787525}
   - {fileID: 4086442797505878092}
-  afterColor: {r: 1, g: 0.81960785, b: 0.39215687, a: 1}
+  afterColor: {r: 0.93333334, g: 0.80784315, b: 0.19215687, a: 1}
 --- !u!114 &7957953047382073262
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -12668,6 +12717,41 @@ RectTransform:
   m_AnchorMax: {x: 1, y: 1}
   m_AnchoredPosition: {x: 0, y: -20}
   m_SizeDelta: {x: 0, y: 20}
+  m_Pivot: {x: 0.5, y: 0.5}
+--- !u!1 &6173050206963553308
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 5125825266766717048}
+  m_Layer: 5
+  m_Name: DragLayer
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!224 &5125825266766717048
+RectTransform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6173050206963553308}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 2.4, y: 2.4, z: 2.4}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 8078654021755882354}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &6174582990703658194
 GameObject:
@@ -16667,6 +16751,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3dac3b3f5979044ac5dc74a75f4a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragParent: {fileID: 5125825266766717048}
   dropOffset: {x: 0, y: 0, z: 0}
   dragCompletedSound: {fileID: 8300000, guid: cd439cdb02554b64b8d2415bacbdf4f8, type: 3}
   vigourSlider: {fileID: 3956397192419204076}
@@ -16690,7 +16775,7 @@ MonoBehaviour:
   buffBars:
   - {fileID: 4201538452200573983}
   - {fileID: 4691020258790165702}
-  afterColor: {r: 1, g: 0.81960785, b: 0.39215687, a: 1}
+  afterColor: {r: 0.93333334, g: 0.80784315, b: 0.19215687, a: 1}
 --- !u!114 &7763806301231041103
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16828,6 +16913,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3dac3b3f5979044ac5dc74a75f4a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragParent: {fileID: 5125825266766717048}
   dropOffset: {x: 0, y: 0, z: 0}
   dragCompletedSound: {fileID: 8300000, guid: cd439cdb02554b64b8d2415bacbdf4f8, type: 3}
   vigourSlider: {fileID: 4574560368792882069}
@@ -16851,7 +16937,7 @@ MonoBehaviour:
   buffBars:
   - {fileID: 4201538452200573983}
   - {fileID: 4691020258790165702}
-  afterColor: {r: 1, g: 0.81960785, b: 0.39215687, a: 1}
+  afterColor: {r: 0.93333334, g: 0.80784315, b: 0.19215687, a: 1}
 --- !u!114 &598077997942212616
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -18550,6 +18636,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9f3dac3b3f5979044ac5dc74a75f4a7e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragParent: {fileID: 5125825266766717048}
   dropOffset: {x: 0, y: 0, z: 0}
   dragCompletedSound: {fileID: 8300000, guid: cd439cdb02554b64b8d2415bacbdf4f8, type: 3}
   vigourSlider: {fileID: 8415240600692575614}
@@ -18573,7 +18660,7 @@ MonoBehaviour:
   buffBars:
   - {fileID: 7495002158234781959}
   - {fileID: 6014202735723607031}
-  afterColor: {r: 1, g: 0.81960785, b: 0.39215687, a: 1}
+  afterColor: {r: 0.93333334, g: 0.80784315, b: 0.19215687, a: 1}
 --- !u!114 &7066071940976529202
 MonoBehaviour:
   m_ObjectHideFlags: 0
