@@ -60,7 +60,12 @@ public class PlayerControlMainWorld : MonoBehaviour
         //移動
         if (moveInput != new Vector2(0, 0))
         {
+            if (moveInput.magnitude > 1)
+            {
+                moveInput.Normalize(); // 確保斜對角長度也是 1，不會超速
+            }
             animator.SetFloat("Speed", 60f);
+
             this.transform.position += new Vector3(moveInput.x, 0, moveInput.y)*Time.deltaTime*moveSpeed;
         }
         else

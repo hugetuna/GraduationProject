@@ -26,7 +26,7 @@ public class SwitchSetter : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         if (isOn)
         {
             switchText.fontSize =48;
-            switchText.fontStyle = FontStyles.Bold;
+            //switchText.fontStyle = FontStyles.Bold;
         }
         else
         {
