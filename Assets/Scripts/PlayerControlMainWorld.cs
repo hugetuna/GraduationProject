@@ -270,7 +270,6 @@ public class PlayerControlMainWorld : MonoBehaviour
         if (playerInput != null)
         {
             playerInput.SwitchCurrentActionMap(mapName);
-            Debug.Log($"Action Map 切換至: {mapName}");
         }
     }
 }

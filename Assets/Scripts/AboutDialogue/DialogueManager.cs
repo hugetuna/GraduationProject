@@ -70,21 +70,24 @@ public class DialogueManager : MonoBehaviour
                 if (mapName == "Dialogue")
                 {
                     StartCoroutine(farm.ControlAllButtons(false));
+                    farm.playerInput.SwitchCurrentActionMap("Dialogue");
                 }
                 else if (mapName == "PlayerActionMain")
                 {
                     StartCoroutine(farm.ControlAllButtons(true));
+                    farm.playerInput.SwitchCurrentActionMap("FarmConfig");
                 }    
                 return; // 如果有任何一個農場的互動UI正在顯示，就不切換Action Map
             }
         }
         if (teamManager != null)
         {
-            PlayerInput captain = teamManager?.teamMembers[
-            teamManager.currentLeaderIndex].GetComponent<PlayerInput>();
-            if (captain != null)
+            foreach (PlayerControlMainWorld member in teamManager.teamMembers)
             {
-                captain.SwitchCurrentActionMap(mapName);
+                if (member != null)
+                {
+                    member.SwitchSelfActionMap(mapName);
+                }
             }
         }
     }
