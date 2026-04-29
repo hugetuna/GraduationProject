@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.U2D.Animation;
+//using static Unity.Cinemachine.InputAxisControllerBase<T>;
 
 public class PlayerControlMainWorld : MonoBehaviour
 {
@@ -20,15 +21,20 @@ public class PlayerControlMainWorld : MonoBehaviour
     public Animator animator;//綁定角色動畫
     private Vector2 moveInput; // 儲存 Move Action 的輸入
     public bool faceDirection = false;//true面向右，false面相左
-    public float moveSpeed = 1f;
     public Transform Bone;
     //互動事件參數
     public System.Action onInteractionFinish;
     public string waitInteractionKey;
+    [Header("CharacterController用數值")]
+    private CharacterController controller;
+    public float moveSpeed = 1f;
+    public float gravity = 9.81f;
+    private Vector3 playerVelocity;
     //設定初始可操作角色
     void Start()
     {
-        teamManager= FindAnyObjectByType<TeamManager>();
+        controller=GetComponent<CharacterController>();
+        teamManager = FindAnyObjectByType<TeamManager>();
         //初始化工具對應的圖樣tag->綁定toolAnimations字典
         tools[0] = "None";
         tools[1] = "Normal";
@@ -65,8 +71,15 @@ public class PlayerControlMainWorld : MonoBehaviour
                 moveInput.Normalize(); // 確保斜對角長度也是 1，不會超速
             }
             animator.SetFloat("Speed", 60f);
-
-            this.transform.position += new Vector3(moveInput.x, 0, moveInput.y)*Time.deltaTime*moveSpeed;
+            controller.Move(new Vector3(moveInput.x, 0, moveInput.y) * Time.deltaTime * moveSpeed);
+            // 3. 處理重力 (CharacterController 不會自動往下掉)
+            if (controller.isGrounded && playerVelocity.y < 0)
+            {
+                playerVelocity.y = 0f;
+            }
+            playerVelocity.y -= gravity * Time.deltaTime;
+            controller.Move(playerVelocity * Time.deltaTime);
+            //this.transform.position += new Vector3(moveInput.x, 0, moveInput.y)*Time.deltaTime*moveSpeed;
         }
         else
         {

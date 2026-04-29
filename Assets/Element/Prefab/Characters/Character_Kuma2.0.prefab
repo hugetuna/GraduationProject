@@ -13,10 +13,9 @@ GameObject:
   - component: {fileID: 444804626022098523}
   - component: {fileID: -4586970149817358211}
   - component: {fileID: -7047995137481637624}
-  - component: {fileID: -6055489355859136340}
-  - component: {fileID: -4879710821653841502}
   - component: {fileID: 9161924940153580328}
   - component: {fileID: 1854127572222422989}
+  - component: {fileID: 9025645218600043641}
   m_Layer: 3
   m_Name: Character_Kuma2.0
   m_TagString: Player
@@ -251,57 +250,10 @@ MonoBehaviour:
   toolSpriteResolver: {fileID: 3948907583463558194}
   animator: {fileID: 6740595233886514276}
   faceDirection: 0
-  moveSpeed: 8
   Bone: {fileID: 7702187812912414817}
   waitInteractionKey: 
---- !u!65 &-6055489355859136340
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2490980026185192416}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.5585093, y: 3.7401242, z: 1}
-  m_Center: {x: -0.07498312, y: 2.629938, z: 0.76411784}
---- !u!54 &-4879710821653841502
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2490980026185192416}
-  serializedVersion: 4
-  m_Mass: 0.0000001
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 2
+  moveSpeed: 8
+  gravity: 9.81
 --- !u!210 &9161924940153580328
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -328,6 +280,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Library: []
   m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: 7050bcf2019f49e4a9902e740ec85bee, type: 3}
+--- !u!143 &9025645218600043641
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2490980026185192416}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2.5
+  m_Radius: 0.55
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 2, z: 0.6}
 --- !u!1 &8121868069917055175
 GameObject:
   m_ObjectHideFlags: 0

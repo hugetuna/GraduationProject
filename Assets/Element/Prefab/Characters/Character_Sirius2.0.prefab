@@ -13,10 +13,9 @@ GameObject:
   - component: {fileID: -5812177955911683352}
   - component: {fileID: 6301064192802314008}
   - component: {fileID: 874445509639540754}
-  - component: {fileID: -1156702129331775184}
-  - component: {fileID: 4622093393763400740}
   - component: {fileID: 8395527110587220896}
   - component: {fileID: 6517101978703250820}
+  - component: {fileID: 3889950947366692837}
   m_Layer: 3
   m_Name: Character_Sirius2.0
   m_TagString: Player
@@ -233,6 +232,7 @@ MonoBehaviour:
   activityRecord:
     selectedActivity: {fileID: 0}
   isAvailable: 0
+  currentAction: 0
 --- !u!114 &874445509639540754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -250,57 +250,10 @@ MonoBehaviour:
   toolSpriteResolver: {fileID: 361163798380701161}
   animator: {fileID: 5393082369993727541}
   faceDirection: 0
-  moveSpeed: 8
   Bone: {fileID: 8478253588302079443}
   waitInteractionKey: 
---- !u!65 &-1156702129331775184
-BoxCollider:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3064106402500530401}
-  m_Material: {fileID: 0}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_LayerOverridePriority: 0
-  m_IsTrigger: 0
-  m_ProvidesContacts: 0
-  m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 2.5585093, y: 3.7401242, z: 0.09010863}
-  m_Center: {x: -0.07498312, y: 2.629938, z: 0.76411784}
---- !u!54 &4622093393763400740
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3064106402500530401}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 1
+  moveSpeed: 8
+  gravity: 9.81
 --- !u!210 &8395527110587220896
 SortingGroup:
   m_ObjectHideFlags: 0
@@ -327,6 +280,32 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_Library: []
   m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: 5b6c8641f7b914548b16318c8728c9c9, type: 3}
+--- !u!143 &3889950947366692837
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3064106402500530401}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Height: 2.5
+  m_Radius: 0.55
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 2, z: 0.6}
 --- !u!1 &6517878821510364290
 GameObject:
   m_ObjectHideFlags: 0
