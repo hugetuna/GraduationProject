@@ -19,7 +19,7 @@ public class DragToLesson : Drag
     [SerializeField] private GameObject vigourSlider;
     private TrainingVigourBar vigourBar; // 對應腳本參考
     //-----------------------------------------------------------------//
-    private TrainingUIData trainingUIData; // 目前訓練 UI 的資料
+    // private TrainingUIData trainingUIData; // 目前訓練 UI 的資料
     private IdolWho myIdolIndex;
     public IdolWho MyIdolIndex { get { return myIdolIndex; } }
 
@@ -66,6 +66,20 @@ public class DragToLesson : Drag
             lastDropZone = CurrentDropZone;
             currentZoneType = CurrentDropZone.zoneType;
             zoneIndex = CurrentDropZone.zoneIndex;
+
+            // 第一天指定角色訓練的特殊情形
+            if (DayManager.Instance != null && DayManager.Instance.date == 1)
+            {
+                var currentEvent = DayManager.Instance.dayEventManager.currentEvent;
+                if (currentEvent != null)
+                {
+                    if(currentEvent.TriggerTimeIndex == 6 && currentEvent.targetIdol == MyIdolIndex)
+                    {
+                        // 角色放到訓練室後就不允許再移動了
+                        GetComponent<CanvasGroup>().blocksRaycasts = false;
+                    }
+                }
+            }
         }
         else if (lastDropZone != null) // 拖曳失敗，回到上個 DropZone
         {

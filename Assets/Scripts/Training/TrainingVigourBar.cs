@@ -86,19 +86,36 @@ public class TrainingVigourBar : MonoBehaviour
         bool isTooTired = characterInfo.vigour < trainingUIData.neededVigour;
         // Debug.Log($"對 {characterInfo.idolIndex} 使用灰階效果: 體力={characterInfo.vigour}, 耗體={trainingUIData.vigourCost}");
 
+        // 檢查今天是否為訓練室的新手教學
+        bool firstDay = false;
+        if (DayManager.Instance != null && DayManager.Instance.date == 1)
+        {
+            var currentEvent = DayManager.Instance.dayEventManager.currentEvent;
+            if (currentEvent != null && currentEvent.TriggerTimeIndex >= 6)
+            {
+                if (currentZoneType != DropZoneType.Member)
+                {
+                    // 把角色放進訓練室後就不允許再拖曳了
+                    Debug.Log("已將指定角色放入訓練室，鎖定拖曳");
+                    drag.enabled = false;
+                    firstDay = true;
+                }
+            }
+        }
+
         if (zoneType == DropZoneType.Member)
         {
             // 在 Member 區才需要根據體力變灰
             grayEffect.SetGrayScale(isTooTired);
             fillGrayEffect.SetGrayScale(isTooTired);
-            drag.enabled = !isTooTired; // 體力不足時禁用拖曳功能
+            if(!firstDay) drag.enabled = !isTooTired; // 體力不足時禁用拖曳功能
         }
         else // 訓練區（先不管 None）
         {
             // 取消灰階（不論體力狀態）
             grayEffect.SetGrayScale(false);
             fillGrayEffect.SetGrayScale(false);
-            drag.enabled = true; // 始終允許拖曳功能
+            if(!firstDay) drag.enabled = true; // 始終允許拖曳功能
         }
     }
 }

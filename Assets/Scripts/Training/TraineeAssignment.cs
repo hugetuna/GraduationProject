@@ -8,13 +8,13 @@ public class TraineeAssignment : MonoBehaviour
     void Start()
     {
         TrainingUIHandler.OnTrainingUIConfirmed += AssignTrainees;
-        TrainingHintToggler.OnGoToComputer += AssignAllToTrain;
+        GoToComputerHint.OnGoToComputer += AssignAllToTrain;
     }
 
     void OnDestroy()
     {
         TrainingUIHandler.OnTrainingUIConfirmed -= AssignTrainees;
-        TrainingHintToggler.OnGoToComputer -= AssignAllToTrain;
+        GoToComputerHint.OnGoToComputer -= AssignAllToTrain;
     }
 
     public void AssignAllToTrain(TrainingUIData data)
