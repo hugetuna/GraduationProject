@@ -10,11 +10,19 @@ public class SetElevatorIcon : MonoBehaviour
     public List<Button> buttons; // 按鈕列表
     public List<Transform> elevatorIconPositions; // 電梯圖示位置列表
     public List<Sprite> peopleSprites; // 電梯內人數對應的圖片列表
+    [Header("音效設定")]
+    public AudioClip selectFloorSound; // 選擇樓層的音效
+    public AudioClip exitSound; // 退出電梯選單的音效
+    public Button exitButton;
     // Start is called before the first frame update
     void Start()
     {
-       
+        exitButton.onClick.AddListener(() =>
+        {
+            if (exitSound != null) AudioManager.Instance.PlaySFX(exitSound);
+        });
     }
+
     public void SetElevatorIconPos(int placeCode)
     {
         int i = 0;
@@ -32,12 +40,13 @@ public class SetElevatorIcon : MonoBehaviour
             buttons[i].onClick.RemoveAllListeners();
             buttons[i].onClick.AddListener(() =>
             {
+                if (selectFloorSound != null) AudioManager.Instance.PlaySFX(selectFloorSound);
                 if (SceneTransitionManager.Instance != null)
                     if (index == 0)
                     {
                         SceneTransitionManager.Instance.teleportByTargetSceneName("Floor_B1");
-                    }   
-                else
+                    }
+                    else
                         SceneTransitionManager.Instance.teleportByTargetSceneName("Floor_" + index);
                 else
                     Debug.LogError("SceneTransitionManager.Instance 為 null！");
