@@ -52,6 +52,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     
     private void Start()
     {
+        
         teamManager = FindAnyObjectByType<TeamManager>();
         resourceManager = FindAnyObjectByType<ResourceManager>();
         soilManager = FindAnyObjectByType<SoilManager>();
@@ -85,17 +86,20 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     {
         plantSeedButton.interactable = !(seedsOnThisSoil.Count == maxSeedAmount);
         addFoodBarnButton.interactable = !(foodBarn >= foodBarnMax);
+        harvestSeedButton.interactable = seedsOnThisSoil.Count > 0;
+        exitButton.interactable = true;
     }
     //安全切換 Map
     private void SwitchActionMap(string mapName)
     {
         if (teamManager != null)
         {
-            PlayerInput captain = teamManager?.teamMembers[
-            teamManager.currentLeaderIndex].GetComponent<PlayerInput>();
-            if (captain != null)
+            foreach (PlayerControlMainWorld member in teamManager.teamMembers)
             {
-                captain.SwitchCurrentActionMap(mapName);
+                if (member != null)
+                {
+                    member.SwitchSelfActionMap(mapName);
+                }
             }
         }
         if (playerInput != null)
@@ -165,7 +169,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     {
         button.interactable = false; // 禁用按鈕
         yield return new WaitForSeconds(cooldownTime); // 等待冷卻時間
-        button.interactable = true; // 重新啟用按鈕
+        updateFarmButtonInteractable(); // 根據當前狀態更新按鈕互動性
     }
     //種植個種子
     public SeedInstanceScript_Animal PlantSeed()

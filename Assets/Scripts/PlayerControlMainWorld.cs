@@ -33,7 +33,8 @@ public class PlayerControlMainWorld : MonoBehaviour
     //設定初始可操作角色
     void Start()
     {
-        controller=GetComponent<CharacterController>();
+        
+        controller =GetComponent<CharacterController>();
         teamManager = FindAnyObjectByType<TeamManager>();
         //初始化工具對應的圖樣tag->綁定toolAnimations字典
         tools[0] = "None";
@@ -261,6 +262,15 @@ public class PlayerControlMainWorld : MonoBehaviour
             {
                 GameManager.Instance.Canvas_Config.SetActive(!GameManager.Instance.Canvas_Config.activeSelf);
             }
+        }
+    }
+    public void SwitchSelfActionMap(string mapName)
+    {
+        var playerInput = GetComponent<PlayerInput>();
+        if (playerInput != null)
+        {
+            playerInput.SwitchCurrentActionMap(mapName);
+            Debug.Log($"Action Map 切換至: {mapName}");
         }
     }
 }
