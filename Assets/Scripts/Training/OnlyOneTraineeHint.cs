@@ -12,17 +12,16 @@ public class OnlyOneTraineeHint : MonoBehaviour
     void Start()
     {
         okayButton.onClick.AddListener(OnOkayButtonClicked);
-
-        // 可以先設定好，不過只有第一天才會用到
-        IdolWho whoCannotTrain = CheckWhoCannotTrain();
-        if (whoCannotTrain != IdolWho.none)
-        {
-            SetHintText(TeamDataUtility.GetIdolNameTW(whoCannotTrain));
-        }
     }
 
-    private void SetHintText(string traineeName)
+    public void SetHintUI()
     {
+        IdolWho whoCannotTrain = CheckWhoCannotTrain();
+        string traineeName = "那個人";
+        if (whoCannotTrain != IdolWho.none)
+        {
+            traineeName = TeamDataUtility.GetIdolNameTW(whoCannotTrain);
+        }
         titleText.text = $"今天就先讓{traineeName}\n去訓練吧";
     }
 
