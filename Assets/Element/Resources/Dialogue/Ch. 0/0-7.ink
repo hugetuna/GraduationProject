@@ -22,8 +22,6 @@ VAR teamID = 0  // 由 Unity 端傳入
 #speaker:Manager
 雖然表演上還有點青澀，但那股熱情...
 #speaker:Manager
-明明才剛組成，卻已經像是一個完整的團體了。
-#speaker:Manager
 ...Era，你有看到嗎？  
 #speaker:Manager
 我一定...會帶她們成功的。
@@ -49,7 +47,7 @@ VAR teamID = 0  // 由 Unity 端傳入
 #Tachie3_Character:Karo
 #Tachie3_Emotion:Talk
 #emotion:Talk
-呼...已經很多年沒站在這種舞台等結果了。
+呼...已經很久沒站在這種舞台等結果了。
 
 #speaker:Sirius
 #Tachie3_Character:Karo
@@ -172,8 +170,6 @@ VAR teamID = 0  // 由 Unity 端傳入
 
 #speaker:Manager
 雖然表演上還有點青澀，但那股熱情...
-#speaker:Manager
-明明才剛組成，卻已經像是一個完整的團體了。
 #speaker:Manager
 ...Era，你有看到嗎？  
 #speaker:Manager
@@ -323,8 +319,6 @@ VAR teamID = 0  // 由 Unity 端傳入
 #speaker:Manager
 雖然表演上還有點青澀，但那股熱情...
 #speaker:Manager
-明明才剛組成，卻已經像是一個完整的團體了。
-#speaker:Manager
 ...Era，你有看到嗎？  
 #speaker:Manager
 我一定...會帶她們成功的。
@@ -472,8 +466,6 @@ VAR teamID = 0  // 由 Unity 端傳入
 
 #speaker:Manager
 雖然表演上還有點青澀，但那股熱情...
-#speaker:Manager
-明明才剛組成，卻已經像是一個完整的團體了。
 #speaker:Manager
 ...Era，你有看到嗎？  
 #speaker:Manager
@@ -624,8 +616,6 @@ VAR teamID = 0  // 由 Unity 端傳入
 #speaker:Manager
 雖然表演上還有點青澀，但那股熱情...
 #speaker:Manager
-明明才剛組成，卻已經像是一個完整的團體了。
-#speaker:Manager
 ...Era，你有看到嗎？  
 #speaker:Manager
 我一定...會帶她們成功的。
@@ -774,8 +764,6 @@ VAR teamID = 0  // 由 Unity 端傳入
 
 #speaker:Manager
 雖然表演上還有點青澀，但那股熱情...
-#speaker:Manager
-明明才剛組成，卻已經像是一個完整的團體了。
 #speaker:Manager
 ...Era，你有看到嗎？  
 #speaker:Manager
@@ -926,11 +914,9 @@ VAR teamID = 0  // 由 Unity 端傳入
 #speaker:Manager
 雖然表演上還有點青澀，但那股熱情...
 #speaker:Manager
-明明才剛組成，卻已經像是一個完整的團體了。
-#speaker:Manager
 ...Era，你有看到嗎？  
 #speaker:Manager
-我一定...會帶她們成功的。
+我一定...會帶她們成功的。。
 
 #speaker:Empty
 #background:Black
@@ -1075,8 +1061,6 @@ VAR teamID = 0  // 由 Unity 端傳入
 
 #speaker:Manager
 雖然表演上還有點青澀，但那股熱情...
-#speaker:Manager
-明明才剛組成，卻已經像是一個完整的團體了。
 #speaker:Manager
 ...Era，你有看到嗎？  
 #speaker:Manager
@@ -1227,8 +1211,6 @@ VAR teamID = 0  // 由 Unity 端傳入
 #speaker:Manager
 雖然表演上還有點青澀，但那股熱情...
 #speaker:Manager
-明明才剛組成，卻已經像是一個完整的團體了。
-#speaker:Manager
 ...Era，你有看到嗎？  
 #speaker:Manager
 我一定...會帶她們成功的。
@@ -1375,8 +1357,6 @@ VAR teamID = 0  // 由 Unity 端傳入
 
 #speaker:Manager
 雖然表演上還有點青澀，但那股熱情...
-#speaker:Manager
-明明才剛組成，卻已經像是一個完整的團體了。
 #speaker:Manager
 ...Era，你有看到嗎？  
 #speaker:Manager

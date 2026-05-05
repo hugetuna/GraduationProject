@@ -16,9 +16,7 @@
 而且為什麼是舞台？要讓他們在這裡表演嗎？
 
 #speaker:Akuma
-偶像嘛～舞台是必須的！
-#speaker:Akuma
-只不過這裡不唱歌也不跳舞。  
+一點小小設計而已啦，在這裡不唱歌也不跳舞  
 #speaker:Akuma
 這裡主要是——養靈魂☆
 
@@ -28,19 +26,19 @@
 #speaker:Akuma
 很簡單的啦！
 #speaker:Akuma
-這裡的環境已經被我改造成一個像培養皿的東西了，超級適合靈魂成長！
+這裡的環境經過我小小的改造，現在是一個像培養皿的東西了！
 
 #speaker:Manager
 ...你這樣講更恐怖了。
 
 #speaker:Akuma　#sfx:Whistling1
-嘻嘻，由我提供「特別蒐集的夢幻靈魂」作為「種子」。
+嘻嘻，由我提供「特別蒐集的夢幻靈魂」作為「胚胎」。
 #speaker:Akuma
-你只要讓偶像們「照顧靈魂」，餵點情感、努力、目標之類的東西...
+你只要讓偶像們「照顧」這些小東西，餵點情感、努力、目標之類的東西...
 #speaker:Akuma
-它們就會成熟！
+它們就會長大！
 #speaker:Manager
-成熟的靈魂會怎樣？
+...成熟的靈魂會怎樣？
 #speaker:Akuma
 成熟的靈魂可是很有價值的，可以做很多事呢～
 #speaker:Akuma
@@ -65,7 +63,7 @@
 這樣真的好嗎...
 #speaker:Akuma
 只要能成功出道就好了吧！總之就是這樣！
-這個「種子」先給你，去試試看吧。
+這個先給你，去試試看吧。
 #speaker:Manager
 ...
 #speaker:Akuma
@@ -74,3 +72,6 @@
 蛤？
 #speaker:Akuma #sfx:Whistling2
 「新·手·大·禮·包」，你等下就知道了啦～
+
+#speaker:Empty
+（試著與區域互動，培養一個靈魂吧。）

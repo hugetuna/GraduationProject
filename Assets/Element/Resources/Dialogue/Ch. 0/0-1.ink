@@ -1,7 +1,7 @@
 VAR teamID = 0  // 由 Unity 端傳入
 
 #speaker:Boss #background:Office #bgm:Daily
-喔？真是不錯的選擇。那麼馬上就讓你們初次見面吧！
+喔？這些孩子嘛...。那麼馬上就讓你們初次見面吧！
 
 #speaker:Manager
 欸...？這麼突然？

@@ -4,27 +4,20 @@
 #speaker:Manager
 第一天上班也太累了吧。  
 #speaker:Manager
-三個人個性都那麼強...但其實挺可愛的啦。
-
-#speaker:Manager#sfx:Lie
-...
+三個人個性都那麼強...。
 #speaker:Manager
-突然馬上就要帶團體，還跑上跑下的熟悉公司跟工作流程。
+突然馬上就要帶團體，還跑上跑下的熟悉公司跟工作流程，累死了。
 #speaker:Manager
-腿都快不是我的了
+還有Neo Polaris...那種充滿觀眾的大型選秀節目，還要準備四次舞台
 #speaker:Manager
-還有 Neo Polaris  
+真的沒問題嗎...。
 #speaker:Manager
-大型選秀節目、四次舞台、無數觀眾...壓力好大
-#speaker:Manager
-但也只能一步一步來。  
-#speaker:Manager
-總之讓她們拚死練習吧...
+總之讓她們拚死練習吧...。
 
 #speaker:Empty #font:Shake
-（震動）
+（房間突然開始震動）
 #speaker:Manager
-欸？地震嗎？不要啊我現在不想動——
+欸？地震嗎...？不要啊我現在不想動
 
 #speaker:Akuma #sfx:AkumaAppear
 #Tachie1_Character:Akuma #Tachie1_Behavior:Shake
@@ -41,16 +34,16 @@
 真是群不錯的孩子們呢～很有潛力。 
 
 #speaker:Manager
-潛力有是有，時間上來不來的及難說啊...
+別說了我都要頭痛死了，一群沒經驗的小鬼時間上來不來的及很難說啊...
 
 #speaker:Akuma
 #Tachie1_Behavior:Shake
-蛤？？？什麼意思？？？她們會被刷掉嗎？？？？？
+什麼意思？？？她們會被刷掉嗎？？？？？
 
 #speaker:Manager
-雖然不想承認，但依我看大概會吧...
+怎麼看都會吧...今天才組成的團體要去挑戰幾天後的海選什麼的，練習時間遠遠不夠。
 #speaker:Manager
-今天才組成的團體要去挑戰幾天後的海選什麼的，練習時間遠遠不夠。
+可惡...好不容易找到的正職，之後又要繼續求職地獄了嗎...。
 
 #speaker:Akuma
 ...？

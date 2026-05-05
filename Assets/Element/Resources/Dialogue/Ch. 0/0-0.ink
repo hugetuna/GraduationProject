@@ -10,41 +10,35 @@
 #speaker:Manager #background:NormalStage
 ...
 #speaker:Manager 
-（——自從那次被炒之後）
-#speaker:Manager 
-（不只遞出的履歷全都沒有消息，身邊還出現了奇怪的東西）
+（自從那次被炒之後，生活完全變得一團糟）
 #speaker:Manager #background:Street
 #font:Shake
 （別想了!）
 #speaker:Manager
 這三年都靠著兼職艱難地撐過，好不容易有公司願意雇用我，一定要好好努力！
-#speaker:Manager
-雖然環境好像不怎麼好就是了...
 #speaker:Empty #background:Office
 #sfx:knock
 （叩叩）
 #speaker:Boss #background:Office #font:Big
 請進！！！！！！！！！
 #speaker:Boss #background:Office #font:Normal
-你好呀新來的！正式向你自我介紹，我是這間小小事務所「Star Sprout」的老闆，請多多指教！
+你好呀新來的！我就是這間小小事務所「Star Sprout」的老闆，請多多指教！
 #speaker:Manager
 (這個老闆...好不靠譜的感覺...)
 #speaker:Boss 
-那麼馬上進入正題，你還記得我們之前談好的工作內容吧，知道那個節目的名稱嗎？
+那麼馬上進入正題，你應該知道最近的那個節目吧？
 #speaker:Manager 
 （「NEO Polaris」，現正火熱的世界級偶像徵選企劃）
 #speaker:Manager
-（由知名娛樂公司與電視台聯手打造的大型舞台，吸引了許多懷抱明星夢的少女們，一同爭奪出道的機會）
+（由知名娛樂公司與電視台聯手打造的大型舞台，吸引了許多懷抱明星夢的少女們，一同爭奪出道的機會...是個絕佳的機會）
 #speaker:Boss
 接下來，你將接手我們事務所的練習生們參加NEO Polaris的全部經紀工作。
 #speaker:Boss
-在前幾季的節目當中，有些一開始毫不起眼的團體，卻一步步累積實力與人氣，最後成為成功出道的黑馬。
-#speaker:Boss
-而且還是少數開放所有公司與個人練習生公平競爭的選秀舞台！
+這個節目是少數開放所有公司與個人練習生公平競爭的選秀舞台，
 #speaker:Boss
 一旦成功出道，對我們這種小公司來說可是一根救命稻草！
 #speaker:Boss
-所以...雖然這裡的財務狀況相當吃緊，但我們已經決定孤注一擲，把整個公司都押在這次選秀上了！
+所以...雖然這裡的財務狀況相當吃緊，但我們已經決定孤注一擲，把整個公司的資源都押在這次選秀上了！
 #speaker:Manager
 #font:Shake
 （欸！？等一下，這個情況是不是不太妙？？？）

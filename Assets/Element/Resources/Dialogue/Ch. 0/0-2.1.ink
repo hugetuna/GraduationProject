@@ -22,6 +22,12 @@ VAR teamID = 0  // 由 Unity 端傳入
 想跟大家一起出門！
 #speaker:Karo
 另外大門也是有警衛的，他會幫我們代收包裹喔～
+#speaker:Karo
+公司導覽就差不多到這邊吧，如你所見是個很小的公司呢...
+#speaker:Karo
+不過...我還是很希望能在這裡順利出道的。
+#speaker:Karo
+沒什麼事的話就回辦公室吧！
 ->end_part
 
 ===team1_kuma_sirius_aicor===
@@ -33,6 +39,10 @@ VAR teamID = 0  // 由 Unity 端傳入
 想跟大家一起出門！
 #speaker:Aicor
 話說警衛能幫忙代收包裹，超級幫大忙。
+#speaker:Aicor
+公司大概就這樣，小小的。
+#speaker:Aicor
+你接下來就回三樓的辦公室吧！
 
 ->end_part
 
@@ -45,6 +55,12 @@ VAR teamID = 0  // 由 Unity 端傳入
 想跟大家一起出門！
 #speaker:Mizar
 另外大門也是有警衛的，他會幫我們代收包裹喔～
+#speaker:Mizar
+公司導覽就差不多到這邊吧，雖然很小但我還是蠻喜歡的
+#speaker:Kuma
+我也是！
+#speaker:Mizar
+一起回辦公室吧～
 ->end_part
 
 ===team3_kuma_karo_aicor===
@@ -56,6 +72,12 @@ VAR teamID = 0  // 由 Unity 端傳入
 想跟大家一起出門！
 #speaker:Karo
 另外大門也是有警衛的，他會幫我們代收包裹喔～
+#speaker:Karo
+公司導覽就差不多到這邊吧，如你所見是個很小的公司呢...
+#speaker:Karo
+不過...我還是很希望能在這裡順利出道的。
+#speaker:Karo
+沒什麼事的話就回辦公室吧！
 ->end_part
 
 ===team4_kuma_karo_mizar===
@@ -66,6 +88,12 @@ VAR teamID = 0  // 由 Unity 端傳入
 
 #speaker:Karo
 另外大門也是有警衛的，他會幫我們代收包裹喔～
+#speaker:Karo
+公司導覽就差不多到這邊吧，如你所見是個很小的公司呢...
+#speaker:Karo
+不過...我還是很希望能在這裡順利出道的。
+#speaker:Karo
+沒什麼事的話就回辦公室吧！
 ->end_part
 
 ===team5_kuma_aicor_mizar===
@@ -77,6 +105,12 @@ VAR teamID = 0  // 由 Unity 端傳入
 想跟大家一起出門！
 #speaker:Mizar
 另外大門也是有警衛的，他會幫我們代收包裹喔～
+#speaker:Mizar
+公司導覽就差不多到這邊吧，雖然很小但我還是蠻喜歡的～
+#speaker:Kuma
+我也是！
+#speaker:Mizar
+一起回辦公室吧～
 ->end_part
 
 ===team6_sirius_karo_aicor===
@@ -88,6 +122,12 @@ VAR teamID = 0  // 由 Unity 端傳入
 一直待在公司練習都要膩了。
 #speaker:Karo
 另外大門也是有警衛的，他會幫我們代收包裹喔～
+#speaker:Karo
+公司導覽就差不多到這邊吧，如你所見是個很小的公司呢...
+#speaker:Karo
+不過...我還是很希望能在這裡順利出道的。
+#speaker:Karo
+沒什麼事的話就回辦公室吧！
 
 ->end_part
 
@@ -100,6 +140,14 @@ VAR teamID = 0  // 由 Unity 端傳入
 很期待跟大家一起出門呢。
 #speaker:Karo
 另外大門也是有警衛的，他會幫我們代收包裹喔～。
+#speaker:Karo
+公司導覽就差不多到這邊吧，如你所見是個很小的公司呢...
+#speaker:Karo
+不過...我還是很希望能在這裡順利出道的。
+#speaker:Mizar
+一定會的！
+#speaker:Karo
+沒什麼事的話就回辦公室吧！
 ->end_part
 
 ===team8_sirius_aicor_mizar===
@@ -111,7 +159,12 @@ VAR teamID = 0  // 由 Unity 端傳入
 一直待在公司練習都要膩了。
 #speaker:Mizar
 另外大門也是有警衛的，他會幫我們代收包裹喔～
-
+#speaker:Mizar
+公司導覽就差不多到這邊吧，雖然很小但我還是蠻喜歡的！
+#speaker:Aicor
+嗯...！
+#speaker:Mizar
+一起回辦公室吧～！
 ->end_part
 
 ===team9_karo_aicor_mizar===
@@ -123,6 +176,14 @@ VAR teamID = 0  // 由 Unity 端傳入
 很期待跟大家一起出門呢。
 #speaker:Karo
 另外大門也是有警衛的，他會幫我們代收包裹喔～。
+#speaker:Karo
+公司導覽就差不多到這邊吧，如你所見是個很小的公司呢...
+#speaker:Karo
+不過...我還是很希望能在這裡順利出道的。
+#speaker:Mizar
+一定會的！
+#speaker:Karo
+沒什麼事的話就回辦公室吧！
 ->end_part
 
 ===end_part===
