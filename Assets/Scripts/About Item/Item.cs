@@ -6,6 +6,7 @@ public enum ItemType { Consumable, Equipment,Fans}
 
 public abstract class Item : ScriptableObject
 {
+    public string itemID;
     public string itemName;
     public string description;
     public Sprite icon;

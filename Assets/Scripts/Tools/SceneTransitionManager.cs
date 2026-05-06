@@ -15,6 +15,7 @@ public class SceneTransitionManager : MonoBehaviour
     [Header("轉場設定")]
     public float minimumShowTime = 1.0f; // 最少顯示 CoverIn 的時間（避免讀取太快）
     private bool isTransitioning = false;
+    private bool isLoading = false;
     [Header("為了EventManager")]
     public System.Action onDialogueFinish = null;
     public string waitSceneName = "";
@@ -39,6 +40,7 @@ public class SceneTransitionManager : MonoBehaviour
     }
     public void OnGameFileLoad()
     {
+        isLoading = true;
         if (GameManager.Instance.DayData.day == 1)
         {
             teleportByTargetSceneName("Floor_4");
@@ -70,15 +72,19 @@ public class SceneTransitionManager : MonoBehaviour
             GameManager.Instance.SaveIdolData(sortedIdols);
         }
         //儲存資源
-        ResourceManager resourceManager = FindAnyObjectByType<ResourceManager>();
-        if (resourceManager != null)
+        if (isLoading==false)
         {
-            GameManager.Instance.SaveResourceData(resourceManager);
+            ResourceManager resourceManager = FindAnyObjectByType<ResourceManager>();
+            if (resourceManager != null)
+            {
+                GameManager.Instance.SaveResourceData(resourceManager);
+            }
         }
         // 傳送到指定場景
         AudioManager.Instance.StopMusic();
         GameManager.Instance.sceneNameSave = targetSceneName;
         LoadSceneWithTransition(targetSceneName);
+        isLoading = false;
     }
     /// <summary>
     /// 呼叫這個方法來切換場景，會自動處理動畫
