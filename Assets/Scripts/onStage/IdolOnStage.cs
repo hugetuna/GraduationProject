@@ -42,6 +42,7 @@ public class IdolOnStage : MonoBehaviour, IDropHandler,IPointerEnterHandler, IPo
     public Image circleClockUI;
     public TextMeshProUGUI StageStaminaText;
     public Image StaminaBarUI;
+    public GameObject UseableIndicator;
     // Start is called before the first frame update
     void Start()
     {
@@ -217,10 +218,28 @@ public class IdolOnStage : MonoBehaviour, IDropHandler,IPointerEnterHandler, IPo
         StageStaminaText.text = $"{StageStamina}/{StageStaminaMax}";
         
     }
+    //可用卡片時，顯示提示
+    public void ShowUseableIndicator(bool show)
+    {
+        if (UseableIndicator != null&&isAcion==false)
+        {
+            UseableIndicator.SetActive(show);
+        }
+    }
     //拖曳落點
     public void OnDrop(PointerEventData eventData)
     {
         if (stageManager.gameBreak) return; // 遊戲暫停中不可拖曳
+        //還原所有放置提示
+        OnStageManager onStageManager = FindAnyObjectByType<OnStageManager>();
+        if (onStageManager != null)
+        {
+            foreach (IdolInstance idol in onStageManager.onStageIdols)
+            {
+                IdolOnStage idolOnStage = idol.GetComponent<IdolOnStage>();
+                idolOnStage.ShowUseableIndicator(false);
+            }
+        }
         // 嘗試從拖曳來源取得 SetCardUI
         SetCardUI draggedCardUI = eventData.pointerDrag?.GetComponent<SetCardUI>();
         if (draggedCardUI != null)
@@ -257,7 +276,7 @@ public class IdolOnStage : MonoBehaviour, IDropHandler,IPointerEnterHandler, IPo
                 if (StageVocal >= cardUI.cardData.voGate && StageDance >= cardUI.cardData.daGate && StageVisual >= cardUI.cardData.viGate)
                 {
                     Debug.Log($"滑鼠進入 {idolInstance.name}，檢查卡片 {cardUI.cardData.cardName} 可用...");
-                    cardUI.ShowGlowEffect(true);
+                    //cardUI.ShowGlowEffect(true);
                 }
             }
         }
@@ -266,6 +285,6 @@ public class IdolOnStage : MonoBehaviour, IDropHandler,IPointerEnterHandler, IPo
     public void OnPointerExit(PointerEventData eventData)
     {
         SetCardUI cardUI = eventData.pointerDrag?.GetComponent<SetCardUI>();
-        cardUI?.ShowGlowEffect(false);
+        //cardUI?.ShowGlowEffect(false);
     }
 }
