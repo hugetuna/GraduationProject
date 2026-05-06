@@ -141,19 +141,20 @@ public class SceneTransitionManager : MonoBehaviour
         }
         // 5.等待新場景完全載入（避免畫面閃爍）
         yield return new WaitForSeconds(0.1f);
-        // 6.播放淡出動畫（離開）
-        transitionAnimator.SetTrigger("CoverOut");
-        float coverOutTime = GetAnimationClipLength("CoverOut");
-        yield return new WaitForSeconds(coverOutTime > 0 ? coverOutTime : 0.5f);
-        isTransitioning = false;
-        // 這裡檢查自定義的 triggerComputerAfterLoad 旗標
-        if (triggerComputerAfterLoad&&sceneName== "Floor_4")
+        // 6.5這裡檢查自定義的 triggerComputerAfterLoad 旗標
+        if (triggerComputerAfterLoad && sceneName == "Floor_4")
         {
             triggerComputerAfterLoad = false; // 重置旗標避免重複觸發
             // 觸發事件
             Debug.Log("自動觸發電腦互動事件");
             ComputerInteraction.TriggerOnComputerInteracted();
         }
+        // 6.播放淡出動畫（離開）
+        transitionAnimator.SetTrigger("CoverOut");
+        float coverOutTime = GetAnimationClipLength("CoverOut");
+        yield return new WaitForSeconds(coverOutTime > 0 ? coverOutTime : 0.5f);
+        isTransitioning = false;
+        
         // 7. 處理背景音樂 by Cake
         // 播放新場景的背景音樂
         string sceneNameLower = sceneName.ToLower();
