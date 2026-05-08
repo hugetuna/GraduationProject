@@ -49,7 +49,9 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     public AudioClip audio_PlantSeed;
     public AudioClip audio_WaterSeed;
     public AudioClip audio_HarvestSeed;
-    
+    [Header("教學用")]
+    public bool isTutorialFinished = false;
+
     private void Start()
     {
         
@@ -84,6 +86,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     }
     public void updateFarmButtonInteractable()
     {
+        if (!isTutorialFinished) return;
         plantSeedButton.interactable = !(seedsOnThisSoil.Count == maxSeedAmount);
         addFoodBarnButton.interactable = !(foodBarn >= foodBarnMax);
         harvestSeedButton.interactable = seedsOnThisSoil.Count > 0;
@@ -120,6 +123,10 @@ public class AnimalFarm : MonoBehaviour, IInteractable
         UpdateCountingText();
         farmCanvas.gameObject.SetActive(true);
         StartCoroutine(SelectButtonWithDelay());// 等待一幀再選取按鈕，確保不會被當前的空白鍵觸發 onClick
+        if (DayManager.Instance.date == 2&&DayManager.Instance.dayEventManager.currentEvent.Type==EventType.WaitTutorialEnd)//第二天教學專用
+        {
+            StartCoroutine(FarmButtomTutorial());
+        }
     }
     private IEnumerator SelectButtonWithDelay()
     {
@@ -135,12 +142,47 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     public IEnumerator ControlAllButtons(bool enable)
     {
         EventSystem.current.SetSelectedGameObject(null);
-        WaitForSeconds wait = new WaitForSeconds(0.5f); // 0.5秒的延遲
+        WaitForSeconds wait = new WaitForSeconds(0.2f); // 0.2秒的延遲
         yield return wait; // 等待延遲時間
         plantSeedButton.interactable = enable;
         addFoodBarnButton.interactable = enable;
         harvestSeedButton.interactable = enable;
         exitButton.interactable = enable;
+    }
+    public IEnumerator FarmButtomTutorial()
+    {
+        Debug.Log("開始農場教學");
+        bool step1Completed = false;//第一步：引導玩家點擊種植按紐
+        bool step2Completed = false;//第二步：引導玩家點擊澆灌按紐直到全滿
+        // 先清空所有選取，防止意外觸發
+        EventSystem.current.SetSelectedGameObject(null);
+        StartCoroutine(ControlAllButtons(false));// 先禁用所有按鈕，確保玩家只能點擊被教學引導的按鈕
+        WaitForSeconds wait = new WaitForSeconds(0.5f); // 0.5秒的延遲
+        yield return wait; // 等待延遲時間
+        plantSeedButton.interactable = true;
+        plantSeedButton.Select();
+        while (!step1Completed)
+        {
+            if (seedsOnThisSoil.Count > 0)
+            {
+                step1Completed = true;
+            }
+            yield return null;
+        }
+        plantSeedButton.interactable = false;
+        while (!step2Completed)
+        {
+            addFoodBarnButton.interactable = true;
+            addFoodBarnButton.Select();
+            if (foodBarn >= foodBarnMax)
+            {
+                step2Completed = true;
+            }
+            yield return null;
+        }
+        StartCoroutine(ControlAllButtons(true));
+        HideInteractionUI();
+        isTutorialFinished = true;
     }
     public void HideInteractionUI()
     {

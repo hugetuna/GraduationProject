@@ -39,7 +39,7 @@ public class DayManager : MonoBehaviour
         {
             StartDay();
         }
-        else if (SceneName == "Floor_4"&&date == 1&& IsInStartOfDay == true)
+        else if (SceneName == "Floor_3"&&date == 1&& IsInStartOfDay == true)
         {
             StartDay();
             IdolInstance[] allIdols = FindObjectsByType<IdolInstance>(FindObjectsSortMode.None);

@@ -15,6 +15,7 @@ public enum EventType
     WaitUntilSpecificIdolTrained,
     WaitUntilSpecificButtonPressed,
     WaitAfterDayEndEventStart,
+    WaitTutorialEnd,
     EndDay
 }
 [CreateAssetMenu(menuName = "DayFlow/Day Event")]

@@ -214,6 +214,11 @@ public class DayEventManager : MonoBehaviour
         {
             Debug.Log($"等待按鈕 {dayEvent.targetButtonName} 被按下...");
         }
+        else if (dayEvent.Type == EventType.WaitTutorialEnd)
+        {
+            // 等待教學結束的邏輯
+            StartCoroutine(MonitorTutorialEnd(onFinish));
+        }
         else if (dayEvent.Type == EventType.WaitAfterDayEndEventStart)
         {
             // 電腦結算頁面後
@@ -290,6 +295,21 @@ public class DayEventManager : MonoBehaviour
             yield return new WaitForSeconds(0.5f);
         }
         // 條件達成，呼叫回調通知事件結束
+        onFinish?.Invoke();
+    }
+    private IEnumerator MonitorTutorialEnd(System.Action onFinish)
+    {
+        AnimalFarm tutorialFarm = FindAnyObjectByType<AnimalFarm>();
+        while (tutorialFarm != null && !tutorialFarm.isTutorialFinished)
+        {
+            
+            if (tutorialFarm != null && tutorialFarm.isTutorialFinished)
+            {   
+                Debug.Log("教學結束，條件達成");
+                break;
+            }
+            yield return new WaitForSeconds(0.5f);
+        }
         onFinish?.Invoke();
     }
     public void PressEventButton(string buttonName)
