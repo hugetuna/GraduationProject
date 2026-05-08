@@ -178,7 +178,23 @@ public class GameManager : MonoBehaviour
         ResourceData.bondAB = resource.bondAB;
         ResourceData.bondBC = resource.bondBC;
         ResourceData.bondCA = resource.bondCA;
-        ResourceData.items = resource.items;
+        //儲存道具ID和數量
+        ResourceData.saveItems.Clear();
+        foreach (ItemStack itemStack in resource.items)
+        {
+            IdolWho owner = IdolWho.none;
+            if (itemStack.item is FansItem fansItem)
+            {
+                // 現在你可以直接存取 FansItem 特有的欄位了
+                owner = fansItem.harvester;
+            }
+            ResourceData.saveItems.Add(new ItemSaveStack
+            {
+                itemID = itemStack.item.itemID,
+                quantity = itemStack.quantity, 
+                Harvester = owner
+            });
+        }
         //塞入裝備名稱（因為裝備是以物件形式存在，無法直接存入，所以只存名字，讀取時再對照名字給裝備）
         ResourceData.allEqupmentNames.Clear();
         foreach (EquipmentItem equipment in resource.InventoryManager.ownedEquipments)

@@ -125,8 +125,20 @@ public class SetCardUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
             eventData.position,
             eventData.pressEventCamera,
             out Vector2 localPoint);
-
         rectTransform.anchoredPosition = localPoint;
+        //提示能夠被放置的偶像
+        OnStageManager onStageManager = FindAnyObjectByType<OnStageManager>();
+        if (onStageManager != null)
+        {
+            foreach (IdolInstance idol in onStageManager.onStageIdols)
+            {
+                IdolOnStage idolOnStage = idol.GetComponent<IdolOnStage>();
+                if (idolOnStage.StageVocal >=cardData.voGate && idolOnStage.StageDance >= cardData.daGate && idolOnStage.StageVisual >= cardData.viGate)
+                {
+                    idolOnStage.ShowUseableIndicator(true);
+                }
+            }
+        }
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -142,5 +154,15 @@ public class SetCardUI : MonoBehaviour, IBeginDragHandler, IDragHandler, IEndDra
         transform.SetParent(originalParent);
         transform.localPosition = originalPosition;
         canvasGroup.blocksRaycasts = true;
+        //還原所有放置提示
+        OnStageManager onStageManager = FindAnyObjectByType<OnStageManager>();
+        if (onStageManager != null)
+        {
+            foreach (IdolInstance idol in onStageManager.onStageIdols)
+            {
+                IdolOnStage idolOnStage = idol.GetComponent<IdolOnStage>();
+                idolOnStage.ShowUseableIndicator(false);
+            }
+        }
     }
 }

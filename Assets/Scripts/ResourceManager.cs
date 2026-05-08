@@ -1,8 +1,9 @@
+using NUnit.Framework;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System;
-using NUnit.Framework;
+using static UnityEngine.UI.GridLayoutGroup;
 
 [System.Serializable]
 public struct ItemStack
@@ -27,6 +28,7 @@ public class ResourceManager : MonoBehaviour
     public BondData bondBC;
     public BondData bondCA;
     public List<IdolInstance> idolsPicked;//選進隊伍的三名偶像
+    public List<Item> allItems;//所有道具的參考，主要是為了從存檔讀回道具物件用的
     public List<ItemStack> items = new List<ItemStack>();
     public bool IsItemChanged { get; private set; } = true; // 標記道具是否有變化
     private void Awake()
@@ -54,17 +56,53 @@ public class ResourceManager : MonoBehaviour
     {
         ResourceSaveData resourceSaveData = GameManager.Instance.ResourceData;
         Money = resourceSaveData.Money;
+        Debug.Log("從存檔讀取錢" + resourceSaveData.Money);
         MoneyBonus = resourceSaveData.MoneyBonus;
         bondAB = resourceSaveData.bondAB;//列表中，A與B的羈絆值，以下同
         bondBC = resourceSaveData.bondBC;
         bondCA = resourceSaveData.bondCA;
-        items = resourceSaveData.items;
+        //道具必須以id的方式找回物件，因為scriptable obj不能直接存檔
+        items.Clear();
+        foreach (var saveItemStack in resourceSaveData.saveItems)
+        {
+            if (findItemByID(saveItemStack.itemID) != null)
+            {
+                //如果是粉絲道具還要把收割者的資料讀回來
+                if (saveItemStack.isFansItem)
+                {
+                    FansItem fansItemFromSave = findItemByID(saveItemStack.itemID) as FansItem;
+                    FansItem clone= fansItemFromSave.Clone() as FansItem;//必須要複製以迎合不同收割者的資料
+                    clone.harvester = saveItemStack.Harvester;
+                    items.Add(new ItemStack(clone, saveItemStack.quantity));
+                }
+                else
+                {
+                    items.Add(new ItemStack(findItemByID(saveItemStack.itemID), saveItemStack.quantity));
+                }
+            }
+            else
+            {
+                Debug.LogWarning("找不到道具ID: " + saveItemStack.itemID);
+            }
+        }
         //裝備類道具需要從名稱找回物件
         InventoryManager.ownedEquipments.Clear();
         foreach (var itemName in resourceSaveData.allEqupmentNames)
         {
             InventoryManager.ownedEquipments.Add(InventoryManager.FindEquipmentByName(itemName));
+            
         }
+    }
+    public Item findItemByID(string itemID)
+    {
+        foreach (var item in allItems)
+        {
+            if (item.itemID == itemID)
+            {
+                return item;
+            }
+        }
+        return null;
     }
     //每天結束時必須重製資源暫時狀態
     public void ResetTemporaryEffect()
@@ -101,6 +139,7 @@ public class ResourceManager : MonoBehaviour
             InventoryManager.ownedEquipments.Add(newItem as EquipmentItem);
             return;
         }
+        
         bool found = false;
         for (int i = 0; i < items.Count; i++)
         {

@@ -1037,9 +1037,33 @@ PrefabInstance:
       value: ResourceManager
       objectReference: {fileID: 0}
     - target: {fileID: 6044898494438979232, guid: 9fe5171271c188b4b9801674b8b909da, type: 3}
+      propertyPath: Money
+      value: 1000
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044898494438979232, guid: 9fe5171271c188b4b9801674b8b909da, type: 3}
       propertyPath: InventoryManager
       value: 
       objectReference: {fileID: 1717718819}
+    - target: {fileID: 6044898494438979232, guid: 9fe5171271c188b4b9801674b8b909da, type: 3}
+      propertyPath: items.Array.size
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044898494438979232, guid: 9fe5171271c188b4b9801674b8b909da, type: 3}
+      propertyPath: items.Array.data[0].item
+      value: 
+      objectReference: {fileID: 11400000, guid: eb9ceb552216c4e4e90e90d55ec09432, type: 2}
+    - target: {fileID: 6044898494438979232, guid: 9fe5171271c188b4b9801674b8b909da, type: 3}
+      propertyPath: items.Array.data[1].item
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044898494438979232, guid: 9fe5171271c188b4b9801674b8b909da, type: 3}
+      propertyPath: items.Array.data[0].quantity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6044898494438979232, guid: 9fe5171271c188b4b9801674b8b909da, type: 3}
+      propertyPath: items.Array.data[1].quantity
+      value: 0
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1225,8 +1249,8 @@ MonoBehaviour:
   m_XRTrackingOrigin: {fileID: 0}
   m_ActionsAsset: {fileID: -944628639613478452, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_PointAction: {fileID: -1654692200621890270, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_MoveAction: {fileID: -8784545083839296357, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
-  m_SubmitAction: {fileID: 392368643174621059, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_MoveAction: {fileID: 6462415169296887048, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
+  m_SubmitAction: {fileID: -2446991262922999641, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_CancelAction: {fileID: 7727032971491509709, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_LeftClickAction: {fileID: 3001919216989983466, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
   m_MiddleClickAction: {fileID: -2185481485913320682, guid: ca9f5fa95ffab41fb9a615ab714db018, type: 3}
