@@ -239,7 +239,7 @@ public class TeamManager : MonoBehaviour
                 if (animator != null)
                 {
                     animator.SetFloat("Speed", speed);
-                    if (speed > 10f)
+                    if (speed > 20f)
                     {
                         animator.SetFloat("Speed", speed);
                     }
@@ -251,7 +251,7 @@ public class TeamManager : MonoBehaviour
                 //用目標位置與當前位置決定朝向
                 bool moveDirection = (targetPos - teamMembers[i].transform.position).x > 0;//true=向右，false=向左
                 // **方向變更緩衝機制**
-                float directionThreshold = 0.2f; // 只有當方向變化超過這個閾值時，才會翻轉
+                float directionThreshold = 0.1f; // 只有當方向變化超過這個閾值時，才會翻轉
                 if (moveDirection)
                 {
                     if ((targetPos - teamMembers[i].transform.position).x >= directionThreshold)
@@ -267,7 +267,7 @@ public class TeamManager : MonoBehaviour
                     }
                 }
                 //teamMembers[i].transform.position = Vector3.Lerp(teamMembers[i].transform.position, targetPos, followSpeed * Time.deltaTime);
-                teamMembers[i].GetComponent<PlayerControlMainWorld>().controller.Move((targetPos - teamMembers[i].transform.position).normalized * followSpeed * Time.deltaTime);
+                teamMembers[i].GetComponent<PlayerControlMainWorld>().controller.Move((targetPos - teamMembers[i].transform.position) * followSpeed * Time.deltaTime);
             }
         }
     }
