@@ -10,7 +10,7 @@ public class ComputerInteraction : MonoBehaviour, IInteractable
 
     void Start()
     {
-        InvokeRepeating("UpdateColliderState", 1f, 300f); // 第一次延遲 1 秒，之後每五分鐘檢查一次
+        Invoke("UpdateColliderState", 1f); // 延遲 1 秒執行
     }
 
     private void UpdateColliderState()
@@ -57,7 +57,7 @@ public class ComputerInteraction : MonoBehaviour, IInteractable
         var currentEvent = DayManager.Instance.dayEventManager.currentEvent;
         int date = DayManager.Instance.date;
 
-        if (date == 1 && currentEvent.TriggerTimeIndex < 14)
+        if (date == 1 && currentEvent.TriggerTimeIndex < 10)
         {
             Debug.Log("完成特定第一天事件前不觸發");
             return false;

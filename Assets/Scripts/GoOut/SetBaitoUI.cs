@@ -109,7 +109,7 @@ public class SetBaitoUI : MonoBehaviour
         SceneTransitionManager.Instance.triggerComputerAfterLoad = true;
         if (SceneTransitionManager.Instance != null)
         {
-            SceneTransitionManager.Instance.teleportByTargetSceneName("Floor_4");
+            SceneTransitionManager.Instance.teleportByTargetSceneName("Floor_3");
         }   
     }
 
