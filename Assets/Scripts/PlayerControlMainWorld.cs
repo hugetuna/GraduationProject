@@ -33,7 +33,6 @@ public class PlayerControlMainWorld : MonoBehaviour
     //設定初始可操作角色
     void Start()
     {
-        
         controller =GetComponent<CharacterController>();
         teamManager = FindAnyObjectByType<TeamManager>();
         //初始化工具對應的圖樣tag->綁定toolAnimations字典
