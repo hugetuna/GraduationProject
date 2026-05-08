@@ -13,7 +13,7 @@ public class ResourceStatusSetter : MonoBehaviour
     public void setByResourceAndDay()
     {
         MoneyCount.text = ResourceManager.Instance.Money.ToString();
-        DayCountDown.text = $"剩餘天數{(3 - DayManager.Instance.date)}天";
+        DayCountDown.text = $"距離下次公演剩餘{3 - DayManager.Instance.date}天";
         Date.text = $"2025/09/{DayManager.Instance.date+21}";
     }
 }

@@ -160,7 +160,7 @@ public class SetBaitoUI : MonoBehaviour
             // 為圖片插槽放置角色圖片
             if (i < TeamDataUtility.idolCount)
             {
-                img.sprite = TeamDataUtility.QSprites[idol.idolIndex];
+                img.sprite = idol.idolUISprites.spriteQ;
             }
             else
             {

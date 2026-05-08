@@ -37,7 +37,7 @@ public class SetSellCharacterUI : MonoBehaviour
         fixedFansSlots.AddRange(slots);
 
         // 設定角色 UI
-        headImage.sprite = idolInstance.spriteTachie;
+        headImage.sprite = idolInstance.idolUISprites.spriteTachie;
         nameText.text = idolInstance.idolIndex.ToString();
 
         // 儲存粉絲資料並重設其 UI

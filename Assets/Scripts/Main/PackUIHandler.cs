@@ -1,10 +1,5 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.EventSystems;
-using UnityEngine.InputSystem;
-using System;
 
 /* 掛在 UIManager 上 */
 public class PackUIHandler : MonoBehaviour
@@ -18,6 +13,7 @@ public class PackUIHandler : MonoBehaviour
     [SerializeField] private Button panelBackground; // 點擊背景關閉 UI 的按鈕
     //-----------------------------------------------------------------//
     [SerializeField] private AudioClip openPackSound;
+    [SerializeField] private AudioClip closePackSound;
 
     void Start()
     {
@@ -41,5 +37,6 @@ public class PackUIHandler : MonoBehaviour
         Debug.Log("關閉 UI");
         UIAndPlayerInput.EnableAllPlayerInputs(); // 啟用所有玩家的輸入系統
         packUI.SetActive(false);
+        AudioManager.Instance.PlaySFX(closePackSound); // 播放音效
     }
 }

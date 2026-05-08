@@ -19,7 +19,8 @@ public class TeamDataUtility
     public static IdolWho GetIdolEnum(string name)
     {
         if (nameToEnum.TryGetValue(name, out IdolWho idol)) return idol;
-        else{
+        else
+        {
             Debug.LogWarning($"找不到對應的角色 enum 值，名稱：{name}");
             return IdolWho.none;
         }
@@ -38,14 +39,26 @@ public class TeamDataUtility
     public static string GetIdolNameTW(IdolWho idolIndex)
     {
         if (enumToNameTW.TryGetValue(idolIndex, out string name)) return name;
-        else{
+        else
+        {
             Debug.LogWarning($"找不到對應的角色名稱，enum 值：{idolIndex}");
             return "";
         }
     }
 
+    public static IdolWho GetIdolEnumTW(string name)
+    {
+        var pair = enumToNameTW.FirstOrDefault(kv => kv.Value == name);
+        if (!pair.Equals(default(KeyValuePair<IdolWho, string>))) return pair.Key;
+        else
+        {
+            Debug.LogWarning($"找不到對應的角色 enum 值，名稱：{name}");
+            return IdolWho.none;
+        }
+    }
+
     //-----------------------------------------------------------------//
-    
+
     /* 所有已選角色（三個，也包含隱藏於場景的角色） */
     public static readonly int idolCount = 3; // 實際角色數量（不計隱藏情況）
     private static SortedDictionary<IdolWho, IdolInstance> idolDict;
@@ -77,22 +90,6 @@ public class TeamDataUtility
         }
     }
 
-    private static Dictionary<IdolWho, Sprite> qSprites = new(); // 角色 UI 圖片（Q版）
-    public static Dictionary<IdolWho, Sprite> QSprites
-    {
-        get
-        {
-            if (qSprites.Count == 0)
-            {
-                foreach (var idol in IdolDict)
-                {
-                    qSprites[idol.Key] = idol.Value.spriteQ;
-                }
-            }
-            return qSprites;
-        }
-    }
-
     private static void RefreshIdolInstances()
     {
         var instances = Object.FindObjectsByType<IdolInstance>(FindObjectsInactive.Include, FindObjectsSortMode.None);
@@ -112,5 +109,5 @@ public class TeamDataUtility
         return raw.Replace("Character_", "").Replace("2.0", "").Replace("(Clone)", "").Trim();
     }
 
-    
+
 }

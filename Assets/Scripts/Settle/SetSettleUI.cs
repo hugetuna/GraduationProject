@@ -65,7 +65,7 @@ public class SetSettleUI : MonoBehaviour
 
         int finalVigour = idol.vigour - idol.trainRecord.vigourCost;
         character.GetComponent<SetSettleCharacterUI>().ShowCharacterBenefits(
-            idol.spriteTachie,
+            idol.idolUISprites.spriteTachie,
             idol.basicStatus.idolName,
             finalVigour, idol.vigourMax, 0,  // 目前沒有最大體力值變動
             idol.dance, idol.trainRecord.danceExp,
@@ -85,7 +85,7 @@ public class SetSettleUI : MonoBehaviour
 
         int finalVigour = idol.vigour - idol.baitoRecord.selectedBaito.vigourCost;
         character.GetComponent<SetSettleCharacterUI>().ShowCharacterBenefits(
-            idol.spriteTachie,
+            idol.idolUISprites.spriteTachie,
             idol.basicStatus.idolName,
             finalVigour, idol.vigourMax, 0,  // 目前沒有最大體力值變動
             idol.dance, 0, // 沒有舞蹈經驗變動
@@ -106,7 +106,7 @@ public class SetSettleUI : MonoBehaviour
         int finalVigour = idol.vigour - idol.activityRecord.selectedActivity.vigourCost;
         finalVigour = Mathf.Max(finalVigour, 0); // 確保體力不會變成負數
         character.GetComponent<SetSettleCharacterUI>().ShowCharacterBenefits(
-            idol.spriteTachie,
+            idol.idolUISprites.spriteTachie,
             idol.basicStatus.idolName,
             finalVigour, idol.vigourMax, 0,  // 目前沒有最大體力值變動
             idol.dance, 0, // 沒有舞蹈經驗變動
@@ -129,7 +129,7 @@ public class SetSettleUI : MonoBehaviour
         GameObject character = characters[index];
 
         character.GetComponent<SetSettleCharacterUI>().ShowCharacterBenefits(
-            idol.spriteTachie,
+            idol.idolUISprites.spriteTachie,
             idol.basicStatus.idolName,
             idol.vigour, idol.vigourMax, 0,  // 目前沒有最大體力值變動
             idol.dance, 0,

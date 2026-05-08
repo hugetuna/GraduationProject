@@ -16,7 +16,6 @@ public class SetFansObjectUI : MonoBehaviour
     [Header("角色粉絲資料")]
     private ItemStack fansItemStack;
     public ItemStack FansItemStack => fansItemStack;
-    [SerializeField] private List<Sprite> ownerSprites = new(); // 依照 IdolWho enum 順序放置 
     
     public void Initialize(ItemStack fansItemStack, IdolWho idolIndex)
     {
@@ -25,6 +24,6 @@ public class SetFansObjectUI : MonoBehaviour
         fansIcon.sprite = fansItemStack.item.icon;
         fansNameText.text = fansItemStack.item.itemName;
         fansNumText.text = $"{fansItemStack.quantity}";
-        ownerIcon.sprite = ownerSprites[(int)idolIndex];
+        ownerIcon.sprite = TeamDataUtility.IdolDict[idolIndex].idolUISprites.spriteIcon;
     }
 }

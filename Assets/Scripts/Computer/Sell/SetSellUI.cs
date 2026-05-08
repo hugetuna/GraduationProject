@@ -10,7 +10,8 @@ public class SetSellUI : MonoBehaviour
     [SerializeField] private List<GameObject> characterUIList = new();
     [SerializeField] private Button closeButton; // 關閉販賣頁面按鈕
     //-----------------------------------------------------------------//
-    private List<ItemStack> testFansList = new(); // 測試用粉絲資料
+    [Header("測試用粉絲資料")]
+    [SerializeField] private List<ItemStack> testFansList = new();
     //-----------------------------------------------------------------//
     private Dictionary<IdolInstance, List<ItemStack>> idolFansDict = new();
 
@@ -58,20 +59,16 @@ public class SetSellUI : MonoBehaviour
 
     private void AddTestFansData(List<IdolInstance> idolList)
     {
-        // 測試用粉絲已預先加入 ResourceManager
-        foreach(var itemStack in ResourceManager.Instance.items)
-        {
-            if (itemStack.item is FansItem)
-            {
-                testFansList.Add(itemStack);
-            }
-        }
-        
-        // 確保測試用粉絲的 harvester 不為空
         for (int i = 0; i < testFansList.Count; i++)
         {
-            var item = testFansList[i].item as FansItem;
-            item.harvester = idolList[i % idolList.Count].idolIndex;
+            var itemStack = testFansList[i];
+
+            // 用 Clone 確保測試用粉絲不會直接修改原本的 SO 資料
+            FansItem copy = (FansItem)itemStack.item.Clone();
+            copy.SetHarvester(idolList[i % idolList.Count].idolIndex);
+
+            // 將測試用粉絲加到 ResourceManager
+            ResourceManager.Instance.AddItem(copy, itemStack.quantity);
         }
     }
 

@@ -36,7 +36,8 @@ public class SetStatusBoard : MonoBehaviour
     public void setByIdolInstance()
     {
         Head.sprite = HeadList[(int)idol.idolIndex];
-        Name.text = idol.basicStatus.idolName;
+        // Name.text = idol.basicStatus.idolName;
+        Name.text = TeamDataUtility.GetIdolNameTW(idol.idolIndex);
         Fans.text = idol.fans.ToString();
         VoNum.text = idol.vocal.ToString();
         DaNum.text = idol.dance.ToString();

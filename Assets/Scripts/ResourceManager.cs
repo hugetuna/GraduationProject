@@ -113,7 +113,7 @@ public class ResourceManager : MonoBehaviour
     public void GainMoney(int gain)
     {
         Money += (int)(gain * MoneyBonus);
-        
+
         // 避免找不到主介面時報錯
         var mainUI = FindAnyObjectByType<MainCanvasSetter>();
         if (mainUI != null) mainUI.setResourceUI();
@@ -134,7 +134,7 @@ public class ResourceManager : MonoBehaviour
     public void AddItem(Item newItem)
     {
         //裝備類道具直接加入擁有清單
-        if (newItem.itemType==ItemType.Equipment)
+        if (newItem.itemType == ItemType.Equipment)
         {
             InventoryManager.ownedEquipments.Add(newItem as EquipmentItem);
             return;
@@ -146,6 +146,15 @@ public class ResourceManager : MonoBehaviour
             //創建一個內容和查找對象相同的stack->改數量->設置成相同的
             if (items[i].item == newItem && items[i].quantity < items[i].item.maxStack)
             {
+                // 粉絲道具會根據持有者不同分成不同 stack 儲存（這樣背包比較好處理）
+                if (newItem is FansItem newFans && items[i].item is FansItem existingFans)
+                {
+                    if (newFans.harvester != existingFans.harvester)
+                    {
+                        continue;
+                    }
+                }
+
                 ItemStack stack = items[i];
                 stack.quantity += 1;
                 items[i] = stack;
@@ -174,6 +183,15 @@ public class ResourceManager : MonoBehaviour
         {
             if (items[i].item == newItem)
             {
+                // 粉絲道具會根據持有者不同分成不同 stack 儲存（這樣背包比較好處理）
+                if (newItem is FansItem newFans && items[i].item is FansItem existingFans)
+                {
+                    if (newFans.harvester != existingFans.harvester)
+                    {
+                        continue;
+                    }
+                }
+
                 int canAdd = items[i].item.maxStack - items[i].quantity;
                 if (canAdd > 0)
                 {
@@ -211,6 +229,15 @@ public class ResourceManager : MonoBehaviour
             {
                 if (items[i].item == newItem && items[i].quantity < items[i].item.maxStack)
                 {
+                    // 粉絲道具會根據持有者不同分成不同 stack 儲存（這樣背包比較好處理）
+                    if (newItem is FansItem newFans && items[i].item is FansItem existingFans)
+                    {
+                        if (newFans.harvester != existingFans.harvester)
+                        {
+                            continue;
+                        }
+                    }
+                    
                     ItemStack stack = items[i];
                     stack.quantity += 1;
                     items[i] = stack;

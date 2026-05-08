@@ -91,11 +91,12 @@ public class TrainingUIHandler : MonoBehaviour
         for (int i = 0; i < characterImages.Count; i++)
         {
             Image img = characterImages[i];
-
+            var idolInstance = TeamDataUtility.IdolDict.ElementAt(i).Value;
+            
             // 為圖片插槽放置角色圖片
             if (i < TeamDataUtility.idolCount)
             {
-                img.sprite = TeamDataUtility.QSprites.ElementAt(i).Value;
+                img.sprite = idolInstance.idolUISprites.spriteQ;
             }
             else
             {
@@ -104,7 +105,6 @@ public class TrainingUIHandler : MonoBehaviour
                 continue;
             }
 
-            var idolInstance = TeamDataUtility.IdolDict.ElementAt(i).Value;
             var state = TrainingUIManager.Instance.GetIdolState(idolInstance.idolIndex);
 
             // 根據角色的訓練狀態決定圖片是否顯示（在訓練中或在隊伍中的角色才顯示）

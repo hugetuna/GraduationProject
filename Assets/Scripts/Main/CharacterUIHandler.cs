@@ -13,6 +13,7 @@ public class CharacterUIHandler : MonoBehaviour
     [SerializeField] private Button panelBackground;
     //-----------------------------------------------------------------//
     [SerializeField] private AudioClip openCharacterSound;
+    [SerializeField] private AudioClip closeCharacterSound;
     
     void Start()
     {
@@ -36,6 +37,7 @@ public class CharacterUIHandler : MonoBehaviour
     {
         Debug.Log("關閉 UI");
         UIAndPlayerInput.EnableAllPlayerInputs(); // 啟用所有玩家的輸入系統
+        AudioManager.Instance.PlaySFX(closeCharacterSound); // 播放音效
         CharacterUI.SetActive(false);
     }
 }

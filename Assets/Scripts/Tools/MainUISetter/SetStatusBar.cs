@@ -9,6 +9,7 @@ public class SetStatusBar : MonoBehaviour
     public Image Head;
     public List<Sprite> HeadList;
     public TextMeshProUGUI Name;
+    public TextMeshProUGUI NameEffect;
     public TextMeshProUGUI Fans;
     public TextMeshProUGUI VoNum;
     public TextMeshProUGUI DaNum;
@@ -33,7 +34,9 @@ public class SetStatusBar : MonoBehaviour
     public void setByIdolInstance()
     {
         Head.sprite = HeadList[(int)idol.idolIndex];
-        Name.text = idol.basicStatus.idolName;
+        // Name.text = idol.basicStatus.idolName;
+        Name.text = TeamDataUtility.GetIdolNameTW(idol.idolIndex);
+        NameEffect.text = Name.text;
         Fans.text = idol.fans.ToString();
         VoNum.text = idol.vocal.ToString();
         DaNum.text = idol.dance.ToString();

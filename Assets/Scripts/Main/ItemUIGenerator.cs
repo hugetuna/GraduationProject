@@ -46,6 +46,7 @@ public class ItemUIGenerator : MonoBehaviour
                 ItemType.Equipment => equipContent,
                 _ => consumableContent
             };
+            bool isFansItem = itemStack.item.itemType == ItemType.Fans;
 
             itemObject.transform.SetParent(targetContent, false);
             itemObject.SetActive(true); // 啟用該道具項目
@@ -55,7 +56,9 @@ public class ItemUIGenerator : MonoBehaviour
             var btn = inside.GetComponent<Button>();
             var setItemUI = inside.GetComponent<SetItemUI>();
 
-            setItemUI.Initialize(itemStack.item, itemStack.quantity);
+            // 粉絲道具的詳細判定交給 SetItemUI 的 Initialize 方法檢查
+            if(isFansItem) setItemUI.Initialize(itemStack.item, itemStack.quantity, (itemStack.item as FansItem).harvester);
+            else setItemUI.Initialize(itemStack.item, itemStack.quantity);
 
             btn.onClick.RemoveAllListeners(); // 移除舊的監聽事件避免重複
             btn.onClick.AddListener(() => itemInfoUI.OnItemClicked(btn));

@@ -37,7 +37,7 @@ public class UseItem : MonoBehaviour
 
         foreach(var idol in idolInstances)
         {
-            string memberName = idol.idolIndex.ToString(); // 取得隊伍成員名稱
+            string memberName = TeamDataUtility.GetIdolNameTW(idol.idolIndex); // 取得隊伍成員名稱
             dropdown.options.Add(new TMP_Dropdown.OptionData("給 " + memberName)); // 新增選單項目
         }
         ResetDropdown(); // 初始化下拉選單
@@ -64,7 +64,7 @@ public class UseItem : MonoBehaviour
     {
         // 使用道具的對象
         var characterName = selectedCharacterName.Replace("給 ", ""); // 去除名稱前綴
-        var name = TeamDataUtility.GetIdolEnum(characterName);
+        var name = TeamDataUtility.GetIdolEnumTW(characterName);
         var characterIndex = name == IdolWho.none ? IdolWho.none : name;
         if(characterIndex == IdolWho.none)
         {

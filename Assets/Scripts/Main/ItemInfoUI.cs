@@ -11,7 +11,7 @@ public class ItemInfoUI : MonoBehaviour
     [SerializeField] private Image itemInfoIcon; // 道具詳細資訊的圖示
     [SerializeField] private TextMeshProUGUI itemInfoName; // 道具詳細資訊的名稱
     [SerializeField] private TextMeshProUGUI itemInfoDescription; // 道具詳細資訊的描述
-    [SerializeField] private TextMeshProUGUI itemInfoDuration; // 道具詳細資訊的持續天數
+    [SerializeField] private TextMeshProUGUI itemInfoAdditional; // 道具詳細資訊的持續天數或持有角色
     [SerializeField] private GameObject dropdownMenu; // 選擇道具使用對象的下拉選單
     private TextMeshProUGUI dropdownLabel; // 下拉選單的標籤，用於顯示選擇的對象
     private Image dropdownArrow; // 下拉選單的箭頭圖示
@@ -65,16 +65,32 @@ public class ItemInfoUI : MonoBehaviour
         // 根據不同的道具類型顯示不同的資訊
         if (selectedItem is ConsumableItem consumable)
         {
-            itemInfoDuration.gameObject.SetActive(true);
-            itemInfoDuration.text = $"持續天數：{consumable.duration}";
+            // itemInfoAdditional.gameObject.SetActive(true);
+            itemInfoAdditional.text = $"持續天數：{consumable.duration}";
 
             SetDropdownInteractable(true);
             useItemButton.GetComponent<Button>().interactable = true;
         }
-        else
+        else if (selectedItem is FansItem fansItem)
         {
-            itemInfoDuration.text = "";
-            itemInfoDuration.gameObject.SetActive(false);
+            // itemInfoAdditional.gameObject.SetActive(true);
+
+            string harvesterName = "";
+            if (fansItem.harvester != IdolWho.none && TeamDataUtility.IdolDict.ContainsKey(fansItem.harvester))
+            {
+                harvesterName = TeamDataUtility.GetIdolNameTW(fansItem.harvester);
+            }
+
+            if (!string.IsNullOrEmpty(harvesterName)) itemInfoAdditional.text = $"持有角色：{harvesterName}";
+            else itemInfoAdditional.text = "";
+
+            SetDropdownInteractable(false);
+            useItemButton.GetComponent<Button>().interactable = false;
+        }
+        else // if (selectedItem is EquipmentItem equipment)
+        {
+            itemInfoAdditional.text = "";
+            // itemInfoAdditional.gameObject.SetActive(false);
 
             SetDropdownInteractable(false);
             useItemButton.GetComponent<Button>().interactable = false;
@@ -97,15 +113,15 @@ public class ItemInfoUI : MonoBehaviour
         itemInfoIcon.sprite = null;
         itemInfoName.text = "";
         itemInfoDescription.text = "";
-        itemInfoDuration.text = "";
-        itemInfoDuration.gameObject.SetActive(false);
+        itemInfoAdditional.text = "";
+        itemInfoAdditional.gameObject.SetActive(false);
 
         SetDropdownInteractable(false);
         useItemButton.GetComponent<Button>().interactable = false;
 
         itemInfoName.ForceMeshUpdate();
         itemInfoDescription.ForceMeshUpdate();
-        itemInfoDuration.ForceMeshUpdate();
+        itemInfoAdditional.ForceMeshUpdate();
 
         selectedItem = null;
     }
