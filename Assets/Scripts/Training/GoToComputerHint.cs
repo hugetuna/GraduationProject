@@ -41,7 +41,7 @@ public class GoToComputerHint : MonoBehaviour
         SceneTransitionManager.Instance.triggerComputerAfterLoad = true; // 跳轉後即開啟電腦
         if (SceneTransitionManager.Instance != null)
         {
-            SceneTransitionManager.Instance.teleportByTargetSceneName("Floor_4");
+            SceneTransitionManager.Instance.teleportByTargetSceneName("Floor_3");
         }
     }
 

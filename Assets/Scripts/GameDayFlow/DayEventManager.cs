@@ -300,6 +300,12 @@ public class DayEventManager : MonoBehaviour
     private IEnumerator MonitorTutorialEnd(System.Action onFinish)
     {
         AnimalFarm tutorialFarm = FindAnyObjectByType<AnimalFarm>();
+        Elevator elevator = FindAnyObjectByType<Elevator>();
+        if (elevator != null)
+        {
+            elevator.elevatorIconSetter.SwitchAllButtons(false);
+            Debug.LogWarning("關閉電梯按鈕，等待教學結束...");
+        }
         while (tutorialFarm != null && !tutorialFarm.isTutorialFinished)
         {
             
@@ -309,6 +315,10 @@ public class DayEventManager : MonoBehaviour
                 break;
             }
             yield return new WaitForSeconds(0.5f);
+        }
+        if (elevator != null)
+        {
+            elevator.elevatorIconSetter.SwitchAllButtons(true);
         }
         onFinish?.Invoke();
     }

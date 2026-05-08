@@ -170,12 +170,15 @@ public class OnStageManager : MonoBehaviour
                 }
             }
             AudioManager.Instance.PlaySFX(RoundEndSFX);
-            StartCoroutine(Break());//開始回合間休息
             Debug.Log($"進入第 {round} 回合！");
-            if(round> currentStageData.roundMax)
+            if (round > currentStageData.roundMax)
             {
                 Debug.Log("達到最大回合數，遊戲結束！");
                 GameEnd();
+            }
+            else
+            {
+                StartCoroutine(Break());//開始回合間休息
             }
         }
     }
@@ -377,9 +380,9 @@ public class OnStageManager : MonoBehaviour
     // 結束演出：計算表演得分並更新 GameManager / ResourceManager
     public void EndAndLeave()
     {
-        if(currentStageData.nextSceneName=="Floor_4"|| currentStageData.nextSceneName == "Dialogue Scene") //如果下一關是Floor_4，代表演出結束，回到主世界，給予獎勵
+        if(currentStageData.nextSceneName=="Floor_3"|| currentStageData.nextSceneName == "Dialogue Scene") //如果下一關是Floor_3，代表演出結束，回到主世界，給予獎勵
         {
-            SceneTransitionManager.Instance.triggerComputerAfterLoad = true;//告訴轉場管理器在讀取Floor_4後直接進入日結算畫面
+            SceneTransitionManager.Instance.triggerComputerAfterLoad = true;//告訴轉場管理器在讀取Floor_3後直接進入日結算畫面
         }
         if (currentStageData.clearDialogue!=null) GameManager.Instance.SaveInkJSONAssetData(currentStageData.clearDialogue);
         SceneTransitionManager.Instance.teleportByTargetSceneName(currentStageData.nextSceneName);

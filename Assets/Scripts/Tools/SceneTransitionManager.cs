@@ -43,7 +43,7 @@ public class SceneTransitionManager : MonoBehaviour
         isLoading = true;
         if (GameManager.Instance.DayData.day == 1)
         {
-            teleportByTargetSceneName("Floor_4");
+            teleportByTargetSceneName("Floor_3");
         }
         else
         {
@@ -142,7 +142,7 @@ public class SceneTransitionManager : MonoBehaviour
         // 5.等待新場景完全載入（避免畫面閃爍）
         yield return new WaitForSeconds(0.1f);
         // 6.5這裡檢查自定義的 triggerComputerAfterLoad 旗標
-        if (triggerComputerAfterLoad && sceneName == "Floor_4")
+        if (triggerComputerAfterLoad && sceneName == "Floor_3")
         {
             triggerComputerAfterLoad = false; // 重置旗標避免重複觸發
             // 觸發事件

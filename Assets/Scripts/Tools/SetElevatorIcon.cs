@@ -57,4 +57,8 @@ public class SetElevatorIcon : MonoBehaviour
     {
         elevatorIconPeoples.GetComponent<UnityEngine.UI.Image>().sprite = peopleSprites[peopleCount];
     }
+    public void SwitchAllButtons(bool open)
+    {
+        buttons.ForEach(button => button.interactable = open);
+    }
 }
