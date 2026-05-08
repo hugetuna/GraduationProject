@@ -26,7 +26,7 @@ public class PlayerControlMainWorld : MonoBehaviour
     public System.Action onInteractionFinish;
     public string waitInteractionKey;
     [Header("CharacterController用數值")]
-    private CharacterController controller;
+    public CharacterController controller;
     public float moveSpeed = 1f;
     public float gravity = 9.81f;
     private Vector3 playerVelocity;

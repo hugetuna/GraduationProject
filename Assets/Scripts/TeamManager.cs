@@ -216,7 +216,6 @@ public class TeamManager : MonoBehaviour
                 if ((currentLeaderIndex + 1 + teamMembers.Count) % teamMembers.Count == i)
                 {
                     targetPos = leaderPos - (leaderPos - teamMembers[i].transform.position).normalized * Mathf.Min(followDistance, (leaderPos - teamMembers[i].transform.position).magnitude);
-
                 }
                 //向下輪轉兩個隊員
                 else if ((currentLeaderIndex + 2 + teamMembers.Count) % teamMembers.Count == i)
@@ -251,7 +250,7 @@ public class TeamManager : MonoBehaviour
                 }
                 //用目標位置與當前位置決定朝向
                 bool moveDirection = (targetPos - teamMembers[i].transform.position).x > 0;//true=向右，false=向左
-                                                                                           // **方向變更緩衝機制**
+                // **方向變更緩衝機制**
                 float directionThreshold = 0.2f; // 只有當方向變化超過這個閾值時，才會翻轉
                 if (moveDirection)
                 {
@@ -267,7 +266,8 @@ public class TeamManager : MonoBehaviour
                         teamMembers[i].Bone.transform.rotation = Quaternion.Euler(45, 0, 0); // 朝左
                     }
                 }
-                teamMembers[i].transform.position = Vector3.Lerp(teamMembers[i].transform.position, targetPos, followSpeed * Time.deltaTime);
+                //teamMembers[i].transform.position = Vector3.Lerp(teamMembers[i].transform.position, targetPos, followSpeed * Time.deltaTime);
+                teamMembers[i].GetComponent<PlayerControlMainWorld>().controller.Move((targetPos - teamMembers[i].transform.position).normalized * followSpeed * Time.deltaTime);
             }
         }
     }
