@@ -12,15 +12,15 @@ public class SetElevatorIcon : MonoBehaviour
     public List<Sprite> peopleSprites; // 電梯內人數對應的圖片列表
     [Header("音效設定")]
     public AudioClip selectFloorSound; // 選擇樓層的音效
-    public AudioClip exitSound; // 退出電梯選單的音效
+    // public AudioClip exitSound; // 退出電梯選單的音效
     public Button exitButton;
     // Start is called before the first frame update
     void Start()
     {
-        exitButton.onClick.AddListener(() =>
-        {
-            if (exitSound != null) AudioManager.Instance.PlaySFX(exitSound);
-        });
+        // exitButton.onClick.AddListener(() =>
+        // {
+        //     //if (exitSound != null) AudioManager.Instance.PlaySFX(exitSound);
+        // });
     }
 
     public void SetElevatorIconPos(int placeCode)

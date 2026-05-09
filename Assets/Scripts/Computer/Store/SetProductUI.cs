@@ -48,8 +48,7 @@ public class SetProductUI : MonoBehaviour
         productImage.sprite = product.item.icon;
         productNameText.text = product.item.itemName;
 
-        // 初始庫存數量設為最大庫存數
-        productRuntime.currentStack = product.maxStack; 
+        // 初始庫存數量設為最大庫存數 -> 已內建於 ProductRuntime 類別
         UpdateStackText();
 
         // 根據是否特價來調整價格顯示

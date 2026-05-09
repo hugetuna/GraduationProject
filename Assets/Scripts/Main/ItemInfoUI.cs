@@ -81,7 +81,7 @@ public class ItemInfoUI : MonoBehaviour
                 harvesterName = TeamDataUtility.GetIdolNameTW(fansItem.harvester);
             }
 
-            if (!string.IsNullOrEmpty(harvesterName)) itemInfoAdditional.text = $"持有角色：{harvesterName}";
+            if (harvesterName != "") itemInfoAdditional.text = $"持有角色：{harvesterName}";
             else itemInfoAdditional.text = "";
 
             SetDropdownInteractable(false);
@@ -114,7 +114,6 @@ public class ItemInfoUI : MonoBehaviour
         itemInfoName.text = "";
         itemInfoDescription.text = "";
         itemInfoAdditional.text = "";
-        itemInfoAdditional.gameObject.SetActive(false);
 
         SetDropdownInteractable(false);
         useItemButton.GetComponent<Button>().interactable = false;
