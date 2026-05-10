@@ -8,7 +8,6 @@
 #speaker:Host
 各位，先跟觀眾朋友們打個招呼吧？
 
-
 #Tachie1_Character:Kuma #Tachie1_Emotion:Laugh #Tachie1_Behavior:Shake
 #emotion:Laugh
 #speaker:Kuma
@@ -86,7 +85,7 @@
 ...小熊，安靜。
 
 #speaker:Host
-（笑）看來大家感情真的很好呢！那最後，有沒有什麼話想對支持你們的粉絲說？
+看來大家感情真的很好呢！那最後，有沒有什麼話想對支持你們的粉絲說？
 
 #speaker:Sirius
 #Tachie2_Emotion:Talk
@@ -101,7 +100,7 @@
 大家一定要看喔！我們走著瞧——不對，是請多多指教！
 
 #speaker:Empty
-（隨後錄影結束，工作人員上前調整燈光）
+（錄影結束）
 
 #speaker:Karo
 呼...比想像中還要累呢。
