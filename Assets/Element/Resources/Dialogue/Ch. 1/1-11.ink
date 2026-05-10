@@ -10,9 +10,9 @@
 #speaker:Empty
 （對手團體的領隊在三人面前停下了腳步。）
 
-#speaker:EnemyLeader
+#speaker:Viv1DLeader
 你們...，比想像中的還要像樣一點。
-#speaker:EnemyLeader
+#speaker:Viv1DLeader
 但別高興得太早，這場選秀最後勝出的絕對會是我們。我會在這裡，親手把你們淘汰掉。
 
 #speaker:Sirius
@@ -20,9 +20,9 @@
 #emotion:Angry
 妳說什麼...？
 
-#speaker:EnemyLeader
+#speaker:Viv1DLeader
 （眼神轉向一旁的 Karo，嘴角露出冰冷的嘲諷）
-#speaker:EnemyLeader
+#speaker:Viv1DLeader
 這一次，我絕對不會再錯失出道的機會。絕對不會。
 
 #speaker:Karo
@@ -37,10 +37,10 @@
 #Tachie1_Behavior:Shake
 什、什麼意思？我們才不會輸呢！
 
-#speaker:EnemyLeader
+#speaker:Viv1DLeader
 哼。
-#speaker:EnemyLeader
-（對手領隊冷哼一聲，帶著團員逕直離去，那股沉重的氣壓讓走廊瞬間變得安靜）
+#speaker:Viv1DLeader
+（轉身，帶著團員逕直離去了）
 
 #speaker:Sirius
 #Tachie2_Emotion:Talk

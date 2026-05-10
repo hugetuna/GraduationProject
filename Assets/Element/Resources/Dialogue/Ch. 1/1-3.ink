@@ -57,7 +57,8 @@ Neo Polaris相關的所有經紀事務與訓練安排都交給你處理了，接
 第一場公演——，是「歌唱取向」的舞台。
 
 #speaker:Sirius
-#Tachie2_Emotion:Angry
+#Tachie3_Character:Siriu
+#Tachie3_Emotion:Angry
 #emotion:Angry
 歌唱取向...？
 
@@ -67,9 +68,12 @@ Neo Polaris相關的所有經紀事務與訓練安排都交給你處理了，接
 你們的總分要在全部 8 組參賽者中擠進前 4 名，否則就會被直接淘汰。
 
 #speaker:Karo
-...8 組選 4 組，也就是說有一半的人會在這裡消失。
+#Tachie2_Character:Karo #Tachie2_Emotion:Talk
+#emotion:Talk
+...8 組選 4 組，也就是說有一半的人會在這裡淘汰。
 
 #speaker:Boss
+#Tachie2_Character:Karo
 第一場的我這裡的內部資訊大概就這樣，之後節目應該還會聯繫你。
 #speaker:Boss
 他們...我們事務所的未來就交給你了。
@@ -80,10 +84,13 @@ Neo Polaris相關的所有經紀事務與訓練安排都交給你處理了，接
 我知道了。各位，我們回練習室吧，接下來的訓練會比之前更辛苦。
 
 #speaker:Kuma #Tachie1_Emotion:Laugh #emotion:Laugh
+#Tachie1_Character:Kuma
 喔！！
 
 #speaker:Karo #Tachie3_Emotion:Talk #emotion:Talk
+#Tachie2_Character:Karo
 走吧。
 
 #speaker:Sirius #Tachie2_Emotion:Talk #emotion:Talk
+#Tachie3_Character:Sirius
 ...加油。
