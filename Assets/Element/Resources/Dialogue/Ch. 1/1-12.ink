@@ -1,5 +1,5 @@
 
-#speaker:Manager #background:LockerRoom #bgm:NormalTheme
+#speaker:Empty #background:DressingRoom
 #Tachie1_Character:Kuma #Tachie1_Emotion:Angry
 #Tachie2_Character:Sirius #Tachie2_Emotion:Angry
 #Tachie3_Character:Karo #Tachie3_Emotion:Angry
@@ -15,6 +15,7 @@
 #emotion:Talk
 經紀人...我們...
 #speaker:Kuma
+#emotion:Talk
 我們是第四名。卡在最後一個名額...活下來了。
 
 #speaker:Manager
@@ -27,8 +28,10 @@
 #emotion:Talk
 第一名是那家大型娛樂公司的團體，實力跟人氣都沒話說。
 #speaker:Sirius
+#emotion:Talk
 第二名是「Viv1D」，各方面都很平衡的表演，舞台氣氛塑造得很好。
 #speaker:Sirius
+#emotion:Talk
 第三名則是「Mixx」他們唱的太好了，表演分拿了接近滿分。
 
 #speaker:Manager

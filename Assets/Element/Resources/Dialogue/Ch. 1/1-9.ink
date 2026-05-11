@@ -2,31 +2,46 @@
 #Tachie1_Character:Kuma #Tachie1_Emotion:Talk
 #Tachie2_Character:Sirius #Tachie2_Emotion:Talk
 #Tachie3_Character:Karo #Tachie3_Emotion:Talk
+#Tachie1_Move:((-500,0),0.5)
+#Tachie2_Move:((500,0),0.5)
 （錄影結束後，三人聚在電視台長廊的轉角處）
 
 #speaker:Karo
+#Tachie3_Character:Karo #Tachie3_Emotion:Talk
 #emotion:Talk
 我們先在這裡經紀人吧，應該快了吧。
 
 #speaker:Kuma
+#Tachie2_Character:Sirius
+#Tachie3_Character:Karo
+#Tachie1_Character:Kuma #Tachie1_Emotion:Talk
 #emotion:Talk
 經紀人真的好慢喔，居然讓我們自己等！
 
 
 #speaker:Kuma
+#Tachie1_Character:Kuma #Tachie1_Emotion:Laugh
 #Tachie1_Behavior:Shake
-#emotion:Talk
+#emotion:Laugh
 剛採訪完我現在充滿動力，已經想回去練習了！
 
 #speaker:Sirius
+#Tachie2_Character:Sirius
 #Tachie2_Emotion:Talk
 #emotion:Talk
 好，那等等就多做幾組核心吧，腹部肌肉對唱歌也是很重要的。
 
 #speaker:Kuma
+#Tachie1_Character:Kuma #Tachie1_Emotion:Talk
+#emotion:Talk
 欸...
 
 #speaker:Karo
+#Tachie1_Character:Kuma
+#Tachie2_Character:Sirius
+#Tachie3_Character:Karo
+#Tachie3_Emotion:Talk
+#emotion:Talk
 #Tachie3_Behavior:Shake
 好了啦不要鬧了，我聯絡一下看看...。
 
@@ -54,26 +69,30 @@
 （對方的領隊在經過時，稍微放慢了腳步，眼神冷淡地掃過三人一眼）
 
 #speaker:Empty
-（沒有停下腳步或點頭示意，逕直走了過去）
+（沒有停下腳步或點頭示意，直接走了過去）
 
 #speaker:Kuma
-#Tachie1_Emotion:Talk
+#Tachie1_Character:Kuma #Tachie1_Emotion:Talk
 #emotion:Talk
 ...哇。
 #speaker:Kuma
+#Tachie1_Character:Kuma #Tachie1_Emotion:Talk
 #emotion:Talk
 那些人也是選手吧，好厲害的樣子，看起來就像真正出道過的偶像。
 
 #Tachie1_Character:Kuma
 #speaker:Sirius
+#Tachie2_Character:Sirius
 #Tachie2_Emotion:Talk
 #emotion:Talk
 ...那種游刃有餘的感覺，看起來很熟悉這類採訪跟活動
 #speaker:Sirius
+#emotion:Talk
 應該是練習年數很長的練習生們。
 
 #Tachie2_Character:Sirius
 #speaker:Karo
+#Tachie3_Character:Karo
 #Tachie3_Emotion:Angry
 #emotion:Angry
 ...
@@ -94,6 +113,7 @@
 那是我們最大的競爭對手之一。
 
 #speaker:Kuma
+#Tachie1_Character:Kuma
 #Tachie1_Behavior:Shake
 #Tachie1_Emotion:Talk
 #emotion:Talk
@@ -112,12 +132,14 @@
 看過強者的樣子後，你們應該更清楚自己還差在哪裡了吧？
 
 #speaker:Sirius
+#Tachie2_Character:Sirius
 #Tachie2_Emotion:Talk
 #emotion:Talk
 ...嗯，不會輸給他們的。
 
 #Tachie2_Character:Sirius
 #speaker:Karo
+#Tachie3_Character:Karo
 #Tachie3_Emotion:Talk
 #emotion:Talk
 走吧，我們不能在這邊停滯不前。

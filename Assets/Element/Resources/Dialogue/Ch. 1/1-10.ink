@@ -1,5 +1,5 @@
-#speaker:Empty #background:DressingRoom #bgm:
-（後台更衣室內，空氣中充滿了髮膠與化妝品的味道，還有從外面傳來的嘈雜聲）
+#speaker:Empty #background:DressingRoom 
+（後台更衣室內，空氣中充滿了化妝品的味道，還有從外面傳來的歡聲）
 
 #speaker:Kuma
 #Tachie1_Character:Kuma #Tachie1_Emotion:Talk #emotion:Talk
@@ -17,6 +17,7 @@
 
 #speaker:Karo
 #Tachie2_Character:Karo #Tachie2_Emotion:Talk
+#emotion:Talk
 西莉絲，你的狀況還可以嗎？
 
 #speaker:Sirius
@@ -29,10 +30,13 @@
 （雖然語氣冷淡，但她正反覆緊握著拳頭，指關節微微發白）
 
 #speaker:Karo
-#Tachie3_Character:Karo #Tachie3_Emotion:Talk
+#Tachie2_Character:Karo #Tachie2_Emotion:Talk
+#emotion:Talk
 不用有太大壓力，歌唱有特殊加成分是沒錯，但你的舞蹈也能為我們帶來很多分數。
 
 #speaker:Sirius
+#Tachie3_Character:Sirius #Tachie3_Emotion:Talk
+#emotion:Talk
 我知道，無論唱歌還是跳舞，我都會做到我能做到的最好。
 
 #speaker:Manager

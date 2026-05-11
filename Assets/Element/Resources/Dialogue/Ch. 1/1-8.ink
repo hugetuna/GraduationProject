@@ -41,6 +41,7 @@
 
 #speaker:Kuma
 #Tachie1_Behavior:Shake
+#Tachie1_Character:Kuma
 #Tachie1_Emotion:Talk
 #emotion:Talk
 超——級緊張的！
@@ -48,6 +49,7 @@
 初舞台在宣佈名字的時候，我以為心臟要跳出來了！
 
 #Tachie1_Character:Kuma
+#Tachie2_Character:Karo
 #Tachie2_Emotion:Talk
 #emotion:Talk
 #speaker:Karo
@@ -61,6 +63,7 @@
 提到練習，聽說接下來的「一公」是歌唱取向的舞台，大家準備得怎麼樣了？
 
 #speaker:Karo
+#Tachie2_Character:Karo
 #Tachie2_Emotion:Talk
 #emotion:Talk
 舞台構成的部分需要先保密一下，但最近我們都在加急訓練唱歌。
@@ -68,49 +71,70 @@
 #Tachie2_Character:Karo
 #speaker:Sirius
 #Tachie3_Emotion:Talk
+#Tachie3_Character:Sirius
 #emotion:Talk
 ...歌唱對我來說是個挑戰。
 #speaker:Sirius
+#emotion:Talk
 但身邊的大家都很認真地幫助我，我會努力的。
 
 
 #speaker:Kuma
+#Tachie1_Character:Kuma
 #Tachie1_Emotion:Laugh
 #emotion:Laugh
 西莉絲唱歌其實很有特色喔！雖然經紀人說那是「非常有待開發的聲音」！
 
 #speaker:Sirius
-#emotion:Talk
-#Tachie2_Behavior:Flip
-...小熊，安靜。
+#Tachie3_Character:Sirius
+...。
 
 #speaker:Host
 看來大家感情真的很好呢！那最後，有沒有什麼話想對支持你們的粉絲說？
 
 #speaker:Sirius
-#Tachie2_Emotion:Talk
+#Tachie3_Character:Sirius
+#Tachie3_Emotion:Talk
+#emotion:Talk
 ...我們會讓你們看到我們的決心，會繼續用表演回饋大家。
 
 #speaker:Karo
+#Tachie2_Character:Karo
+#Tachie2_Emotion:Talk
+#emotion:Talk
 請期待我們在一公的表現，絕對不會讓大家失望的。
 
 #speaker:Kuma
+#Tachie1_Character:Kuma
 #Tachie1_Emotion:Laugh #Tachie1_Behavior:Shake
 #emotion:Laugh
 大家一定要看喔！我們走著瞧——不對，是請多多指教！
 
 #speaker:Empty
+#Tachie3_Character:Sirius
+#Tachie2_Character:Karo
+#Tachie1_Character:Kuma
 （錄影結束）
 
 #speaker:Karo
+#Tachie2_Character:Karo
+#Tachie2_Emotion:Talk
+#emotion:Talk
 呼...比想像中還要累呢。
 
 #speaker:Sirius
-#Tachie2_Emotion:Talk
+#Tachie3_Character:Sirius
+#Tachie3_Emotion:Talk
+#emotion:Talk
 小熊，你剛才說太多廢話了。
 
 #speaker:Kuma
+#Tachie1_Character:Kuma
 #Tachie1_Emotion:Laugh
+#emotion:Laugh
 有嗎？這叫綜藝感啦，綜藝感！
 #speaker:Kuma
+#Tachie1_Character:Kuma
+#Tachie1_Emotion:Talk
+#emotion:Talk
 對了，經紀人去哪了？剛才錄影的時候都沒看到他...

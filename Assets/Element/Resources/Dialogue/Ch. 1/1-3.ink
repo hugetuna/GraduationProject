@@ -83,14 +83,14 @@ Neo Polaris相關的所有經紀事務與訓練安排都交給你處理了，接
 #speaker:Manager
 我知道了。各位，我們回練習室吧，接下來的訓練會比之前更辛苦。
 
-#speaker:Kuma #Tachie1_Emotion:Laugh #emotion:Laugh
-#Tachie1_Character:Kuma
+#speaker:Kuma #Tachie1_Character:Kuma
+#Tachie1_Emotion:Laugh #emotion:Laugh
 喔！！
 
-#speaker:Karo #Tachie3_Emotion:Talk #emotion:Talk
-#Tachie2_Character:Karo
+#speaker:Karo #Tachie2_Character:Karo
+#Tachie3_Emotion:Talk #emotion:Talk
 走吧。
 
-#speaker:Sirius #Tachie2_Emotion:Talk #emotion:Talk
-#Tachie3_Character:Sirius
+#speaker:Sirius #Tachie3_Character:Sirius
+#Tachie2_Emotion:Talk #emotion:Talk
 ...加油。

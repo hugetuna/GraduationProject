@@ -1,5 +1,5 @@
 #speaker:Empty #background:Corridor #bgm:TensionTheme
-（一公舞台結束。三人正往休息室走去，「Viv1D」剛好迎面而來）
+（舞台結束後的走廊，「Viv1D」剛好迎面而來）
 #Tachie1_Character:Kuma 
 #Tachie2_Character:Sirius 
 #Tachie3_Character:Karo 
@@ -16,7 +16,7 @@
 但別高興得太早，這場選秀最後勝出的絕對會是我們。我會在這裡，親手把你們淘汰掉。
 
 #speaker:Sirius
-#Tachie2_Emotion:Angry
+#Tachie2_Character:Sirius #Tachie2_Emotion:Angry
 #emotion:Angry
 妳說什麼...？
 
@@ -26,12 +26,14 @@
 這一次，我絕對不會再錯失出道的機會。絕對不會。
 
 #speaker:Karo
+#Tachie3_Character:Karo
 #Tachie3_Emotion:Angry #font:Shake
 #emotion:Angry
 ...！
 （Karo 的臉色瞬間煞白，原本穩定握著麥克風的手劇烈顫抖了一下）
 
 #speaker:Kuma
+#Tachie1_Character:Kuma 
 #Tachie1_Emotion:Talk
 #emotion:Talk
 #Tachie1_Behavior:Shake
@@ -40,18 +42,22 @@
 #speaker:Viv1DLeader
 哼。
 #speaker:Viv1DLeader
-（轉身，帶著團員逕直離去了）
+（轉身，帶著團員離去了）
+
 
 #speaker:Sirius
-#Tachie2_Emotion:Talk
+#Tachie2_Character:Sirius #Tachie2_Emotion:Talk
 #emotion:Talk
 Karo？妳沒事吧？妳認識剛才那個人？
 
 #speaker:Karo
+#Tachie3_Character:Karo
 #Tachie3_Emotion:Talk
 #emotion:Talk
 ...沒事。只是有點累了。
 #speaker:Karo
+#Tachie3_Character:Karo
+#Tachie3_Emotion:Talk
 #emotion:Talk
 我們快回去吧，就快結果發表了。
 

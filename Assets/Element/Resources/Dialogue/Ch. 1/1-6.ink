@@ -43,6 +43,7 @@
 
 #speaker:Akuma #sfx:AkumaAppear
 #Tachie1_Character:Akuma
+#Tachie1_Behavior:Shake
 嘻嘻嘻，用我的方式不就好了？
 
 #speaker:Akuma
