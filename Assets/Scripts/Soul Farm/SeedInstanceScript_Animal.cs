@@ -29,6 +29,11 @@ public class SeedInstanceScript_Animal : MonoBehaviour
     void Update()
     {
         orderSeter.UpdateSortingOrder();
+        if (daysGrown >= seedData.growthDays)
+        {
+            // 成熟了就不移動了
+            return;
+        }
         moveTimer += Time.deltaTime;
         if (moveTimer >= moveInterval)
         {
@@ -92,19 +97,19 @@ public class SeedInstanceScript_Animal : MonoBehaviour
         {
             growthStages[i].SetActive(false); // 先關掉所有
         }
-        //if (daysGrown == 0)
-        //{
+        if (daysGrown == 0)
+        {
             growthStages[0].SetActive(true); // 顯示幼苗階段
-            animator= growthStages[0].GetComponent<Animator>();
-        //}
-        //else if (daysGrown >= seedData.growthDays)
-        //{
-        //    growthStages[2].SetActive(true); // 顯示成熟階段
-        //}
-        //else
-        //{
-        //    growthStages[1].SetActive(true); // 顯示中期階段
-        //}
+            animator = growthStages[0].GetComponent<Animator>();
+        }
+        else if (daysGrown >= seedData.growthDays)
+        {
+            growthStages[2].SetActive(true); // 顯示成熟階段
+        }
+        else
+        {
+            growthStages[1].SetActive(true); // 顯示中期階段
+        }
     }
 
     [ContextMenu("water")]
@@ -150,7 +155,22 @@ public class SeedInstanceScript_Animal : MonoBehaviour
     public int Harvest()
     {
         Debug.Log($"{seedData.seedName} 成熟了！獎勵等級: {currentRewardPoint}");
+ 
         // 呼叫獎勵系統來抽選獎勵
         return currentRewardPoint;
+    }
+    //根據名字找到一動畫的長度
+    public float GetAnimationLength(string animName)
+    {
+        RuntimeAnimatorController ac = animator.runtimeAnimatorController;
+        foreach (var clip in ac.animationClips)
+        {
+            if (clip.name == animName)
+            {
+                return clip.length; // 秒數
+            }
+        }
+        Debug.LogWarning("找不到動畫：" + animName);
+        return 0f;
     }
 }
