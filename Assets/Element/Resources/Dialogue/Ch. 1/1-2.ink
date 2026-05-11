@@ -2,7 +2,7 @@
 #Tachie1_Character:Kuma #Tachie1_Emotion:Laugh #Tachie1_Behavior:Shake
 #emotion:Laugh
 #speaker:Kuma
-老闆！我們通過了！我們通過初選了！！
+老闆！我們通過初選了！！
 
 #Tachie2_Character:Karo #Tachie2_Emotion:Laugh
 #emotion:Laugh
@@ -29,12 +29,10 @@
 #speaker:Manager
 大家練習的都很認真，雖然實力還需要繼續打磨，但能感受到潛力與熱情。
 #speaker:Manager
-小熊的舞台表現力比預期好，Karo 的穩定度是團隊的核心，西莉絲的舞蹈實力更是我們的武器。
-#speaker:Manager
 不過，接下來的比賽可能還得繼續苦戰...。
 
 #speaker:Boss
-Neo Polaris相關的所有經紀事務與訓練安排都交給你處理了，接下來也拜託你了。
+接下來也繼續拜託你了。
 
 #speaker:Manager
 謝謝老闆的信任，但直到現在都還沒收到後續賽制的消息，沒辦法針對調整的話現在也只能以基礎練習為主...。
@@ -54,7 +52,7 @@ Neo Polaris相關的所有經紀事務與訓練安排都交給你處理了，接
 #speaker:Boss
 接下來的正式賽程共有三場大型公演，每一場都有不同的評分偏向。
 #speaker:Boss
-第一場公演——，是「歌唱取向」的舞台。
+第一場公演，是「歌唱取向」的舞台。
 
 #speaker:Sirius
 #Tachie3_Character:Siriu
@@ -65,12 +63,12 @@ Neo Polaris相關的所有經紀事務與訓練安排都交給你處理了，接
 #speaker:Boss
 沒錯，這次公演並沒有限定主題，但會針對歌唱實力做出特別評分的加成。
 #speaker:Boss
-你們的總分要在全部 8 組參賽者中擠進前 4 名，否則就會被直接淘汰。
+你們的總分要在全部8組參賽者中擠進前4名，否則就會被直接淘汰。
 
 #speaker:Karo
 #Tachie2_Character:Karo #Tachie2_Emotion:Talk
 #emotion:Talk
-...8 組選 4 組，也就是說有一半的人會在這裡淘汰。
+...8組選4組，也就是說有一半的人會在這裡淘汰。
 
 #speaker:Boss
 #Tachie2_Character:Karo
@@ -81,7 +79,7 @@ Neo Polaris相關的所有經紀事務與訓練安排都交給你處理了，接
 #speaker:Manager
 （歌唱舞台...跟 Era 有關的獎勵...）
 #speaker:Manager
-我知道了。各位，我們回練習室吧，接下來的訓練會比之前更辛苦。
+我知道了。各位，我們回練習室吧。
 
 #speaker:Kuma #Tachie1_Character:Kuma
 #Tachie1_Emotion:Laugh #emotion:Laugh

@@ -3,9 +3,9 @@
 #speaker:Manager
 歌唱舞台啊...。
 #speaker:Manager
-說實話現在的大家不論是哪個能力單獨拿出來看都沒辦法撐起場面，
+說實話現在的大家不論是哪個能力單獨拿出來看都沒辦法撐起場面。
 #speaker:Manager
-但歌唱更是注重實力累積，而時間正是我們現在最缺乏的...
+但歌唱更是注重實力累積，而時間正是我們現在最缺乏的...。
 
 #speaker:Manager
 ...更奇怪的是，老闆提到的那個賽制變動。
@@ -69,10 +69,7 @@ Era的消息...？
 但我會用我的方式來帶領她們。
 
 #speaker:Akuma
-Era...
-#speaker:Akuma
-不要讓我失望啊...經紀人。
-
+Era...。
 #Tachie1_Character:Akuma
 #Tachie1_Move:((2000,0),0.01)
 

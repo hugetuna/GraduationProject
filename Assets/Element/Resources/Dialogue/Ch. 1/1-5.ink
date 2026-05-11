@@ -16,7 +16,7 @@
 在歌唱上具有優勢的...
 
 #speaker:Manager
-「Mixx」，由兩個女性素人組成的雙人混聲組合。
+「Mixx」，由兩個女性素人組成的雙人組合。
 #speaker:Manager
 歌唱實力完全是專業歌手等級的，初舞台時幾乎都是靠實力分入選。
 #speaker:Manager
