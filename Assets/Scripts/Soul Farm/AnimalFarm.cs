@@ -86,7 +86,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     }
     public void updateFarmButtonInteractable()
     {
-        if (!isTutorialFinished) return;
+        if (!isTutorialFinished&&DayManager.Instance.date==2) return;
         plantSeedButton.interactable = !(seedsOnThisSoil.Count == maxSeedAmount);
         addFoodBarnButton.interactable = !(foodBarn >= foodBarnMax);
         harvestSeedButton.interactable = seedsOnThisSoil.Count > 0;
@@ -123,7 +123,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
         UpdateCountingText();
         farmCanvas.gameObject.SetActive(true);
         StartCoroutine(SelectButtonWithDelay());// 等待一幀再選取按鈕，確保不會被當前的空白鍵觸發 onClick
-        if (DayManager.Instance.date == 2&&DayManager.Instance.dayEventManager.currentEvent.Type==EventType.WaitTutorialEnd)//第二天教學專用
+        if (DayManager.Instance.date == 2&&DayManager.Instance.dayEventManager.currentEvent?.Type==EventType.WaitTutorialEnd)//第二天教學專用
         {
             StartCoroutine(FarmButtomTutorial());
         }
@@ -301,7 +301,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
 
                 int finalSeedRewardPoint = Random.Range(seedRewardPoint - 80 + leader.charm, seedRewardPoint + 30 + leader.charm);
                 FansItem newFan = soilManager.RollFansItem(finalSeedRewardPoint, leader.idolIndex);
-                resourceManager.AddItem(newFan);
+                ResourceManager.Instance.AddItem(newFan);
 
                 AudioManager.Instance.PlaySFX(audio_HarvestSeed);
 

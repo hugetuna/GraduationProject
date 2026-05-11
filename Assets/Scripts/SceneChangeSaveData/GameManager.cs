@@ -182,6 +182,7 @@ public class GameManager : MonoBehaviour
         ResourceData.saveItems.Clear();
         foreach (ItemStack itemStack in resource.items)
         {
+            bool isFansItem = itemStack.item is FansItem;
             IdolWho owner = IdolWho.none;
             if (itemStack.item is FansItem fansItem)
             {
@@ -191,7 +192,8 @@ public class GameManager : MonoBehaviour
             ResourceData.saveItems.Add(new ItemSaveStack
             {
                 itemID = itemStack.item.itemID,
-                quantity = itemStack.quantity, 
+                quantity = itemStack.quantity,
+                isFansItem = isFansItem,
                 Harvester = owner
             });
         }

@@ -72,7 +72,7 @@ public class DayManager : MonoBehaviour
             }
             Debug.Log($"第一天，封鎖了{whoGoesToTeain.idolIndex}以外的練習");
         }
-        if (SceneName == "Floor_4"|| SceneName == "Floor_3" || SceneName == "Floor_2" || SceneName == "Floor_1" || SceneName == "Floor_B1")
+        if (SceneName == "Floor_3"|| SceneName == "Floor_3" || SceneName == "Floor_2" || SceneName == "Floor_1" || SceneName == "Floor_B1")
         {
             dayEventManager.ShowEventHint(dayEventManager.currentEvent);
         }

@@ -73,10 +73,12 @@ public class ResourceManager : MonoBehaviour
                     FansItem fansItemFromSave = findItemByID(saveItemStack.itemID) as FansItem;
                     FansItem clone= fansItemFromSave.Clone() as FansItem;//必須要複製以迎合不同收割者的資料
                     clone.harvester = saveItemStack.Harvester;
+                    Debug.Log("從存檔讀取粉絲道具" + clone.itemName + "，收割者是" + clone.harvester);
                     items.Add(new ItemStack(clone, saveItemStack.quantity));
                 }
                 else
                 {
+                    Debug.Log("從存檔讀取粉絲道具");
                     items.Add(new ItemStack(findItemByID(saveItemStack.itemID), saveItemStack.quantity));
                 }
             }
@@ -146,6 +148,7 @@ public class ResourceManager : MonoBehaviour
             //創建一個內容和查找對象相同的stack->改數量->設置成相同的
             if (items[i].item == newItem && items[i].quantity < items[i].item.maxStack)
             {
+                Debug.Log("正在比較粉絲道具");
                 // 粉絲道具會根據持有者不同分成不同 stack 儲存（這樣背包比較好處理）
                 if (newItem is FansItem newFans && items[i].item is FansItem existingFans)
                 {
@@ -154,7 +157,6 @@ public class ResourceManager : MonoBehaviour
                         continue;
                     }
                 }
-
                 ItemStack stack = items[i];
                 stack.quantity += 1;
                 items[i] = stack;
@@ -165,8 +167,8 @@ public class ResourceManager : MonoBehaviour
         if (!found)
         {
             items.Add(new ItemStack(newItem, 1));
+            Debug.Log("追加道具" + newItem.itemName);
         }
-        Debug.Log("追加道具" + newItem.itemName);
         SetItemChanged(true); // 標記道具已更改
     }
     //指定數量來新增道具(scriptable obj 可以用"=="來判斷相同)
