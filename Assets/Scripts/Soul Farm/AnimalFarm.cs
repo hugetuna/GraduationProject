@@ -181,8 +181,19 @@ public class AnimalFarm : MonoBehaviour, IInteractable
             yield return null;
         }
         StartCoroutine(ControlAllButtons(true));
+        StartCoroutine(MagicalGrow());
         HideInteractionUI();
         isTutorialFinished = true;
+    }
+    public IEnumerator MagicalGrow()//種子瞬間長大（用在第二天的事件裡）
+    {
+        WaitForSeconds wait = new WaitForSeconds(1f); // 1秒的延遲
+        yield return wait; // 等待延遲時間
+        foreach (SeedInstanceScript_Animal seed in seedsOnThisSoil)
+        {
+            seed.Grown(1);
+        }
+        yield return null;
     }
     public void HideInteractionUI()
     {
@@ -302,19 +313,27 @@ public class AnimalFarm : MonoBehaviour, IInteractable
                 int finalSeedRewardPoint = Random.Range(seedRewardPoint - 80 + leader.charm, seedRewardPoint + 30 + leader.charm);
                 FansItem newFan = soilManager.RollFansItem(finalSeedRewardPoint, leader.idolIndex);
                 ResourceManager.Instance.AddItem(newFan);
-
+                StartCoroutine(HarvestAnimation(i, seed));
                 AudioManager.Instance.PlaySFX(audio_HarvestSeed);
 
-                // 重要：從 List 移除並銷毀物件
-                seedsOnThisSoil.RemoveAt(i);
-                Destroy(seed.gameObject);
-                UpdateCountingText();
-                updateFarmButtonInteractable();
                 return; // 成功收割一個就跳出
             }
         }
         Debug.Log("沒有可以收割的種子");
         StartCoroutine(ButtonCooldown(harvestSeedButton, 0.2f));
+    }
+    public IEnumerator HarvestAnimation(int i, SeedInstanceScript_Animal seed)
+    {
+        seed.growthStages[2].GetComponent<Animator>().SetTrigger("Harvest");
+        HideInteractionUI();
+        WaitForSeconds wait = new WaitForSeconds(1f);
+        yield return wait; // 等待延遲時間
+        // 重要：從 List 移除並銷毀物件
+        seedsOnThisSoil.RemoveAt(i);
+        Destroy(seed.gameObject);
+        UpdateCountingText();
+        updateFarmButtonInteractable();
+        yield return null;
     }
     public void UpdateCountingText()
     {
