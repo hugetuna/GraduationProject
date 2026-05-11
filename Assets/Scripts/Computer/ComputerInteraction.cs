@@ -55,15 +55,16 @@ public class ComputerInteraction : MonoBehaviour, IInteractable
         }
 
         var currentEvent = DayManager.Instance.dayEventManager.currentEvent;
+        int chapter = DayManager.Instance.chapter;
         int date = DayManager.Instance.date;
 
-        if (date == 1 && currentEvent.TriggerTimeIndex < 10)
+        if (date == 1&& chapter==0 && currentEvent.TriggerTimeIndex < 10)
         {
             Debug.Log("完成特定第一天事件前不觸發");
             return false;
         }
 
-        if (date == 2 && currentEvent.TriggerTimeIndex < 10)
+        if (date == 2 && chapter == 0 && currentEvent.TriggerTimeIndex < 10)
         {
             Debug.Log("完成特定第二天事件前不觸發");
             return false;

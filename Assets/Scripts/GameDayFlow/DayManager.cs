@@ -39,7 +39,7 @@ public class DayManager : MonoBehaviour
         {
             StartDay();
         }
-        else if (SceneName == "Floor_3"&&date == 1&& IsInStartOfDay == true)
+        else if (SceneName == "Floor_3"&&date == 1&&chapter==0 && IsInStartOfDay == true)
         {
             StartDay();
             IdolInstance[] allIdols = FindObjectsByType<IdolInstance>(FindObjectsSortMode.None);
@@ -81,7 +81,7 @@ public class DayManager : MonoBehaviour
     public void StartDay()
     {
         IsInStartOfDay = false;
-        dayEventManager.InitializeDayEvents(date,0);
+        dayEventManager.InitializeDayEvents(chapter, date, 0);
         dayEventManager.TriggerNextEvent();
         TeamManager teamManager = FindAnyObjectByType<TeamManager>();
         teamManager.ResetIdolsTeam();

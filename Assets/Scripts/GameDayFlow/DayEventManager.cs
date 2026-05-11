@@ -19,7 +19,7 @@ public class DayEventManager : MonoBehaviour
     public GameObject eventHintPanel;
     public TextMeshProUGUI eventHintText;
     // 初始化當天事件隊列
-    public void InitializeDayEvents(int currentDay,int startTimeIndex)
+    public void InitializeDayEvents(int currentchapter,int currentDay,int startTimeIndex)
     {
         Debug.Log($"今天是第 {currentDay} 天");
         EventedNumberToday = 0;
@@ -28,7 +28,7 @@ public class DayEventManager : MonoBehaviour
         List<DayEvent> todayEvents=new List<DayEvent>();
         foreach (var dayEventSet in allDayEventSets)
         {
-            if (dayEventSet.dayIndex == currentDay)
+            if (dayEventSet.chapterIndex == currentchapter && dayEventSet.dayIndex == currentDay)
             {
                 todayEvents = dayEventSet.todayEvents;
             }
