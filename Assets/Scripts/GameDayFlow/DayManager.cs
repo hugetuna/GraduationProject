@@ -110,6 +110,8 @@ public class DayManager : MonoBehaviour
         GameManager.Instance.UpdateFarmAndAnimalAtDayEnd();
         // 重置預約狀態
         GameManager.Instance.teacherSaveData.CleanTeacherAppointments();
+        // 清除過期的商演預約紀錄
+        GameManager.Instance.activitySaveData.CleanGoneActivities(); 
         // 每天結束時大保存一次
         date++;
         GameManager.Instance.SaveDayData();

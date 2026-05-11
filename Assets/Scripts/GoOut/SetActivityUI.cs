@@ -21,8 +21,8 @@ public class SetActivityUI : MonoBehaviour
     public static event Action<Activity, StageAttribute> OnActivityConfirmed; // 定義確認出發事件
     //-----------------------------------------------------------------//
 
-    [Header("商演資料（測試用）")]
-    [SerializeField] private Activity ActivityForTest;
+    [Header("商演資料")]
+    private Activity todayActivity = null;
     [SerializeField] private StageAttribute StageAttributeForTest; // 對應的舞台資料
     // private bool isInitialized = false;
 
@@ -31,13 +31,14 @@ public class SetActivityUI : MonoBehaviour
         InitializeButtonEvents(); // 初始化按鈕事件
     }
 
-    public void OpenActivityUI() // 每次開啟介面時都會執行一次
+    public void OpenActivityUI(Activity appointedActivity) // 每次開啟介面時都會執行一次
     {
-        // 根據預約紀錄顯示商演資訊（暫時先用測試資料）
-        activityText.text = ActivityForTest.activityName;
-        descriptionText.text = ActivityForTest.description;
-        VigourCostText.text = $"{ActivityForTest.vigourCost} 體";
-        MoneyGainText.text = $"{ActivityForTest.MoneyGain} 錢";
+        // 根據預約紀錄顯示商演資訊
+        todayActivity = appointedActivity;
+        activityText.text = todayActivity.activityName;
+        descriptionText.text = todayActivity.description;
+        VigourCostText.text = $"{todayActivity.vigourCost} 體";
+        MoneyGainText.text = $"{todayActivity.MoneyGain} 錢";
 
         UpdateCharacterImagesAndEquipments(); // 設定角色 UI 與裝備欄圖片
         RefreshCharacterStats(); // 刷新體力狀態與角色數值
@@ -58,7 +59,7 @@ public class SetActivityUI : MonoBehaviour
     private void ConfirmToActivity()
     {
         Debug.Log("指派外出商演");
-        OnActivityConfirmed?.Invoke(ActivityForTest, StageAttributeForTest); // 觸發確認出發事件，指派全員外出商演
+        OnActivityConfirmed?.Invoke(todayActivity, StageAttributeForTest); // 觸發確認出發事件，指派全員外出商演
     }
 
     private void UpdateCharacterImagesAndEquipments()
@@ -108,7 +109,7 @@ public class SetActivityUI : MonoBehaviour
             var vigourBar = characterImages[i].GetComponentInChildren<ActivityVigourBar>();
             var numbers = characterImages[i].GetComponentInChildren<GoOutNumbers>();
 
-            vigourBar.Initialize(ActivityForTest, idol); // 初始化體力條
+            vigourBar.Initialize(todayActivity, idol); // 初始化體力條
             numbers.Initialize(idol.idolIndex); // 初始化角色底下的數值顯示
         }
     }

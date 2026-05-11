@@ -33,6 +33,7 @@ public class GameManager : MonoBehaviour
     public ChatSaveData chatSaveData = new();
     public TeacherSaveData teacherSaveData = new();
     public ProductSaveData productSaveData = new();
+    public ActivitySaveData activitySaveData = new();
 
     [Header("臨時儲存資料")]
     public DialogueSaveData dialogueSaveData;
@@ -222,6 +223,11 @@ public class GameManager : MonoBehaviour
         productSaveData.products.Add(productRuntime);
     }
 
+    public void SaveActivityData(Activity activity)
+    {
+        activitySaveData.activities.Add(activity);
+    }
+
     /*本地存檔相關*/
     private string SavePath => Path.Combine(Application.persistentDataPath, "gamesave.json");
 
@@ -241,6 +247,7 @@ public class GameManager : MonoBehaviour
             chatSaveData = this.chatSaveData,
             teacherSaveData = this.teacherSaveData,
             productSaveData = this.productSaveData,
+            activitySaveData = this.activitySaveData,
             isElevatorUsedToday = this.isElevatorUsedToday,
             //dialogueSaveData = this.dialogueSaveData
         };
@@ -279,6 +286,7 @@ public class GameManager : MonoBehaviour
         this.chatSaveData = wrapper.chatSaveData;
         this.teacherSaveData = wrapper.teacherSaveData;
         this.productSaveData = wrapper.productSaveData;
+        this.activitySaveData = wrapper.activitySaveData;
         this.isElevatorUsedToday = wrapper.isElevatorUsedToday;
         //this.dialogueSaveData = wrapper.dialogueSaveData;
 
