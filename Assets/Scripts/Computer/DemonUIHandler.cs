@@ -61,7 +61,7 @@ public class DemonUIHandler : MonoBehaviour
         Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
 
         // 排除特定 Layer
-        int mask = ~LayerMask.GetMask("Ignore Raycast");
+        int mask = LayerMask.GetMask("Akuma_Desktop");
 
         if (Physics.Raycast(ray, out RaycastHit hit, 1000f, mask))
         {

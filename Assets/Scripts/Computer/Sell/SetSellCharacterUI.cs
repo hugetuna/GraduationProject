@@ -38,7 +38,7 @@ public class SetSellCharacterUI : MonoBehaviour
 
         // 設定角色 UI
         headImage.sprite = idolInstance.idolUISprites.spriteTachie;
-        nameText.text = idolInstance.idolIndex.ToString();
+        nameText.text = TeamDataUtility.GetIdolNameTW(idolInstance.idolIndex);
 
         // 儲存粉絲資料並重設其 UI
         allFansData = fansList ?? new List<ItemStack>(); // 若清單為 null，則給予空清單

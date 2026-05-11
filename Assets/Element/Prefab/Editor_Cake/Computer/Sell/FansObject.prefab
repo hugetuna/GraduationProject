@@ -397,7 +397,7 @@ RectTransform:
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
   m_AnchoredPosition: {x: -0.2406, y: -25.2}
-  m_SizeDelta: {x: 31.8651, y: 11.4753}
+  m_SizeDelta: {x: 36.5725, y: 11.4753}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2773050267618119581
 CanvasRenderer:
@@ -608,12 +608,6 @@ MonoBehaviour:
   fansNameText: {fileID: 667834056758491496}
   fansNumText: {fileID: 6753667755640788089}
   ownerIcon: {fileID: 6049488137266708076}
-  ownerSprites:
-  - {fileID: 21300000, guid: 0f7e57fb4b17a334785eab72e6de9a56, type: 3}
-  - {fileID: 21300000, guid: 58417c7c8aeabb742819881dffcbd5dd, type: 3}
-  - {fileID: 21300000, guid: 8914b2c3413bfcb49b6b68f5b7762116, type: 3}
-  - {fileID: 21300000, guid: 5b3e5b0f64fb77a4c805e71b13382180, type: 3}
-  - {fileID: 21300000, guid: b73f4807cd7351246918121648d18e02, type: 3}
 --- !u!114 &8631323941547080723
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -626,8 +620,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f49537c5c3587d44da84099b27a3ab28, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  dragParent: {fileID: 0}
   dropOffset: {x: 0, y: 0, z: 0}
+  dragCompletedSound: {fileID: 8300000, guid: cd439cdb02554b64b8d2415bacbdf4f8, type: 3}
   ownerType: 0
   fansNameText: {fileID: 8989184176881264653}
   fansOwnerIcon: {fileID: 3531680677681349777}
-  dragCompletedSound: {fileID: 8300000, guid: cd439cdb02554b64b8d2415bacbdf4f8, type: 3}
