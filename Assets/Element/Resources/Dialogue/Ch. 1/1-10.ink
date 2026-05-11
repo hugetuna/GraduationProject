@@ -1,57 +1,64 @@
-#speaker:Empty #background:DressingRoom 
-（後台更衣室內，空氣中充滿了化妝品的味道，還有從外面傳來的歡聲）
+#speaker:Empty #background:Corridor #bgm:TensionTheme
+（舞台結束後的走廊，「Viv1D」剛好迎面而來）
+#Tachie1_Character:Kuma 
+#Tachie2_Character:Sirius 
+#Tachie3_Character:Karo 
 
-#speaker:Kuma
-#Tachie1_Character:Kuma #Tachie1_Emotion:Talk #emotion:Talk
-哇...從這裡就能聽到外面好熱鬧的聲音
-
-#Tachie2_Character:Karo #Tachie2_Emotion:Talk
-#emotion:Talk
 #Tachie1_Move:((-500,0),0.5)
+#Tachie2_Move:((500,0),0.5)
+
+#speaker:Empty
+（對手團體的領隊在三人面前停下了腳步。）
+
+#speaker:Viv1DLeader
+你們...，比想像中的還要像樣一點。
+#speaker:Viv1DLeader
+但別高興得太早，這場選秀最後勝出的絕對會是我們。我會在這裡，親手把你們淘汰掉。
+
+#speaker:Sirius
+#Tachie2_Character:Sirius #Tachie2_Emotion:Angry
+#emotion:Angry
+妳說什麼...？
+
+#speaker:Viv1DLeader
+（眼神轉向一旁的 Karo，嘴角露出冰冷的嘲諷）
+#speaker:Viv1DLeader
+這一次，我絕對不會再錯失出道的機會。絕對不會。
+
 #speaker:Karo
-公演跟之前不同，是有現場粉絲觀看的，是我們傳達魅力的最好機會。
+#Tachie3_Character:Karo
+#Tachie3_Emotion:Angry #font:Shake
+#emotion:Angry
+...！
+（Karo 的臉色瞬間煞白，原本穩定握著麥克風的手劇烈顫抖了一下）
 
 #speaker:Kuma
-#Tachie1_Character:Kuma #Tachie1_Emotion:Laugh #emotion:Laugh
-嗯！雖然有點緊張，但想到可以直接看到粉絲們的反應，就覺得非常興奮！
+#Tachie1_Character:Kuma 
+#Tachie1_Emotion:Talk
+#emotion:Talk
+#Tachie1_Behavior:Shake
+什、什麼意思？我們才不會輸呢！
+
+#speaker:Viv1DLeader
+哼。
+#speaker:Viv1DLeader
+（轉身，帶著團員離去了）
+
+
+#speaker:Sirius
+#Tachie2_Character:Sirius #Tachie2_Emotion:Talk
+#emotion:Talk
+Karo？妳沒事吧？妳認識剛才那個人？
 
 #speaker:Karo
-#Tachie2_Character:Karo #Tachie2_Emotion:Talk
+#Tachie3_Character:Karo
+#Tachie3_Emotion:Talk
 #emotion:Talk
-西莉絲，你的狀況還可以嗎？
-
-#speaker:Sirius
-#Tachie3_Character:Sirius #Tachie3_Emotion:Talk
-#Tachie2_Move:((500,0),0.5)
-#emotion:Talk
-嗯，還行。
-#speaker:Sirius
-#emotion:Talk
-（雖然語氣冷淡，但她正反覆緊握著拳頭，指關節微微發白）
-
+...沒事。只是有點累了。
 #speaker:Karo
-#Tachie2_Character:Karo #Tachie2_Emotion:Talk
+#Tachie3_Character:Karo
+#Tachie3_Emotion:Talk
 #emotion:Talk
-不用有太大壓力，歌唱有特殊加成分是沒錯，但你的舞蹈也能為我們帶來很多分數。
+我們快回去吧，就快結果發表了。
 
-#speaker:Sirius
-#Tachie3_Character:Sirius #Tachie3_Emotion:Talk
-#emotion:Talk
-我知道，無論唱歌還是跳舞，我都會做到我能做到的最好。
 
-#speaker:Manager
-（走進休息室，看著三人的樣子）
-#speaker:Manager
-準備好了嗎？
-#speaker:Manager
-去吧，無論如何，享受你們的舞台
-
-#speaker:Empty #background:Stage #bgm:StageBGM #sfx:Cheer
-（強烈的聚光燈瞬間打在三人身上，台下傳來如雷般的掌聲與歡呼聲）
-
-#speaker:Manager
-（站在側台陰影處，看著台上閃閃發光的她們）
-#speaker:Manager
-（那是只有她們才能散發出的，原始的光芒。）
-#speaker:Manager
-（只要能讓這道光留住....。）
