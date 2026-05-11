@@ -114,6 +114,11 @@ public class DayManager : MonoBehaviour
         GameManager.Instance.activitySaveData.CleanGoneActivities(); 
         // 每天結束時大保存一次
         date++;
+        if(chapter==0&&date==4)
+        {
+            chapter = 1;
+            date = 1;
+        }
         GameManager.Instance.SaveDayData();
         GameManager.Instance.SaveToFile();
         SceneTransitionManager.Instance.teleportByTargetSceneName("Floor_1");
