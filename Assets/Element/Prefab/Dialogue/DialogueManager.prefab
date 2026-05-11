@@ -17,7 +17,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &7537617169568216352
 RectTransform:
   m_ObjectHideFlags: 0
@@ -617,7 +617,7 @@ MonoBehaviour:
   m_Transition: 1
   m_Colors:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
-    m_HighlightedColor: {r: 0.7433963, g: 0.39694554, b: 0.5173336, a: 0.78431374}
+    m_HighlightedColor: {r: 0.9254902, g: 0.88235295, b: 0.7254902, a: 0.78431374}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
     m_SelectedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
@@ -855,6 +855,9 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 9586c6eb0454e794390f3d673fa0b2bc, type: 2}
   - {fileID: 11400000, guid: 784e0ee462f85c442bd322f1262bc19b, type: 2}
   - {fileID: 11400000, guid: 4a3ad573ea3ee9a42a2555007bffe88b, type: 2}
+  - {fileID: 11400000, guid: 9463d2e52fe4b534a854dc5bdc954ad3, type: 2}
+  - {fileID: 11400000, guid: 89c1fa56ffc799145b1cdc29f37e951a, type: 2}
+  - {fileID: 11400000, guid: 8425b715e294a14479a5553b82ffd149, type: 2}
   tachieManager: {fileID: 4560520132745631748}
   speakerName: {fileID: 2630313988088260911}
   speakerImage: {fileID: 533091520772710665}
@@ -1018,7 +1021,7 @@ MonoBehaviour:
     m_ActionName: 'FarmConfig/Maps[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
-  m_DefaultActionMap: Dialogue
+  m_DefaultActionMap: PlayerActionMain
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
 --- !u!1001 &3988976152836115084
@@ -1199,19 +1202,19 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4232384697000702315, guid: 059144958c79e1c48973b11dc1baf38f, type: 3}
       propertyPath: m_Colors.m_HighlightedColor.a
-      value: 0.627451
+      value: 0.78431374
       objectReference: {fileID: 0}
     - target: {fileID: 4232384697000702315, guid: 059144958c79e1c48973b11dc1baf38f, type: 3}
       propertyPath: m_Colors.m_HighlightedColor.b
-      value: 0.78039217
+      value: 0.76645774
       objectReference: {fileID: 0}
     - target: {fileID: 4232384697000702315, guid: 059144958c79e1c48973b11dc1baf38f, type: 3}
       propertyPath: m_Colors.m_HighlightedColor.g
-      value: 0.78039217
+      value: 0.88156384
       objectReference: {fileID: 0}
     - target: {fileID: 4232384697000702315, guid: 059144958c79e1c48973b11dc1baf38f, type: 3}
       propertyPath: m_Colors.m_HighlightedColor.r
-      value: 0.78039217
+      value: 0.9169811
       objectReference: {fileID: 0}
     - target: {fileID: 4232384697000702315, guid: 059144958c79e1c48973b11dc1baf38f, type: 3}
       propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[1].m_Target
@@ -1622,7 +1625,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4721731521122278370, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
       propertyPath: backGroundFiles.Array.size
-      value: 8
+      value: 19
       objectReference: {fileID: 0}
     - target: {fileID: 4721731521122278370, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
       propertyPath: backGroundFiles.Array.data[2].BackGroundImg
@@ -1647,7 +1650,51 @@ PrefabInstance:
     - target: {fileID: 4721731521122278370, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
       propertyPath: backGroundFiles.Array.data[7].BackGroundImg
       value: 
-      objectReference: {fileID: 21300000, guid: 9771d1535d9ebd04d91d7e2d33385a29, type: 3}
+      objectReference: {fileID: 21300000, guid: eb1bd5877ac17414f96fae34852e796e, type: 3}
+    - target: {fileID: 4721731521122278370, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
+      propertyPath: backGroundFiles.Array.data[8].BackGroundImg
+      value: 
+      objectReference: {fileID: 21300000, guid: ceae50eb5047fc244be0c6fa714a33b4, type: 3}
+    - target: {fileID: 4721731521122278370, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
+      propertyPath: backGroundFiles.Array.data[9].BackGroundImg
+      value: 
+      objectReference: {fileID: 21300000, guid: 1251e4326f470ed488d5388788177e5a, type: 3}
+    - target: {fileID: 4721731521122278370, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
+      propertyPath: backGroundFiles.Array.data[10].BackGroundImg
+      value: 
+      objectReference: {fileID: 21300000, guid: 08643be7f35e5554eac71768dc11f786, type: 3}
+    - target: {fileID: 4721731521122278370, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
+      propertyPath: backGroundFiles.Array.data[11].BackGroundImg
+      value: 
+      objectReference: {fileID: 21300000, guid: 213d93c90336c884b8eb197e903dde4e, type: 3}
+    - target: {fileID: 4721731521122278370, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
+      propertyPath: backGroundFiles.Array.data[12].BackGroundImg
+      value: 
+      objectReference: {fileID: 21300000, guid: 71cfd1cd76972294384706f0563ef40f, type: 3}
+    - target: {fileID: 4721731521122278370, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
+      propertyPath: backGroundFiles.Array.data[13].BackGroundImg
+      value: 
+      objectReference: {fileID: 21300000, guid: b15c8bafe0de9f84c99759611d17b1bb, type: 3}
+    - target: {fileID: 4721731521122278370, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
+      propertyPath: backGroundFiles.Array.data[14].BackGroundImg
+      value: 
+      objectReference: {fileID: 21300000, guid: 8ae7fde7aeed96f4c9740286777ec5c9, type: 3}
+    - target: {fileID: 4721731521122278370, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
+      propertyPath: backGroundFiles.Array.data[15].BackGroundImg
+      value: 
+      objectReference: {fileID: 21300000, guid: f97ac24cd73f6be419574dc277f5aac7, type: 3}
+    - target: {fileID: 4721731521122278370, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
+      propertyPath: backGroundFiles.Array.data[16].BackGroundImg
+      value: 
+      objectReference: {fileID: 21300000, guid: 19b00976421a8d74ea3ac584e2b4c3a6, type: 3}
+    - target: {fileID: 4721731521122278370, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
+      propertyPath: backGroundFiles.Array.data[17].BackGroundImg
+      value: 
+      objectReference: {fileID: 21300000, guid: 007b9c143707bb542bdb454f6e67ab21, type: 3}
+    - target: {fileID: 4721731521122278370, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
+      propertyPath: backGroundFiles.Array.data[18].BackGroundImg
+      value: 
+      objectReference: {fileID: 21300000, guid: 55113000c245a274196c68533f4acd0b, type: 3}
     - target: {fileID: 4721731521122278370, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
       propertyPath: backGroundFiles.Array.data[2].BackGroundName
       value: MyRoom
@@ -1670,7 +1717,51 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4721731521122278370, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
       propertyPath: backGroundFiles.Array.data[7].BackGroundName
-      value: CGKKS
+      value: CG1_00
+      objectReference: {fileID: 0}
+    - target: {fileID: 4721731521122278370, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
+      propertyPath: backGroundFiles.Array.data[8].BackGroundName
+      value: CG1_01
+      objectReference: {fileID: 0}
+    - target: {fileID: 4721731521122278370, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
+      propertyPath: backGroundFiles.Array.data[9].BackGroundName
+      value: CG1_02
+      objectReference: {fileID: 0}
+    - target: {fileID: 4721731521122278370, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
+      propertyPath: backGroundFiles.Array.data[10].BackGroundName
+      value: CG1_03
+      objectReference: {fileID: 0}
+    - target: {fileID: 4721731521122278370, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
+      propertyPath: backGroundFiles.Array.data[11].BackGroundName
+      value: CG1_04
+      objectReference: {fileID: 0}
+    - target: {fileID: 4721731521122278370, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
+      propertyPath: backGroundFiles.Array.data[12].BackGroundName
+      value: CG1_05
+      objectReference: {fileID: 0}
+    - target: {fileID: 4721731521122278370, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
+      propertyPath: backGroundFiles.Array.data[13].BackGroundName
+      value: CG1_06
+      objectReference: {fileID: 0}
+    - target: {fileID: 4721731521122278370, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
+      propertyPath: backGroundFiles.Array.data[14].BackGroundName
+      value: CG1_07
+      objectReference: {fileID: 0}
+    - target: {fileID: 4721731521122278370, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
+      propertyPath: backGroundFiles.Array.data[15].BackGroundName
+      value: CG1_08
+      objectReference: {fileID: 0}
+    - target: {fileID: 4721731521122278370, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
+      propertyPath: backGroundFiles.Array.data[16].BackGroundName
+      value: CG1_09
+      objectReference: {fileID: 0}
+    - target: {fileID: 4721731521122278370, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
+      propertyPath: backGroundFiles.Array.data[17].BackGroundName
+      value: News
+      objectReference: {fileID: 0}
+    - target: {fileID: 4721731521122278370, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
+      propertyPath: backGroundFiles.Array.data[18].BackGroundName
+      value: Corrider
       objectReference: {fileID: 0}
     - target: {fileID: 6749191133542001449, guid: ec0be4188b925b7468894bb92a82d3ed, type: 3}
       propertyPath: m_Name
