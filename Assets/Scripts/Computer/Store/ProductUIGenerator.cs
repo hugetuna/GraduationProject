@@ -44,16 +44,25 @@ public class ProductUIGenerator : MonoBehaviour
         // 按清單生成初始的商品項目
         foreach (ProductRuntime productRuntime in inventoryList)
         {
-            // 生成商品並分類...然而現在只有兩個分類（消耗品 vs. 裝備）
+            // 生成商品並分類...目前有「體力補品、訓練增益、好運配件、服裝裝備」等大致分類
             GameObject productObject = null;
+            string itemName = productRuntime.product.item.itemName;
             var itemType = productRuntime.product.item.itemType;
-            if (itemType == ItemType.Consumable)
+            if (itemName.Contains("體力"))
             {
                 productObject = Instantiate(productPrefab, productContent[0]); // "Wrapper" + Card
             }
-            else if (itemType == ItemType.Equipment)
+            else if (itemName.Contains("舞蹈") || itemName.Contains("表現") || itemName.Contains("歌唱"))
             {
                 productObject = Instantiate(productPrefab, productContent[1]); // "Wrapper" + Card
+            }
+            else if (itemName.Contains("御守") || itemName.Contains("香水"))
+            {
+                productObject = Instantiate(productPrefab, productContent[2]); // "Wrapper" + Card
+            }
+            else if (itemType == ItemType.Equipment)
+            {
+                productObject = Instantiate(productPrefab, productContent[3]); // "Wrapper" + Card
             }
 
             if (productObject == null)
