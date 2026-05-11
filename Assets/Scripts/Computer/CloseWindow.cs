@@ -10,6 +10,7 @@ public class CloseWindow : MonoBehaviour
     private SetAppUI setAppUI; // 對應 App 的 UI 控制腳本 
     public Button closeButton;
     // public GameObject windowToClose; // App 視窗
+    public AudioClip closeAppSound; // 關閉視窗的音效
 
     void Start()
     {
@@ -21,6 +22,7 @@ public class CloseWindow : MonoBehaviour
         // 可使用 UI 上的叉叉關閉 UI
         Debug.Log("關閉視窗 UI");
         gameObject.SetActive(false);
+        if (closeAppSound != null) AudioManager.Instance.PlaySFX(closeAppSound, 0.5f); // 播放音效
 
         GameObject miniInstance = setAppUI.GetMiniInstance();
         if (miniInstance != null) Destroy(miniInstance); // 銷毀最小化按鈕實例

@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 /* 掛在 UIManager 上 */
 public class GoOutUIHandler : MonoBehaviour
@@ -15,6 +16,8 @@ public class GoOutUIHandler : MonoBehaviour
     //-----------------------------------------------------------------//
     [SerializeField] private Button baitoButton; // 打工按鈕
     [SerializeField] private Button activityButton; // 商演按鈕
+    private Activity appointedActivity;
+    private TextMeshProUGUI activityBtnText;
     [SerializeField] private GameObject baitoUI; // 外出打工介面
     [SerializeField] private GameObject activityUI; // 外出商演介面
     //-----------------------------------------------------------------//
@@ -31,6 +34,8 @@ public class GoOutUIHandler : MonoBehaviour
         activityButton.onClick.AddListener(ShowActivityUI); // 為商演按鈕添加點擊事件
 
         goOutUI.SetActive(false); // 預設隱藏整個外出介面
+
+        activityBtnText = activityButton.GetComponentInChildren<TextMeshProUGUI>();
     }
 
     void OnDestroy()
@@ -47,6 +52,19 @@ public class GoOutUIHandler : MonoBehaviour
         selectionUI.SetActive(true);
         baitoUI.SetActive(false);
         activityUI.SetActive(false);
+
+        // 根據預約紀錄決定是否啟用商演按鈕
+        appointedActivity = GameManager.Instance.activitySaveData.GetTodayActivity();
+        if(appointedActivity != null)
+        {
+            activityButton.interactable = true;
+            activityBtnText.color = Color.white;
+        }
+        else
+        {
+            activityButton.interactable = false;
+            activityBtnText.color = new Color32(200, 200, 200, 255);
+        }
     }
 
     private void RecallSelectionUI()
@@ -82,7 +100,7 @@ public class GoOutUIHandler : MonoBehaviour
         selectionUI.SetActive(false);
         baitoUI.SetActive(false);
         activityUI.SetActive(true);
-        activityUI.GetComponent<SetActivityUI>().OpenActivityUI();
+        activityUI.GetComponent<SetActivityUI>().OpenActivityUI(appointedActivity);
     }
 
     public static void TriggerUIsClosedEvent()

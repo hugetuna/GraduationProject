@@ -17,7 +17,7 @@ public class GuideInfoUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI harvestText; // 粉絲詳細資訊的累積收成數 -> None
     //-----------------------------------------------------------------//
     [SerializeField] private GameObject relevantItems; // 粉絲詳細資訊的掉落道具（父物件）
-    private List<Image> itemSlots = new(); // 掉落道具的欄位列表（子物件們）
+    private List<GuideRelevantItem> itemSlots = new(); // 掉落道具的欄位列表（子物件們）
     //-----------------------------------------------------------------//
     private List<Button> fansButtons = new(); // 所有粉絲卡片皆有點擊效果
     [SerializeField] private Color32 normalColor = new(255, 255, 255, 255); // 按鈕正常顏色
@@ -40,8 +40,9 @@ public class GuideInfoUI : MonoBehaviour
         // 預設相關道具欄位
         foreach (Transform slot in relevantItems.transform)
         {
-            itemSlots.Add(slot.GetComponent<Image>());
-            slot.GetComponent<Image>().sprite = null;
+            var cpn = slot.GetComponent<GuideRelevantItem>();
+            itemSlots.Add(cpn);
+            cpn.ClearDisplay();
         }
     }
 
@@ -94,10 +95,10 @@ public class GuideInfoUI : MonoBehaviour
         harvestText.text = $"累積收成數 1"; // 暫時寫死，之後再改
 
         // 先清空原有道具欄位再更新
-        foreach (Image slot in itemSlots) slot.sprite = null;
+        foreach (GuideRelevantItem slot in itemSlots) slot.ClearDisplay();
         for (int i = 0; i < fans.dropableItems.Count; i++)
         {
-            itemSlots[i].sprite = fans.dropableItems[i].icon;
+            itemSlots[i].UpdateDisplay(fans.dropableItems[i]);
         }
 
         // 確保字型正確渲染

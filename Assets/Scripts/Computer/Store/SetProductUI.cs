@@ -48,24 +48,23 @@ public class SetProductUI : MonoBehaviour
         productImage.sprite = product.item.icon;
         productNameText.text = product.item.itemName;
 
-        // 初始庫存數量設為最大庫存數
-        productRuntime.currentStack = product.maxStack; 
+        // 初始庫存數量設為最大庫存數 -> 已內建於 ProductRuntime 類別
         UpdateStackText();
 
         // 根據是否特價來調整價格顯示
         float discount = productRuntime.currentDiscount;
         if (discount == 1.0f) // 原價
         {
-            productPriceText.text = $"$ {product.price}";
+            productPriceText.text = $"${product.price}";
             productPriceText.color = normalPriceColor;
             oldProductPriceText.gameObject.SetActive(false);
             discountDash.SetActive(false);
         }
         else // 特價
         {
-            productPriceText.text = $"$ {(int)(product.price * discount)}";
+            productPriceText.text = $"${(int)(product.price * discount)}";
             productPriceText.color = discountPriceColor;
-            oldProductPriceText.text = $"$ {product.price}";
+            oldProductPriceText.text = $"${product.price}";
             oldProductPriceText.gameObject.SetActive(true);
             discountDash.SetActive(true);
 

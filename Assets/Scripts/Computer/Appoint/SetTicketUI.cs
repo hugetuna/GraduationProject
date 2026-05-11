@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using System;
 
 public enum TicketColor { Blue = 0, Green = 1, LightBlue = 2 }
 
@@ -16,6 +17,9 @@ public class SetTicketUI : MonoBehaviour
     [SerializeField] private TextMeshProUGUI activityInfoText; // 活動描述文字
     [SerializeField] private TextMeshProUGUI activityFeeText; // 活動價格文字
     [SerializeField] private TextMeshProUGUI activityDateText; // 活動日期文字
+    private int year = 2025;
+    private int initialMonth = 9;
+    private int initialDay = 22;
 
     public void Initialize(Activity newActivity, TicketColor color)
     {
@@ -26,7 +30,17 @@ public class SetTicketUI : MonoBehaviour
         activityNameText.text = activity.activityName;
         activityInfoText.text = activity.description;
         activityFeeText.text = $"${activity.fee}";
-        activityDateText.text = activity.date; // 已在 Activity 中設定好格式
+
+        int dayDiff = activity.day - DayManager.Instance.date;
+        int month = initialMonth;
+        int day = initialDay + dayDiff + 1;
+        if (day > 30)  // 簡單處理一下跨月的情況（目前只有九月和十月）
+        {
+            month++;
+            day -= 30;
+        }
+
+        activityDateText.text = $"{year}.{month:D2}.{day:D2}";
 
         // 確保字型正確渲染
         activityNameText.ForceMeshUpdate();

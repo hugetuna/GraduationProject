@@ -28,6 +28,9 @@ public class SetAppUI : MonoBehaviour
     [Header("應用程式雙擊效果")]
     [SerializeField] private float doubleClickThreshold = 0.3f; // 該按鈕的允許雙擊間隔（秒）
     private float lastClickTime = -1f;
+    //-----------------------------------------------------------------//
+    [Header("音效設定")]
+    public AudioClip openAppSound; // 開啟 App 的音效
 
     void Start()
     {
@@ -56,6 +59,7 @@ public class SetAppUI : MonoBehaviour
             Debug.Log($"雙擊開啟 {appData.appName} 視窗");
 
             appWindow.SetActive(true); // 開啟視窗
+            if(openAppSound != null) AudioManager.Instance.PlaySFX(openAppSound, 0.5f); // 播放音效
             var winRect = appWindow.GetComponent<RectTransform>();
 
             if (!windowManager.IsWindowRegistered(winRect))
