@@ -55,16 +55,16 @@ public class SetProductUI : MonoBehaviour
         float discount = productRuntime.currentDiscount;
         if (discount == 1.0f) // 原價
         {
-            productPriceText.text = $"$ {product.price}";
+            productPriceText.text = $"${product.price}";
             productPriceText.color = normalPriceColor;
             oldProductPriceText.gameObject.SetActive(false);
             discountDash.SetActive(false);
         }
         else // 特價
         {
-            productPriceText.text = $"$ {(int)(product.price * discount)}";
+            productPriceText.text = $"${(int)(product.price * discount)}";
             productPriceText.color = discountPriceColor;
-            oldProductPriceText.text = $"$ {product.price}";
+            oldProductPriceText.text = $"${product.price}";
             oldProductPriceText.gameObject.SetActive(true);
             discountDash.SetActive(true);
 
