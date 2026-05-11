@@ -1,57 +1,62 @@
-#speaker:Empty #background:DressingRoom 
-（後台更衣室內，空氣中充滿了化妝品的味道，還有從外面傳來的歡聲）
 
-#speaker:Kuma
-#Tachie1_Character:Kuma #Tachie1_Emotion:Talk #emotion:Talk
-哇...從這裡就能聽到外面好熱鬧的聲音
-
-#Tachie2_Character:Karo #Tachie2_Emotion:Talk
-#emotion:Talk
+#speaker:Empty #background:DressingRoom
+#Tachie1_Character:Kuma #Tachie1_Emotion:Angry
+#Tachie2_Character:Sirius #Tachie2_Emotion:Angry
+#Tachie3_Character:Karo #Tachie3_Emotion:Angry
 #Tachie1_Move:((-500,0),0.5)
-#speaker:Karo
-公演跟之前不同，是有現場粉絲觀看的，是我們傳達魅力的最好機會。
+#Tachie2_Move:((500,0),0.5)
+（休息室門被推開，三人走了進來，臉上的表情並不像剛晉級那樣興奮）
+
+#speaker:Manager
+結果發表結束了吧？狀況如何？
 
 #speaker:Kuma
-#Tachie1_Character:Kuma #Tachie1_Emotion:Laugh #emotion:Laugh
-嗯！雖然有點緊張，但想到可以直接看到粉絲們的反應，就覺得非常興奮！
+#Tachie1_Character:Kuma #Tachie1_Emotion:Talk
+#emotion:Talk
+經紀人...我們...
+#speaker:Kuma
+#emotion:Talk
+我們是第四名。卡在最後一個名額...活下來了。
+
+#speaker:Manager
+第四名嗎...雖然驚險，但總算是在生存範圍內。
+#speaker:Manager
+那其他組的排名呢？
+
+#speaker:Sirius
+#Tachie2_Character:Sirius #Tachie2_Emotion:Talk
+#emotion:Talk
+第一名是那家大型娛樂公司的團體，實力跟人氣都沒話說。
+#speaker:Sirius
+#emotion:Talk
+第二名是「Viv1D」，各方面都很平衡的表演，舞台氣氛塑造得很好。
+#speaker:Sirius
+#emotion:Talk
+第三名則是「Mixx」他們唱的太好了，表演分拿了接近滿分。
+
+#speaker:Manager
+果然...前三名的斷層還是很大。
+#speaker:Manager
+不過能從 8 組裡擠進前 4 已經很了不起了。你們表現得很棒。
 
 #speaker:Karo
-#Tachie2_Character:Karo #Tachie2_Emotion:Talk
-#emotion:Talk
-西莉絲，你的狀況還可以嗎？
+#Tachie3_Character:Karo #Tachie3_Emotion:Angry
+#emotion:Angry
+明明我的練習時間最長...卻沒有做到像他們一樣...。
 
-#speaker:Sirius
-#Tachie3_Character:Sirius #Tachie3_Emotion:Talk
-#Tachie2_Move:((500,0),0.5)
-#emotion:Talk
-嗯，還行。
-#speaker:Sirius
-#emotion:Talk
-（雖然語氣冷淡，但她正反覆緊握著拳頭，指關節微微發白）
+#speaker:Manager
+（察覺到 Karo 狀態不對勁，那種焦慮感比平常更強烈）
+#speaker:Manager
+Karo...
+#speaker:Manager
+大家今天都累了吧，先回去休息吧。
+#speaker:Manager
+排名的事情之後再檢討，重要的是我們還留在這場選秀裡。
 
 #speaker:Karo
-#Tachie2_Character:Karo #Tachie2_Emotion:Talk
-#emotion:Talk
-不用有太大壓力，歌唱有特殊加成分是沒錯，但你的舞蹈也能為我們帶來很多分數。
-
-#speaker:Sirius
-#Tachie3_Character:Sirius #Tachie3_Emotion:Talk
-#emotion:Talk
-我知道，無論唱歌還是跳舞，我都會做到我能做到的最好。
+#Tachie3_Character:Karo #Tachie3_Emotion:Angry
+#emotion:Angry
+...嗯。那我先去收拾東西了。
 
 #speaker:Manager
-（走進休息室，看著三人的樣子）
-#speaker:Manager
-準備好了嗎？
-#speaker:Manager
-去吧，無論如何，享受你們的舞台
-
-#speaker:Empty #background:Stage #bgm:StageBGM #sfx:Cheer
-（強烈的聚光燈瞬間打在三人身上，台下傳來如雷般的掌聲與歡呼聲）
-
-#speaker:Manager
-（站在側台陰影處，看著台上閃閃發光的她們）
-#speaker:Manager
-（那是只有她們才能散發出的，原始的光芒。）
-#speaker:Manager
-（只要能讓這道光留住....。）
+（看來，關於她以前在其他公司待過的那些事...我必須找時間查清楚了。）
