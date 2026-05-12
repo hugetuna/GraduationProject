@@ -470,12 +470,13 @@ VAR teamID = 0  // 由 Unity 端傳入
 #Tachie1_Character:Kuma 
 #Tachie1_Emotion:Talk
 #emotion:Talk
-艾可你在緊張嗎嗎？怎麼一直東張西望？
+艾可你在緊張嗎？怎麼一直東張西望？
 
 #speaker:Aicor
 #Tachie1_Character:Kuma 
 #Tachie2_Character:Aicor #Tachie2_Emotion:Angry
 #emotion:Angry
+#Tachie3_Move:((500,0),0.5)
 我在找鏡子啦，我需要現在重新確認一下外表。
 
 #speaker:Manager
