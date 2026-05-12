@@ -31,7 +31,8 @@
 #speaker:Manager
 ...你這樣講更恐怖了。
 
-#speaker:Akuma　#sfx:Whistling1
+#speaker:Akuma
+#sfx:Whistling1
 嘻嘻，由我提供「特別蒐集的夢幻靈魂」作為「胚胎」。
 #speaker:Akuma
 你只要讓偶像們「照顧」這些小東西，餵點情感、努力、目標之類的東西...
