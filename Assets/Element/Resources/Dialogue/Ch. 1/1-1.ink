@@ -1,15 +1,15 @@
 VAR teamID = 0
 { teamID:
-0: -> team0_kuma_sirius_karo
-1: -> team1_kuma_sirius_aicor
-2: -> team2_kuma_sirius_mizar
-3: -> team3_kuma_karo_aicor
-4: -> team4_kuma_karo_mizar
-5: -> team5_kuma_aicor_mizar
-6: -> team6_sirius_karo_aicor
-7: -> team7_sirius_karo_mizar
-8: -> team8_sirius_aicor_mizar
-9: -> team9_karo_aicor_mizar
+- 0: -> team0_kuma_sirius_karo
+- 1: -> team1_kuma_sirius_aicor
+- 2: -> team2_kuma_sirius_mizar
+- 3: -> team3_kuma_karo_aicor
+- 4: -> team4_kuma_karo_mizar
+- 5: -> team5_kuma_aicor_mizar
+- 6: -> team6_sirius_karo_aicor
+- 7: -> team7_sirius_karo_mizar
+- 8: -> team8_sirius_aicor_mizar
+- 9: -> team9_karo_aicor_mizar
 }
 
 ===team0_kuma_sirius_karo===
