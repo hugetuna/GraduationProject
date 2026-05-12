@@ -130,7 +130,7 @@ public class SetSettleUI : MonoBehaviour
 
         character.GetComponent<SetSettleCharacterUI>().ShowCharacterBenefits(
             idol.idolUISprites.spriteTachie,
-            idol.basicStatus.idolName,
+            TeamDataUtility.GetIdolNameTW(idol.idolIndex),
             idol.vigour, idol.vigourMax, 0,  // 目前沒有最大體力值變動
             idol.dance, 0,
             idol.vocal, 0,
