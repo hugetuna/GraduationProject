@@ -12,6 +12,7 @@ public class DesktopUIHandler : MonoBehaviour
     [SerializeField] private Button powerButton;
     [SerializeField] private GameObject startMenu;
     [SerializeField] private GameObject settleUI; // 按下 powerButton 後跳出結算畫面
+    [SerializeField] private GameObject demonPet; // 惡魔桌寵（第一天不顯示）
     //-----------------------------------------------------------------//
     [Header("角色控制")]
     public TeamManager teamManager; // 透過 TeamManager 物件取得當前隊伍成員
@@ -57,6 +58,8 @@ public class DesktopUIHandler : MonoBehaviour
         AudioManager.Instance.PlaySFX(turnOnSound); // 播放開機音效
         
         Camera.main.orthographic = true; // 切換成平行投影
+
+        if(DayManager.Instance.date == 1) demonPet.SetActive(false); // 第一天不顯示惡魔桌寵
 
         teamMembers = teamManager.teamMembers; // 獲取當前隊伍成員
         foreach (PlayerControlMainWorld member in teamMembers)
