@@ -9,6 +9,7 @@ public class DayManager : MonoBehaviour
     public static DayManager Instance;
     public int chapter = 0; //保存遊戲中的章節
     public int date = 0; //保存遊戲中的日期
+    public List<StageAttribute> bossStages;
     public DayEventManager dayEventManager;
     public bool IsInStartOfDay = true;//是否處於新一天開始的階段
     [Header("為了EventManager")]
@@ -81,6 +82,16 @@ public class DayManager : MonoBehaviour
     public void StartDay()
     {
         IsInStartOfDay = false;
+        if (date == 3&&chapter==0)
+        {
+            // 教學章最終天
+            GameManager.Instance.onStageStage=bossStages[0];
+        }
+        else if (date == 13 && chapter == 1)
+        {
+            // 正式第一章章最終天
+            GameManager.Instance.onStageStage = bossStages[1];
+        }
         dayEventManager.InitializeDayEvents(chapter, date, 0);
         dayEventManager.TriggerNextEvent();
         TeamManager teamManager = FindAnyObjectByType<TeamManager>();
