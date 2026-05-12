@@ -1504,7 +1504,7 @@ VAR teamID = 0  // 由 Unity 端傳入
 好了，回去準備下一階段吧。 
 #speaker:Manager
 真正的挑戰，才正要開始。
-->night
+->END
 ===night===
 #speaker:Manager #background:MyRoom #bgm:AkumaTheme
 （脫掉外套，整個人重重地摔進沙發裡）
