@@ -661,6 +661,7 @@ GameObject:
   - component: {fileID: 1717284592909307813}
   - component: {fileID: 1732921002793514286}
   - component: {fileID: 8203359086119792079}
+  - component: {fileID: 6416188524882536816}
   - component: {fileID: 495683890932557319}
   m_Layer: 0
   m_Name: AnimalFarm_Normal
@@ -730,6 +731,7 @@ MonoBehaviour:
   audio_PlantSeed: {fileID: 0}
   audio_WaterSeed: {fileID: 0}
   audio_HarvestSeed: {fileID: 0}
+  isTutorialFinished: 0
 --- !u!114 &8203359086119792079
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -792,6 +794,21 @@ MonoBehaviour:
   m_DefaultActionMap: PlayerActionMain
   m_SplitScreenIndex: -1
   m_Camera: {fileID: 0}
+--- !u!114 &6416188524882536816
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2338596099040995790}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 16defcab490c8724e9b4572d055ae02d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  hintPrefab: {fileID: 1776773948414331192, guid: 1f68213dbd0f542449843e0e85fa0aa1, type: 3}
+  SpwanPoint: {x: 0, y: 2, z: 1}
+  XDeg: 45
 --- !u!65 &495683890932557319
 BoxCollider:
   m_ObjectHideFlags: 0
