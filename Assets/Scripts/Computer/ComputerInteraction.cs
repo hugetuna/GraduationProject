@@ -63,7 +63,6 @@ public class ComputerInteraction : MonoBehaviour, IInteractable
             Debug.Log("完成特定第一天事件前不觸發");
             return false;
         }
-
         if (date == 2 && chapter == 0 && currentEvent.TriggerTimeIndex < 10)
         {
             Debug.Log("完成特定第二天事件前不觸發");

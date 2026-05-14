@@ -33,7 +33,7 @@ public class SetElevatorIcon : MonoBehaviour
         {
             int index = i; // 捕獲當前的索引值
             UnityEvent unityEvent = new UnityEvent();
-            if (DayManager.Instance.date == 1)//第一天禁止進入B1，封鎖按鈕
+            if (DayManager.Instance.date == 1&& DayManager.Instance.chapter == 0)//第一天禁止進入B1，封鎖按鈕
             {
                 buttons[0].interactable = false;
             }
