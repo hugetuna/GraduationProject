@@ -31,6 +31,10 @@ public class ComputerInteraction : MonoBehaviour, IInteractable
     public static void TriggerOnComputerInteracted()
     {
         Debug.Log($"電腦互動事件被觸發{OnComputerInteracted != null}");
+        if(DayManager.Instance.dayEventManager.currentEvent.Type == EventType.WaitComputerOpen)
+        {
+            DayManager.Instance.dayEventManager.ComputerOpen();
+        }
         OnComputerInteracted?.Invoke();
     }
     void IInteractable.Interact(int tool)
@@ -38,7 +42,7 @@ public class ComputerInteraction : MonoBehaviour, IInteractable
         // 來自 IInteractable 介面
         if (CheckCanInteract())
         {
-            OnComputerInteracted?.Invoke();
+            TriggerOnComputerInteracted();
             if (transform.childCount > 0)
             {
                 // 隱藏互動提示（減少提示物件與電腦介面交叉的不適感）

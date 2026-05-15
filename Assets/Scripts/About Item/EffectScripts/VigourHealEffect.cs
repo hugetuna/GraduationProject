@@ -10,6 +10,8 @@ public class VigourHealEffect : ItemEffect
     {
         int before = target.vigour;
         target.vigour = Mathf.Min(target.vigour + healAmount, target.vigourMax);
+        MainCanvasSetter mainCanvasSetter = FindAnyObjectByType<MainCanvasSetter>();
+        mainCanvasSetter?.setStatusBar();
         Debug.Log($"[體力恢復] 從 {before} → {target.vigour}");
     }
 }

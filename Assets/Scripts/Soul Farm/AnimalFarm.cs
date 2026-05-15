@@ -30,6 +30,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     public int foodBarnMax=0;//食物欄位上限
     [Header("介面")]
     public Canvas farmCanvas;//互動按鈕介面
+    public InteractableHint interactableHint;//互動提示
     public Button plantSeedButton;
     public TextMeshProUGUI plantCounting;
     public Button addFoodBarnButton;
@@ -114,6 +115,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     public void ShowInteractionUI()
     {
         SwitchActionMap("FarmConfig");
+        interactableHint.HideHint();
         // 讓主畫面 UI 看得到但點不到，且不接受鍵盤導覽
         if (mainUICanvasGroup != null)
         {
@@ -198,6 +200,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     public void HideInteractionUI()
     {
         SwitchActionMap("PlayerActionMain");
+        interactableHint.HideHint();
         if (mainUICanvasGroup != null)
         {
             mainUICanvasGroup.interactable = true;

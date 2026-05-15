@@ -176,7 +176,6 @@ public class SceneTransitionManager : MonoBehaviour
             if (clip.name == clipName)
                 return clip.length;
         }
-
         return 0f;
     }
 }

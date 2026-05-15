@@ -24,7 +24,7 @@ public class InteractableHint : MonoBehaviour
         }
     }
 
-    void ShowHint()
+    public void ShowHint()
     {
         if (hintPrefab != null && hintInstance == null)
         {
@@ -34,7 +34,7 @@ public class InteractableHint : MonoBehaviour
         }
     }
 
-    void HideHint()
+    public void HideHint()
     {
         if (hintInstance != null)
         {

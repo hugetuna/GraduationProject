@@ -435,7 +435,6 @@ public class OnStageManager : MonoBehaviour
             Debug.Log($"抽牌權為0，無法抽牌");
             return;
         }
-
         if (DrawCards(1))
         {
             drawChance--;
@@ -487,5 +486,4 @@ public class OnStageManager : MonoBehaviour
     {
         drawCharge += amount;
     }
-    
 }

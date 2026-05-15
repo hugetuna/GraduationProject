@@ -14,6 +14,7 @@ public enum EventType
     WaitForSeconds,
     WaitUntilSpecificIdolTrained,
     WaitUntilSpecificButtonPressed,
+    WaitComputerOpen,
     WaitAfterDayEndEventStart,
     WaitTutorialEnd,
     EndDay

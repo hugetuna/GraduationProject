@@ -214,6 +214,10 @@ public class DayEventManager : MonoBehaviour
         {
             Debug.Log($"等待按鈕 {dayEvent.targetButtonName} 被按下...");
         }
+        else if (dayEvent.Type == EventType.WaitComputerOpen)
+        {
+            Debug.Log($"等待電腦介面被開啟");
+        }
         else if (dayEvent.Type == EventType.WaitTutorialEnd)
         {
             // 等待教學結束的邏輯
@@ -327,6 +331,14 @@ public class DayEventManager : MonoBehaviour
         if(currentEvent!=null && currentEvent.Type == EventType.WaitUntilSpecificButtonPressed && currentEvent.targetButtonName == buttonName)
         {
             // 按鈕被按下，事件完成
+            TriggerNextEvent();
+        }
+    }
+    public void ComputerOpen()
+    {
+        if (currentEvent != null && currentEvent.Type == EventType.WaitComputerOpen)
+        {
+            Debug.Log($"電腦介面被開啟，事件完成");
             TriggerNextEvent();
         }
     }
