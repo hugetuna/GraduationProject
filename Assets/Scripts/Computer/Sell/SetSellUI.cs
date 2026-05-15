@@ -10,8 +10,8 @@ public class SetSellUI : MonoBehaviour
     [SerializeField] private List<GameObject> characterUIList = new();
     [SerializeField] private Button closeButton; // 關閉販賣頁面按鈕
     //-----------------------------------------------------------------//
-    [Header("測試用粉絲資料")]
-    [SerializeField] private List<ItemStack> testFansList = new();
+    // [Header("測試用粉絲資料")]
+    // [SerializeField] private List<ItemStack> testFansList = new();
     //-----------------------------------------------------------------//
     private Dictionary<IdolInstance, List<ItemStack>> idolFansDict = new();
 
@@ -37,7 +37,7 @@ public class SetSellUI : MonoBehaviour
         }
 
         /* 處理測試用粉絲 */
-        AddTestFansData(idolList);
+        // AddTestFansData(idolList);
 
         // 初始化角色粉絲字典
         foreach (var idol in idolList) idolFansDict[idol] = new List<ItemStack>();
@@ -57,20 +57,20 @@ public class SetSellUI : MonoBehaviour
         }
     }
 
-    private void AddTestFansData(List<IdolInstance> idolList)
-    {
-        for (int i = 0; i < testFansList.Count; i++)
-        {
-            var itemStack = testFansList[i];
+    // private void AddTestFansData(List<IdolInstance> idolList)
+    // {
+    //     for (int i = 0; i < testFansList.Count; i++)
+    //     {
+    //         var itemStack = testFansList[i];
 
-            // 用 Clone 確保測試用粉絲不會直接修改原本的 SO 資料
-            FansItem copy = (FansItem)itemStack.item.Clone();
-            copy.SetHarvester(idolList[i % idolList.Count].idolIndex);
+    //         // 用 Clone 確保測試用粉絲不會直接修改原本的 SO 資料
+    //         FansItem copy = (FansItem)itemStack.item.Clone();
+    //         copy.SetHarvester(idolList[i % idolList.Count].idolIndex);
 
-            // 將測試用粉絲加到 ResourceManager
-            ResourceManager.Instance.AddItem(copy, itemStack.quantity);
-        }
-    }
+    //         // 將測試用粉絲加到 ResourceManager
+    //         ResourceManager.Instance.AddItem(copy, itemStack.quantity);
+    //     }
+    // }
 
     private void AddToIdolFansDict(FansItem fansItem, int amount = 1)
     {

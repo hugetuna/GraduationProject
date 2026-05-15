@@ -9,6 +9,8 @@ public class DayManager : MonoBehaviour
     public static DayManager Instance;
     public int chapter = 0; //保存遊戲中的章節
     public int date = 0; //保存遊戲中的日期
+    [HideInInspector] public int day = 1; // 保存遊戲中的總天數（方便記錄用，從 1 開始計算）
+    private bool isDayInitialized = false; // 確保總天數有正確地被初始化
     public List<StageAttribute> bossStages;
     public DayEventManager dayEventManager;
     public bool IsInStartOfDay = true;//是否處於新一天開始的階段
@@ -22,8 +24,8 @@ public class DayManager : MonoBehaviour
     }
     public void OnGameFileLoad()
     {
-        date=GameManager.Instance.DayData.day;
-        IsInStartOfDay= GameManager.Instance.DayData.IsInStartOfDay;
+        date = GameManager.Instance.DayData.day;
+        IsInStartOfDay = GameManager.Instance.DayData.IsInStartOfDay;
         //if (IsInStartOfDay)
         //{
         //    StartDay();
@@ -36,11 +38,11 @@ public class DayManager : MonoBehaviour
     }
     public void OnSceneLoaded(string SceneName)
     {
-        if (IsInStartOfDay==true&&SceneName=="Floor_1")
+        if (IsInStartOfDay == true && SceneName == "Floor_1")
         {
             StartDay();
         }
-        else if (SceneName == "Floor_3"&&date == 1&&chapter==0 && IsInStartOfDay == true)
+        else if (SceneName == "Floor_3" && date == 1 && chapter == 0 && IsInStartOfDay == true)
         {
             StartDay();
             IdolInstance[] allIdols = FindObjectsByType<IdolInstance>(FindObjectsSortMode.None);
@@ -54,11 +56,11 @@ public class DayManager : MonoBehaviour
                     whoGoesToTeain = idol;
                     break;
                 }
-                else if (idol.idolIndex == IdolWho.Aicor&&  whoGoesToTeain?.idolIndex!= IdolWho.Sirius)
+                else if (idol.idolIndex == IdolWho.Aicor && whoGoesToTeain?.idolIndex != IdolWho.Sirius)
                 {
                     whoGoesToTeain = idol;
                 }
-                else if (idol.idolIndex == IdolWho.Kuma&& whoGoesToTeain?.idolIndex != IdolWho.Sirius&& whoGoesToTeain?.idolIndex != IdolWho.Aicor)
+                else if (idol.idolIndex == IdolWho.Kuma && whoGoesToTeain?.idolIndex != IdolWho.Sirius && whoGoesToTeain?.idolIndex != IdolWho.Aicor)
                 {
                     whoGoesToTeain = idol;
                 }
@@ -73,19 +75,28 @@ public class DayManager : MonoBehaviour
             }
             Debug.Log($"第一天，封鎖了{whoGoesToTeain.idolIndex}以外的練習");
         }
-        if (SceneName == "Floor_3"|| SceneName == "Floor_3" || SceneName == "Floor_2" || SceneName == "Floor_1" || SceneName == "Floor_B1")
+        if (SceneName == "Floor_3" || SceneName == "Floor_3" || SceneName == "Floor_2" || SceneName == "Floor_1" || SceneName == "Floor_B1")
         {
             dayEventManager.ShowEventHint(dayEventManager.currentEvent);
+        }
+
+        if (isDayInitialized == false)
+        {
+            // 更新總天數
+            if (chapter == 0) day = date;
+            else if (chapter == 1) day = date + 3;
+
+            isDayInitialized = true;
         }
     }
     // 用來更動日期的函式
     public void StartDay()
     {
         IsInStartOfDay = false;
-        if (date == 3&&chapter==0)
+        if (date == 3 && chapter == 0)
         {
             // 教學章最終天
-            GameManager.Instance.onStageStage=bossStages[0];
+            GameManager.Instance.onStageStage = bossStages[0];
         }
         else if (date == 13 && chapter == 1)
         {
@@ -122,10 +133,11 @@ public class DayManager : MonoBehaviour
         // 重置預約狀態
         GameManager.Instance.teacherSaveData.CleanTeacherAppointments();
         // 清除過期的商演預約紀錄
-        GameManager.Instance.activitySaveData.CleanGoneActivities(); 
+        GameManager.Instance.activitySaveData.CleanGoneActivities();
         // 每天結束時大保存一次
         date++;
-        if(chapter==0&&date==4)
+        day++;
+        if (chapter == 0 && date == 4)
         {
             chapter = 1;
             date = 1;
@@ -133,5 +145,5 @@ public class DayManager : MonoBehaviour
         GameManager.Instance.SaveDayData();
         GameManager.Instance.SaveToFile();
         SceneTransitionManager.Instance.teleportByTargetSceneName("Floor_1");
-    }  
+    }
 }

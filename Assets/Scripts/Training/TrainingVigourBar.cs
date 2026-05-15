@@ -88,7 +88,7 @@ public class TrainingVigourBar : MonoBehaviour
 
         // 檢查今天是否為訓練室的新手教學
         bool firstDay = false;
-        if (DayManager.Instance != null && DayManager.Instance.date == 1)
+        if (DayManager.Instance != null && DayManager.Instance.day == 1)
         {
             var currentEvent = DayManager.Instance.dayEventManager.currentEvent;
             if (currentEvent != null && currentEvent.TriggerTimeIndex >= 6)
