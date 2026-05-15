@@ -7,16 +7,21 @@ using UnityEngine.UI;
 /* 掛在提醒玩家已使用某道具的提示 prefab 上 */
 public class PackHintToggler : MonoBehaviour
 {
-    [SerializeField] private TextMeshProUGUI hintText; // 提示文字 UI 元素
+    [SerializeField] private TextMeshProUGUI hintText; // 提示文字
+    [SerializeField] private TextMeshProUGUI descriptionText; // 道具效果說明文字
     [SerializeField] private Button okButton; // 確認按鈕
     [SerializeField] private AudioClip closeSound;
 
-    public void SetHintUI(string idolName, string itemName)
+    public void SetHintUI(string idolName, Item item)
     {
+        string itemName = item.itemName;
+        string itemDescription = item.description;
         string hint = "";
+        
         if(itemName.Length > 5) hint = $"{idolName}使用了\n{itemName}！";
         else hint = $"{idolName}使用了{itemName}！";
         hintText.text = hint;
+        descriptionText.text = $"道具效果：{itemDescription}";
         okButton.onClick.AddListener(OnOkButtonClicked);
     }
 
