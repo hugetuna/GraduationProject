@@ -9,6 +9,7 @@ public class DayManager : MonoBehaviour
     public static DayManager Instance;
     public int chapter = 0; //保存遊戲中的章節
     public int date = 0; //保存遊戲中的日期
+    public int day = 1; // 保存遊戲中的總天數（方便記錄用，從 1 開始計算）
     public List<StageAttribute> bossStages;
     public DayEventManager dayEventManager;
     public bool IsInStartOfDay = true;//是否處於新一天開始的階段
@@ -125,6 +126,7 @@ public class DayManager : MonoBehaviour
         GameManager.Instance.activitySaveData.CleanGoneActivities(); 
         // 每天結束時大保存一次
         date++;
+        day++;
         if(chapter==0&&date==4)
         {
             chapter = 1;

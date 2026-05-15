@@ -28,7 +28,7 @@ public class ChatRoomController : MonoBehaviour
 
     void OnEnable() // 僅限同檔案同天同場景的視窗開關
     {
-      if(lastEnabledUserRuntime != null)
+        if (lastEnabledUserRuntime != null)
         {
             // 重新啟用聊天室時，如果有正在聊天的用戶，則繼續顯示對話內容
             StartChatting(lastEnabledUserRuntime);
@@ -219,7 +219,7 @@ public class ChatRoomController : MonoBehaviour
 
         // 通知 UI 更新狀態
         currentUserRuntime.lastMessageText = text;
-        currentUserRuntime.lastMessageDay = DayManager.Instance.date;
+        currentUserRuntime.lastMessageDay = DayManager.Instance.day;
         SetUserUI.InvokeUserStatusChanged(currentUserRuntime);
 
         // 新增對話泡泡，並隨時記錄對話歷史

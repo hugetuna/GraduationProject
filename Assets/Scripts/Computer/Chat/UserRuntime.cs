@@ -42,7 +42,7 @@ public class UserRuntime
         }
 
         // 若無存檔，預設為當前日期
-        if(lastMessageDay == -1) lastMessageDay = DayManager.Instance.date;
+        if(lastMessageDay == -1) lastMessageDay = DayManager.Instance.day;
     }
 
     public void AddToChatHistory(string text, bool isPlayer)
@@ -63,7 +63,7 @@ public class UserRuntime
         // if (count > 0)
         // {
         //     lastMessageText = chatHistory[count - 1].text;
-        //     lastMessageDay = DayManager.Instance.date;
+        //     lastMessageDay = DayManager.Instance.day;
         //     if (lastMessageText == "＊此次對話已結束＊")
         //     {
         //         isUnread = false; // 對話結束後不再視為未讀

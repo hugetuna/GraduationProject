@@ -158,7 +158,7 @@ public class TicketInfoUI : MonoBehaviour
         selectedButton.GetComponent<Image>().sprite = selectedTicketSprites[(int)theme];
 
         // 生成最小化活動圖示到對應日期上
-        int daydiff = Math.Abs(selectedActivity.day - DayManager.Instance.date);
+        int daydiff = Math.Abs(selectedActivity.day - DayManager.Instance.day);
         GameObject minTicket = Instantiate(minTicketPrefabs[(int)theme], DayContents[daydiff].transform);
 
         // 設定最小化活動圖示的內容
@@ -225,7 +225,7 @@ public class TicketInfoUI : MonoBehaviour
         btn.GetComponent<Image>().sprite = selectedTicketSprites[(int)theme];
 
         // 2. 生成最小化活動圖示到日曆
-        int daydiff = act.day - DayManager.Instance.date;
+        int daydiff = act.day - DayManager.Instance.day;
         if (daydiff >= 0 && daydiff <= 5)
         {
             GameObject minTicket = Instantiate(minTicketPrefabs[(int)theme], DayContents[daydiff].transform);

@@ -35,11 +35,12 @@ public class DoorInteraction : MonoBehaviour, IInteractable
     {
         if (DayManager.Instance == null || DayManager.Instance.dayEventManager.currentEvent == null) return false;
 
+        int chapter = DayManager.Instance.chapter;
         int date = DayManager.Instance.date;
         int eventIndex = DayManager.Instance.dayEventManager.currentEvent.TriggerTimeIndex;
 
         // 目前第一天的事件 6 是指定角色訓練，而事件 7 是繼續逛下一層樓
-        return date == 1 && eventIndex > 6;
+        return chapter == 0 && date == 1 && eventIndex > 6;
     }
 
     private void ShowFirstDayHint()
