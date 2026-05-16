@@ -37,6 +37,7 @@ public class UseItem : MonoBehaviour
 
         foreach(var idol in idolInstances)
         {
+            if(!idol.isAvailable) continue; // 如果偶像不在隊伍裡，則跳過這個偶像，不加入選項
             string memberName = TeamDataUtility.GetIdolNameTW(idol.idolIndex); // 取得隊伍成員名稱
             dropdown.options.Add(new TMP_Dropdown.OptionData("給 " + memberName)); // 新增選單項目
         }
