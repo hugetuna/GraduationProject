@@ -6,7 +6,12 @@ using System.Collections.Generic;
 public class TeacherSaveData
 {
     public List<TeacherInfo> trainingTeachers = new(); // 記錄已預約的老師用戶名稱＆性質
-    // 部分預約資料可能需要每天更新，之後再寫就好
+
+    public bool IsWithTeacherToday(TrainingType trainingType) // 記錄今天是否有老師協助訓練（方便存取用）
+    {
+        var teacher = trainingTeachers.Find(t => t.trainingType == trainingType);
+        return teacher != null;
+    }
 
     public void CleanTeacherAppointments()
     {

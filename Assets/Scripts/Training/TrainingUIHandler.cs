@@ -19,6 +19,7 @@ public class TrainingUIHandler : MonoBehaviour
     [SerializeField] private TextMeshProUGUI TypeText;
     [SerializeField] private TextMeshProUGUI TeacherText;
     [SerializeField] private TextMeshProUGUI VigourText;
+    [SerializeField] private TextMeshProUGUI BenefitText;
     [SerializeField] private List<Image> characterImages = new(); //  UI 上的（角色）圖片插槽
     //-----------------------------------------------------------------//
     [Header("相關音效")]
@@ -26,7 +27,7 @@ public class TrainingUIHandler : MonoBehaviour
     [SerializeField] private AudioClip assignSound; // 按下指派按鈕的音效
     //-----------------------------------------------------------------//
     private TrainingUIData trainingUIData; // 訓練 UI 的資料 ScriptableObject
-    private bool isInitialized = false; // 確保訓練 UI 只初始化一次
+    // private bool isInitialized = false;
     private string todayTeacherName = "";
     //-----------------------------------------------------------------//
     [Header("跳轉提示 UI 元素")]
@@ -52,34 +53,40 @@ public class TrainingUIHandler : MonoBehaviour
         //-----------------------------------------------------------------//
 
         TypeText.text = trainingUIData.trainingType.ToString(); // 設定訓練類型的 UI 文字內容
-        FindTodayTeacher(); // 設定老師的 UI 文字內容
-        VigourText.text = $"耗費體力：{trainingUIData.neededVigour}"; // 設定耗費體力的 UI 文字內容
+        FindTodayTeacherAndExplanation(); // // 根據有無老師，設定老師、耗費體力與數值收益的 UI 文字內容
 
         UpdateCharacterImagesAndPositions(); // 設定角色 UI 圖片及位置
 
-        if (!isInitialized)
-        {
-            InitializeDragSystem();
-            isInitialized = true;
-        }
+        RefreshDragSystem(); // 初始化或刷新拖曳系統，確保每次開啟 UI 都能正確顯示拖曳功能
+
+        // if (!isInitialized)
+        // {
+        //     InitializeDragSystem();
+        //     isInitialized = true;
+        // }
 
         //-----------------------------------------------------------------//
 
         CheckUnableState(); // 檢查是否有無法訓練的角色，並套用灰階效果
     }
 
-    private void FindTodayTeacher()
+    private void FindTodayTeacherAndExplanation()
     {
-        // 從預約資料中讀取今天的老師名稱
+        // 從預約資料中讀取今天的老師名稱（[老師名字] vs. 無）
         var teacherSaveData = GameManager.Instance.teacherSaveData;
         var trainingType = trainingUIData.trainingType;
-        if (todayTeacherName == "")
-        {
-            todayTeacherName = teacherSaveData.GetTeacherNameByType(trainingType);
-        }
-        if (todayTeacherName != "無")
+        if (todayTeacherName == "") todayTeacherName = teacherSaveData.GetTeacherNameByType(trainingType);
+        
+        if (todayTeacherName != "無") // 今天有老師
         {
             teacherSaveData.SetTeacherLessonCompleted(trainingType); // 標記老師為已使用，避免隔天重複預約
+            VigourText.text = $"耗費體力：{trainingUIData.neededVigour - 5}"; 
+            BenefitText.text = $"數值收益：{trainingUIData.withTeacherBenefit}";
+        }
+        else // 今天沒老師
+        {
+            VigourText.text = $"耗費體力：{trainingUIData.neededVigour}"; 
+            BenefitText.text = $"數值收益：{trainingUIData.basicBenefit}";
         }
 
         TeacherText.text = $"老師：{todayTeacherName}";
@@ -92,7 +99,7 @@ public class TrainingUIHandler : MonoBehaviour
         {
             Image img = characterImages[i];
             var idolInstance = TeamDataUtility.IdolDict.ElementAt(i).Value;
-            
+
             // 為圖片插槽放置角色圖片
             if (i < TeamDataUtility.idolCount)
             {
@@ -154,7 +161,7 @@ public class TrainingUIHandler : MonoBehaviour
         OnTrainingUIClosed?.Invoke(); // 觸發訓練 UI 關閉事件
     }
 
-    private void InitializeDragSystem()
+    private void RefreshDragSystem()
     {
         for (int i = 0; i < characterImages.Count; i++)
         {

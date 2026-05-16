@@ -33,8 +33,8 @@ public class TraineeAssignment : MonoBehaviour
             IdolInstance idolData = idol.GetComponent<IdolInstance>();
 
             // 如果角色根本不應該出現在訓練介面，就直接跳過（比如說她正好在打工）
-            if(!idolData.CanShowInTheAction(AvailableAction.Train)) continue; 
-            
+            if (!idolData.CanShowInTheAction(AvailableAction.Train)) continue;
+
             /* 取得角色的訓練資料 */
             IdolWho idolEnum = idolData.idolIndex;
             var trainRecord = idolData.trainRecord;
@@ -52,12 +52,14 @@ public class TraineeAssignment : MonoBehaviour
                 CalculateAndSetTrainingStats(idolData, data);
 
                 // 標記為忙碌並隱藏角色物件
-                if (areAllToTrain) continue; // 全員訓練不隱藏角色
-                teamManager.AddBusyMember(idolControl);
-                idol.SetActive(false);
+                if (!areAllToTrain) // 全員訓練不隱藏角色
+                {
+                    teamManager.AddBusyMember(idolControl);
+                    idol.SetActive(false);
+                }
 
                 // 更新跨場景狀態
-                UpdateIdolTrainRecord(idolEnum, isActive: false);
+                if(!areAllToTrain) UpdateIdolTrainRecord(idolEnum, isActive: false);
                 idolData.currentAction = AvailableAction.Train;
             }
             // 情況二：這個角色在「成員區」(可能是剛被移出訓練，或者原本就沒事)
@@ -94,8 +96,9 @@ public class TraineeAssignment : MonoBehaviour
     private void CalculateAndSetTrainingStats(IdolInstance idol, TrainingUIData data)
     {
         // 根據是否有老師來決定收益類型
-        var teacherName = GameManager.Instance.teacherSaveData.GetTeacherNameByType(data.trainingType);
-        int benefit = teacherName != "無" ? data.withTeacherBenefit : data.basicBenefit;
+        bool isWithTeacher = GameManager.Instance.teacherSaveData.IsWithTeacherToday(data.trainingType);
+        int benefit = isWithTeacher ? data.withTeacherBenefit : data.basicBenefit;
+        int vigourCost = isWithTeacher ? data.neededVigour - 5 : data.neededVigour;
 
         int finalDanceExp = 0;
         int finalVocalExp = 0;
@@ -118,7 +121,7 @@ public class TraineeAssignment : MonoBehaviour
         // 寫入 Record (這裡只是紀錄「將會」發生什麼事，還沒真正扣體力)
         UpdateIdolTrainRecord(
             idol.idolIndex,
-            vigourCost: data.neededVigour,
+            vigourCost: vigourCost,
             danceExp: finalDanceExp,
             vocalExp: finalVocalExp,
             visualExp: finalVisualExp

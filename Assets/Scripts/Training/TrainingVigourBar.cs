@@ -7,6 +7,7 @@ public class TrainingVigourBar : MonoBehaviour
     private IdolInstance characterInfo; // 該角色的數值資料
     private TrainingUIData trainingUIData;
     private DropZoneType currentZoneType;
+    private bool isWithTeacher;
     //-----------------------------------------------------------------//
     [Header("體力 UI")]
     [SerializeField] private Slider vigourSlider; // 該角色的體力值 UI
@@ -18,7 +19,8 @@ public class TrainingVigourBar : MonoBehaviour
     private UIGrayEffect fillGrayEffect; // 體力條圖片的灰階效果參考
     private RectTransform vigourRect; // 體力條的 RectTransform 參考
     [SerializeField] private Vector2 teamPosition; // 角色在隊伍裡，體力條的位置（初始位置）
-    [SerializeField] private Vector2 sendPosition; // 角色準備外出商演時，體力條的位置（拖曳後的位置）
+    [SerializeField] private Vector2 sendPosition; // 角色準備訓練時，體力條的位置（拖曳後的位置）
+    [SerializeField] private Color32 tiredColor = new Color32(244, 112, 112, 255); // 體力不足時的顏色
 
     void Awake()
     {
@@ -33,6 +35,7 @@ public class TrainingVigourBar : MonoBehaviour
         this.trainingUIData = trainingUIData;
         characterInfo = TeamDataUtility.IdolDict[myIdolIndex]; // 尋找對應的角色資料
         currentZoneType = characterInfo.trainRecord.droppedZoneType; // 根據角色的打工紀錄設定區域類型
+        isWithTeacher = GameManager.Instance.teacherSaveData.IsWithTeacherToday(trainingUIData.trainingType);
 
         UpdateVigourBar(currentZoneType); // 初始化體力條顯示
     }
@@ -55,7 +58,7 @@ public class TrainingVigourBar : MonoBehaviour
         // 基礎數值計算
         float max = characterInfo.vigourMax;
         float current = characterInfo.vigour;
-        float cost = trainingUIData.neededVigour;
+        float cost = isWithTeacher ? trainingUIData.neededVigour - 5 : trainingUIData.neededVigour;
 
         vigourSlider.maxValue = max; // 設定體力值 UI 的最大值
 
@@ -75,16 +78,17 @@ public class TrainingVigourBar : MonoBehaviour
             lastFillImage.fillAmount = ratio; // 顯示體力變化
         }
 
-        ApplyGrayEffect(zoneType); // 根據體力狀態更新灰階效果
+        ApplyColorEffect(zoneType); // 根據體力狀態更新顏色效果
     }
 
-    private void ApplyGrayEffect(DropZoneType zoneType)
+    private void ApplyColorEffect(DropZoneType zoneType)
     {
         if (grayEffect == null || characterInfo == null || trainingUIData == null) return;
 
         // 檢查體力是否足夠
-        bool isTooTired = characterInfo.vigour < trainingUIData.neededVigour;
-        // Debug.Log($"對 {characterInfo.idolIndex} 使用灰階效果: 體力={characterInfo.vigour}, 耗體={trainingUIData.vigourCost}");
+        float cost = isWithTeacher ? trainingUIData.neededVigour - 5 : trainingUIData.neededVigour;
+        bool isTooTired = characterInfo.vigour < cost;
+        // Debug.Log($"對 {characterInfo.idolIndex} 使用灰階效果: 體力={characterInfo.vigour}, 耗體={cost}");
 
         // 檢查今天是否為訓練室的新手教學
         bool firstDay = false;
@@ -105,16 +109,18 @@ public class TrainingVigourBar : MonoBehaviour
 
         if (zoneType == DropZoneType.Member)
         {
-            // 在 Member 區才需要根據體力變灰
+            // 在 Member 區才需要根據體力變色
             grayEffect.SetGrayScale(isTooTired);
-            fillGrayEffect.SetGrayScale(isTooTired);
+            // fillGrayEffect.SetGrayScale(isTooTired);
+            fillImage.color = isTooTired ? tiredColor : Color.white; // 體力不足時改變顏色，否則恢復正常顏色
             if(!firstDay) drag.enabled = !isTooTired; // 體力不足時禁用拖曳功能
         }
         else // 訓練區（先不管 None）
         {
-            // 取消灰階（不論體力狀態）
+            // 取消變色（不論體力狀態）
             grayEffect.SetGrayScale(false);
-            fillGrayEffect.SetGrayScale(false);
+            // fillGrayEffect.SetGrayScale(false);
+            fillImage.color = Color.white;
             if(!firstDay) drag.enabled = true; // 始終允許拖曳功能
         }
     }

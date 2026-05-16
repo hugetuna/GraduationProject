@@ -10,8 +10,8 @@ public class TrainingUIData : ScriptableObject
     public TrainingType trainingType = TrainingType.None; // 訓練類型
     //public string teacherName = ""; // 老師名稱，預設為無 => 動態資料，改為直接從 AppointSaveData 讀取
     public int neededVigour = 20; // 訓練所需的體力值，預設為 20
-    public int basicBenefit = 60; // 訓練的基本收益，預設為 60
-    public int withTeacherBenefit = 100; // 有老師協助訓練的收益，預設為 100
+    public int basicBenefit = 150; // 訓練的基本收益，預設為 150
+    public int withTeacherBenefit = 200; // 有老師協助訓練的收益，預設為 200
     //-----------------------------------------------------------------//
     /* 根據角色狀態有所浮動的部分 */
     // 角色訓練前與訓練後的體力＆能力值 -> 讀取角色的資料再加以視覺化 v
@@ -24,8 +24,8 @@ public class TrainingUIData : ScriptableObject
 //         trainingType = "";
 //         teacherName = "";
 //         neededVigour = 20;
-//         basicBenefit = 60;
-//         withTeacherBenefit = 100;
+//         basicBenefit = 150;
+//         withTeacherBenefit = 200;
 //         teamData = null;
 //     }
 // #endif
