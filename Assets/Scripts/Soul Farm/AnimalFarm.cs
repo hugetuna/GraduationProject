@@ -55,10 +55,14 @@ public class AnimalFarm : MonoBehaviour, IInteractable
 
     private void Start()
     {
-        
         teamManager = FindAnyObjectByType<TeamManager>();
         resourceManager = FindAnyObjectByType<ResourceManager>();
         soilManager = FindAnyObjectByType<SoilManager>();
+        if (!isTutorialFinished && DayManager.Instance.date == 2&&DayManager.Instance.dayEventManager.currentEvent?.Type==EventType.WaitUntilSceneChange&&farmLV==FarmLV.Low)
+        {
+            resourceManager.AddItem(resourceManager.findItemByID("CS-001"), 1);
+            Debug.Log("第二天的農場教學，給予玩家一個低級種子");
+        }
     }
     void Update()
     {
@@ -216,6 +220,30 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     public void pressPlantButton()
     {
         //種植種子(消耗玩家道具)
+        if (farmLV == FarmLV.Low)
+        {
+            if (!resourceManager.RemoveItem(resourceManager.findItemByID("CS-001"), 1))
+            {
+                Debug.Log("沒有足夠的種子了");
+                return;
+            }
+        }
+        else if (farmLV == FarmLV.Medium)
+        {
+            if (!resourceManager.RemoveItem(resourceManager.findItemByID("CS-002"), 1))
+            {
+                Debug.Log("沒有足夠的種子了");
+                return;
+            }
+        }
+        else if (farmLV == FarmLV.High)
+        {
+            if (!resourceManager.RemoveItem(resourceManager.findItemByID("CS-003"), 1))
+            {
+                Debug.Log("沒有足夠的種子了");
+                return;
+            }
+        }
         PlantSeed();
         teamManager?.teamMembers[teamManager.currentLeaderIndex].GetComponent<PlayerControlMainWorld>().OnFarmAnimation();
         StartCoroutine(ButtonCooldown(plantSeedButton, 0.2f)); // 種植按鈕冷卻0.2秒
