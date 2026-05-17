@@ -1,9 +1,12 @@
 using UnityEngine;
 using UnityEngine.UI;
+using System;
 
 /* 掛在角色 UI 上 */
 public class TrainingVigourBar : MonoBehaviour
 {
+    public static event Action OnTrainingTutorialDone; // 定義訓練室新手教學完成事件（新手教學用）
+    //-----------------------------------------------------------------//
     private IdolInstance characterInfo; // 該角色的數值資料
     private TrainingUIData trainingUIData;
     private DropZoneType currentZoneType;
@@ -90,20 +93,18 @@ public class TrainingVigourBar : MonoBehaviour
         bool isTooTired = characterInfo.vigour < cost;
         // Debug.Log($"對 {characterInfo.idolIndex} 使用灰階效果: 體力={characterInfo.vigour}, 耗體={cost}");
 
-        // 檢查今天是否為訓練室的新手教學
+        // 檢查今天是否為訓練室的新手教學（因為會影響到體力判定所以放在這個腳本處理）
         bool firstDay = false;
-        if (DayManager.Instance != null && DayManager.Instance.day == 1)
+        var currentEvent = DayManager.Instance.dayEventManager.currentEvent;
+        if (DayManager.Instance.day == 1 && currentEvent != null && currentEvent.TriggerTimeIndex >= 6)
         {
-            var currentEvent = DayManager.Instance.dayEventManager.currentEvent;
-            if (currentEvent != null && currentEvent.TriggerTimeIndex >= 6)
+            if (currentZoneType != DropZoneType.Member)
             {
-                if (currentZoneType != DropZoneType.Member)
-                {
-                    // 把角色放進訓練室後就不允許再拖曳了
-                    Debug.Log("已將指定角色放入訓練室，鎖定拖曳");
-                    drag.enabled = false;
-                    firstDay = true;
-                }
+                // 把角色放進訓練室後就不允許再拖曳了
+                // Debug.Log("已將指定角色放入訓練室，鎖定拖曳");
+                drag.enabled = false;
+                firstDay = true;
+                OnTrainingTutorialDone?.Invoke();
             }
         }
 
@@ -113,7 +114,7 @@ public class TrainingVigourBar : MonoBehaviour
             grayEffect.SetGrayScale(isTooTired);
             // fillGrayEffect.SetGrayScale(isTooTired);
             fillImage.color = isTooTired ? tiredColor : Color.white; // 體力不足時改變顏色，否則恢復正常顏色
-            if(!firstDay) drag.enabled = !isTooTired; // 體力不足時禁用拖曳功能
+            if (!firstDay) drag.enabled = !isTooTired; // 體力不足時禁用拖曳功能
         }
         else // 訓練區（先不管 None）
         {
@@ -121,7 +122,7 @@ public class TrainingVigourBar : MonoBehaviour
             grayEffect.SetGrayScale(false);
             // fillGrayEffect.SetGrayScale(false);
             fillImage.color = Color.white;
-            if(!firstDay) drag.enabled = true; // 始終允許拖曳功能
+            if (!firstDay) drag.enabled = true; // 始終允許拖曳功能
         }
     }
 }

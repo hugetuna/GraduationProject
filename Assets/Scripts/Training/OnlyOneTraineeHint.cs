@@ -6,6 +6,7 @@ using TMPro;
 public class OnlyOneTraineeHint : MonoBehaviour
 {
     [SerializeField] private TextMeshProUGUI titleText;
+    [SerializeField] private TextMeshProUGUI descriptionText;
     [SerializeField] private Button okayButton; // 按下後會關閉提示
     [SerializeField] private AudioClip cancelSound; // 按下按鈕的音效
 
@@ -22,7 +23,31 @@ public class OnlyOneTraineeHint : MonoBehaviour
         {
             traineeName = TeamDataUtility.GetIdolNameTW(whoCannotTrain);
         }
-        titleText.text = $"今天就先讓{traineeName}\n去訓練吧";
+        titleText.text = $"今天就先讓{traineeName}\n去訓練吧～";
+
+        IdolInstance idol = TeamDataUtility.IdolDict[whoCannotTrain];
+        string trainingType = "";
+        int ability = 0; 
+        int total = 0;
+        switch (idol.trainRecord.droppedZoneType)
+        {
+            case DropZoneType.Dance:
+                trainingType = "舞蹈";
+                ability = idol.dance;
+                total = ability + idol.trainRecord.danceExp;
+                break;
+            case DropZoneType.Vocal:
+                trainingType = "歌唱";
+                ability = idol.vocal;
+                total = ability + idol.trainRecord.vocalExp;
+                break;
+            case DropZoneType.Visual:
+                trainingType = "表現力";
+                ability = idol.visual;
+                total = ability + idol.trainRecord.visualExp;
+                break;
+        }
+        descriptionText.text = $"訓練項目：{trainingType} {ability}>>{total}";
     }
 
     private void OnOkayButtonClicked()

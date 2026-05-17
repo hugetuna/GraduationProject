@@ -10,6 +10,7 @@ public class TrainingUIHandler : MonoBehaviour
 {
     public static event Action OnTrainingUIClosed; // 定義訓練 UI 關閉事件
     public static event Action<TrainingUIData, bool> OnTrainingUIConfirmed; // 定義確定指派訓練成員事件
+    public static event Action OnTrainingUIOpened; // 定義訓練 UI 開啟事件（新手教學用）
     //-----------------------------------------------------------------//
     [Header("訓練 UI 元素")]
     [SerializeField] private GameObject trainingUI; // 直接使用場景中的，不必另外生成
@@ -68,6 +69,15 @@ public class TrainingUIHandler : MonoBehaviour
         //-----------------------------------------------------------------//
 
         CheckUnableState(); // 檢查是否有無法訓練的角色，並套用灰階效果
+
+        //-----------------------------------------------------------------//
+
+        // 啟用訓練室新手教學提示
+        var currentEvent = DayManager.Instance.dayEventManager.currentEvent;
+        if(DayManager.Instance.day == 1 && currentEvent != null && currentEvent.TriggerTimeIndex >= 6)
+        {
+            OnTrainingUIOpened?.Invoke();
+        }
     }
 
     private void FindTodayTeacherAndExplanation()
