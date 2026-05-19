@@ -29,11 +29,16 @@ public class SetDemonUI : MonoBehaviour
     private Coroutine typingCoroutine;
     private bool isTyping = false;
     private string fullLineText = ""; // 暫存目前的完整文字內容
+    [SerializeField] private GameObject indicator; // 漂浮三角形
+    //-----------------------------------------------------------------//
+    [Header("音效設定")]
+    [SerializeField] private AudioClip openSellUISound; // 開啟販賣頁面的音效
 
     void Start()
     {       
         sellUI.SetActive(false); // 預設關閉販賣頁面
         hintIcon.SetActive(true); // 預設顯示提示圖示
+        indicator.SetActive(false); // 預設關閉三角形
 
         talkButton.onClick.AddListener(OnTalkButtonClick);
         problemButton.onClick.AddListener(OnProblemButtonClick);
@@ -75,6 +80,8 @@ public class SetDemonUI : MonoBehaviour
     {
         // 打開販賣頁面
         sellUI.SetActive(true);
+        AudioManager.Instance.PlaySFX(openSellUISound, 0.5f);
+
         if(!isSellInitialized)
         {
             sellUI.GetComponent<SetSellUI>().Initialize();
@@ -94,6 +101,8 @@ public class SetDemonUI : MonoBehaviour
         story = new Story(inkJSONAsset.text);
         story.ChoosePathString(knotName);
         storyFinished = false;
+
+        indicator.SetActive(false); // 新對話開始時先收起三角形
 
         // 切換 Knot 時要確保停止上一個正在跑的打字機
         if (typingCoroutine != null) StopCoroutine(typingCoroutine);
@@ -120,6 +129,8 @@ public class SetDemonUI : MonoBehaviour
         if (story.canContinue)
         {
             fullLineText = story.Continue();
+
+            indicator.SetActive(false); // 打字期間要把三角形隱藏起來
             
             // 啟動打字機效果
             if (typingCoroutine != null) StopCoroutine(typingCoroutine);
@@ -129,6 +140,7 @@ public class SetDemonUI : MonoBehaviour
         {
             storyFinished = true;
             dialogueText.maxVisibleCharacters = fullLineText.Length; // 結束時確保文字完全顯示
+            indicator.SetActive(false); // 結束時也要收起三角形
             // dialogueText.text = story.currentText; // 維持最後一句
         }
     }
@@ -152,6 +164,12 @@ public class SetDemonUI : MonoBehaviour
         }
 
         isTyping = false;
+
+        // 字全部打完後檢查接著是否還有話要說，有的話才顯示三角形提醒玩家
+        if (story != null && story.canContinue)
+        {
+            indicator.SetActive(true);
+        }
     }
 
     private void FinishTypewriterInstantly() // 即時停止打字機效果（並顯示所有文字）
@@ -159,6 +177,12 @@ public class SetDemonUI : MonoBehaviour
         if (typingCoroutine != null) StopCoroutine(typingCoroutine);
         dialogueText.maxVisibleCharacters = fullLineText.Length;
         isTyping = false;
+
+        // 玩家手動點擊讓打字全部顯示，此時一樣檢查後面有沒有字，有就顯示三角形
+        if (indicator != null && story != null && story.canContinue)
+        {
+            indicator.SetActive(true);
+        }
     }
 
     // private string GetInkLine(string knotName)
@@ -170,16 +194,18 @@ public class SetDemonUI : MonoBehaviour
 
     private void ResetDialogue()
     {
-        // 重置時也要停止打字機
+        // 重置時也要停止打字機＆三角形
         if (typingCoroutine != null) StopCoroutine(typingCoroutine);
         isTyping = false;
+        indicator.SetActive(false);
 
         currentKnot = "default_text";
         story = new Story(inkJSONAsset.text);
         story.ChoosePathString(currentKnot);
         storyFinished = false;
-        // hintIcon.SetActive(true);
-        // hintShown = true;
+
+        hintIcon.SetActive(true);
+        hintShown = true;
         
         // 預設內容也改用打字機顯示
         // fullLineText = GetInkLine(currentKnot);

@@ -6,9 +6,10 @@ using System.Linq;
 /* 掛在販賣頁面根部 */
 public class SetSellUI : MonoBehaviour
 {
-    [Header("UI 元素")]
+    [Header("UI 元素＆音效設定")]
     [SerializeField] private List<GameObject> characterUIList = new();
     [SerializeField] private Button closeButton; // 關閉販賣頁面按鈕
+    [SerializeField] private AudioClip closeSound; // 關閉販賣頁面的音效
     //-----------------------------------------------------------------//
     // [Header("測試用粉絲資料")]
     // [SerializeField] private List<ItemStack> testFansList = new();
@@ -20,6 +21,7 @@ public class SetSellUI : MonoBehaviour
         // 設定關閉按鈕事件
         closeButton.onClick.AddListener(() =>
         {
+            AudioManager.Instance.PlaySFX(closeSound, 0.5f);
             gameObject.SetActive(false);
         });
     }
