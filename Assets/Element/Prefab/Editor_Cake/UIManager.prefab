@@ -70,7 +70,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   teamManager: {fileID: 0}
-  goBaitoSound: {fileID: 0}
 --- !u!114 &2197749000687245499
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -121,6 +120,7 @@ GameObject:
   - component: {fileID: 8637626974531682640}
   - component: {fileID: 8413756448011191297}
   - component: {fileID: 6454518020203464210}
+  - component: {fileID: 1512039126598848463}
   m_Layer: 0
   m_Name: DesktopManager
   m_TagString: Untagged
@@ -157,7 +157,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   desktopUI: {fileID: 0}
   powerButton: {fileID: 0}
-  startMenu: {fileID: 0}
   settleUI: {fileID: 0}
   demonPet: {fileID: 0}
   teamManager: {fileID: 0}
@@ -194,6 +193,27 @@ MonoBehaviour:
   demonUI: {fileID: 0}
   byeButton: {fileID: 0}
   clickDemonSound: {fileID: 8300000, guid: 8de023d8d1ce62c4fa7058c263d4b0c8, type: 3}
+--- !u!114 &1512039126598848463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5643304229247252531}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4fd64489c90bd284db2b818d5acc7b42, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorialBanner: {fileID: 0}
+  bannerRect: {fileID: 0}
+  canvasGroup: {fileID: 0}
+  tutorialText: {fileID: 0}
+  lagDuration: 0
+  moveDuration: 1
+  stayDuration: 5
+  hiddenY: -435
+  visibleY: -405
 --- !u!1 &8704934796690645585
 GameObject:
   m_ObjectHideFlags: 0

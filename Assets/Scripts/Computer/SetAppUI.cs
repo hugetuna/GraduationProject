@@ -31,6 +31,8 @@ public class SetAppUI : MonoBehaviour
     //-----------------------------------------------------------------//
     [Header("音效設定")]
     public AudioClip openAppSound; // 開啟 App 的音效
+    //-----------------------------------------------------------------//
+    public static event Action<string> OnAppWithTutorialOpened;
 
     void Start()
     {
@@ -59,7 +61,7 @@ public class SetAppUI : MonoBehaviour
             Debug.Log($"雙擊開啟 {appData.appName} 視窗");
 
             appWindow.SetActive(true); // 開啟視窗
-            if(openAppSound != null) AudioManager.Instance.PlaySFX(openAppSound, 0.5f); // 播放音效
+            if (openAppSound != null) AudioManager.Instance.PlaySFX(openAppSound, 0.5f); // 播放音效
             var winRect = appWindow.GetComponent<RectTransform>();
 
             if (!windowManager.IsWindowRegistered(winRect))
@@ -80,6 +82,11 @@ public class SetAppUI : MonoBehaviour
                 windowManager.BringToFront(winRect);
             }
 
+            // 處理新手教學
+            if (appData.appName == "圖鑑" && DayManager.Instance.day == 1)
+            {
+                OnAppWithTutorialOpened?.Invoke("粉絲可以換成金錢、粉絲數或道具（詳細玩法將於下一天介紹）");
+            }
         }
 
         lastClickTime = Time.time;

@@ -11,6 +11,7 @@ public class CloseWindow : MonoBehaviour
     public Button closeButton;
     // public GameObject windowToClose; // App 視窗
     public AudioClip closeAppSound; // 關閉視窗的音效
+    public static event Action OnAppWithTutorialClosed;
 
     void Start()
     {
@@ -29,6 +30,9 @@ public class CloseWindow : MonoBehaviour
 
         RectTransform windowRect = GetComponent<RectTransform>();
         WindowManager.Instance.DeregisterWindow(windowRect);
+
+        // 處理新手教學
+        if(DayManager.Instance.day <= 3) OnAppWithTutorialClosed?.Invoke();
     }
 
     public void BindSetAppUI(SetAppUI setAppUI)

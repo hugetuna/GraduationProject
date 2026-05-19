@@ -1,11 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 using TMPro;
+using UnityEngine.EventSystems;
 
 /* 掛在商店視窗的商品卡片根部（不看 Wrapper）*/
-public class SetProductUI : MonoBehaviour
+public class SetProductUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     [Header("商品卡片的 UI 設定")]
     private ProductRuntime productRuntime;
@@ -22,6 +21,11 @@ public class SetProductUI : MonoBehaviour
     [SerializeField] private GameObject discountDash; // 特價時的原價刪除線
     private float minDashLength = 19; // 原價刪除線的最小長度
     private float maxDashLength = 23; // 原價刪除線的最大長度
+    //-----------------------------------------------------------------//
+    [Header("Hover 資訊")]
+    [SerializeField] private GameObject hoverObj; // Hover 時顯示的資訊物件
+    [SerializeField] private TextMeshProUGUI hoverNameText; // Hover 時顯示的商品名稱文字
+    [SerializeField] private TextMeshProUGUI hoverEffectText; // Hover 時顯示的商品描述文字
     //-----------------------------------------------------------------//
     private CartController cartController;
 
@@ -47,6 +51,10 @@ public class SetProductUI : MonoBehaviour
         // 設定 UI 顯示
         productImage.sprite = product.item.icon;
         productNameText.text = product.item.itemName;
+
+        // 設定 hover 資訊
+        hoverNameText.text = product.item.itemName;
+        hoverEffectText.text = product.item.description;
 
         // 初始庫存數量設為最大庫存數 -> 已內建於 ProductRuntime 類別
         UpdateStackText();
@@ -83,6 +91,8 @@ public class SetProductUI : MonoBehaviour
         productNameText.ForceMeshUpdate();
         productPriceText.ForceMeshUpdate();
         stackText.ForceMeshUpdate();
+        hoverNameText.ForceMeshUpdate();
+        hoverEffectText.ForceMeshUpdate();
 
         // 為加入購物車的按鈕註冊事件
         cartButton.onClick.RemoveAllListeners(); // 確保不會重複註冊
@@ -101,5 +111,13 @@ public class SetProductUI : MonoBehaviour
         else cartButton.interactable = true;
     }
 
-    
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        hoverObj.SetActive(true);
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        hoverObj.SetActive(false);
+    }
 }
