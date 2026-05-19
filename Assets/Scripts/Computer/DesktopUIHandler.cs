@@ -10,14 +10,14 @@ public class DesktopUIHandler : MonoBehaviour
     [Header("電腦桌面與其底下 UI")]
     public GameObject desktopUI;
     [SerializeField] private Button powerButton;
-    [SerializeField] private GameObject startMenu;
+    // [SerializeField] private GameObject startMenu;
     [SerializeField] private GameObject settleUI; // 按下 powerButton 後跳出結算畫面
     [SerializeField] private GameObject demonPet; // 惡魔桌寵（第一天不顯示）
     //-----------------------------------------------------------------//
     [Header("角色控制")]
     public TeamManager teamManager; // 透過 TeamManager 物件取得當前隊伍成員
     private List<PlayerControlMainWorld> teamMembers = new(); // 記錄取得的隊伍成員
-    private List<PlayerInput> playerInputs = new(); // 玩家輸入系統
+    // private List<PlayerInput> playerInputs = new(); // 玩家輸入系統
     //-----------------------------------------------------------------//
     [Header("相關音效")]
     [SerializeField] private AudioClip turnOnSound;
@@ -73,7 +73,7 @@ public class DesktopUIHandler : MonoBehaviour
     {
         UIAndPlayerInput.EnableAllPlayerInputs(); // 啟用所有玩家的輸入系統
 
-        startMenu.SetActive(false); // 關閉開始選單
+        // startMenu.SetActive(false); // 關閉開始選單
         desktopUI.SetActive(false); // 關閉電腦桌面 UI
 
         settleUI.SetActive(true); // 開啟結算畫面
