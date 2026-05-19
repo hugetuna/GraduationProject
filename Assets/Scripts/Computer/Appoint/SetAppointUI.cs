@@ -23,7 +23,7 @@ public class SetAppointUI : MonoBehaviour
         for (int i = 0; i < dateTexts.Count; i++)
         {
             int month = initialMonth;
-            int day = initialDay + i + 1;
+            int day = initialDay + DayManager.Instance.day + i - 1;
             if(day > 30){ // 簡單處理一下跨月的情況（目前只有九月和十月）
                 month++;
                 day -= 30; 

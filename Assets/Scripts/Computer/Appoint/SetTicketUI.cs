@@ -33,7 +33,7 @@ public class SetTicketUI : MonoBehaviour
         
         int dayDiff = Math.Abs(activity.day - DayManager.Instance.day);
         int month = initialMonth;
-        int day = initialDay + dayDiff + 1;
+        int day = initialDay + dayDiff;
         if (day > 30)  // 簡單處理一下跨月的情況（目前只有九月和十月）
         {
             month++;

@@ -54,6 +54,7 @@ public class DemonUIHandler : MonoBehaviour
         Debug.Log("退出惡魔頁面");
         // demonPet.SetActive(true); // 顯示惡魔桌寵
         demonUI.SetActive(false); // 隱藏惡魔頁面
+        AudioManager.Instance.PlaySFX(clickDemonSound, setPitch: 0.8f); // 播放音效
     }
 
     private bool IsPointerOver3DObject(Transform target) // 檢查特定場景物件是否被滑鼠點擊
