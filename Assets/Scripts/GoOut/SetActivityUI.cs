@@ -25,6 +25,9 @@ public class SetActivityUI : MonoBehaviour
     private Activity todayActivity = null;
     [SerializeField] private StageAttribute StageAttributeForTest; // 對應的舞台資料
     // private bool isInitialized = false;
+    //-----------------------------------------------------------------//
+    [Header("音效設定")]
+    [SerializeField] private AudioClip cancelSound;
 
     void Start()
     {
@@ -52,6 +55,7 @@ public class SetActivityUI : MonoBehaviour
 
     private void CloseActivityUI()
     {
+        AudioManager.Instance.PlaySFX(cancelSound);
         GoOutUIHandler.TriggerUIsClosedEvent(); // 觸發事件，返回選擇介面
         gameObject.SetActive(false);
     }

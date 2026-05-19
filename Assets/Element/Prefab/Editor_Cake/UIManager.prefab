@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 1049746107457160736}
   - component: {fileID: 521221383074588066}
   - component: {fileID: 2197749000687245499}
+  - component: {fileID: 3426007225251870967}
   m_Layer: 0
   m_Name: GoOutManager
   m_TagString: Untagged
@@ -54,6 +55,8 @@ MonoBehaviour:
   baitoUI: {fileID: 0}
   activityUI: {fileID: 0}
   openSound: {fileID: 8300000, guid: 21f166225243f354694ab2a00d2f107a, type: 3}
+  cancelSound: {fileID: 8300000, guid: 05c8dbd126d814849809c15f29792d56, type: 3}
+  activityTutorial: {fileID: 0}
 --- !u!114 &521221383074588066
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -66,7 +69,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 37c79c2dfe029ef429888950b7b1389e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dragToBaito: []
   teamManager: {fileID: 0}
   goBaitoSound: {fileID: 0}
 --- !u!114 &2197749000687245499
@@ -85,6 +87,28 @@ MonoBehaviour:
   hintNoBtn: {fileID: 0}
   hintYesBtn: {fileID: 0}
   teamManager: {fileID: 0}
+  confirmSound: {fileID: 8300000, guid: bc18747071144a24fafacbee2f420bf0, type: 3}
+  cancelSound: {fileID: 8300000, guid: 05c8dbd126d814849809c15f29792d56, type: 3}
+--- !u!114 &3426007225251870967
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4549451018048604359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 246460c520d41be4abfd84c8790c55fa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorialBanner: {fileID: 0}
+  bannerRect: {fileID: 0}
+  canvasGroup: {fileID: 0}
+  tutorialText: {fileID: 0}
+  lagDuration: 0
+  moveDuration: 1
+  hiddenY: -360
+  visibleY: -330
 --- !u!1 &5643304229247252531
 GameObject:
   m_ObjectHideFlags: 0
@@ -135,8 +159,10 @@ MonoBehaviour:
   powerButton: {fileID: 0}
   startMenu: {fileID: 0}
   settleUI: {fileID: 0}
+  demonPet: {fileID: 0}
   teamManager: {fileID: 0}
   turnOnSound: {fileID: 8300000, guid: 6f52496dd8680354caf4b972b99063bc, type: 3}
+  sceneObjects: []
 --- !u!114 &8413756448011191297
 MonoBehaviour:
   m_ObjectHideFlags: 0
