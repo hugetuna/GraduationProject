@@ -15,6 +15,10 @@ public class ActivityAssignment : MonoBehaviour
     //-----------------------------------------------------------------//
     [Header("隊伍管理")]
     [SerializeField] private TeamManager teamManager; // 用來標記忙碌角色（跨場景同步）
+    //-----------------------------------------------------------------//
+    [Header("音效設定")]
+    [SerializeField] private AudioClip confirmSound;
+    [SerializeField] private AudioClip cancelSound;
 
     void Start()
     {
@@ -38,6 +42,7 @@ public class ActivityAssignment : MonoBehaviour
 
     public void CloseHintUI()
     {
+        AudioManager.Instance.PlaySFX(cancelSound);
         hintObject.SetActive(false);
     }
     
@@ -45,6 +50,7 @@ public class ActivityAssignment : MonoBehaviour
     {
         // 必須全員一起去商演，若有人體力不足預計會減少收益
         Debug.Log("跳轉到 Live 小遊戲");
+        AudioManager.Instance.PlaySFX(confirmSound);
 
         var idolList = TeamDataUtility.IdolInstanceList;
         foreach (var idol in idolList)

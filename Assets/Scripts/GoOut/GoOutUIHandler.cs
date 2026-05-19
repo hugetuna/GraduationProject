@@ -23,6 +23,10 @@ public class GoOutUIHandler : MonoBehaviour
     //-----------------------------------------------------------------//
     [Header("相關音效")]
     [SerializeField] private AudioClip openSound; // 開啟介面的音效
+    [SerializeField] private AudioClip cancelSound; // 關閉外出介面的音效
+    //-----------------------------------------------------------------//
+    [Header("簡易新手教學")]
+    [SerializeField] private ActivityTutorial activityTutorial; // 商演提示腳本
 
     void Start()
     {
@@ -47,11 +51,18 @@ public class GoOutUIHandler : MonoBehaviour
     private void ShowSelectionUI()
     {
         Debug.Log("開啟外出 UI");
+        AudioManager.Instance.PlaySFX(openSound);
         UIAndPlayerInput.DisableAllPlayerInputs(); // 禁用角色移動
         goOutUI.SetActive(true);
         selectionUI.SetActive(true);
         baitoUI.SetActive(false);
         activityUI.SetActive(false);
+
+        // 判斷是否啟用新手教學提示
+        if(DayManager.Instance.day == 1)
+        {
+            activityTutorial.ShowTutorial();
+        }
 
         // 根據預約紀錄決定是否啟用商演按鈕
         appointedActivity = GameManager.Instance.activitySaveData.GetTodayActivity();
@@ -79,6 +90,7 @@ public class GoOutUIHandler : MonoBehaviour
     private void CloseGoOutUI()
     {
         Debug.Log("關閉外出 UI");
+        AudioManager.Instance.PlaySFX(cancelSound);
         UIAndPlayerInput.EnableAllPlayerInputs(); // 啟用角色移動
         goOutUI.SetActive(false);
     }

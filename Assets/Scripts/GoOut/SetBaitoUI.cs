@@ -34,6 +34,10 @@ public class SetBaitoUI : MonoBehaviour
     [SerializeField] private GameObject hintObject; // 全員打工的提示物件
     [SerializeField] private Button hintNoBtn; // 提示的 "否" 按鈕
     [SerializeField] private Button hintYesBtn; // 提示的 "是" 按鈕
+    //-----------------------------------------------------------------//
+    [Header("音效設定")]
+    [SerializeField] private AudioClip confirmSound;
+    [SerializeField] private AudioClip cancelSound;
 
     void Start()
     {
@@ -95,12 +99,14 @@ public class SetBaitoUI : MonoBehaviour
 
     private void CloseHintUI()
     {
+        AudioManager.Instance.PlaySFX(cancelSound);
         hintObject.SetActive(false);
     }
 
     private void JumpToComputer()
     {
         Debug.Log("跳轉到電腦介面");
+        AudioManager.Instance.PlaySFX(confirmSound);
 
         // 把該指派的都派一派
         OnBaitoConfirmed?.Invoke(true);
@@ -124,6 +130,7 @@ public class SetBaitoUI : MonoBehaviour
         else
         {
             // 正常處理打工指派事件
+            AudioManager.Instance.PlaySFX(confirmSound);
             OnBaitoConfirmed?.Invoke(false); // 拖曳時角色就會記錄打工類型，所以這裡不用再另外傳遞
             CloseBaitoUI();
         }

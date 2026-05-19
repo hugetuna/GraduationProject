@@ -7,7 +7,6 @@ public class BaitoAssignment : MonoBehaviour
 {
     // [SerializeField] private List<DragToBaito> dragToBaito = new(); // 拖曳腳本，用來判斷角色所在區域
     [SerializeField] private TeamManager teamManager; // 用來標記忙碌角色（跨場景同步）
-    [SerializeField] private AudioClip goBaitoSound; // 打工出發音效
 
     void Start()
     {
@@ -60,9 +59,6 @@ public class BaitoAssignment : MonoBehaviour
                 idol.currentAction = AvailableAction.Free;
             }
         }
-
-        // 播放音效
-        if (goBaitoSound != null) AudioManager.Instance.PlaySFX(goBaitoSound);
     }
 }
 

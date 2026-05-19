@@ -1,9 +1,8 @@
 using System.Collections;
-using TMPro;
 using UnityEngine;
+using TMPro;
 
-/* 掛在 UIManager 上 */
-public class TrainingTutorial : MonoBehaviour
+public class ActivityTutorial : MonoBehaviour
 {
     [Header("UI 元件")]
     [SerializeField] private GameObject tutorialBanner; // 懸浮視窗物件
@@ -12,7 +11,7 @@ public class TrainingTutorial : MonoBehaviour
     [SerializeField] private TextMeshProUGUI tutorialText; // 提示文字元件
     //-----------------------------------------------------------------//
     [Header("動態時間設定")]
-    [SerializeField] private float lagDuration = 1f; // 打開訓練 UI 後的延遲開啟時間
+    [SerializeField] private float lagDuration = 1f; // 打開外出介面後的延遲開啟時間
     [SerializeField] private float moveDuration = 0.6f; // 浮上來＆消下去的花費時間（秒）
     // [SerializeField] private float stayDuration = 1.2f; // 消失動態開始前的文字停留時間
     //-----------------------------------------------------------------//
@@ -25,33 +24,17 @@ public class TrainingTutorial : MonoBehaviour
 
     void Start()
     {
-        TrainingUIHandler.OnTrainingUIOpened += ShowTutorial; // 訂閱訓練 UI 開啟事件，觸發提示橫幅的顯示  
-        TrainingVigourBar.OnTrainingTutorialDone += CompleteTutorial; // 訂閱訓練室新手教學完成事件，觸發提示橫幅的成功提示與消除
-        TrainingUIHandler.OnTrainingUIClosed += Close; // 訂閱訓練 UI 關閉事件，觸發提示橫幅的隱藏
-
         tutorialBanner.SetActive(false); // 預設隱藏提示橫幅
     }
 
-    void OnDestroy()
+    public void ShowTutorial()
     {
-        TrainingUIHandler.OnTrainingUIOpened -= ShowTutorial; // 取消訂閱事件
-        TrainingVigourBar.OnTrainingTutorialDone -= CompleteTutorial;
-        TrainingUIHandler.OnTrainingUIClosed -= Close;
-    }
-
-    private void ShowTutorial()
-    {
-        SetText("將指定角色拖曳到右邊的訓練區域（只有今天完成後不可再更動）");
+        SetText("今天沒有可用的商演，之後可以到辦公室電腦預約");
         Show(lagDuration);
+        // CompleteAndHide(); // 等待 stayDuration 秒後自動消失
     }
 
-    private void CompleteTutorial()
-    {
-        SetText("做得好！接著關閉訓練介面，讓角色開始訓練");
-        // CompleteAndHide();
-    }
-
-    private void Close()
+    public void Close()
     {
         // 關閉所有動態
         if (activeAnimation != null)
