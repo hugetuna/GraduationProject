@@ -5,7 +5,7 @@ using UnityEngine.UI;
 using TMPro;
 using System;
 
-public enum TicketColor { Blue = 0, Green = 1, LightBlue = 2 }
+public enum TicketColor { Blue = 0, Green = 1, LightBlue = 2, None = -1 }
 
 /* 掛在預約視窗的活動票券 prefab 根部（不看 Wrapper）*/
 public class SetTicketUI : MonoBehaviour

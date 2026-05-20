@@ -23,7 +23,6 @@ public class SetActivityUI : MonoBehaviour
 
     [Header("商演資料")]
     private Activity todayActivity = null;
-    [SerializeField] private StageAttribute StageAttributeForTest; // 對應的舞台資料
     // private bool isInitialized = false;
     //-----------------------------------------------------------------//
     [Header("音效設定")]
@@ -63,7 +62,7 @@ public class SetActivityUI : MonoBehaviour
     private void ConfirmToActivity()
     {
         Debug.Log("指派外出商演");
-        OnActivityConfirmed?.Invoke(todayActivity, StageAttributeForTest); // 觸發確認出發事件，指派全員外出商演
+        OnActivityConfirmed?.Invoke(todayActivity, todayActivity.stageAttribute); // 觸發確認出發事件，指派全員外出商演
     }
 
     private void UpdateCharacterImagesAndEquipments()

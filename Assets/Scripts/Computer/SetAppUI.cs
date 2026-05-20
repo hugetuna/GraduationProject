@@ -83,10 +83,18 @@ public class SetAppUI : MonoBehaviour
             }
 
             // 處理新手教學
-            if (appData.appName == "圖鑑" && DayManager.Instance.day == 1)
+            if (DayManager.Instance.day == 1)
             {
-                OnAppWithTutorialOpened?.Invoke("粉絲可以換成金錢、粉絲數或道具（詳細玩法將於下一天介紹）");
+                if (appData.appName == "圖鑑")
+                {
+                    OnAppWithTutorialOpened?.Invoke("粉絲可以換成金錢、粉絲數或道具（詳細玩法將於下一天介紹）");
+                }
+                else if (appData.appName == "預約")
+                {
+                    OnAppWithTutorialOpened?.Invoke("預約商演須支付參加費，當天可到一樓大門消耗體力參加並獲取報酬");
+                }
             }
+
         }
 
         lastClickTime = Time.time;
