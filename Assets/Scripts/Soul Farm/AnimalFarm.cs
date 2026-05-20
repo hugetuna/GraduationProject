@@ -63,6 +63,10 @@ public class AnimalFarm : MonoBehaviour, IInteractable
             resourceManager.AddItem(resourceManager.findItemByID("CS-001"), 1);
             Debug.Log("第二天的農場教學，給予玩家一個低級種子");
         }
+        if (isActivated == false)
+        {
+            interactableHint.isActivate = false;
+        }
     }
     void Update()
     {

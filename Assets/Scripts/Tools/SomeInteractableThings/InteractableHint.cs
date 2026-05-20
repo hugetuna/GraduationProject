@@ -7,10 +7,11 @@ public class InteractableHint : MonoBehaviour
     public Vector3 SpwanPoint;
     public float XDeg = 0;
     private GameObject hintInstance;
+    public bool isActivate = true;
 
     private void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player") && isActivate)
         {
             ShowHint();
         }
@@ -18,7 +19,7 @@ public class InteractableHint : MonoBehaviour
 
     private void OnTriggerExit(Collider other)
     {
-        if (other.CompareTag("Player"))
+        if (other.CompareTag("Player")&&isActivate)
         {
             HideHint();
         }
