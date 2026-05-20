@@ -8,7 +8,7 @@ public class TicketUIGenerator : MonoBehaviour
     [Header("活動票券資訊")]
     public List<Activity> ticketList = new(); // 儲存活動資訊的清單
     //-----------------------------------------------------------------//
-    public List<GameObject> ticketPrefab = new(); // 用於生成活動項目的預製件（先從三種樣式中隨便選）
+    public List<GameObject> ticketPrefab = new(); // 用於生成活動項目的預製件（共三種樣式）
     public List<Transform> ticketContent = new(); // 用於放置生成的活動票券的容器
 
     void Start()
@@ -24,8 +24,8 @@ public class TicketUIGenerator : MonoBehaviour
             }
 
             // 生成活動票券（目前只有一個分類）
-            int randomTicket = UnityEngine.Random.Range(0, ticketPrefab.Count); // 隨機生成票券樣式
-            GameObject activityObject = Instantiate(ticketPrefab[randomTicket], ticketContent[0]);
+            TicketColor ticketStyle = activity.ticketColorId; // 使用活動指定的票券樣式
+            GameObject activityObject = Instantiate(ticketPrefab[(int)ticketStyle], ticketContent[0]);
             if (activityObject == null)
             {
                 Debug.Log("活動票券生成失敗！");
@@ -35,7 +35,7 @@ public class TicketUIGenerator : MonoBehaviour
             GameObject btn = activityObject.transform.Find("Button").gameObject; // Wrapper + "Button"
             // 設定活動票券的 UI 資料
             SetTicketUI setTicketUI = btn.GetComponent<SetTicketUI>();
-            setTicketUI.Initialize(activity, (TicketColor)randomTicket);
+            setTicketUI.Initialize(activity, ticketStyle);
         }
 
         GetComponent<TicketInfoUI>().Initialize(); // 初始化活動詳情 UI
