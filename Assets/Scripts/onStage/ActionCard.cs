@@ -2,12 +2,17 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
+public enum CardBaseType
+{
+    Normal, Vo, Da, Vi,buff
+}
 [CreateAssetMenu(fileName = "New ActionCard", menuName = "Stage/Action Card")]
 public class ActionCard : ScriptableObject
 {
     public string cardId;
     public string cardName;
     public Sprite cardPic;
+    public CardBaseType cardType;
     //分數限制
     public int voGate;
     public int daGate;

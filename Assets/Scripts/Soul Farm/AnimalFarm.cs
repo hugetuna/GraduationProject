@@ -37,6 +37,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     public TextMeshProUGUI foodBarnCounting;
     public Button harvestSeedButton;
     public Button exitButton;
+    public GameObject InactiveBoard;//未啟動提示版
     private GameObject lastSelected; // 紀錄最後一個選取的物件
     [Header("外部 UI 阻斷")]
     public CanvasGroup mainUICanvasGroup; // 拖入主畫面的 CanvasGroup
@@ -58,7 +59,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
         teamManager = FindAnyObjectByType<TeamManager>();
         resourceManager = FindAnyObjectByType<ResourceManager>();
         soilManager = FindAnyObjectByType<SoilManager>();
-        if (!isTutorialFinished && DayManager.Instance.date == 2&&DayManager.Instance.dayEventManager.currentEvent?.Type==EventType.WaitUntilSceneChange&&farmLV==FarmLV.Low)
+        if (!isTutorialFinished && DayManager.Instance.date == 2 && DayManager.Instance.dayEventManager.currentEvent?.Type == EventType.WaitUntilSceneChange && farmLV == FarmLV.Low)
         {
             resourceManager.AddItem(resourceManager.findItemByID("CS-001"), 1);
             Debug.Log("第二天的農場教學，給予玩家一個低級種子");
@@ -66,6 +67,12 @@ public class AnimalFarm : MonoBehaviour, IInteractable
         if (isActivated == false)
         {
             interactableHint.isActivate = false;
+            InactiveBoard.SetActive(true);
+        }
+        else
+        {
+            interactableHint.isActivate = true;
+            InactiveBoard.SetActive(false);
         }
     }
     void Update()
