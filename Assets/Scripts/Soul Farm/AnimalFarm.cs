@@ -214,6 +214,11 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     }
     void IInteractable.Interact(int toolType) // 互動行為
     {
+        if (!isActivated)
+        {
+            Debug.Log("這個農場還沒有開放");
+            return;
+        }
         ShowInteractionUI();
     }
     //按下種植按鈕(因為按鈕回傳值不能是SeedInstanceScript_Animal所以千套)
