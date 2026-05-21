@@ -8,7 +8,6 @@ public class InteractableHint : MonoBehaviour
     public float XDeg = 0;
     private GameObject hintInstance;
     public bool isActivate = true;
-
     private void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("Player") && isActivate)

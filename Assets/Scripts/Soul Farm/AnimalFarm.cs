@@ -105,9 +105,11 @@ public class AnimalFarm : MonoBehaviour, IInteractable
         if (!isTutorialFinished&&DayManager.Instance.date==2) return;
         // 根據當前狀態更新按鈕的互動性，同時也會呼叫onDisable來重置按鈕顏色
         plantSeedButton.interactable = !(seedsOnThisSoil.Count == maxSeedAmount);
+        if (plantSeedButton.interactable == false) plantSeedButton.GetComponent<FarmButtonHelper>().OnDeselected();
         addFoodBarnButton.interactable = !(foodBarn >= foodBarnMax);
+        if (addFoodBarnButton.interactable == false) addFoodBarnButton.GetComponent<FarmButtonHelper>().OnDeselected();
         harvestSeedButton.interactable = seedsOnThisSoil.Count > 0;
-        
+        if (harvestSeedButton.interactable == false) harvestSeedButton.GetComponent<FarmButtonHelper>().OnDeselected();
         exitButton.interactable = true;
     }
     //安全切換 Map
@@ -132,6 +134,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     public void ShowInteractionUI()
     {
         SwitchActionMap("FarmConfig");
+        interactableHint.isActivate=false;
         interactableHint.HideHint();
         // 讓主畫面 UI 看得到但點不到，且不接受鍵盤導覽
         if (mainUICanvasGroup != null)
@@ -146,6 +149,19 @@ public class AnimalFarm : MonoBehaviour, IInteractable
         {
             StartCoroutine(FarmButtomTutorial());
         }
+        updateFarmButtonInteractable();
+    }
+    public void HideInteractionUI()
+    {
+        SwitchActionMap("PlayerActionMain");
+        interactableHint.isActivate = true;
+        if (mainUICanvasGroup != null)
+        {
+            mainUICanvasGroup.interactable = true;
+            mainUICanvasGroup.blocksRaycasts = true;
+        }
+        farmCanvas.gameObject.SetActive(false);
+        updateFarmButtonInteractable();
     }
     private IEnumerator SelectButtonWithDelay()
     {
@@ -167,6 +183,13 @@ public class AnimalFarm : MonoBehaviour, IInteractable
         addFoodBarnButton.interactable = enable;
         harvestSeedButton.interactable = enable;
         exitButton.interactable = enable;
+        if (enable==false)
+        {
+            plantSeedButton.GetComponent<FarmButtonHelper>().OnDeselected();
+            addFoodBarnButton.GetComponent<FarmButtonHelper>().OnDeselected();
+            harvestSeedButton.GetComponent<FarmButtonHelper>().OnDeselected();
+            exitButton.GetComponent<FarmButtonHelper>().OnDeselected();
+        }
     }
     public IEnumerator FarmButtomTutorial()
     {
@@ -221,17 +244,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
         }
         yield return null;
     }
-    public void HideInteractionUI()
-    {
-        SwitchActionMap("PlayerActionMain");
-        interactableHint.HideHint();
-        if (mainUICanvasGroup != null)
-        {
-            mainUICanvasGroup.interactable = true;
-            mainUICanvasGroup.blocksRaycasts = true;
-        }
-        farmCanvas.gameObject.SetActive(false);
-    }
+    
     void IInteractable.Interact(int toolType) // 互動行為
     {
         if (!isActivated)
@@ -276,7 +289,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     }
     public IEnumerator ButtonCooldown(Button button, float cooldownTime)
     {
-        button.interactable = false; // 禁用按鈕
+        //button.interactable = false; // 禁用按鈕
         yield return new WaitForSeconds(cooldownTime); // 等待冷卻時間
         updateFarmButtonInteractable(); // 根據當前狀態更新按鈕互動性
     }
@@ -379,7 +392,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     public IEnumerator HarvestAnimation(int i, SeedInstanceScript_Animal seed)
     {
         seed.growthStages[2].GetComponent<Animator>().SetTrigger("Harvest");
-        HideInteractionUI();
+        //HideInteractionUI();
         WaitForSeconds wait = new WaitForSeconds(1f);
         yield return wait; // 等待延遲時間
         // 重要：從 List 移除並銷毀物件
@@ -387,6 +400,10 @@ public class AnimalFarm : MonoBehaviour, IInteractable
         Destroy(seed.gameObject);
         UpdateCountingText();
         updateFarmButtonInteractable();
+        if (DayManager.Instance.date == 2&& DayManager.Instance.dayEventManager.currentEvent?.Type == EventType.MainWorld)
+        {
+            HideInteractionUI();
+        }
         yield return null;
     }
     public void UpdateCountingText()
