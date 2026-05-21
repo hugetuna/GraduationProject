@@ -103,9 +103,11 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     public void updateFarmButtonInteractable()
     {
         if (!isTutorialFinished&&DayManager.Instance.date==2) return;
+        // 根據當前狀態更新按鈕的互動性，同時也會呼叫onDisable來重置按鈕顏色
         plantSeedButton.interactable = !(seedsOnThisSoil.Count == maxSeedAmount);
         addFoodBarnButton.interactable = !(foodBarn >= foodBarnMax);
         harvestSeedButton.interactable = seedsOnThisSoil.Count > 0;
+        
         exitButton.interactable = true;
     }
     //安全切換 Map
@@ -180,6 +182,9 @@ public class AnimalFarm : MonoBehaviour, IInteractable
         plantSeedButton.Select();
         while (!step1Completed)
         {
+            plantSeedButton.GetComponent<FarmButtonHelper>().ButtonText.color = new Color32(249, 180, 195, 255);
+            if (plantSeedButton.GetComponent<FarmButtonHelper>().countingText != null) plantSeedButton.GetComponent<FarmButtonHelper>().countingText.color = new Color32(249, 180, 195, 255);
+            plantSeedButton.GetComponent<FarmButtonHelper>()._button.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
             if (seedsOnThisSoil.Count > 0)
             {
                 step1Completed = true;
@@ -191,6 +196,9 @@ public class AnimalFarm : MonoBehaviour, IInteractable
         {
             addFoodBarnButton.interactable = true;
             addFoodBarnButton.Select();
+            addFoodBarnButton.GetComponent<FarmButtonHelper>().ButtonText.color = new Color32(249, 180, 195, 255);
+            if (addFoodBarnButton.GetComponent<FarmButtonHelper>().countingText != null) addFoodBarnButton.GetComponent<FarmButtonHelper>().countingText.color = new Color32(249, 180, 195, 255);
+            addFoodBarnButton.GetComponent<FarmButtonHelper>()._button.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
             if (foodBarn >= foodBarnMax)
             {
                 step2Completed = true;
@@ -201,6 +209,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
         StartCoroutine(MagicalGrow());
         HideInteractionUI();
         isTutorialFinished = true;
+        Debug.Log("結束農場教學");
     }
     public IEnumerator MagicalGrow()//種子瞬間長大（用在第二天的事件裡）
     {
@@ -297,7 +306,6 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     //補充食物欄位
     public void AddFoodBarn(int amount)
     {
-
         if (foodBarn + amount <= foodBarnMax)
         {
             foodBarn += amount;
@@ -348,7 +356,6 @@ public class AnimalFarm : MonoBehaviour, IInteractable
                 seedsOnThisSoil.RemoveAt(i);
                 continue;
             }
-
             // 檢查 2: 是否成熟
             if (seed.GetDaysGrown() >= seed.seedData.growthDays)
             {

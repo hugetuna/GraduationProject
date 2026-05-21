@@ -303,12 +303,12 @@ public class DayEventManager : MonoBehaviour
     }
     private IEnumerator MonitorTutorialEnd(System.Action onFinish)
     {
-        AnimalFarm tutorialFarm = FindAnyObjectByType<AnimalFarm>();
+        AnimalFarm tutorialFarm = FindAnyObjectByType<SoilManager>().animalFarms[0];
         Elevator elevator = FindAnyObjectByType<Elevator>();
         if (elevator != null)
         {
             elevator.elevatorIconSetter.SwitchAllButtons(false);
-            Debug.LogWarning("關閉電梯按鈕，等待教學結束...");
+            Debug.Log("關閉電梯按鈕，等待教學結束...");
         }
         while (tutorialFarm != null && !tutorialFarm.isTutorialFinished)
         {

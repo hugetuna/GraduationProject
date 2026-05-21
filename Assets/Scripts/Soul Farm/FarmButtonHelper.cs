@@ -5,7 +5,7 @@ using UnityEngine.UI;
 
 public class FarmButtonHelper : MonoBehaviour, IPointerEnterHandler
 {
-    private Button _button;
+    public Button _button;
     public TMPro.TextMeshProUGUI ButtonText;
     public TMPro.TextMeshProUGUI countingText;
 
@@ -22,10 +22,32 @@ public class FarmButtonHelper : MonoBehaviour, IPointerEnterHandler
     {
         ButtonText.color=new Color32(249, 180, 195, 255);
         if (countingText != null) countingText.color = new Color32(249, 180, 195, 255);
+        _button.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+        // 如果按鈕不可互動，則將顏色調淡
+        if (_button.interactable == false)
+        {
+            ButtonText.color = new Color32(255, 255, 255, 160);
+            if (countingText != null) countingText.color = new Color32(255, 255, 255, 160);
+            _button.GetComponent<Image>().color = new Color32(255, 255, 255, 160);
+        }
     }
     public void OnDeselected()
     {
         ButtonText.color = Color.white;
         if (countingText != null) countingText.color = Color.white;
+        _button.GetComponent<Image>().color = new Color32(255, 255, 255, 255);
+        //如果按鈕不可互動，則將顏色調淡
+        if (_button.interactable == false)
+        {
+            ButtonText.color = new Color32(255, 255, 255, 160);
+            if (countingText != null) countingText.color = new Color32(255, 255, 255, 160);
+            _button.GetComponent<Image>().color = new Color32(255, 255, 255, 160);
+        }
     }
+    //public void OnDisable()
+    //{
+    //    ButtonText.color = Color.white;
+    //    if (countingText != null) countingText.color = Color.white;
+    //    _button.GetComponent<Image>().color = new Color32(255, 255, 255, 160);
+    //}
 }
