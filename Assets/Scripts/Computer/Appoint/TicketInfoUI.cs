@@ -21,6 +21,7 @@ public class TicketInfoUI : MonoBehaviour
     private Dictionary<Button, bool> ticketStatDict = new(); // 儲存票券報名狀態的字典
     private Button selectedButton; // 當前選擇的票券按鈕
     private Activity selectedActivity = null; // 當前選擇的活動
+    private int today; // 今日天數（方便存取用）
     //-----------------------------------------------------------------//
     [SerializeField] private Vector2 originalPos = Vector2.zero; // 按鈕們的起始位置
     [SerializeField] private Vector2 offset = new(11.0f, 0); // 被按下的按鈕會往右移動的距離
@@ -47,6 +48,8 @@ public class TicketInfoUI : MonoBehaviour
 
     public void Initialize()
     {
+        today = DayManager.Instance.day;
+
         // 找出所有活動票券按鈕
         ticketButtons.Clear();
         Button[] buttons = ticketContent.GetComponentsInChildren<Button>();
@@ -71,7 +74,7 @@ public class TicketInfoUI : MonoBehaviour
 
             if (isAppointed)
             {
-                RestoreAppointedActivityUI(btn, act); // 回復已預約的活動票券 UI
+                RestoreAppointedActivityUI(btn, act); // 恢復已預約的活動票券 UI
             }
             else
             {
@@ -139,6 +142,16 @@ public class TicketInfoUI : MonoBehaviour
             // 隱藏報名按鈕，顯示出藏在後面的取消報名按鈕
             joinButton.gameObject.SetActive(false);
             quitButton.gameObject.SetActive(true);
+
+            int appointDay = GameManager.Instance.activitySaveData.GetAppointDay(selectedActivity);
+            if (appointDay < today) // 預約當天過後即無法取消
+            {
+                quitButton.interactable = false;
+            }
+            else // 其他情況不予限制
+            {
+                quitButton.interactable = true;
+            }
         }
         else // 若選中尚未報名的活動
         {
@@ -158,7 +171,7 @@ public class TicketInfoUI : MonoBehaviour
         selectedButton.GetComponent<Image>().sprite = selectedTicketSprites[(int)theme];
 
         // 生成最小化活動圖示到對應日期上
-        int daydiff = Math.Abs(selectedActivity.day - DayManager.Instance.day);
+        int daydiff = Math.Abs(selectedActivity.day - today);
         GameObject minTicket = Instantiate(minTicketPrefabs[(int)theme], DayContents[daydiff].transform);
 
         // 設定最小化活動圖示的內容
@@ -172,7 +185,7 @@ public class TicketInfoUI : MonoBehaviour
         quitButton.gameObject.SetActive(true);
 
         // 跨場景的資料儲存
-        GameManager.Instance.SaveActivityData(selectedActivity);
+        GameManager.Instance.SaveActivityData(selectedActivity, today);
     }
 
     public void OnQuitActivity()
@@ -195,7 +208,7 @@ public class TicketInfoUI : MonoBehaviour
         quitButton.gameObject.SetActive(false);
 
         // 跨場景的資料儲存
-        GameManager.Instance.activitySaveData.RemoveActivity(selectedActivity);
+        GameManager.Instance.activitySaveData.RemoveActivity(selectedActivity, today);
 
         // // 取消報名後，重置活動詳情＆票券 UI
         // for (int i = 0; i < ticketButtons.Count; i++)
@@ -225,7 +238,7 @@ public class TicketInfoUI : MonoBehaviour
         btn.GetComponent<Image>().sprite = selectedTicketSprites[(int)theme];
 
         // 2. 生成最小化活動圖示到日曆
-        int daydiff = act.day - DayManager.Instance.day;
+        int daydiff = act.day - today;
         if (daydiff >= 0 && daydiff <= 5)
         {
             GameObject minTicket = Instantiate(minTicketPrefabs[(int)theme], DayContents[daydiff].transform);

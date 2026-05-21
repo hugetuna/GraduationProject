@@ -51,7 +51,7 @@ public class SetAppointUI : MonoBehaviour
             }
 
             // 設定公演顯示的 UI 資料
-            TextMeshProUGUI stageNumText = stageObject.transform.Find("NumText").GetComponent<TextMeshProUGUI>();
+            TextMeshProUGUI stageNumText = stageObject.transform.Find("StageText").GetComponent<TextMeshProUGUI>();
             stageNumText.text = stage.activityName;
         }
         

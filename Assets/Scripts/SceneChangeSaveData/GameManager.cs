@@ -225,9 +225,13 @@ public class GameManager : MonoBehaviour
         productSaveData.products.Add(productRuntime);
     }
 
-    public void SaveActivityData(Activity activity)
+    public void SaveActivityData(Activity activity, int appointDay)
     {
-        activitySaveData.activities.Add(activity);
+        activitySaveData.activities.Add(new ActivityAppointment
+        {
+            activity = activity,
+            appointDay = appointDay
+        });
     }
 
     /*本地存檔相關*/
