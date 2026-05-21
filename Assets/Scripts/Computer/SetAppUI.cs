@@ -91,7 +91,8 @@ public class SetAppUI : MonoBehaviour
                 }
                 else if (appData.appName == "預約")
                 {
-                    OnAppWithTutorialOpened?.Invoke("預約商演須支付參加費，當天可到一樓大門消耗體力參加並獲取報酬");
+                    // 預約商演須支付參加費，當天可到一樓大門消耗體力參加並獲取報酬
+                    OnAppWithTutorialOpened?.Invoke("商演預約後隔天便無法取消，當天可到一樓大門消耗體力參加並獲取報酬");
                 }
             }
 
