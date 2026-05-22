@@ -18,16 +18,17 @@ public class ActivitySaveData
 
     public Activity GetTodayActivity() // 獲取今日預約的商演（不含公演）
     {
-        Activity dayActivities = null;
+        Activity todayActivities = null;
         foreach (ActivityAppointment appoint in activities)
         {
-            if (appoint.appointDay == DayManager.Instance.day && !appoint.activity.description.Contains("公演"))
+            Activity activity = appoint.activity;
+            if (activity.day == DayManager.Instance.day && !activity.description.Contains("公演"))
             {
-                dayActivities = appoint.activity; // 一天最多只會有一個商演
+                todayActivities = activity; // 一天最多只會有一個商演
             }
         }
 
-        return dayActivities;
+        return todayActivities;
     }
 
     public bool IsActivityAppointed(Activity activity)
@@ -43,7 +44,7 @@ public class ActivitySaveData
 
     public void CleanGoneActivities() // 清除已結束的商演資料（預計在每日結算時進行）
     {
-        activities.RemoveAll(activity => activity.appointDay < DayManager.Instance.day);
+        activities.RemoveAll(appoint => appoint.activity.day < DayManager.Instance.day);
     }
 }
 

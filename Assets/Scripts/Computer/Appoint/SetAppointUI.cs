@@ -36,7 +36,7 @@ public class SetAppointUI : MonoBehaviour
         // 生成公演顯示
         foreach (Activity stage in stageList)
         {
-            int daydiff = Math.Abs(stage.day - DayManager.Instance.day);
+            int daydiff = stage.day - DayManager.Instance.day;
             if (daydiff < 0 || daydiff > 5)
             {
                 Debug.Log($"{stage.activityName} 不在顯示範圍內，跳過生成");

@@ -31,9 +31,9 @@ public class SetTicketUI : MonoBehaviour
         activityInfoText.text = activity.description;
         activityFeeText.text = $"${activity.fee}";
         
-        int dayDiff = Math.Abs(activity.day - DayManager.Instance.day);
+        int dayDiff = activity.day; // 活動日期直接如實呈現即可
         int month = initialMonth;
-        int day = initialDay + dayDiff;
+        int day = initialDay + dayDiff - 1;
         if (day > 30)  // 簡單處理一下跨月的情況（目前只有九月和十月）
         {
             month++;
