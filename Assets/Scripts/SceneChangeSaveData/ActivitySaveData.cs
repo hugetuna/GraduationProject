@@ -22,7 +22,7 @@ public class ActivitySaveData
         foreach (ActivityAppointment appoint in activities)
         {
             Activity activity = appoint.activity;
-            if (activity.day == DayManager.Instance.day && !activity.description.Contains("公演"))
+            if (activity.day == DayManager.Instance.totalDays && !activity.description.Contains("公演"))
             {
                 todayActivities = activity; // 一天最多只會有一個商演
             }
@@ -44,7 +44,7 @@ public class ActivitySaveData
 
     public void CleanGoneActivities() // 清除已結束的商演資料（預計在每日結算時進行）
     {
-        activities.RemoveAll(appoint => appoint.activity.day < DayManager.Instance.day);
+        activities.RemoveAll(appoint => appoint.activity.day < DayManager.Instance.totalDays);
     }
 }
 

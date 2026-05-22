@@ -32,7 +32,7 @@ public class CloseWindow : MonoBehaviour
         WindowManager.Instance.DeregisterWindow(windowRect);
 
         // 處理新手教學
-        if(DayManager.Instance.day <= 3) OnAppWithTutorialClosed?.Invoke();
+        if(DayManager.Instance.totalDays <= 3) OnAppWithTutorialClosed?.Invoke();
     }
 
     public void BindSetAppUI(SetAppUI setAppUI)

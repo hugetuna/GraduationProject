@@ -59,7 +59,7 @@ public class GoOutUIHandler : MonoBehaviour
         activityUI.SetActive(false);
 
         // 判斷是否啟用新手教學提示
-        if(DayManager.Instance.day == 1)
+        if(DayManager.Instance.totalDays == 1)
         {
             activityTutorial.ShowTutorial();
         }

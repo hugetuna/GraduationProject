@@ -48,7 +48,7 @@ public class TicketInfoUI : MonoBehaviour
 
     public void Initialize()
     {
-        today = DayManager.Instance.day;
+        today = DayManager.Instance.totalDays;
 
         // 找出所有活動票券按鈕
         ticketButtons.Clear();

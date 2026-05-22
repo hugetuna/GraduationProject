@@ -83,7 +83,7 @@ public class SetAppUI : MonoBehaviour
             }
 
             // 處理新手教學
-            if (DayManager.Instance.day == 1)
+            if (DayManager.Instance.totalDays == 1)
             {
                 if (appData.appName == "圖鑑")
                 {
