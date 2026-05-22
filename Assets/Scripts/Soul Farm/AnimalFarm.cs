@@ -64,16 +64,6 @@ public class AnimalFarm : MonoBehaviour, IInteractable
             resourceManager.AddItem(resourceManager.findItemByID("CS-001"), 1);
             Debug.Log("第二天的農場教學，給予玩家一個低級種子");
         }
-        if (isActivated == false)
-        {
-            interactableHint.isActivate = false;
-            InactiveBoard.SetActive(true);
-        }
-        else
-        {
-            interactableHint.isActivate = true;
-            InactiveBoard.SetActive(false);
-        }
     }
     void Update()
     {
@@ -98,6 +88,19 @@ public class AnimalFarm : MonoBehaviour, IInteractable
                     plantSeedButton.Select();
                 }
             }
+        }
+    }
+    public void setupActiveState()
+    {
+        if (isActivated == false)
+        {
+            interactableHint.isActivate = false;
+            InactiveBoard.SetActive(true);
+        }
+        else
+        {
+            interactableHint.isActivate = true;
+            InactiveBoard.SetActive(false);
         }
     }
     public void updateFarmButtonInteractable()

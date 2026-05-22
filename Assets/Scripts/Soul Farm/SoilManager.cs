@@ -26,6 +26,7 @@ public class SoilManager : MonoBehaviour
                 animalFarms[(int)farm.farmLV].maxSeedAmount = farm.maxSeedAmount;
                 animalFarms[(int)farm.farmLV].foodBarn = farm.foodBarn;
                 animalFarms[(int)farm.farmLV].foodBarnMax = farm.foodBarnMax;
+                animalFarms[(int)farm.farmLV].setupActiveState();
             }
         }
     }
