@@ -26,8 +26,11 @@ public class TitleButtonManager : MonoBehaviour
     {
         AudioManager.Instance.PlaySFX(MainTitleBtnSnd, setPitch: 1.2f);
         GameManager.Instance.SaveInkJSONAssetData(dialogueSaveDataNewgame);
-        DayManager.Instance.day = 1;
-        DayManager.Instance.chapter = 0;
+        GameManager.Instance.DayData.day=1;
+        GameManager.Instance.DayData.chapter=0;
+        DayManager.Instance.chapter=0;
+        DayManager.Instance.date=1;
+        DayManager.Instance.IsInStartOfDay=true;
         SceneTransitionManager.Instance.teleportByTargetSceneName("Dialogue Scene");
     }
     private void OnLoadButtonClicked()

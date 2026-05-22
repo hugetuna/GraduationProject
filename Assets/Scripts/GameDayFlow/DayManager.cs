@@ -25,6 +25,7 @@ public class DayManager : MonoBehaviour
     public void OnGameFileLoad()
     {
         date = GameManager.Instance.DayData.day;
+        chapter=GameManager.Instance.DayData.chapter;
         IsInStartOfDay = GameManager.Instance.DayData.IsInStartOfDay;
         //if (IsInStartOfDay)
         //{

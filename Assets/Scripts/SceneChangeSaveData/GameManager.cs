@@ -157,6 +157,7 @@ public class GameManager : MonoBehaviour
     }
     public void SaveDayData()
     {
+        DayData.chapter=DayManager.Instance.chapter;
         DayData.day = DayManager.Instance.date;
         DayData.currentEventIndex = DayManager.Instance.dayEventManager.currentEvent.TriggerTimeIndex;
         DayData.IsInStartOfDay = DayManager.Instance.IsInStartOfDay;

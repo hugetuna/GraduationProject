@@ -5,6 +5,7 @@ using UnityEngine.Events;
 [System.Serializable]
 public class DaySaveData
 {
+    public int chapter;
     public int day;
     public int currentEventIndex;
     public bool IsInStartOfDay;
