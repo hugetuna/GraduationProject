@@ -27,6 +27,7 @@ public class DayManager : MonoBehaviour
         date = GameManager.Instance.DayData.day;
         chapter=GameManager.Instance.DayData.chapter;
         IsInStartOfDay = GameManager.Instance.DayData.IsInStartOfDay;
+        if(date==1&&chapter==0) totalDays = 1;
         //if (IsInStartOfDay)
         //{
         //    StartDay();

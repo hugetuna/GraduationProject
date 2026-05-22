@@ -22,6 +22,7 @@ public class GameManager : MonoBehaviour
     public static GameManager Instance;
     public ResolutionManager ResolutionManager;
     public GameObject Canvas_Config;
+    public GameSettingsSO startGameSettingsSO;
     [Header("永久儲存資料")]
     public List<AnimalFarmSaveData> FarmsDataList;
     public List<AnimalSaveData> animalDataList = new List<AnimalSaveData>();
@@ -349,6 +350,21 @@ public class GameManager : MonoBehaviour
         ResolutionManager.targetHeight = configData.resolutionHeight;
         ResolutionManager.targetFullScreenMode = configData.fullScreenMode;
         Debug.Log("遊戲設定已載入。");
+    }
+    //完全重置遊戲（回到初始狀態）並將gamemanager裡的資料也重置
+    public void ResetGame()
+    {
+        FarmsDataList = startGameSettingsSO.FarmsDataList;
+        animalDataList = startGameSettingsSO.animalDataList;
+        teamIndex = startGameSettingsSO.teamIndex;
+        idolDataList = startGameSettingsSO.idolDataList;
+        DayData = startGameSettingsSO.DayData;
+        sceneNameSave = startGameSettingsSO.sceneNameSave;
+        ResourceData = startGameSettingsSO.ResourceData;
+        chatSaveData = startGameSettingsSO.chatSaveData;
+        teacherSaveData = startGameSettingsSO.teacherSaveData;
+        productSaveData = startGameSettingsSO.productSaveData;
+        activitySaveData = startGameSettingsSO.activitySaveData;
     }
     //關閉遊戲
     public void QuitGame()
