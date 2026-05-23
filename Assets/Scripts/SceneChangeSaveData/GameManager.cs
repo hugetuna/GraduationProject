@@ -371,7 +371,7 @@ public class GameManager : MonoBehaviour
         Debug.Log("正在透過 JSON 深拷貝重置遊戲資訊...");
 
         // 1. 將 SO 轉化為臨時 JSON 字串
-        string json = JsonUtility.ToJson(startGameSettingsSO);
+        //string json = JsonUtility.ToJson(startGameSettingsSO);
 
         // 2. 利用 JsonUtility 解析出全新、獨立記憶體空間的資料物件
         //    這裡假設你有寫一個跟 SO 結構一樣的資料包裝類，或者我們直接轉回全新的實例
@@ -385,13 +385,12 @@ public class GameManager : MonoBehaviour
         sceneNameSave = startGameSettingsSO.sceneNameSave;
 
         // 以下是自訂的 Class 類別，必須用 JSON 轉化，否則會共用記憶體
-        DayData = JsonUtility.FromJson<DaySaveData>(json);
-        ResourceData = JsonUtility.FromJson<ResourceSaveData>(json);
-        chatSaveData = JsonUtility.FromJson<ChatSaveData>(json);
-        teacherSaveData = JsonUtility.FromJson<TeacherSaveData>(json);
-        productSaveData = JsonUtility.FromJson<ProductSaveData>(json);
-        activitySaveData = JsonUtility.FromJson<ActivitySaveData>(json);
-        demonDialogueSaveData = JsonUtility.FromJson<DemonDialogueSaveData>(json);
+        DayData = JsonUtility.FromJson<DaySaveData>(JsonUtility.ToJson(startGameSettingsSO.DayData));
+        ResourceData = JsonUtility.FromJson<ResourceSaveData>(JsonUtility.ToJson(startGameSettingsSO.ResourceData));
+        chatSaveData = JsonUtility.FromJson<ChatSaveData>(JsonUtility.ToJson(startGameSettingsSO.chatSaveData));
+        teacherSaveData = JsonUtility.FromJson<TeacherSaveData>(JsonUtility.ToJson(startGameSettingsSO.teacherSaveData));
+        productSaveData = JsonUtility.FromJson<ProductSaveData>(JsonUtility.ToJson(startGameSettingsSO.productSaveData));
+        activitySaveData = JsonUtility.FromJson<ActivitySaveData>(JsonUtility.ToJson(startGameSettingsSO.activitySaveData));
 
         Debug.Log("遊戲資訊已成功安全重置，且初始設定檔未受污染。");
     }
