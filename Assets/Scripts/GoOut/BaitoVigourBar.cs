@@ -15,16 +15,17 @@ public class BaitoVigourBar : MonoBehaviour
     //-----------------------------------------------------------------//
     private DragToBaito drag; // 拖曳元件參考
     private UIGrayEffect grayEffect; // 灰階效果參考
-    private UIGrayEffect fillGrayEffect; // 體力條圖片的灰階效果參考
+    // private UIGrayEffect fillGrayEffect; // 體力條圖片的灰階效果參考
     private RectTransform vigourRect; // 體力條的 RectTransform 參考
     [SerializeField] private Vector2 teamPosition; // 角色在隊伍裡，體力條的位置（初始位置）
     [SerializeField] private Vector2 sendPosition; // 角色準備外出商演時，體力條的位置（拖曳後的位置）
+    [SerializeField] private Color32 tiredColor = new(244, 112, 112, 255); // 體力不足時的顏色
 
     void Awake()
     {
         drag = GetComponent<DragToBaito>();
         grayEffect = GetComponent<UIGrayEffect>();
-        fillGrayEffect = fillImage.GetComponent<UIGrayEffect>();
+        // fillGrayEffect = fillImage.GetComponent<UIGrayEffect>();
         vigourRect = vigourSlider.GetComponent<RectTransform>();
     }
 
@@ -100,14 +101,16 @@ public class BaitoVigourBar : MonoBehaviour
         {
             // 在 Member 區才需要根據體力變灰
             grayEffect.SetGrayScale(isTooTired);
-            fillGrayEffect.SetGrayScale(isTooTired);
+            // fillGrayEffect.SetGrayScale(isTooTired);
+            fillImage.color = isTooTired ? tiredColor : Color.white; // 體力不足時改變顏色，否則恢復正常顏色
             drag.enabled = !isTooTired; // 體力不足時禁用拖曳功能
         }
         else // Baito 區（先不管 None）
         {
             // 取消灰階（不論體力狀態）
             grayEffect.SetGrayScale(false);
-            fillGrayEffect.SetGrayScale(false);
+            // fillGrayEffect.SetGrayScale(false);
+            fillImage.color = Color.white;
             drag.enabled = true; // 始終允許拖曳功能
         }
     }

@@ -314,7 +314,11 @@ public class IdolInstance : MonoBehaviour
         if (isSettling && activityRecord.selectedActivity != null)
         {
             Debug.Log($"結算 {idolIndex} 的商演");
-            vigour -= activityRecord.selectedActivity.vigourCost; // 隔天主 UI 會同步此變化
+
+            int vigourCost = activityRecord.selectedActivity.vigourCost;
+            if(vigour < vigourCost) vigour = 0;
+            else vigour -= vigourCost; // 隔天主 UI 會同步此變化
+            
             ResourceManager.Instance.Money += activityRecord.selectedActivity.MoneyGain;
         }
 

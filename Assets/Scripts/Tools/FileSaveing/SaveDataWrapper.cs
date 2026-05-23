@@ -16,6 +16,7 @@ public class SaveDataWrapper
     public TeacherSaveData teacherSaveData;
     public ProductSaveData productSaveData;
     public ActivitySaveData activitySaveData;
+    public DemonDialogueSaveData demonDialogueSaveData;
     public bool isElevatorUsedToday;
     // 劇情與舞台通常視需求決定是否永久存檔
     // DialogueSaveData dialogueSaveData;

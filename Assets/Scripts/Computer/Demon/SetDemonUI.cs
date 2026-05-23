@@ -16,7 +16,7 @@ public class SetDemonUI : MonoBehaviour
     [SerializeField] private Button dialogueObject;
     [SerializeField] private TextMeshProUGUI dialogueText;
     [SerializeField] private GameObject hintIcon;
-    private bool hintShown = true;
+    [SerializeField] private bool hasTalked = false;
     //-----------------------------------------------------------------//
     [Header("對話腳本")]
     [SerializeField] private TextAsset inkJSONAsset;
@@ -35,9 +35,11 @@ public class SetDemonUI : MonoBehaviour
     [SerializeField] private AudioClip openSellUISound; // 開啟販賣頁面的音效
 
     void Start()
-    {       
+    {   
+        hasTalked = GameManager.Instance.demonDialogueSaveData.hasTalkedToDemon;   
+        hintIcon.SetActive(!hasTalked); // 根據對話紀錄顯示提示圖示
+
         sellUI.SetActive(false); // 預設關閉販賣頁面
-        hintIcon.SetActive(true); // 預設顯示提示圖示
         indicator.SetActive(false); // 預設關閉三角形
 
         talkButton.onClick.AddListener(OnTalkButtonClick);
@@ -55,10 +57,10 @@ public class SetDemonUI : MonoBehaviour
 
     private void OnTalkButtonClick()
     {
-        if (hintShown)
+        if (!hasTalked) // 第一次對話
         {
             hintIcon.SetActive(false);
-            hintShown = false;
+            GameManager.Instance.SaveDemonDialogueData(true);
         }
 
         // 對話未結束不可中斷
@@ -203,9 +205,6 @@ public class SetDemonUI : MonoBehaviour
         story = new Story(inkJSONAsset.text);
         story.ChoosePathString(currentKnot);
         storyFinished = false;
-
-        hintIcon.SetActive(true);
-        hintShown = true;
         
         // 預設內容也改用打字機顯示
         // fullLineText = GetInkLine(currentKnot);
