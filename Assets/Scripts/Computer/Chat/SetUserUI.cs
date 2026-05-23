@@ -71,7 +71,8 @@ public class SetUserUI : MonoBehaviour
         statusImage.gameObject.SetActive(ur.isUnread);
         lastMessageText.text = ur.lastMessageText;
 
-        int dayDiff = DayManager.Instance.totalDays - ur.lastMessageDay; // 上次讀訊息與現在的天數差距
+        int totalDays = DayManager.Instance.date + DayManager.Instance.chapter * 3; // 僅適用於新手教學＆第一章
+        int dayDiff = totalDays - ur.lastMessageDay; // 上次讀訊息與現在的天數差距
         if (dayDiff > 0)
         {
             // 顯示 1 day, 2 days...

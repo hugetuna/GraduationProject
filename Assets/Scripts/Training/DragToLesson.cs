@@ -68,7 +68,7 @@ public class DragToLesson : Drag
             zoneIndex = CurrentDropZone.zoneIndex;
 
             // 第一天指定角色訓練的特殊情形
-            if (DayManager.Instance != null && DayManager.Instance.totalDays == 1)
+            if (DayManager.Instance != null && DayManager.Instance.chapter == 0 && DayManager.Instance.date == 1)
             {
                 var currentEvent = DayManager.Instance.dayEventManager.currentEvent;
                 if (currentEvent != null)

@@ -59,7 +59,7 @@ public class DesktopUIHandler : MonoBehaviour
         
         Camera.main.orthographic = true; // 切換成平行投影
 
-        if(DayManager.Instance.totalDays == 1) demonPet.SetActive(false); // 第一天不顯示惡魔桌寵
+        if(DayManager.Instance.chapter == 0 && DayManager.Instance.date == 1) demonPet.SetActive(false); // 第一天不顯示惡魔桌寵
 
         teamMembers = teamManager.teamMembers; // 獲取當前隊伍成員
         foreach (PlayerControlMainWorld member in teamMembers)

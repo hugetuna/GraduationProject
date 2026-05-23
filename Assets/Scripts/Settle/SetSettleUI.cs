@@ -37,7 +37,7 @@ public class SetSettleUI : MonoBehaviour
 
         // 呼叫角色顯示（已排序）＆計算金錢變化（還沒有完全改好）
         idolInstances = TeamDataUtility.IdolInstanceList;
-        if (DayManager.Instance.totalDays == 1) moneyEarned = 1000;
+        if (DayManager.Instance.chapter == 0 && DayManager.Instance.date == 1) moneyEarned = 1000;
 
         foreach (var idol in idolInstances)
         {
