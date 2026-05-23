@@ -13,6 +13,8 @@ public class ProductUIGenerator : MonoBehaviour
     //-----------------------------------------------------------------//
     public GameObject productPrefab; // 用於生成商品項目的預製件
     public List<Transform> productContent = new(); // 用於放置生成的商品物件的容器
+    //-----------------------------------------------------------------//
+    public Button seedContentButton; // 粉絲種子分類的按鈕
 
     void Start()
     {
@@ -48,6 +50,7 @@ public class ProductUIGenerator : MonoBehaviour
             GameObject productObject = null;
             string itemName = productRuntime.product.item.itemName;
             var itemType = productRuntime.product.item.itemType;
+            string itemId = productRuntime.product.item.itemID;
             if (itemName.Contains("體力"))
             {
                 productObject = Instantiate(productPrefab, productContent[0]); // "Wrapper" + Card
@@ -56,13 +59,15 @@ public class ProductUIGenerator : MonoBehaviour
             {
                 productObject = Instantiate(productPrefab, productContent[1]); // "Wrapper" + Card
             }
-            else if (itemName.Contains("御守") || itemName.Contains("香水"))
+            else if (itemName.Contains("御守") || itemName.Contains("香水") || itemType == ItemType.Equipment)
             {
                 productObject = Instantiate(productPrefab, productContent[2]); // "Wrapper" + Card
             }
-            else if (itemType == ItemType.Equipment)
+            else if (itemId.Contains("CS")) // 粉絲種子
             {
-                productObject = Instantiate(productPrefab, productContent[3]); // "Wrapper" + Card
+                // 新手教學第一天不開放粉絲種子的生成＆購買
+                if (DayManager.Instance.chapter == 0 && DayManager.Instance.date == 1) continue;
+                else productObject = Instantiate(productPrefab, productContent[3]); // "Wrapper" + Card
             }
 
             if (productObject == null)
@@ -75,6 +80,12 @@ public class ProductUIGenerator : MonoBehaviour
             // 設定商品卡片的 UI 資料
             SetProductUI setProductUI = card.GetComponent<SetProductUI>();
             setProductUI.Initialize(productRuntime);
+        }
+
+        if (DayManager.Instance.chapter == 0 && DayManager.Instance.date == 1)
+        {
+            // 新手教學第一天不開放粉絲種子的生成＆購買
+            seedContentButton.gameObject.SetActive(false);
         }
     }
 }

@@ -319,7 +319,7 @@ public class IdolInstance : MonoBehaviour
             if(vigour < vigourCost) vigour = 0;
             else vigour -= vigourCost; // 隔天主 UI 會同步此變化
             
-            ResourceManager.Instance.Money += activityRecord.selectedActivity.MoneyGain;
+            ResourceManager.Instance.Money += (int)(activityRecord.selectedActivity.MoneyGain * ResourceManager.Instance.MoneyBonus);
         }
 
         // 重置必須清空的商演紀錄
@@ -357,7 +357,7 @@ public class IdolInstance : MonoBehaviour
         {
             Debug.Log($"結算 {idolIndex} 的打工");
             vigour -= baitoRecord.selectedBaito.vigourCost; // 隔天主 UI 會同步此變化
-            ResourceManager.Instance.Money += baitoRecord.selectedBaito.MoneyGain;
+            ResourceManager.Instance.Money += (int)(baitoRecord.selectedBaito.MoneyGain * ResourceManager.Instance.MoneyBonus);
         }
 
         // 重置必須清空的打工紀錄

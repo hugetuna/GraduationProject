@@ -37,7 +37,7 @@ public class SetSettleUI : MonoBehaviour
 
         // 呼叫角色顯示（已排序）＆計算金錢變化（還沒有完全改好）
         idolInstances = TeamDataUtility.IdolInstanceList;
-        if (DayManager.Instance.chapter == 0 && DayManager.Instance.date == 1) moneyEarned = 1000;
+        // if (DayManager.Instance.chapter == 0 && DayManager.Instance.date == 1) moneyEarned = 1000;
 
         foreach (var idol in idolInstances)
         {
@@ -66,7 +66,7 @@ public class SetSettleUI : MonoBehaviour
         int finalVigour = idol.vigour - idol.trainRecord.vigourCost;
         character.GetComponent<SetSettleCharacterUI>().ShowCharacterBenefits(
             idol.idolUISprites.spriteTachie,
-            idol.basicStatus.idolName,
+            TeamDataUtility.GetIdolNameTW(idol.idolIndex),
             finalVigour, idol.vigourMax, 0,  // 目前沒有最大體力值變動
             idol.dance, idol.trainRecord.danceExp,
             idol.vocal, idol.trainRecord.vocalExp,
@@ -86,7 +86,7 @@ public class SetSettleUI : MonoBehaviour
         int finalVigour = idol.vigour - idol.baitoRecord.selectedBaito.vigourCost;
         character.GetComponent<SetSettleCharacterUI>().ShowCharacterBenefits(
             idol.idolUISprites.spriteTachie,
-            idol.basicStatus.idolName,
+            TeamDataUtility.GetIdolNameTW(idol.idolIndex),
             finalVigour, idol.vigourMax, 0,  // 目前沒有最大體力值變動
             idol.dance, 0, // 沒有舞蹈經驗變動
             idol.vocal, 0, // 沒有歌唱經驗變動
@@ -94,7 +94,8 @@ public class SetSettleUI : MonoBehaviour
             idol.performance, 0 // 目前沒有演技變動
         );
 
-        moneyEarned += idol.baitoRecord.selectedBaito.MoneyGain; // 打工會賺錢，但不會拿到道具
+        // 打工會賺錢，但不會拿到道具
+        moneyEarned += (int)(idol.baitoRecord.selectedBaito.MoneyGain * ResourceManager.Instance.MoneyBonus); 
     }
 
     private void ShowActivityBenefits(IdolInstance idol)
@@ -107,7 +108,7 @@ public class SetSettleUI : MonoBehaviour
         finalVigour = Mathf.Max(finalVigour, 0); // 確保體力不會變成負數
         character.GetComponent<SetSettleCharacterUI>().ShowCharacterBenefits(
             idol.idolUISprites.spriteTachie,
-            idol.basicStatus.idolName,
+            TeamDataUtility.GetIdolNameTW(idol.idolIndex),
             finalVigour, idol.vigourMax, 0,  // 目前沒有最大體力值變動
             idol.dance, 0, // 沒有舞蹈經驗變動
             idol.vocal, 0, // 沒有歌唱經驗變動
@@ -117,7 +118,8 @@ public class SetSettleUI : MonoBehaviour
 
         if (!isSettleActivityMoney)
         {
-            moneyEarned += idol.activityRecord.selectedActivity.MoneyGain; // 商演會賺錢，但不會拿到道具
+            // 商演會賺錢，但不會拿到道具
+            moneyEarned += (int)(idol.activityRecord.selectedActivity.MoneyGain * ResourceManager.Instance.MoneyBonus); 
             isSettleActivityMoney = true; // 確保只結算一次商演賺的錢
         }
     }

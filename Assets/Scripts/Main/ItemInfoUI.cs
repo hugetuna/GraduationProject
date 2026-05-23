@@ -16,6 +16,7 @@ public class ItemInfoUI : MonoBehaviour
     private TextMeshProUGUI dropdownLabel; // 下拉選單的標籤，用於顯示選擇的對象
     private Image dropdownArrow; // 下拉選單的箭頭圖示
     [SerializeField] private GameObject useItemButton; // 確認使用道具的按鈕
+    private Button useButtonComponent;
     //-----------------------------------------------------------------//
     private List<Button> itemButtons = new(); // 儲存所有道具項目按鈕
     private Item selectedItem = null; // 當前選擇的道具
@@ -31,6 +32,7 @@ public class ItemInfoUI : MonoBehaviour
     {
         dropdownLabel = dropdownMenu.transform.Find("Label").GetComponent<TextMeshProUGUI>();
         dropdownArrow = dropdownMenu.transform.Find("Arrow").GetComponent<Image>();
+        useButtonComponent = useItemButton.GetComponent<Button>();
     }
 
     void Start()
@@ -65,16 +67,22 @@ public class ItemInfoUI : MonoBehaviour
         // 根據不同的道具類型顯示不同的資訊
         if (selectedItem is ConsumableItem consumable)
         {
-            // itemInfoAdditional.gameObject.SetActive(true);
-            itemInfoAdditional.text = $"持續天數：{consumable.duration}";
+            if (consumable.itemID.Contains("CS")) // 粉絲種子
+            {
+                itemInfoAdditional.text = "";
+                SetDropdownInteractable(false);
+                useButtonComponent.interactable = false;
+            }
+            else
+            {
+                itemInfoAdditional.text = $"持續天數：{consumable.duration}";
 
-            SetDropdownInteractable(true);
-            useItemButton.GetComponent<Button>().interactable = true;
+                SetDropdownInteractable(true);
+                useButtonComponent.interactable = true;
+            }
         }
         else if (selectedItem is FansItem fansItem)
         {
-            // itemInfoAdditional.gameObject.SetActive(true);
-
             string harvesterName = "";
             if (fansItem.harvester != IdolWho.none && TeamDataUtility.IdolDict.ContainsKey(fansItem.harvester))
             {
@@ -85,15 +93,14 @@ public class ItemInfoUI : MonoBehaviour
             else itemInfoAdditional.text = "";
 
             SetDropdownInteractable(false);
-            useItemButton.GetComponent<Button>().interactable = false;
+            useButtonComponent.interactable = false;
         }
         else // if (selectedItem is EquipmentItem equipment)
         {
             itemInfoAdditional.text = "";
-            // itemInfoAdditional.gameObject.SetActive(false);
 
             SetDropdownInteractable(false);
-            useItemButton.GetComponent<Button>().interactable = false;
+            useButtonComponent.interactable = false;
         }
 
         // 確保字型正確渲染
@@ -116,7 +123,7 @@ public class ItemInfoUI : MonoBehaviour
         itemInfoAdditional.text = "";
 
         SetDropdownInteractable(false);
-        useItemButton.GetComponent<Button>().interactable = false;
+        useButtonComponent.interactable = false;
 
         itemInfoName.ForceMeshUpdate();
         itemInfoDescription.ForceMeshUpdate();
@@ -138,7 +145,7 @@ public class ItemInfoUI : MonoBehaviour
     private void SetDropdownInteractable(bool interactable)
     {
         dropdownMenu.GetComponent<TMP_Dropdown>().interactable = interactable;
-        
+
         byte alpha = interactable ? (byte)255 : (byte)128;
         dropdownLabel.color = new Color32(50, 50, 50, alpha);
         dropdownArrow.color = new Color32(255, 255, 255, alpha);
