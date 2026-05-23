@@ -472,14 +472,14 @@ VAR teamID = 0  // 由 Unity 端傳入
 老闆早安！我們來了！
 
 #speaker:Karo
-#Tachie2_Move:((-500,0),0.5)
+#Tachie1_Move:((-500,0),0.5)
 #Tachie3_Character:Karo 
 #Tachie3_Emotion:Angry
 #emotion:Angry
 ...唉。
 
 #speaker:Mizar
-#Tachie1_Move:((500,0),0.5)
+#Tachie3_Move:((500,0),0.5)
 #Tachie2_Character:Mizar 
 呵呵，老闆早安～。
 
@@ -581,14 +581,14 @@ VAR teamID = 0  // 由 Unity 端傳入
 老闆早安！我們來了！
 
 #speaker:Mizar
-#Tachie2_Move:((-500,0),0.5)
+#Tachie1_Move:((-500,0),0.5)
 #Tachie3_Character:Mizar 
 #Tachie3_Emotion:Laugh
 #emotion:Laugh
 呵呵，老闆早安。
 
 #speaker:Aicor
-#Tachie1_Move:((500,0),0.5)
+#Tachie3_Move:((500,0),0.5)
 #Tachie2_Character:Aicor 
 呼...呼...。
 
