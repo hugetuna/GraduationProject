@@ -16,7 +16,8 @@ public class TicketUIGenerator : MonoBehaviour
         // 一公前的所有活動清單
         foreach (Activity activity in ticketList) // 按清單生成初始的活動項目
         {
-            int diff = activity.day - DayManager.Instance.totalDays;
+            int totalDays = DayManager.Instance.date + DayManager.Instance.chapter * 3; // 僅適用於新手教學＆第一章
+            int diff = activity.day - totalDays;
             if (diff < 0 || diff > 5)
             {
                 Debug.Log($"{activity.activityName} 不在可預約範圍內，跳過生成");

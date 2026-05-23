@@ -42,7 +42,11 @@ public class UserRuntime
         }
 
         // 若無存檔，預設為當前日期
-        if(lastMessageDay == -1) lastMessageDay = DayManager.Instance.totalDays;
+        if (lastMessageDay == -1)
+        {
+            int totalDays = DayManager.Instance.date + DayManager.Instance.chapter * 3; // 僅適用於新手教學＆第一章
+            lastMessageDay = totalDays;
+        }
     }
 
     public void AddToChatHistory(string text, bool isPlayer)

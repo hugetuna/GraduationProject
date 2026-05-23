@@ -19,11 +19,13 @@ public class SetAppointUI : MonoBehaviour
     
     void Start()
     {
+        int totalDays = DayManager.Instance.date + DayManager.Instance.chapter * 3; // 僅適用於新手教學＆第一章
+
         // 設定行事曆日期
         for (int i = 0; i < dateTexts.Count; i++)
         {
             int month = initialMonth;
-            int day = initialDay + DayManager.Instance.totalDays + i - 1;
+            int day = initialDay + totalDays + i - 1;
             if(day > 30){ // 簡單處理一下跨月的情況（目前只有九月和十月）
                 month++;
                 day -= 30; 
@@ -36,7 +38,7 @@ public class SetAppointUI : MonoBehaviour
         // 生成公演顯示
         foreach (Activity stage in stageList)
         {
-            int daydiff = stage.day - DayManager.Instance.totalDays;
+            int daydiff = stage.day - totalDays;
             if (daydiff < 0 || daydiff > 5)
             {
                 Debug.Log($"{stage.activityName} 不在顯示範圍內，跳過生成");

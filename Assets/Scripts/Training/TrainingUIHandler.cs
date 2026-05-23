@@ -74,7 +74,7 @@ public class TrainingUIHandler : MonoBehaviour
 
         // 啟用訓練室新手教學提示
         var currentEvent = DayManager.Instance.dayEventManager.currentEvent;
-        if(DayManager.Instance.totalDays == 1 && currentEvent != null && currentEvent.TriggerTimeIndex >= 6)
+        if(DayManager.Instance.chapter == 0 && DayManager.Instance.date == 1 && currentEvent != null && currentEvent.TriggerTimeIndex >= 6)
         {
             OnTrainingUIOpened?.Invoke();
         }
