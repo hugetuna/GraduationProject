@@ -1224,20 +1224,20 @@ VAR teamID = 0  // 由 Unity 端傳入
 #Tachie1_Behavior:Shake
 嗚哇上面超熱，希望我的表情管理有做好。
 
-#speaker:Karo
+#speaker:Mizar
 #Tachie1_Move:((-500,0),0.5)
-#Tachie3_Character:Karo
+#Tachie3_Character:Mizar
 #Tachie3_Emotion:Angry
-#emotion:Angry
+#emotion:Mizar
 原來在舞台上是這種感覺啊...。
-#speaker:Karo
-#Tachie3_Character:Karo
+#speaker:Mizar
+#Tachie3_Character:Mizar
 #Tachie3_Emotion:Talk
 #emotion:Talk
 接下來就剩下結果嗎...。
 
 #speaker:Sirius
-#Tachie3_Character:Karo
+#Tachie3_Character:Mizar
 #Tachie2_Character:Sirius 
 #Tachie2_Emotion:Angry
 #emotion:Angry
@@ -1299,14 +1299,14 @@ VAR teamID = 0  // 由 Unity 端傳入
 #Tachie1_Behavior:Shake #font:Normal
 之後真的要去錄節目了呀。
 
-#speaker:Karo
-#Tachie3_Character:Karo
+#speaker:Mizar
+#Tachie3_Character:Mizar
 #Tachie3_Emotion:Talk
 #emotion:Talk
 #Tachie3_Behavior:Shake
 太好了呢，大家都太棒了。
-#speaker:Karo
-#Tachie3_Character:Karo
+#speaker:Mizar
+#Tachie3_Character:Mizar
 #Tachie3_Emotion:Laugh
 #emotion:Laugh
 謝謝你們。
@@ -1343,8 +1343,8 @@ VAR teamID = 0  // 由 Unity 端傳入
 #speaker:Manager
 (像當初的她一樣...)
 
-#speaker:Karo
-#Tachie3_Character:Karo
+#speaker:Mizar
+#Tachie3_Character:Mizar
 #Tachie3_Emotion:Laugh
 #emotion:Laugh
 謝謝你，之後就交給你帶領我們了。

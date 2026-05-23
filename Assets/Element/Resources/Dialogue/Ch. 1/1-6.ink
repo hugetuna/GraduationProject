@@ -1,4 +1,14 @@
 VAR teamID = 0
+
+#speaker:Empty #background:News #bgm:CheerfulOffice
+（攝影機燈號亮起，專業的訪談場景中，三位練習生坐在沙發上）
+
+#speaker:Host
+歡迎來到《Neo Polaris》賽前直擊！
+#speaker:Host
+今天我們請到了在初舞台表現亮眼、充滿驚喜的新星團體！
+#speaker:Host
+各位，先跟觀眾朋友們打個招呼吧？
 { teamID:
 - 0: -> team0_kuma_sirius_karo
 - 1: -> team1_kuma_sirius_aicor
@@ -12,15 +22,6 @@ VAR teamID = 0
 - 9: -> team9_karo_aicor_mizar
 }
 
-#speaker:Empty #background:News #bgm:CheerfulOffice
-（攝影機燈號亮起，專業的訪談場景中，三位練習生坐在沙發上）
-
-#speaker:Host
-歡迎來到《Neo Polaris》賽前直擊！
-#speaker:Host
-今天我們請到了在初舞台表現亮眼、充滿驚喜的新星團體！
-#speaker:Host
-各位，先跟觀眾朋友們打個招呼吧？
 
 ===team0_kuma_sirius_karo===
 

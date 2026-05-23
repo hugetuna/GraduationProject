@@ -1,4 +1,6 @@
 VAR teamID = 0
+#speaker:Empty #background:DressingRoom 
+（後台更衣室內，空氣中充滿了化妝品的味道，還有從外面傳來的歡聲）
 { teamID:
 - 0: -> team0_kuma_sirius_karo
 - 1: -> team1_kuma_sirius_aicor
@@ -11,8 +13,7 @@ VAR teamID = 0
 - 8: -> team8_sirius_aicor_mizar
 - 9: -> team9_karo_aicor_mizar
 }
-#speaker:Empty #background:DressingRoom 
-（後台更衣室內，空氣中充滿了化妝品的味道，還有從外面傳來的歡聲）
+
 ===team0_kuma_sirius_karo===
 #speaker:Kuma
 #Tachie1_Character:Kuma #Tachie1_Emotion:Talk #emotion:Talk
