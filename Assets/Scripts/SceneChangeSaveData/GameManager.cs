@@ -351,20 +351,40 @@ public class GameManager : MonoBehaviour
         ResolutionManager.targetFullScreenMode = configData.fullScreenMode;
         Debug.Log("遊戲設定已載入。");
     }
-    //完全重置遊戲（回到初始狀態）並將gamemanager裡的資料也重置
+    // 完全重置遊戲（回到初始狀態）並將 gamemanager 裡的資料也重置
     public void ResetGame()
     {
-        FarmsDataList = startGameSettingsSO.FarmsDataList;
-        animalDataList = startGameSettingsSO.animalDataList;
+        if (startGameSettingsSO == null)
+        {
+            Debug.LogError("找不到初始設定檔 startGameSettingsSO！");
+            return;
+        }
+
+        Debug.Log("正在透過 JSON 深拷貝重置遊戲資訊...");
+
+        // 1. 將 SO 轉化為臨時 JSON 字串
+        string json = JsonUtility.ToJson(startGameSettingsSO);
+
+        // 2. 利用 JsonUtility 解析出全新、獨立記憶體空間的資料物件
+        //    這裡假設你有寫一個跟 SO 結構一樣的資料包裝類，或者我們直接轉回全新的實例
+        //    最安全且符合你現有結構的做法，是逐個切斷 List 和自訂 Class 的引用：
+
+        FarmsDataList = new List<AnimalFarmSaveData>(startGameSettingsSO.FarmsDataList);
+        animalDataList = new List<AnimalSaveData>(startGameSettingsSO.animalDataList);
+        idolDataList = new List<IdolSaveData>(startGameSettingsSO.idolDataList);
+
         teamIndex = startGameSettingsSO.teamIndex;
-        idolDataList = startGameSettingsSO.idolDataList;
-        DayData = startGameSettingsSO.DayData;
         sceneNameSave = startGameSettingsSO.sceneNameSave;
-        ResourceData = startGameSettingsSO.ResourceData;
-        chatSaveData = startGameSettingsSO.chatSaveData;
-        teacherSaveData = startGameSettingsSO.teacherSaveData;
-        productSaveData = startGameSettingsSO.productSaveData;
-        activitySaveData = startGameSettingsSO.activitySaveData;
+
+        // 以下是自訂的 Class 類別，必須用 JSON 轉化，否則會共用記憶體
+        DayData = JsonUtility.FromJson<DaySaveData>(json);
+        ResourceData = JsonUtility.FromJson<ResourceSaveData>(json);
+        chatSaveData = JsonUtility.FromJson<ChatSaveData>(json);
+        teacherSaveData = JsonUtility.FromJson<TeacherSaveData>(json);
+        productSaveData = JsonUtility.FromJson<ProductSaveData>(json);
+        activitySaveData = JsonUtility.FromJson<ActivitySaveData>(json);
+
+        Debug.Log("遊戲資訊已成功安全重置，且初始設定檔未受污染。");
     }
     //關閉遊戲
     public void QuitGame()

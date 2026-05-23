@@ -219,7 +219,8 @@ public class ChatRoomController : MonoBehaviour
 
         // 通知 UI 更新狀態
         currentUserRuntime.lastMessageText = text;
-        currentUserRuntime.lastMessageDay = DayManager.Instance.totalDays;
+        int totalDays = DayManager.Instance.date + DayManager.Instance.chapter * 3; // 僅適用於新手教學＆第一章
+        currentUserRuntime.lastMessageDay = totalDays;
         SetUserUI.InvokeUserStatusChanged(currentUserRuntime);
 
         // 新增對話泡泡，並隨時記錄對話歷史

@@ -156,7 +156,6 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     }
     public void HideInteractionUI()
     {
-        SwitchActionMap("PlayerActionMain");
         interactableHint.isActivate = true;
         if (mainUICanvasGroup != null)
         {
@@ -165,6 +164,11 @@ public class AnimalFarm : MonoBehaviour, IInteractable
         }
         farmCanvas.gameObject.SetActive(false);
         updateFarmButtonInteractable();
+        if (DayManager.Instance.date == 2&&DayManager.Instance.chapter==0 && DayManager.Instance.dayEventManager.currentEvent?.Type == EventType.MainWorld)//第二天教學專用
+        {
+            return;
+        }
+        SwitchActionMap("PlayerActionMain");
     }
     private IEnumerator SelectButtonWithDelay()
     {

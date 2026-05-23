@@ -41,5 +41,12 @@ public class DestoryCardOnDrag : MonoBehaviour, IDropHandler
                 Debug.Log($"無法丟棄該卡片。");
             }
         }
+        foreach (var idol in stageManager.onStageIdols)
+        {
+            if (idol != null)
+            {
+                idol.GetComponent<IdolOnStage>().ShowUseableIndicator(false);
+            }
+        }
     }
 }

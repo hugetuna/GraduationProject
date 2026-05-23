@@ -28,6 +28,9 @@ public class TitleButtonManager : MonoBehaviour
         GameManager.Instance.SaveInkJSONAssetData(dialogueSaveDataNewgame);
         GameManager.Instance.ResetGame();
         DayManager.Instance.OnGameFileLoad();
+        DayManager.Instance.date = 1;
+        DayManager.Instance.chapter = 0;
+        DayManager.Instance.IsInStartOfDay = true;
         SceneTransitionManager.Instance.teleportByTargetSceneName("Dialogue Scene");
     }
     private void OnLoadButtonClicked()
