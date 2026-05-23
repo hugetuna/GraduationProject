@@ -30,15 +30,129 @@ MonoBehaviour:
     foodBarnMax: 5
   animalDataList: []
   teamIndex: -1
-  idolDataList: []
+  idolDataList:
+  - positionInTeam: 0
+    idolIndex: 4
+    basicStatus: {fileID: 11400000, guid: ed0a0d7139266dc449a0a3db6904da95, type: 2}
+    vocal: 130
+    dance: 120
+    visual: 210
+    voTrainingBonus: 1
+    daTrainingBonus: 1
+    viTrainingBonus: 1
+    charm: 0
+    charmInCount: 0
+    performance: 100
+    vigour: 60
+    vigourMax: 60
+    fans: 0
+    bondWithP: 0
+    equippedItemName: 
+    currentClothIndex: 0
+    BHaveSetUp: 1
+    basicTrainRecord: {fileID: 11400000, guid: 6430773534cda664291cf9a5b910875f, type: 2}
+    trainRecord:
+      state: 4
+      position: {x: 0, y: 0}
+      droppedZoneType: 0
+      droppedZoneIndex: -1
+      vigourCost: 0
+      danceExp: 0
+      vocalExp: 0
+      visualExp: 0
+    baitoRecord:
+      selectedBaito: {fileID: 0}
+      position: {x: 0, y: 0}
+      zoneType: 0
+      zoneIndex: -1
+    activityRecord:
+      selectedActivity: {fileID: 0}
+    isAvailable: 1
+    currentAction: 0
+  - positionInTeam: 0
+    idolIndex: 1
+    basicStatus: {fileID: 11400000, guid: a8b952e84e0073849a2d817947bb270c, type: 2}
+    vocal: 180
+    dance: 190
+    visual: 200
+    voTrainingBonus: 1
+    daTrainingBonus: 1
+    viTrainingBonus: 1
+    charm: 0
+    charmInCount: 0
+    performance: 120
+    vigour: 65
+    vigourMax: 65
+    fans: 0
+    bondWithP: 0
+    equippedItemName: 
+    currentClothIndex: 0
+    BHaveSetUp: 1
+    basicTrainRecord: {fileID: 11400000, guid: 6430773534cda664291cf9a5b910875f, type: 2}
+    trainRecord:
+      state: 4
+      position: {x: 0, y: 0}
+      droppedZoneType: 0
+      droppedZoneIndex: -1
+      vigourCost: 0
+      danceExp: 0
+      vocalExp: 0
+      visualExp: 0
+    baitoRecord:
+      selectedBaito: {fileID: 0}
+      position: {x: 0, y: 0}
+      zoneType: 0
+      zoneIndex: -1
+    activityRecord:
+      selectedActivity: {fileID: 0}
+    isAvailable: 1
+    currentAction: 0
+  - positionInTeam: 0
+    idolIndex: 2
+    basicStatus: {fileID: 11400000, guid: e14ab52a0b03c89419a4e9a8c75d38ed, type: 2}
+    vocal: 110
+    dance: 250
+    visual: 130
+    voTrainingBonus: 1
+    daTrainingBonus: 1
+    viTrainingBonus: 1
+    charm: 0
+    charmInCount: 0
+    performance: 70
+    vigour: 70
+    vigourMax: 70
+    fans: 0
+    bondWithP: 0
+    equippedItemName: 
+    currentClothIndex: 0
+    BHaveSetUp: 1
+    basicTrainRecord: {fileID: 11400000, guid: 6430773534cda664291cf9a5b910875f, type: 2}
+    trainRecord:
+      state: 0
+      position: {x: 0, y: 0}
+      droppedZoneType: 0
+      droppedZoneIndex: -1
+      vigourCost: 0
+      danceExp: 0
+      vocalExp: 0
+      visualExp: 0
+    baitoRecord:
+      selectedBaito: {fileID: 0}
+      position: {x: 0, y: 0}
+      zoneType: 0
+      zoneIndex: -1
+    activityRecord:
+      selectedActivity: {fileID: 0}
+    isAvailable: 1
+    currentAction: 0
   DayData:
     chapter: 0
     day: 1
     currentEventIndex: 0
-    IsInStartOfDay: 1
+    IsInStartOfDay: 0
   sceneNameSave: 
   ResourceData:
-    Money: 0
+    Money: 500
     MoneyBonus: 1
     bondAB:
       idolA: {fileID: 0}
@@ -52,7 +166,15 @@ MonoBehaviour:
       idolA: {fileID: 0}
       idolB: {fileID: 0}
       bondValue: 0
-    saveItems: []
+    saveItems:
+    - itemID: C_007
+      quantity: 1
+      isFansItem: 0
+      Harvester: -1
+    - itemID: F_004
+      quantity: 1
+      isFansItem: 1
+      Harvester: 1
     allEqupmentNames: []
   chatSaveData:
     users: []

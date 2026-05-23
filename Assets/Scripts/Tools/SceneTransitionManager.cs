@@ -41,7 +41,7 @@ public class SceneTransitionManager : MonoBehaviour
     public void OnGameFileLoad()
     {
         isLoading = true;
-        if (GameManager.Instance.DayData.day == 1)
+        if (GameManager.Instance.DayData.day == 1&& GameManager.Instance.DayData.chapter == 0)
         {
             teleportByTargetSceneName("Floor_3");
         }
