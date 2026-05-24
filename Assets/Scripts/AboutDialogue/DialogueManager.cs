@@ -126,8 +126,8 @@ public class DialogueManager : MonoBehaviour
     }
     public void DialogueStart()
     {
-        //開啟跳過鍵
-        skipButton.interactable = true;
+        skipButton.interactable = false;
+        StartCoroutine(activeSkipButtonAfterDelay());
         //切換 Action Map 到對話專用
         SwitchActionMap("Dialogue");
         //關閉玩家操作、ui顯示
@@ -503,6 +503,12 @@ public class DialogueManager : MonoBehaviour
     public void Skip()
     {
         OnDialougeEnd();
+    }
+    public IEnumerator activeSkipButtonAfterDelay()
+    {
+        WaitForSeconds wait = new WaitForSeconds(1f); // 1秒的延遲
+        yield return wait; // 等待延遲時間
+        skipButton.interactable = true;
     }
     private void OnDialougeEnd()
     {
