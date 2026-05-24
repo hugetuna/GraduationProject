@@ -26,6 +26,8 @@ public class DayManager : MonoBehaviour
         date = GameManager.Instance.DayData.day;
         chapter=GameManager.Instance.DayData.chapter;
         IsInStartOfDay = GameManager.Instance.DayData.IsInStartOfDay;
+        dayEventManager.interactObjectKey = "";
+        dayEventManager.isWaitingForInteract= false;
         //if (IsInStartOfDay)
         //{
         //    StartDay();
