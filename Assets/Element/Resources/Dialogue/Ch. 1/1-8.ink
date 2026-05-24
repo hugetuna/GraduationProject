@@ -67,8 +67,7 @@ Karo？妳沒事吧？妳認識剛才那個人？
 #Tachie1_Character:Kuma #Tachie1_Emotion:Angry
 #Tachie2_Character:Sirius #Tachie2_Emotion:Angry
 #Tachie3_Character:Karo #Tachie3_Emotion:Angry
-#Tachie1_Move:((-500,0),0.5)
-#Tachie2_Move:((500,0),0.5)
+
 （休息室門被推開，三人走了進來，臉上的表情並不像剛晉級那樣興奮）
 
 #speaker:Manager

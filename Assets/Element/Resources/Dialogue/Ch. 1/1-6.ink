@@ -162,8 +162,7 @@ VAR teamID = 0
 #Tachie1_Character:Kuma #Tachie1_Emotion:Talk
 #Tachie2_Character:Sirius #Tachie2_Emotion:Talk
 #Tachie3_Character:Karo #Tachie3_Emotion:Talk
-#Tachie1_Move:((-500,0),0.5)
-#Tachie2_Move:((500,0),0.5)
+
 （三人走出攝影棚，聚在電視台長廊的轉角處）
 
 #speaker:Karo
@@ -449,8 +448,7 @@ VAR teamID = 0
 #Tachie1_Character:Kuma #Tachie1_Emotion:Talk
 #Tachie2_Character:Sirius #Tachie2_Emotion:Talk
 #Tachie3_Character:Aicor #Tachie3_Emotion:Talk
-#Tachie1_Move:((-500,0),0.5)
-#Tachie2_Move:((500,0),0.5)
+
 （三人走出攝影棚，聚在電視台長廊的轉角處）
 
 #speaker:Aicor
@@ -736,8 +734,7 @@ VAR teamID = 0
 #Tachie1_Character:Kuma #Tachie1_Emotion:Talk
 #Tachie2_Character:Sirius #Tachie2_Emotion:Talk
 #Tachie3_Character:Mizar #Tachie3_Emotion:Talk
-#Tachie1_Move:((-500,0),0.5)
-#Tachie2_Move:((500,0),0.5)
+
 （三人走出攝影棚，聚在電視台長廊的轉角處）
 
 #speaker:Mizar
@@ -1016,8 +1013,7 @@ VAR teamID = 0
 #Tachie1_Character:Kuma #Tachie1_Emotion:Talk
 #Tachie2_Character:Aicor #Tachie2_Emotion:Talk
 #Tachie3_Character:Karo #Tachie3_Emotion:Talk
-#Tachie1_Move:((-500,0),0.5)
-#Tachie2_Move:((500,0),0.5)
+
 （三人走出攝影棚，聚在電視台長廊的轉角處）
 
 #speaker:Karo
@@ -1300,8 +1296,7 @@ VAR teamID = 0
 #Tachie1_Character:Kuma #Tachie1_Emotion:Talk
 #Tachie2_Character:Mizar #Tachie2_Emotion:Talk
 #Tachie3_Character:Karo #Tachie3_Emotion:Talk
-#Tachie1_Move:((-500,0),0.5)
-#Tachie2_Move:((500,0),0.5)
+
 （三人走出攝影棚，聚在電視台長廊的轉角處）
 
 #speaker:Karo
@@ -1582,8 +1577,7 @@ VAR teamID = 0
 #Tachie1_Character:Kuma #Tachie1_Emotion:Talk
 #Tachie2_Character:Aicor #Tachie2_Emotion:Talk
 #Tachie3_Character:Mizar #Tachie3_Emotion:Talk
-#Tachie1_Move:((-500,0),0.5)
-#Tachie2_Move:((500,0),0.5)
+
 （三人走出攝影棚，聚在電視台長廊的轉角處）
 
 #speaker:Mizar
@@ -1863,8 +1857,7 @@ VAR teamID = 0
 #Tachie1_Character:Aicor #Tachie1_Emotion:Talk
 #Tachie2_Character:Sirius #Tachie2_Emotion:Talk
 #Tachie3_Character:Karo #Tachie3_Emotion:Talk
-#Tachie1_Move:((-500,0),0.5)
-#Tachie2_Move:((500,0),0.5)
+
 （三人走出攝影棚，聚在電視台長廊的轉角處）
 
 #speaker:Karo
@@ -2148,8 +2141,7 @@ VAR teamID = 0
 #Tachie1_Character:Mizar #Tachie1_Emotion:Talk
 #Tachie2_Character:Sirius #Tachie2_Emotion:Talk
 #Tachie3_Character:Karo #Tachie3_Emotion:Talk
-#Tachie1_Move:((-500,0),0.5)
-#Tachie2_Move:((500,0),0.5)
+
 （三人走出攝影棚，聚在電視台長廊的轉角處）
 
 #speaker:Karo
@@ -2432,8 +2424,7 @@ VAR teamID = 0
 #Tachie1_Character:Aicor #Tachie1_Emotion:Talk
 #Tachie2_Character:Sirius #Tachie2_Emotion:Talk
 #Tachie3_Character:Mizar #Tachie3_Emotion:Talk
-#Tachie1_Move:((-500,0),0.5)
-#Tachie2_Move:((500,0),0.5)
+
 （三人走出攝影棚，聚在電視台長廊的轉角處）
 
 #speaker:Mizar
@@ -2713,8 +2704,7 @@ VAR teamID = 0
 #Tachie1_Character:Aicor #Tachie1_Emotion:Talk
 #Tachie2_Character:Mizar #Tachie2_Emotion:Talk
 #Tachie3_Character:Karo #Tachie3_Emotion:Talk
-#Tachie1_Move:((-500,0),0.5)
-#Tachie2_Move:((500,0),0.5)
+
 （三人走出攝影棚，聚在電視台長廊的轉角處）
 
 #speaker:Karo
