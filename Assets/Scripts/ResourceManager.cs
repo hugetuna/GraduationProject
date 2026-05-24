@@ -265,7 +265,7 @@ public class ResourceManager : MonoBehaviour
         bool found = false;
         for (int i = 0; i < items.Count; i++)
         {
-            if (items[i].item == itemRemoved)
+            if (items[i].item.itemID == itemRemoved.itemID)
             {
                 ItemStack stack = items[i];
                 stack.quantity -= quantity;

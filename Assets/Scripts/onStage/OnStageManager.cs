@@ -365,6 +365,12 @@ public class OnStageManager : MonoBehaviour
             {
                 endFansRewardText.text= $"{currentStageData.rewardSets[i].rewardFans}";
                 endMoneyRewardText.text= $"{currentStageData.rewardSets[i].rewardMoney}";
+                //發放金錢與粉絲獎勵
+                foreach(IdolInstance idol in onStageIdols)
+                {
+                    idol.fans += currentStageData.rewardSets[i].rewardFans;
+                }
+                ResourceManager.Instance.GainMoney(currentStageData.rewardSets[i].rewardMoney);
                 break;
             }
         }
