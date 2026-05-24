@@ -27,7 +27,7 @@ public class GuideItemGenerator : MonoBehaviour
 
             GameObject btn = fansObject.transform.Find("Button").gameObject; // Wrapper + "Button"
             // 設定粉絲卡片的 UI 資料
-            btn.GetComponent<SetGuideItemUI>().SetFansItem(fans);
+            btn.GetComponent<SetGuideItemUI>().SetFansItemAndUI(fans);
             guideInfoUI.AddToFansButtons(btn.GetComponent<Button>()); 
         }
         guideInfoUI.UpdateCollectNumber();  // 設定粉絲卡片點擊事件＆更新顯示的收集數量
