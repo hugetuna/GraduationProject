@@ -134,7 +134,8 @@ public class DayManager : MonoBehaviour
         GameManager.Instance.teacherSaveData.CleanTeacherAppointments();
         // 清除過期的商演預約紀錄
         GameManager.Instance.activitySaveData.CleanGoneActivities();
-
+        //更新道具儲存狀態
+        GameManager.Instance.SaveResourceData(ResourceManager.Instance);
         // 每天結束時大保存一次
         date++;
         if (chapter == 0 && date == 4)

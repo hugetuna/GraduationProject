@@ -264,43 +264,10 @@ public class ResourceManager : MonoBehaviour
     {
         bool found = false;
         Debug.Log(items.Count);
-        ItemStack targetStack;
-        // foreach (var stack in items)
-        // {
-        //     Debug.Log($"正在比較要移除的道具: {itemRemoved.itemID}，和背包中的道具: {stack.item.itemID}");
-        //      // 粉絲道具會根據持有者不同分成不同 stack 儲存（這樣背包比較好處理）
-        //     if (stack.item.itemID== itemRemoved.itemID)
-        //     {
-        //         targetStack = stack;
-        //         found = true;
-        //         SetItemChanged(true); // 標記道具已更改
-        //         break;
-        //     }
-        // }
-        // if (found)
-        // {
-        //     targetStack.quantity;
-        //     if (targetStack.quantity <= 0)
-        //     {
-        //         items.Remove(targetStack);
-        //     }
-        //     else
-        //     {
-        //         // 回存修改後的數量
-        //         for (int i = 0; i < items.Count; i++)
-        //         {
-        //             if (items[i].item == targetStack.item)
-        //             {
-        //                 items[i] = targetStack;
-        //                 break;
-        //             }
-        //         }
-        //     }
-        // }
         for (int i = 0; i < items.Count; i++)
         {
             Debug.Log($"正在比較要移除的道具: {itemRemoved.itemID}，和背包中的道具: {items[i].item.itemID}");
-             // 粉絲道具會根據持有者不同分成不同 stack 儲存（這樣背包比較好處理）
+            // 粉絲道具會根據持有者不同分成不同 stack 儲存（這樣背包比較好處理）
             if (items[i].item.itemID == itemRemoved.itemID)
             {
                 ItemStack stack = items[i];

@@ -61,7 +61,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
         soilManager = FindAnyObjectByType<SoilManager>();
         if (!isTutorialFinished && DayManager.Instance.date == 2 && DayManager.Instance.dayEventManager.currentEvent?.Type == EventType.WaitUntilSceneChange && farmLV == FarmLV.Low)
         {
-            resourceManager.AddItem(resourceManager.findItemByID("CS-001"), 1);
+            ResourceManager.Instance.AddItem(ResourceManager.Instance.findItemByID("CS-001"), 1);
             Debug.Log("第二天的農場教學，給予玩家一個低級種子");
         }
     }
@@ -267,7 +267,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
         //種植種子(消耗玩家道具)
         if (farmLV == FarmLV.Low)
         {
-            if (!resourceManager.RemoveItem(resourceManager.findItemByID("CS-001"), 1))
+            if (!ResourceManager.Instance.RemoveItem(ResourceManager.Instance.findItemByID("CS-001"), 1))
             {
                 Debug.Log("沒有足夠的種子了");
                 return;
@@ -275,7 +275,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
         }
         else if (farmLV == FarmLV.Medium)
         {
-            if (!resourceManager.RemoveItem(resourceManager.findItemByID("CS-002"), 1))
+            if (!ResourceManager.Instance.RemoveItem(ResourceManager.Instance.findItemByID("CS-002"), 1))
             {
                 Debug.Log("沒有足夠的種子了");
                 return;
@@ -283,7 +283,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
         }
         else if (farmLV == FarmLV.High)
         {
-            if (!resourceManager.RemoveItem(resourceManager.findItemByID("CS-003"), 1))
+            if (!ResourceManager.Instance.RemoveItem(ResourceManager.Instance.findItemByID("CS-003"), 1))
             {
                 Debug.Log("沒有足夠的種子了");
                 return;
