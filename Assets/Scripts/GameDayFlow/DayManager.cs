@@ -118,7 +118,11 @@ public class DayManager : MonoBehaviour
         foreach (var idol in TeamDataUtility.IdolInstanceList)
         {
             idol.ResetTemporaryEffect();
+            idol.SettleRecords();
+            idol.isAvailable = true;
+            idol.currentAction = AvailableAction.Free;
         }
+        GameManager.Instance.SaveIdolData(TeamDataUtility.IdolInstanceList);
         ItemEffectUtility.ResetAllEffects();
         // 重置事件狀態
         Debug.Log($"結束一天 Date:{date}");
@@ -130,6 +134,7 @@ public class DayManager : MonoBehaviour
         GameManager.Instance.teacherSaveData.CleanTeacherAppointments();
         // 清除過期的商演預約紀錄
         GameManager.Instance.activitySaveData.CleanGoneActivities();
+
         // 每天結束時大保存一次
         date++;
         if (chapter == 0 && date == 4)
