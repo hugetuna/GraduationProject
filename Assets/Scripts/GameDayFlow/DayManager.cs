@@ -118,11 +118,11 @@ public class DayManager : MonoBehaviour
         foreach (var idol in TeamDataUtility.IdolInstanceList)
         {
             idol.ResetTemporaryEffect();
-            idol.SettleRecords();
-            idol.isAvailable = true;
+        }
+        foreach (var idol in  GameManager.Instance.idolDataList)
+        {
             idol.currentAction = AvailableAction.Free;
         }
-        GameManager.Instance.SaveIdolData(TeamDataUtility.IdolInstanceList);
         ItemEffectUtility.ResetAllEffects();
         // 重置事件狀態
         Debug.Log($"結束一天 Date:{date}");

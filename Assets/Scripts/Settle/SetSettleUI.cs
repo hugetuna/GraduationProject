@@ -145,13 +145,14 @@ public class SetSettleUI : MonoBehaviour
 
     private void OnEndDayButtonClicked()
     {
-        //foreach (var idol in idolInstances)
-        //{
-        //    // 結算角色的訓練、打工和商演紀錄，並重置狀態以準備新的一天
-        //    idol.SettleRecords(); 
-        //    idol.isAvailable = true;
-        //    idol.currentAction = AvailableAction.Free;
-        //}
+        foreach (var idol in idolInstances)
+        {
+            // 結算角色的訓練、打工和商演紀錄，並重置狀態以準備新的一天
+            idol.SettleRecords(); 
+            idol.isAvailable = true;
+            idol.currentAction = AvailableAction.Free;
+        }
+
         DayManager.Instance.AfterDayEndEventStart();
     }
 }
