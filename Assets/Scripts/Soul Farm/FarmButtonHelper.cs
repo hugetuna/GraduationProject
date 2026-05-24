@@ -9,7 +9,7 @@ public class FarmButtonHelper : MonoBehaviour, IPointerEnterHandler
     public TMPro.TextMeshProUGUI ButtonText;
     public TMPro.TextMeshProUGUI countingText;
 
-    void Awake() => _button = GetComponent<Button>();
+    //void Awake() => _button = GetComponent<Button>();
 
     // 當滑鼠移入按鈕時
     public void OnPointerEnter(PointerEventData eventData)

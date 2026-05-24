@@ -57,7 +57,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     private void Start()
     {
         teamManager = FindAnyObjectByType<TeamManager>();
-        resourceManager = FindAnyObjectByType<ResourceManager>();
+        //resourceManager = FindAnyObjectByType<ResourceManager>();
         soilManager = FindAnyObjectByType<SoilManager>();
         if (!isTutorialFinished && DayManager.Instance.date == 2 && DayManager.Instance.dayEventManager.currentEvent?.Type == EventType.WaitUntilSceneChange && farmLV == FarmLV.Low)
         {
