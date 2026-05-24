@@ -319,7 +319,8 @@ public class IdolInstance : MonoBehaviour
             if(vigour < vigourCost) vigour = 0;
             else vigour -= vigourCost; // 隔天主 UI 會同步此變化
             
-            ResourceManager.Instance.Money += (int)(activityRecord.selectedActivity.MoneyGain * ResourceManager.Instance.MoneyBonus);
+            // 商演收益已在舞台獲得
+            // ResourceManager.Instance.Money += (int)(activityRecord.selectedActivity.MoneyGain * ResourceManager.Instance.MoneyBonus);
         }
 
         // 重置必須清空的商演紀錄
