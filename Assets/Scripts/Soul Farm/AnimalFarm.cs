@@ -105,7 +105,7 @@ public class AnimalFarm : MonoBehaviour, IInteractable
     }
     public void updateFarmButtonInteractable()
     {
-        if (!isTutorialFinished&&DayManager.Instance.date==2) return;
+        if (!isTutorialFinished&&DayManager.Instance.date==2&&DayManager.Instance.chapter==0) return;
         // 根據當前狀態更新按鈕的互動性，同時也會呼叫onDisable來重置按鈕顏色
         plantSeedButton.interactable = !(seedsOnThisSoil.Count == maxSeedAmount);
         if (plantSeedButton.interactable == false) plantSeedButton.GetComponent<FarmButtonHelper>().OnDeselected();
