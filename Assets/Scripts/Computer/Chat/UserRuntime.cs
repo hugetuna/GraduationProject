@@ -75,6 +75,31 @@ public class UserRuntime
         //     else isUnread = true;
         // }
     }
+
+    public void DailyReset(int currentTotalDays) // 給需要每天重置的對話使用
+    {
+        // 判斷是否跨天（目前總天數大於上次紀錄的天數）
+        if (lastMessageDay < currentTotalDays && lastMessageDay != -1)
+        {
+            // 1. 清空畫面資料
+            chatHistory.Clear();
+            lastMessageText = "";
+            isUnread = true; // 重新設定成未讀狀態，因為對話已經重置了
+
+            // 2. 清除 Ink 存檔狀態，重新建立全新的故事實例
+            savedInkState = "";
+            if (user != null && user.inkJSONAsset != null)
+            {
+                story = new Story(user.inkJSONAsset.text);
+            }
+
+            // 3. 更新最後訊息天數為今天
+            lastMessageDay = currentTotalDays;
+
+            // 4. 強制存檔，確保狀態更新被保存
+            SaveState();
+        }
+    }
 }
 
 [System.Serializable]
