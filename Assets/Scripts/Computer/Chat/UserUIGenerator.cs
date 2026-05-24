@@ -59,6 +59,9 @@ public class UserUIGenerator : MonoBehaviour
         HashSet<string> existingIds = new();
         foreach (var user in savedUserList) existingIds.Add(user.id);
 
+        int totalDays = DayManager.Instance.date + DayManager.Instance.chapter * 3; // 僅適用於新手教學＆第一章
+
+
         foreach (User user in userList)
         {
             if (!existingIds.Contains(user.id))
@@ -75,8 +78,15 @@ public class UserUIGenerator : MonoBehaviour
                 // 存檔中已存在用戶邏輯：重新連線 SO 與 Story
                 UserRuntime runtime = savedUserList.Find(r => r.id == user.id);
                 runtime.user = user;
+
+                // 只有 ID 為 1 的用戶（預約老師）才執行每日跨天重置檢查
+                // 務必放在 ReloadState 之前，這樣重置完乾淨的狀態才能正確被載入
+                if (runtime.id == "1")
+                {
+                    runtime.DailyReset(totalDays);
+                }
                 runtime.ReloadState(); // 初始化 Ink 故事（會自動載入存檔）
-                
+
                 userRuntimes.Add(runtime); // 加入動態清單
             }
         }
