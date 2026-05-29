@@ -245,6 +245,7 @@ public class IdolOnStage : MonoBehaviour, IDropHandler,IPointerEnterHandler, IPo
         if (draggedCardUI != null)
         {
             ActionCard incomingCard = draggedCardUI.cardData;
+            if(StageStamina < incomingCard.staminaCost) return;
             bool accepted = SetApplyingCard(incomingCard);
             if (accepted)
             {
