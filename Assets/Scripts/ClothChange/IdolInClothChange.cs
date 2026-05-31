@@ -49,6 +49,23 @@ public class IdolInClothChange : MonoBehaviour,IDropHandler
         if (eventData.pointerDrag != null)
         {
             DragableCloth item = eventData.pointerDrag.GetComponent<DragableCloth>();
+            //驗證已穿著此衣服的偶像是否已達到上限，如果已達到上限則不允許換裝
+            TeamManager teamManager = FindAnyObjectByType<TeamManager>();
+            int dressedCount = 0;
+            foreach (var idol in teamManager.teamMembers)
+            {
+                IdolInstance idolInstance = idol.GetComponent<IdolInstance>();
+                if (idolInstance.currentClothIndex == item.clothIndex)
+                {
+                    dressedCount++;
+                }
+            }
+            if (dressedCount >= item.num) // 上限為持有數量
+            {
+                Debug.Log("已達到此衣服的穿著上限，無法換裝");
+                return;
+            }
+            //按照衣服index換裝
             if (item != null)
             {
                 ChangeCloth(item.clothIndex);

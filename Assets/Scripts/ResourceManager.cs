@@ -295,7 +295,7 @@ public class ResourceManager : MonoBehaviour
     {
         foreach (var stack in items)
         {
-            if (stack.item == target)
+            if (stack.item.itemID == target.itemID)
                 return stack.quantity;
         }
         return 0;
