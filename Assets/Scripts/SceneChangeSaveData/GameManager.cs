@@ -150,6 +150,7 @@ public class GameManager : MonoBehaviour
                 trainRecord = idol.trainRecord,
                 baitoRecord = idol.baitoRecord,
                 activityRecord = idol.activityRecord,
+                restRecord = idol.restRecord,
                 isAvailable = idol.isAvailable,
                 currentAction = idol.currentAction,
                 equippedItemName = idol.equipmentItemNow != null ? idol.equipmentItemNow.itemName : ""

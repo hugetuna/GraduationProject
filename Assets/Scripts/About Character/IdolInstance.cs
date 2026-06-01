@@ -5,7 +5,7 @@ using UnityEngine.Rendering.VirtualTexturing;
 using UnityEngine.U2D.Animation;
 
 public enum IdolWho { none = -1, Kuma = 0, Karo = 1, Sirius = 2, Mizar = 3, Aicor = 4 }
-public enum AvailableAction { Free, Train, Baito, Activity }
+public enum AvailableAction { Free, Train, Baito, Activity, Rest }
 public class IdolInstance : MonoBehaviour
 {
     public IdolWho idolIndex;
@@ -46,6 +46,7 @@ public class IdolInstance : MonoBehaviour
     public TrainRecord trainRecord = new(); // 訓練紀錄
     public BaitoRecord baitoRecord = new(); // 打工紀錄
     public ActivityRecord activityRecord = new(); // 商演紀錄
+    public RestRecord restRecord = new(); // 休息紀錄
     public bool isAvailable; // 是否可用（在場景中啟用）
     public AvailableAction currentAction; // 當前行動狀態（空閒、訓練、打工、商演）
 
@@ -104,6 +105,11 @@ public class IdolInstance : MonoBehaviour
             -1
         );
         activityRecord.SetActivityRecord(null);
+        restRecord.SetRestRecord(
+            Vector2.zero,
+            RestDropZoneType.Member,
+            -1
+        );
     }
     //填入讀取的資料組
     public void LoadData(IdolSaveData data)
@@ -170,6 +176,8 @@ public class IdolInstance : MonoBehaviour
         baitoRecord = data.baitoRecord;
         // 商演紀錄
         activityRecord = data.activityRecord;
+        // 休息紀錄
+        restRecord = data.restRecord;
 
         isAvailable = data.isAvailable;
         currentAction = data.currentAction;
@@ -284,27 +292,38 @@ public class IdolInstance : MonoBehaviour
     {
         if (currentAction == AvailableAction.Activity)
         {
-            SettleActivityRecord(true); // 如果有商演，以下兩種行動不會結算並直接重置
             SettleTrainRecord(false);
             SettleBaitoRecord(false);
+            SettleActivityRecord(true); // 如果有商演，以下兩種行動不會結算並直接重置
+            SettleRestRecord(false);
         }
         else if (currentAction == AvailableAction.Train)
         {
             SettleTrainRecord(true);
-            SettleActivityRecord(false);
             SettleBaitoRecord(false);
+            SettleActivityRecord(false);
+            SettleRestRecord(false);
         }
         else if (currentAction == AvailableAction.Baito)
         {
+            SettleTrainRecord(false);
             SettleBaitoRecord(true);
             SettleActivityRecord(false);
+            SettleRestRecord(false);
+        }
+        else if (currentAction == AvailableAction.Rest)
+        {
             SettleTrainRecord(false);
+            SettleBaitoRecord(false);
+            SettleActivityRecord(false);
+            SettleRestRecord(true);
         }
         else // Free 狀態則不結算任何東西，直接重置
         {
             SettleBaitoRecord(false);
             SettleActivityRecord(false);
             SettleTrainRecord(false);
+            SettleRestRecord(false);
         }
 
     }
@@ -351,6 +370,7 @@ public class IdolInstance : MonoBehaviour
         /* true */
         );
     }
+
     // 進入電腦頁面時打工收益進帳＆記錄重置
     public void SettleBaitoRecord(bool isSettling)
     {
@@ -369,6 +389,24 @@ public class IdolInstance : MonoBehaviour
             -1
         );
     }
+
+    // 進入電腦頁面時休息結算＆記錄重置
+    public void SettleRestRecord(bool isSettling)
+    {
+        if (isSettling)
+        {
+            Debug.Log($"結算 {idolIndex} 的休息");
+            vigour += restRecord.vigourEarned; // 隔天主 UI 會同步此變化
+        }
+
+        // 重置必須清空的休息紀錄
+        restRecord.SetRestRecord(
+            Vector2.zero,
+            RestDropZoneType.Member,
+            -1
+        );
+    }
+
     [ContextMenu("TestEquip")]
     public void TestEquip()
     {

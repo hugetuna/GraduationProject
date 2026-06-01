@@ -30,7 +30,7 @@ public class DragToLesson : Drag
         vigourBar = GetComponent<TrainingVigourBar>();
     }
 
-    public void Initialize(IdolWho idolIndex) // 僅在初次打開訓練介面時呼叫一次 
+    public void Initialize(IdolWho idolIndex) // 打開訓練介面時呼叫
     {
         myIdolIndex = idolIndex;
     }
