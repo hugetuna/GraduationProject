@@ -14,5 +14,6 @@ public class ClothChange : MonoBehaviour,IInteractable
     {
         canvas_ClothChange.gameObject.SetActive(true);
         idolInClothChangeManager.SetupIdolWhoInClothChange();
+        UIAndPlayerInput.DisableAllPlayerInputs();
     }
 }
