@@ -7,7 +7,7 @@ using System;
 /* 掛在 RestManager 底下 */
 public class RestUIHandler : MonoBehaviour
 {
-    public static event Action<bool> OnRestUIConfirmed; // 定義休息室 UI 確認事件
+    public static event Action<bool> OnRestConfirmed; // 定義休息室 UI 確認事件
     //-----------------------------------------------------------------//
     [Header("休息室 UI 元素")]
     [SerializeField] private GameObject restUI; // 直接使用場景中的，不必另外生成
@@ -21,19 +21,28 @@ public class RestUIHandler : MonoBehaviour
     [Header("相關音效")]
     [SerializeField] private AudioClip openSound; // 開啟訓練 UI 的音效
     [SerializeField] private AudioClip assignSound; // 按下指派按鈕的音效
+    [SerializeField] private AudioClip cancelSound; // 按下"否"按鈕的音效
+    //-----------------------------------------------------------------//
+    [Header("提示視窗")]
+    [SerializeField] private GameObject hintObj; // 前往電腦的提示物件
+    [SerializeField] private Button yesBtn; // 提示的 "是" 按鈕
+    [SerializeField] private Button noBtn; // 提示的 "否" 按鈕
 
     void Start()
     {
-        LoungeInteraction.OnLoungeInteracted += ShowRestUI; // 訂閱開啟休息室 UI 的事件
+        RestInteraction.OnRestInteracted += ShowRestUI; // 訂閱開啟休息室 UI 的事件
 
         closeButton.onClick.AddListener(ConfirmToAssign); // 設定關閉按鈕的監聽事件
+        yesBtn.onClick.AddListener(JumpToComputer);
+        noBtn.onClick.AddListener(CloseHint);
 
         restUI.SetActive(false); // 預設關閉休息室 UI
+        hintObj.SetActive(false); // 預設關閉提示物件
     }
 
     void OnDestroy()
     {
-        LoungeInteraction.OnLoungeInteracted -= ShowRestUI; // 取消訂閱事件
+        RestInteraction.OnRestInteracted -= ShowRestUI; // 取消訂閱事件
     }
 
     public void ShowRestUI()
@@ -42,6 +51,7 @@ public class RestUIHandler : MonoBehaviour
 
         Debug.Log("開啟休息室 UI");
         AudioManager.Instance.PlaySFX(openSound);
+        UIAndPlayerInput.DisableAllPlayerInputs();
 
         //-----------------------------------------------------------------//
 
@@ -99,6 +109,7 @@ public class RestUIHandler : MonoBehaviour
     {
         Debug.Log("關閉休息室 UI");
         restUI.SetActive(false);
+        UIAndPlayerInput.EnableAllPlayerInputs();
 
         // OnRestUIClosed?.Invoke(); // 觸發休息室 UI 關閉事件
     }
@@ -138,24 +149,60 @@ public class RestUIHandler : MonoBehaviour
 
     private void ConfirmToAssign()
     {
-        // if (TrainingUIManager.Instance.GetMembers().Count == 0)
-        // {
-        //     // 若全員皆去訓練，觸發可通往電腦場景的 UI
-        //     var hintObj = Instantiate(hintPrefab, trainingUI.transform.parent); // 在 TrainingUI 的父物件下生成提示 UI
-        //     hintObj.transform.SetAsLastSibling(); // 確保提示 UI 在最上層
-        //     hintObj.GetComponent<GoToComputerHint>().SetTrainingUIData(trainingUIData); // 若確定前往電腦介面可先進行訓練結算
-        // }
-        // else
-        // {
-        //     // 若無人去訓練，就什麼也不做（交由 TraineeAssignment 處理）
-        //     // 有任何人去訓練，即可觸發指派訓練成員事件
-        //     if (assignSound != null) AudioManager.Instance.PlaySFX(assignSound);
-        //     OnTrainingUIConfirmed?.Invoke(trainingUIData, false);
-        //     CloseTrainingUI();
-        // }
+        Debug.Log("指派休息");
+        if (CheckAreAllGone())
+        {
+            // 若全員皆離開隊伍，觸發可通往電腦的提示 UI
+            hintObj.SetActive(true);
+        }
+        else
+        {
+            // 正常處理指派事件
+            AudioManager.Instance.PlaySFX(assignSound);
+            OnRestConfirmed?.Invoke(false); // 拖曳時角色就會記錄休息，所以這裡不用再另外傳遞
+            CloseRestUI();
+        }
+    }
 
-        if (assignSound != null) AudioManager.Instance.PlaySFX(assignSound);
-        OnRestUIConfirmed?.Invoke(false);
-        CloseRestUI();
+    private bool CheckAreAllGone()
+    {
+        int goneIdolCount = 0;
+        foreach (var idol in TeamDataUtility.IdolInstanceList)
+        {
+            if (!idol.CanShowInTheAction(AvailableAction.Rest))
+            {
+                goneIdolCount++;
+            }
+            else
+            {
+                if (idol.restRecord.zoneType == RestDropZoneType.Rest)
+                {
+                    goneIdolCount++;
+                }
+            }
+        }
+        return goneIdolCount == TeamDataUtility.idolCount; // 全員都不在隊伍裡才會回傳 true
+    }
+
+    private void CloseHint()
+    {
+        AudioManager.Instance.PlaySFX(cancelSound);
+        hintObj.SetActive(false);
+    }
+
+    private void JumpToComputer()
+    {
+        Debug.Log("進入電腦介面");
+        AudioManager.Instance.PlaySFX(assignSound);
+
+        // 把該指派的都派一派
+        OnRestConfirmed?.Invoke(true);
+
+        // 前往電腦介面
+        SceneTransitionManager.Instance.triggerComputerAfterLoad = true;
+        if (SceneTransitionManager.Instance != null)
+        {
+            SceneTransitionManager.Instance.teleportByTargetSceneName("Floor_3");
+        }
     }
 }

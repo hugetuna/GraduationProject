@@ -6,19 +6,12 @@ public class ResterAssignment : MonoBehaviour
 
     void Start()
     {
-        RestUIHandler.OnRestUIConfirmed += AssignResters;
-        // GoToComputerHint.OnGoToComputer += AssignAllToTrain;
+        RestUIHandler.OnRestConfirmed += AssignResters;
     }
 
     void OnDestroy()
     {
-        RestUIHandler.OnRestUIConfirmed -= AssignResters;
-        // GoToComputerHint.OnGoToComputer -= AssignAllToTrain;
-    }
-
-    public void AssignAllToRest()
-    {
-        AssignResters(true);
+        RestUIHandler.OnRestConfirmed -= AssignResters;
     }
 
     public void AssignResters(bool areAllToRest) // 當任意休息 UI 按下確定按鈕時呼叫

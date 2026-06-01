@@ -1,73 +1,59 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
-public class RestInteraction : MonoBehaviour
+public class RestInteraction : MonoBehaviour, IInteractable
 {
-    // public string InteractionKey => "Rest"; // 這個字串用來指定動畫 key
+    public string InteractionKey => "Rest"; // 這個字串用來指定動畫 key
     //-----------------------------------------------------------------//
-    private float holdTimer = 0f;
-    public float holdThreshold = 3f; // 長按觸發的時間（秒）
-    public TeamManager teamManager;
-    private bool isPlayerInsideCollider = false;
-    private bool darkRestTriggered = false;
+    public static event Action OnRestInteracted; // 定義碰到門，按下互動鍵跳出 UI 的事件
+    [SerializeField] private BoxCollider myBoxCollider;
 
-    void Update()
+    void Start()
     {
-        if (isPlayerInsideCollider) return;
+        Invoke("UpdateColliderState", 1f); // 延遲 1 秒執行
+    }
 
-        // 按住空白鍵開始計時
-        if (Input.GetKey(KeyCode.Space))
+    private void UpdateColliderState()
+    {
+        if (CheckCanInteract())
         {
-            if (!darkRestTriggered)
-            {
-                holdTimer += Time.deltaTime;
-
-                // 長按滿特定秒數觸發
-                if (holdTimer >= holdThreshold)
-                {
-                    darkRestTriggered = true;
-                    TriggerDarkRest();
-                }
-            }
+            // Debug.Log("休息室互動提示已啟用");
+            myBoxCollider.enabled = true; // 啟用休息室互動
         }
-
-        // 放開空白鍵立刻重置狀態
-        if (Input.GetKeyUp(KeyCode.Space))
+        else
         {
-            ResetDarkRestStatus();
+            // Debug.Log("休息室互動提示已禁用");
+            myBoxCollider.enabled = false; // 禁用休息室互動
         }
     }
 
-    private void TriggerDarkRest()
+    void IInteractable.Interact(int tool) // 來自 IInteractable 介面
     {
-        Debug.Log("觸發還沒做好的休息功能");
-        
-        var teamMembers = teamManager.teamMembers;
-        var currentLeaderIndex = teamManager.currentLeaderIndex;
-        teamMembers[currentLeaderIndex].GetComponent<IdolInstance>().recoverVigour(50);
+        if (CheckCanInteract()) OnRestInteracted?.Invoke(); // 觸發事件
     }
 
-    private void ResetDarkRestStatus()
+    private bool CheckCanInteract()
     {
-        holdTimer = 0f;
-        darkRestTriggered = false;
-    }
-
-    private void OnTriggerEnter(Collider other) // 碰撞偵測
-    {
-        if (other.CompareTag("Player"))
+        if (DayManager.Instance == null || DayManager.Instance.dayEventManager.currentEvent == null)
         {
-            isPlayerInsideCollider = true;
+            return true;
         }
-    }
 
-    private void OnTriggerExit(Collider other)
-    {
-        if (other.CompareTag("Player"))
+        var currentEvent = DayManager.Instance.dayEventManager.currentEvent;
+        int chapter = DayManager.Instance.chapter;
+        int date = DayManager.Instance.date;
+
+        if (date == 1 && chapter == 0 && currentEvent.TriggerTimeIndex < 10)
         {
-            isPlayerInsideCollider = false;
-            ResetDarkRestStatus(); // 玩家離開範圍立刻重置，防止累積時間
+            Debug.Log("完成特定第一天事件前不觸發");
+            return false;
         }
+        if (date == 2 && chapter == 0 && currentEvent.TriggerTimeIndex < 10)
+        {
+            Debug.Log("完成特定第二天事件前不觸發");
+            return false;
+        }
+
+        return true;
     }
 }
