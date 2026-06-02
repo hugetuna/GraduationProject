@@ -59,7 +59,7 @@ public class ProductUIGenerator : MonoBehaviour
             {
                 productObject = Instantiate(productPrefab, productContent[1]); // "Wrapper" + Card
             }
-            else if (itemName.Contains("御守") || itemName.Contains("香水") || itemType == ItemType.Equipment)
+            else if (itemName.Contains("御守") || itemName.Contains("香水") || itemId.Contains("CC"))
             {
                 productObject = Instantiate(productPrefab, productContent[2]); // "Wrapper" + Card
             }

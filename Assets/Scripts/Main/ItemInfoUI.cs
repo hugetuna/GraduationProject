@@ -67,7 +67,7 @@ public class ItemInfoUI : MonoBehaviour
         // 根據不同的道具類型顯示不同的資訊
         if (selectedItem is ConsumableItem consumable)
         {
-            if (consumable.itemID.Contains("CS")) // 粉絲種子
+            if (consumable.itemID.Contains("CS") || consumable.itemID.Contains("CC")) // 粉絲種子或服裝
             {
                 itemInfoAdditional.text = "";
                 SetDropdownInteractable(false);

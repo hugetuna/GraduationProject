@@ -39,14 +39,13 @@ public class ItemUIGenerator : MonoBehaviour
             GameObject itemObject = GetObjectFromPool();
 
             // 根據類型決定它的父物件
-            Transform targetContent = itemStack.item.itemType switch
-            {
-                ItemType.Consumable => consumableContent,
-                ItemType.Fans => fansContent,
-                ItemType.Equipment => equipContent,
-                _ => consumableContent
-            };
-            bool isFansItem = itemStack.item.itemType == ItemType.Fans;
+            Transform targetContent;
+            var itemType = itemStack.item.itemType;
+            
+            if(itemType == ItemType.Equipment || itemStack.item.itemID.Contains("CC")) targetContent = equipContent; // 裝備或衣服
+            else if(itemType == ItemType.Fans) targetContent = fansContent; // 粉絲
+            else if(itemType == ItemType.Consumable) targetContent = consumableContent; // 消耗型道具
+            else targetContent = consumableContent; // 以防萬一
 
             itemObject.transform.SetParent(targetContent, false);
             itemObject.SetActive(true); // 啟用該道具項目
@@ -57,7 +56,7 @@ public class ItemUIGenerator : MonoBehaviour
             var setItemUI = inside.GetComponent<SetItemUI>();
 
             // 粉絲道具的詳細判定交給 SetItemUI 的 Initialize 方法檢查
-            if(isFansItem) setItemUI.Initialize(itemStack.item, itemStack.quantity, (itemStack.item as FansItem).harvester);
+            if(itemType == ItemType.Fans) setItemUI.Initialize(itemStack.item, itemStack.quantity, (itemStack.item as FansItem).harvester);
             else setItemUI.Initialize(itemStack.item, itemStack.quantity);
 
             btn.onClick.RemoveAllListeners(); // 移除舊的監聽事件避免重複

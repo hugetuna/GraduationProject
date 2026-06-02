@@ -45,6 +45,7 @@ public class SetSettleUI : MonoBehaviour
             if (action == AvailableAction.Train) ShowTrainingBenefits(idol);
             else if (action == AvailableAction.Activity) ShowActivityBenefits(idol);
             else if (action == AvailableAction.Baito) ShowBaitoBenefits(idol);
+            else if (action == AvailableAction.Rest) ShowRestBenefits(idol);
             else ShowFreeBenefits(idol); // 閒置狀態（沒有做任何事）也要顯示基本資料，但不會有金錢或經驗值變化
         }
 
@@ -122,6 +123,26 @@ public class SetSettleUI : MonoBehaviour
             moneyEarned += (int)(idol.activityRecord.selectedActivity.MoneyGain * ResourceManager.Instance.MoneyBonus); 
             isSettleActivityMoney = true; // 確保只結算一次商演賺的錢
         }
+    }
+
+    private void ShowRestBenefits(IdolInstance idol)
+    {
+        // 根據休息紀錄來計算體力變化，並更新 UI 顯示（尚未正式結算）
+        int index = idolInstances.IndexOf(idol);
+        GameObject character = characters[index];
+
+        int finalVigour = idol.vigour + idol.restRecord.vigourEarned;
+        character.GetComponent<SetSettleCharacterUI>().ShowCharacterBenefits(
+            idol.idolUISprites.spriteTachie,
+            TeamDataUtility.GetIdolNameTW(idol.idolIndex),
+            finalVigour, idol.vigourMax, 0,  // 目前沒有最大體力值變動
+            idol.dance, 0, // 沒有舞蹈經驗變動
+            idol.vocal, 0, // 沒有歌唱經驗變動
+            idol.visual, 0, // 沒有表現力經驗變動
+            idol.performance, 0 // 目前沒有演技變動
+        );
+
+        // 休息不會賺錢或拿到道具 // moneyEarned += 0; 
     }
 
     private void ShowFreeBenefits(IdolInstance idol)

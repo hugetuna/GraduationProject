@@ -145,7 +145,7 @@ public class ResourceManager : MonoBehaviour
         for (int i = 0; i < items.Count; i++)
         {
             //創建一個內容和查找對象相同的stack->改數量->設置成相同的
-            if (items[i].item == newItem && items[i].quantity < items[i].item.maxStack)
+            if (items[i].item.itemID == newItem.itemID && items[i].quantity < items[i].item.maxStack)
             {
                 Debug.Log("正在比較粉絲道具");
                 // 粉絲道具會根據持有者不同分成不同 stack 儲存（這樣背包比較好處理）

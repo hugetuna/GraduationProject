@@ -396,7 +396,10 @@ public class IdolInstance : MonoBehaviour
         if (isSettling)
         {
             Debug.Log($"結算 {idolIndex} 的休息");
-            vigour += restRecord.vigourEarned; // 隔天主 UI 會同步此變化
+            
+            int result = vigour + restRecord.vigourEarned;
+            if(result > vigourMax) vigour = vigourMax;
+            else vigour += restRecord.vigourEarned; // 隔天主 UI 會同步此變化
         }
 
         // 重置必須清空的休息紀錄
