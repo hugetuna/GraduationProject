@@ -25,17 +25,16 @@ public class SetGuideItemUI : MonoBehaviour
         fansItem = fans;
 
         // 設定粉絲卡片 UI
-        if (fansItem.itemID.Contains("001") || fansItem.itemID.Contains("003"))
+        if (fansItem.icon != null)
         {
-            fansBgImg.sprite = collectedSprite;
+            fansBgImg.sprite = collectedSprite; // 已收集的粉絲卡片背景
+            fansIcon.sprite = fansItem.icon;
         }
         else
         {
-            fansBgImg.sprite = uncollectedSprite;
+            fansBgImg.sprite = uncollectedSprite; // 未收集的粉絲卡片背景
+            fansIcon.color = new Color(0, 0, 0, 0); // 如果沒有圖示，將圖像設為透明
         }
-
-        if (fansItem.icon != null) fansIcon.sprite = fansItem.icon;
-        else fansIcon.color = new Color(0, 0, 0, 0); // 如果沒有圖示，將圖像設為透明
 
     }
 

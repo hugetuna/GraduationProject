@@ -29,19 +29,8 @@ public class UseItem : MonoBehaviour
     {
         itemInfoUI = GetComponent<ItemInfoUI>();
         itemUIGenerator = GetComponent<ItemUIGenerator>();
-
-        // 根據目前隊伍成員決定下拉選單的選項
-        dropdown.options.Clear(); // 清空原有選項
-
-        idolInstances = TeamDataUtility.IdolInstanceList;
-
-        foreach(var idol in idolInstances)
-        {
-            if(!idol.isAvailable) continue; // 如果偶像不在隊伍裡，則跳過這個偶像，不加入選項
-            string memberName = TeamDataUtility.GetIdolNameTW(idol.idolIndex); // 取得隊伍成員名稱
-            dropdown.options.Add(new TMP_Dropdown.OptionData("給 " + memberName)); // 新增選單項目
-        }
-        ResetDropdown(); // 初始化下拉選單
+        
+        ResetDropdown(); // 根據目前隊伍成員決定下拉選單的選項
         isInitialized = true;
 
         // 設定下拉選單的事件監聽器
@@ -112,6 +101,15 @@ public class UseItem : MonoBehaviour
 
     public void ResetDropdown()
     {
+        dropdown.options.Clear(); // 清空原有選項
+        idolInstances = TeamDataUtility.IdolInstanceList;
+        foreach(var idol in idolInstances)
+        {
+            if(!idol.isAvailable) continue; // 如果偶像不在隊伍裡，則跳過這個偶像，不加入選項
+            string memberName = TeamDataUtility.GetIdolNameTW(idol.idolIndex); // 取得隊伍成員名稱
+            dropdown.options.Add(new TMP_Dropdown.OptionData("給 " + memberName)); // 新增選單項目
+        }
+
         dropdown.value = 0; // 預設選擇第一個選項
         dropdown.RefreshShownValue(); // 確保 UI 正確顯示
         selectedCharacterName = dropdown.options[0].text; // 初始化選擇的角色名稱，格式為「給 角色名稱」
