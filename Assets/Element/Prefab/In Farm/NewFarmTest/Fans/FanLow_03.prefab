@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7053672521102879338}
   - component: {fileID: 728374444284478746}
+  - component: {fileID: 8073491322500868189}
   m_Layer: 0
   m_Name: FanLow_03
   m_TagString: Untagged
@@ -55,6 +56,20 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &8073491322500868189
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2860746917131180793}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: c29cff538c195c249b69c6f2236de67b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Library: []
+  m_SpriteLibraryAsset: {fileID: 7108339969198208228, guid: ec76cd9382d56f440b27707ee2768022, type: 3}
 --- !u!1001 &5054206223134341970
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -110,8 +125,32 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6660342970545030701, guid: 4f57cd03da2875e4da8fe803843de78a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2215542499850693124}
   m_SourcePrefab: {fileID: 4843985084834002234, guid: 4f57cd03da2875e4da8fe803843de78a, type: 3}
+--- !u!1 &1894449106649546111 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6660342970545030701, guid: 4f57cd03da2875e4da8fe803843de78a, type: 3}
+  m_PrefabInstance: {fileID: 5054206223134341970}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &2215542499850693124
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1894449106649546111}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ed8b1ae4e4e52b34ea557c1c11e076fc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_CategoryHash: 4.9298773e-21
+  m_labelHash: 7.1909867e-26
+  m_SpriteKey: 0
+  m_SpriteHash: 645940803
 --- !u!4 &5840029360817980044 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -7552582706839291426, guid: 4f57cd03da2875e4da8fe803843de78a, type: 3}
