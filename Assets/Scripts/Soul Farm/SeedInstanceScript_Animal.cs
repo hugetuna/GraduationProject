@@ -1,6 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor.EditorTools;
 using UnityEngine;
+using UnityEngine.U2D.Animation;
 
 public class SeedInstanceScript_Animal : MonoBehaviour
 {
@@ -8,6 +10,7 @@ public class SeedInstanceScript_Animal : MonoBehaviour
     [SerializeField] private int daysGrown = 0; // 已經成長的天數
     [SerializeField] private bool wateredToday = false;//今天澆水了沒
     [SerializeField] private int currentRewardPoint;
+    public SpriteResolver spriteResolver;
     //視覺管理
     public List<GameObject> growthStages; // 成長過程的圖像(我沒有設計防呆，請記得目前只能塞三種)
     public SpriteRenderer spriteRenderer; // 用來顯示圖片的組件
@@ -21,8 +24,8 @@ public class SeedInstanceScript_Animal : MonoBehaviour
     public OrderSet orderSeter;
     void Start()
     {
-        VisualUpdate();
         currentRewardPoint = seedData.rewardPoint;
+        VisualUpdate();
         //開始時運動一次
         moveTimer=moveInterval-0.2f; // 讓它一開始就能選擇方向移動
     }

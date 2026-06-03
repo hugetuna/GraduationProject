@@ -7,6 +7,7 @@ public enum PriceType {Fans=0,Money=1,Item=2 }//0.1.2
 public class FansItem : Item
 {
     public PriceType priceType=PriceType.Fans;
+    public int codeNumber;//用來回傳抽取到的獎品
 
     public IdolWho harvester = IdolWho.none;
     public int OShiPower;

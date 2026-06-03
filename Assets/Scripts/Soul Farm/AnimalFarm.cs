@@ -387,6 +387,10 @@ public class AnimalFarm : MonoBehaviour, IInteractable
                 int finalSeedRewardPoint = Random.Range(seedRewardPoint - 80 + leader.charm, seedRewardPoint + 30 + leader.charm);
                 FansItem newFan = soilManager.RollFansItem(finalSeedRewardPoint, leader.idolIndex);
                 ResourceManager.Instance.AddItem(newFan);
+                if(seed.spriteResolver != null)
+                {
+                    seed.spriteResolver.SetCategoryAndLabel("Fan", newFan.codeNumber.ToString());
+                }
                 StartCoroutine(HarvestAnimation(i, seed));
                 AudioManager.Instance.PlaySFX(audio_HarvestSeed);
 
