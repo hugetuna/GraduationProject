@@ -11,7 +11,7 @@ public class SetMinTicketUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     private Activity activity;
     [SerializeField] private TextMeshProUGUI activityNameText; // 活動名稱文字
     [SerializeField] private GameObject hoverInfo; // 滑鼠懸停時顯示的資訊物件
-    [SerializeField] private TextMeshProUGUI feeText; // 活動價格文字
+    // [SerializeField] private TextMeshProUGUI feeText; // 活動價格文字
     [SerializeField] private TextMeshProUGUI vigourCostText; // 活動耗體文字
 
     void Start()
@@ -25,12 +25,12 @@ public class SetMinTicketUI : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         
         // 設定 UI 顯示
         activityNameText.text = activity.activityName;
-        feeText.text = $"-{activity.fee}";
+        // feeText.text = $"-{activity.fee}";
         vigourCostText.text = $"-{activity.vigourCost}";
 
         // 確保字型正確渲染
         activityNameText.ForceMeshUpdate();
-        feeText.ForceMeshUpdate();
+        // feeText.ForceMeshUpdate();
         vigourCostText.ForceMeshUpdate();
     }
 

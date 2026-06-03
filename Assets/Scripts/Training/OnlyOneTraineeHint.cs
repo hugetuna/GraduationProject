@@ -23,7 +23,7 @@ public class OnlyOneTraineeHint : MonoBehaviour
         {
             traineeName = TeamDataUtility.GetIdolNameTW(whoCannotTrain);
         }
-        titleText.text = $"今天就先讓{traineeName}\n去訓練吧～";
+        titleText.text = $"今天先讓{traineeName}\n去訓練就好！";
 
         IdolInstance idol = TeamDataUtility.IdolDict[whoCannotTrain];
         string trainingType = "";
