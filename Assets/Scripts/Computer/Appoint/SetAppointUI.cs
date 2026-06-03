@@ -13,8 +13,8 @@ public class SetAppointUI : MonoBehaviour
     private int initialDay = 22;
     //-----------------------------------------------------------------//
     [Header("公演顯示")]
-    public List<Activity> stageList = new(); // 公演日期資料
-    public GameObject stagePrefab; // 用於生成公演顯示的預製件
+    public List<Activity> specialList = new(); // 公演等劇情的日期資料
+    public GameObject specialPrefab; // 用於生成公演等劇情顯示的預製件
     public List<GameObject> DayContents; // 行事曆容器（照日期順序）
     
     void Start()
@@ -35,26 +35,26 @@ public class SetAppointUI : MonoBehaviour
             else if(month == 10) dateTexts[i].text = $"OCT {day:D2}";
         }
 
-        // 生成公演顯示
-        foreach (Activity stage in stageList)
+        // 生成公演等劇情顯示
+        foreach (Activity special in specialList)
         {
-            int daydiff = stage.day - totalDays;
+            int daydiff = special.day - totalDays;
             if (daydiff < 0 || daydiff > 5)
             {
-                Debug.Log($"{stage.activityName} 不在顯示範圍內，跳過生成");
+                Debug.Log($"{special.activityName} 不在顯示範圍內，跳過生成");
                 continue;
             }
 
-            GameObject stageObject = Instantiate(stagePrefab, DayContents[daydiff].transform);
-            if (stageObject == null)
+            GameObject specialObject = Instantiate(specialPrefab, DayContents[daydiff].transform);
+            if (specialObject == null)
             {
-                Debug.Log("公演顯示生成失敗！");
+                Debug.Log("公演等劇情顯示生成失敗！");
                 continue;
             }
 
-            // 設定公演顯示的 UI 資料
-            TextMeshProUGUI stageNumText = stageObject.transform.Find("StageText").GetComponent<TextMeshProUGUI>();
-            stageNumText.text = stage.activityName;
+            // 設定公演等劇情顯示的 UI 資料
+            TextMeshProUGUI specialNameText = specialObject.GetComponentInChildren<TextMeshProUGUI>();
+            specialNameText.text = special.activityName;
         }
         
     }

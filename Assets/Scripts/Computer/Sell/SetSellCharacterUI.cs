@@ -1,4 +1,4 @@
-using System.Collections;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -23,9 +23,16 @@ public class SetSellCharacterUI : MonoBehaviour
 
     void Start()
     {
+        SellController.OnSellConfirmedWithFans += HandleSoldFans; // 訂閱售出確認事件
+
         // 綁定按鈕事件
         lastButton.onClick.AddListener(PrevPage);
         nextButton.onClick.AddListener(NextPage);
+    }
+
+    void OnDestroy()
+    {
+        SellController.OnSellConfirmedWithFans -= HandleSoldFans; // 取消訂閱事件
     }
 
     public void Initialize(IdolInstance idol, List<ItemStack> fansList)
@@ -33,6 +40,7 @@ public class SetSellCharacterUI : MonoBehaviour
         idolInstance = idol;
 
         // 取得該角色所有粉絲物件 UI
+        fixedFansSlots.Clear(); // 以防萬一
         var slots = fansObjectParent.GetComponentsInChildren<SetFansObjectUI>(true);
         fixedFansSlots.AddRange(slots);
 
@@ -100,6 +108,36 @@ public class SetSellCharacterUI : MonoBehaviour
     public void PrevPage()
     {
         currentPage--;
+        RefreshFansUI();
+    }
+
+    public void HandleSoldFans(List<ItemStack> soldFans)
+    {
+        // 移除已售出的粉絲
+        foreach (var sold in soldFans)
+        {
+            // 1. 用 FindIndex 抓到該道具在清單中的「真實陣列索引」
+            int index = allFansData.FindIndex(f => f.item != null && f.item.itemID == sold.item.itemID);
+
+            // 如果有找到（index 不等於 -1）
+            if (index != -1)
+            {
+                // 2. 拿出本體資料
+                ItemStack stack = allFansData[index];
+                stack.quantity -= sold.quantity;
+
+                if (stack.quantity <= 0)
+                {
+                    // 3. 數量小於等於 0，直接移除
+                    allFansData.RemoveAt(index);
+                }
+                else
+                {
+                    // 4. 如果只是扣數量，必須把修改後的 struct 重新塞回清單對應位置
+                    allFansData[index] = stack;
+                }
+            }
+        }
         RefreshFansUI();
     }
 }
