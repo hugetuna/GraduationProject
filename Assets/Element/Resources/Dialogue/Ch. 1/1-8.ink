@@ -1,3 +1,21 @@
+
+VAR teamID = 0
+
+
+{ teamID:
+ - 0: -> team0_kuma_sirius_karo
+ - 1: -> team1_kuma_sirius_aicor
+ - 2: -> team2_kuma_sirius_mizar
+ - 3: -> team3_kuma_karo_aicor
+ - 4: -> team4_kuma_karo_mizar
+ - 5: -> team5_kuma_aicor_mizar
+ - 6: -> team6_sirius_karo_aicor
+ - 7: -> team7_sirius_karo_mizar
+ - 8: -> team8_sirius_aicor_mizar
+ - 9: -> team9_karo_aicor_mizar
+}
+
+===team0_kuma_sirius_karo===
 #speaker:Empty #background:Corridor #bgm:TensionTheme
 （舞台結束後的走廊，「Viv1D」剛好迎面而來）
 #Tachie1_Character:Kuma 
@@ -6,7 +24,6 @@
 
 #Tachie1_Move:((-500,0),0.5)
 #Tachie2_Move:((500,0),0.5)
-
 #speaker:Empty
 （對手團體的領隊在三人面前停下了腳步。）
 
@@ -60,8 +77,6 @@ Karo？妳沒事吧？妳認識剛才那個人？
 #Tachie3_Emotion:Talk
 #emotion:Talk
 我們快回去吧，就快結果發表了。
-->Next
-===Next===
 
 #speaker:Empty #background:DressingRoom
 #Tachie1_Character:Kuma #Tachie1_Emotion:Angry
@@ -124,4 +139,1109 @@ Karo...
 #speaker:Manager
 （看來，關於她以前在其他公司待過的那些事...我必須找時間查清楚了。）
 ->END
+->end_part
+
+===team1_kuma_sirius_aicor===
+#speaker:Empty #background:Corridor #bgm:TensionTheme
+（舞台結束後的走廊，「Viv1D」剛好迎面而來）
+#Tachie1_Character:Kuma 
+#Tachie2_Character:Sirius 
+#Tachie3_Character:Aicor
+
+#Tachie1_Move:((-500,0),0.5)
+#Tachie2_Move:((500,0),0.5)
+#speaker:Empty
+（對手團體的領隊在三人面前停下了腳步。）
+
+#speaker:Viv1DLeader
+你們...，比想像中的還要像樣一點。
+#speaker:Viv1DLeader
+但別高興得太早，這場選秀最後勝出的絕對會是我們。我會在這裡，親手把你們淘汰掉。
+
+#speaker:Sirius
+#Tachie2_Character:Sirius #Tachie2_Emotion:Angry
+#emotion:Angry
+妳說什麼...？
+
+#speaker:Viv1DLeader
+（眼神掃過眾人，嘴角露出冰冷的嘲諷）
+#speaker:Viv1DLeader
+這一次，我絕對不會再錯失出道的機會。絕對不會。
+
+#speaker:Kuma
+#Tachie1_Character:Kuma 
+#Tachie1_Emotion:Talk
+#emotion:Talk
+#Tachie1_Behavior:Shake
+什、什麼意思？我們才不會輸呢！
+
+#speaker:Viv1DLeader
+哼。
+#speaker:Viv1DLeader
+（轉身，帶著團員離去了）
+
+
+#speaker:Sirius
+#Tachie2_Character:Sirius #Tachie2_Emotion:Talk
+#emotion:Talk
+莫名其妙的傢伙…。
+
+#speaker:Aicor
+#Tachie3_Character:Aicor
+#Tachie3_Emotion:Angry
+#emotion: Angry
+搞什麼啊那傢伙！
+#speaker:Aicor
+#Tachie3_Character:Aicor
+#Tachie3_Emotion: Angry
+#emotion: Angry
+凶巴巴的，有病。
+#speaker:Empty #background:DressingRoom
+#Tachie1_Character:Kuma #Tachie1_Emotion:Angry
+#Tachie2_Character:Sirius #Tachie2_Emotion:Angry
+#Tachie3_Character:Aicor #Tachie3_Emotion:Angry
+
+（休息室門被推開，三人走了進來，臉上的表情並不像剛晉級那樣興奮）
+
+#speaker:Manager
+結果發表結束了吧？狀況如何？
+
+#speaker:Kuma
+#Tachie1_Character:Kuma #Tachie1_Emotion:Talk
+#emotion:Talk
+經紀人...我們...
+#speaker:Kuma
+#emotion:Talk
+我們是第四名。卡在最後一個名額...活下來了。
+
+#speaker:Manager
+第四名嗎...雖然驚險，但總算是在生存範圍內。
+#speaker:Manager
+那其他組的排名呢？
+
+#speaker:Sirius
+#Tachie2_Character:Sirius #Tachie2_Emotion:Talk
+#emotion:Talk
+第一名是那家大型娛樂公司的團體，實力跟人氣都沒話說。
+#speaker:Sirius
+#emotion:Talk
+第二名是「Viv1D」，各方面都很平衡的表演，舞台氣氛塑造得很好。
+#speaker:Sirius
+#emotion:Talk
+第三名則是「Mixx」他們唱的太好了，表演分拿了接近滿分。
+
+#speaker:Manager
+果然...前三名的斷層還是很大。
+#speaker:Manager
+不過能從 8 組裡擠進前 4 已經很了不起了。你們表現得很棒。
+
+#speaker:Aicor
+#Tachie3_Character:Aicor #Tachie3_Emotion:Angry
+#emotion:Angry
+啊！！！居然沒贏剛剛那群人！氣死我了！
+#speaker:Manager
+「Viv1D」嗎…，對於他們的作風沒有特殊的傳聞呢，看來是真的在針對我們。
+#speaker:Manager
+大家今天都累了吧，先回去休息吧。
+#speaker:Manager
+排名的事情之後再檢討，重要的是我們還留在這場選秀裡。
+
+#speaker:Aicor
+#Tachie3_Character:Aicor #Tachie3_Emotion:Angry
+#emotion:Angry
+可惡，之後一定要贏過他們！
+
+#speaker:Manager
+（與練習生們無關的惡意...，看來必須查查看公司方面的關係了。）
+->END
+
+->end_part
+
+===team2_kuma_sirius_mizar===
+#speaker:Empty #background:Corridor #bgm:TensionTheme
+（舞台結束後的走廊，「Viv1D」剛好迎面而來）
+#Tachie1_Character:Kuma 
+#Tachie2_Character:Sirius 
+#Tachie3_Character:Mizar 
+
+#Tachie1_Move:((-500,0),0.5)
+#Tachie2_Move:((500,0),0.5)
+#speaker:Empty
+（對手團體的領隊在三人面前停下了腳步。）
+
+#speaker:Viv1DLeader
+你們...，比想像中的還要像樣一點。
+#speaker:Viv1DLeader
+但別高興得太早，這場選秀最後勝出的絕對會是我們。我會在這裡，親手把你們淘汰掉。
+
+#speaker:Sirius
+#Tachie2_Character:Sirius #Tachie2_Emotion:Angry
+#emotion:Angry
+妳說什麼...？
+
+#speaker:Viv1DLeader
+（眼神掃過眾人，嘴角露出冰冷的嘲諷）
+#speaker:Viv1DLeader
+這一次，我絕對不會再錯失出道的機會。絕對不會。
+
+#speaker:Kuma
+#Tachie1_Character:Kuma 
+#Tachie1_Emotion:Talk
+#emotion:Talk
+#Tachie1_Behavior:Shake
+什、什麼意思？我們才不會輸呢！
+
+#speaker:Viv1DLeader
+哼。
+#speaker:Viv1DLeader
+（轉身，帶著團員離去了）
+
+
+#speaker:Sirius
+#Tachie2_Character:Sirius #Tachie2_Emotion:Talk
+#emotion:Talk
+莫名其妙的傢伙…。
+
+#speaker:Mizar
+#Tachie3_Character:Mizar
+#Tachie3_Emotion:Angry
+#emotion: Angry
+態度很差呢…。
+#speaker:Mizar
+#Tachie3_Character:Mizar
+#Tachie3_Emotion: Angry
+#emotion: Angry
+感覺是在針對我們嗎…但我們都不認識他們吧…。
+#speaker:Empty #background:DressingRoom
+#Tachie1_Character:Kuma #Tachie1_Emotion:Angry
+#Tachie2_Character:Sirius #Tachie2_Emotion:Angry
+#Tachie3_Character:Mizar #Tachie3_Emotion:Angry
+
+（休息室門被推開，三人走了進來，臉上的表情並不像剛晉級那樣興奮）
+
+#speaker:Manager
+結果發表結束了吧？狀況如何？
+
+#speaker:Kuma
+#Tachie1_Character:Kuma #Tachie1_Emotion:Talk
+#emotion:Talk
+經紀人...我們...
+#speaker:Kuma
+#emotion:Talk
+我們是第四名。卡在最後一個名額...活下來了。
+
+#speaker:Manager
+第四名嗎...雖然驚險，但總算是在生存範圍內。
+#speaker:Manager
+那其他組的排名呢？
+
+#speaker:Sirius
+#Tachie2_Character:Sirius #Tachie2_Emotion:Talk
+#emotion:Talk
+第一名是那家大型娛樂公司的團體，實力跟人氣都沒話說。
+#speaker:Sirius
+#emotion:Talk
+第二名是「Viv1D」，各方面都很平衡的表演，舞台氣氛塑造得很好。
+#speaker:Sirius
+#emotion:Talk
+第三名則是「Mixx」他們唱的太好了，表演分拿了接近滿分。
+
+#speaker:Manager
+果然...前三名的斷層還是很大。
+#speaker:Manager
+不過能從 8 組裡擠進前 4 已經很了不起了。你們表現得很棒。
+
+#speaker:Mizar
+#Tachie3_Character:Mizar #Tachie3_Emotion:Angry
+#emotion:Angry
+剛剛那組，排名很高呢。
+#speaker:Manager
+「Viv1D」嗎…，對於他們的作風沒有特殊的傳聞呢，看來是真的在針對我們。
+#speaker:Manager
+大家今天都累了吧，先回去休息吧。
+#speaker:Manager
+排名的事情之後再檢討，重要的是我們還留在這場選秀裡。
+
+#speaker:Mizar
+#Tachie3_Character:Mizar #Tachie3_Emotion:Angry
+#emotion:Angry
+嗯！之後一定要贏過他們！
+
+#speaker:Manager
+（與練習生們無關的惡意...，看來必須查查看公司方面的關係了。）
+->END
+
+->end_part
+
+===team3_kuma_karo_aicor===
+#speaker:Empty #background:Corridor #bgm:TensionTheme
+（舞台結束後的走廊，「Viv1D」剛好迎面而來）
+#Tachie1_Character:Kuma 
+#Tachie2_Character:Aicor 
+#Tachie3_Character:Karo 
+
+#Tachie1_Move:((-500,0),0.5)
+#Tachie2_Move:((500,0),0.5)
+#speaker:Empty
+（對手團體的領隊在三人面前停下了腳步。）
+
+#speaker:Viv1DLeader
+你們...，比想像中的還要像樣一點。
+#speaker:Viv1DLeader
+但別高興得太早，這場選秀最後勝出的絕對會是我們。我會在這裡，親手把你們淘汰掉。
+
+
+#speaker:Aicor
+#Tachie2_Character:Aicor #Tachie2_Emotion:Angry
+#emotion:Angry
+妳說什麼...？
+
+#speaker:Viv1DLeader
+（眼神轉向一旁的 Karo，嘴角露出冰冷的嘲諷）
+#speaker:Viv1DLeader
+這一次，我絕對不會再錯失出道的機會。絕對不會。
+
+#speaker:Karo
+#Tachie3_Character:Karo
+#Tachie3_Emotion:Angry #font:Shake
+#emotion:Angry
+...！
+（Karo 的臉色瞬間煞白，原本穩定握著麥克風的手劇烈顫抖了一下）
+
+#speaker:Kuma
+#Tachie1_Character:Kuma 
+#Tachie1_Emotion:Talk
+#emotion:Talk
+#Tachie1_Behavior:Shake
+什、什麼意思？我們才不會輸呢！
+
+#speaker:Viv1DLeader
+哼。
+#speaker:Viv1DLeader
+（轉身，帶著團員離去了）
+
+
+#speaker:Aicor
+#Tachie2_Character:Aicor #Tachie2_Emotion:Talk
+#emotion:Talk
+什麼鬼！？Karo？妳認識剛才那個人嗎？
+
+#speaker:Karo
+#Tachie3_Character:Karo
+#Tachie3_Emotion:Talk
+#emotion:Talk
+...。
+#speaker:Karo
+#Tachie3_Character:Karo
+#Tachie3_Emotion:Talk
+#emotion:Talk
+我們快回去吧，就快結果發表了。
+
+#speaker:Empty #background:DressingRoom
+#Tachie1_Character:Kuma #Tachie1_Emotion:Angry
+#Tachie2_Character:Aicor #Tachie2_Emotion:Angry
+#Tachie3_Character:Karo #Tachie3_Emotion:Angry
+
+（休息室門被推開，三人走了進來，臉上的表情並不像剛晉級那樣興奮）
+
+#speaker:Manager
+結果發表結束了吧？狀況如何？
+
+#speaker:Kuma
+#Tachie1_Character:Kuma #Tachie1_Emotion:Talk
+#emotion:Talk
+經紀人...我們...
+#speaker:Kuma
+#emotion:Talk
+我們是第四名。卡在最後一個名額...活下來了。
+
+#speaker:Manager
+第四名嗎...雖然驚險，但總算是在生存範圍內。
+#speaker:Manager
+那其他組的排名呢？
+
+#speaker:Aicor
+#Tachie2_Character:Aicor #Tachie2_Emotion:Talk
+#emotion:Talk
+第一名是那家大型娛樂公司的團體，實力跟人氣都沒話說。
+#speaker:Aicor
+#emotion:Talk
+第二名是「Viv1D」，各方面都很平衡的表演，舞台氣氛塑造得很好。
+#speaker:Aicor
+#emotion:Talk
+第三名則是「Mixx」他們唱的太好了，表演分拿了接近滿分。
+
+#speaker:Manager
+果然...前三名的斷層還是很大。
+#speaker:Manager
+不過能從 8 組裡擠進前 4 已經很了不起了。你們表現得很棒。
+
+#speaker:Karo
+#Tachie3_Character:Karo #Tachie3_Emotion:Angry
+#emotion:Angry
+明明我的練習時間最長...卻沒有做到像他們一樣...。
+
+#speaker:Manager
+（察覺到 Karo 狀態不對勁，那種焦慮感比平常更強烈）
+#speaker:Manager
+Karo...
+#speaker:Manager
+大家今天都累了吧，先回去休息吧。
+#speaker:Manager
+排名的事情之後再檢討，重要的是我們還留在這場選秀裡。
+
+#speaker:Karo
+#Tachie3_Character:Karo #Tachie3_Emotion:Angry
+#emotion:Angry
+...嗯。那我先去收拾東西了。
+
+#speaker:Manager
+（看來，關於她以前在其他公司待過的那些事...我必須找時間查清楚了。）
+->END
+
+->end_part
+
+===team4_kuma_karo_mizar===
+#speaker:Empty #background:Corridor #bgm:TensionTheme
+（舞台結束後的走廊，「Viv1D」剛好迎面而來）
+#Tachie1_Character:Kuma 
+#Tachie2_Character:Mizar 
+#Tachie3_Character:Karo 
+
+#Tachie1_Move:((-500,0),0.5)
+#Tachie2_Move:((500,0),0.5)
+#speaker:Empty
+（對手團體的領隊在三人面前停下了腳步。）
+
+#speaker:Viv1DLeader
+你們...，比想像中的還要像樣一點。
+#speaker:Viv1DLeader
+但別高興得太早，這場選秀最後勝出的絕對會是我們。我會在這裡，親手把你們淘汰掉。
+
+
+#speaker:Mizar
+#Tachie2_Character:Mizar #Tachie2_Emotion:Angry
+#emotion:Angry
+妳說什麼...？
+
+#speaker:Viv1DLeader
+（眼神轉向一旁的 Karo，嘴角露出冰冷的嘲諷）
+#speaker:Viv1DLeader
+這一次，我絕對不會再錯失出道的機會。絕對不會。
+
+#speaker:Karo
+#Tachie3_Character:Karo
+#Tachie3_Emotion:Angry #font:Shake
+#emotion:Angry
+...！
+（Karo 的臉色瞬間煞白，原本穩定握著麥克風的手劇烈顫抖了一下）
+
+#speaker:Kuma
+#Tachie1_Character:Kuma 
+#Tachie1_Emotion:Talk
+#emotion:Talk
+#Tachie1_Behavior:Shake
+什、什麼意思？我們才不會輸呢！
+
+#speaker:Viv1DLeader
+哼。
+#speaker:Viv1DLeader
+（轉身，帶著團員離去了）
+
+
+#speaker:Mizar
+#Tachie2_Character:Mizar #Tachie2_Emotion:Talk
+#emotion:Talk
+哇…，態度好差，Karo？妳還好嗎？
+
+#speaker:Karo
+#Tachie3_Character:Karo
+#Tachie3_Emotion:Talk
+#emotion:Talk
+...還好，只是有點累了。
+#speaker:Karo
+#Tachie3_Character:Karo
+#Tachie3_Emotion:Talk
+#emotion:Talk
+我們快回去吧，就快結果發表了。
+
+#speaker:Empty #background:DressingRoom
+#Tachie1_Character:Kuma #Tachie1_Emotion:Angry
+#Tachie2_Character:Mizar #Tachie2_Emotion:Angry
+#Tachie3_Character:Karo #Tachie3_Emotion:Angry
+
+（休息室門被推開，三人走了進來，臉上的表情並不像剛晉級那樣興奮）
+
+#speaker:Manager
+結果發表結束了吧？狀況如何？
+
+#speaker:Kuma
+#Tachie1_Character:Kuma #Tachie1_Emotion:Talk
+#emotion:Talk
+經紀人...我們...
+#speaker:Kuma
+#emotion:Talk
+我們是第四名。卡在最後一個名額...活下來了。
+
+#speaker:Manager
+第四名嗎...雖然驚險，但總算是在生存範圍內。
+#speaker:Manager
+那其他組的排名呢？
+
+#speaker:Mizar
+#Tachie2_Character:Mizar #Tachie2_Emotion:Talk
+#emotion:Talk
+第一名是那家大型娛樂公司的團體，實力跟人氣都沒話說。
+#speaker:Mizar
+#emotion:Talk
+第二名是「Viv1D」，各方面都很平衡的表演，舞台氣氛塑造得很好。
+#speaker:Mizar
+#emotion:Talk
+第三名則是「Mixx」他們唱的太好了，表演分拿了接近滿分。
+
+#speaker:Manager
+果然...前三名的斷層還是很大。
+#speaker:Manager
+不過能從 8 組裡擠進前 4 已經很了不起了。你們表現得很棒。
+
+#speaker:Karo
+#Tachie3_Character:Karo #Tachie3_Emotion:Angry
+#emotion:Angry
+明明我的練習時間最長...卻沒有做到像他們一樣...。
+
+#speaker:Manager
+（察覺到 Karo 狀態不對勁，那種焦慮感比平常更強烈）
+#speaker:Manager
+Karo...
+#speaker:Manager
+大家今天都累了吧，先回去休息吧。
+#speaker:Manager
+排名的事情之後再檢討，重要的是我們還留在這場選秀裡。
+
+#speaker:Karo
+#Tachie3_Character:Karo #Tachie3_Emotion:Angry
+#emotion:Angry
+...嗯。那我先去收拾東西了。
+
+#speaker:Manager
+（看來，關於她以前在其他公司待過的那些事...我必須找時間查清楚了。）
+->END
+
+->end_part
+
+===team5_kuma_aicor_mizar===
+#speaker:Empty #background:Corridor #bgm:TensionTheme
+（舞台結束後的走廊，「Viv1D」剛好迎面而來）
+#Tachie1_Character:Kuma 
+#Tachie2_Character:Mizar 
+#Tachie3_Character:Aicor
+
+#Tachie1_Move:((-500,0),0.5)
+#Tachie2_Move:((500,0),0.5)
+#speaker:Empty
+（對手團體的領隊在三人面前停下了腳步。）
+
+#speaker:Viv1DLeader
+你們...，比想像中的還要像樣一點。
+#speaker:Viv1DLeader
+但別高興得太早，這場選秀最後勝出的絕對會是我們。我會在這裡，親手把你們淘汰掉。
+
+#speaker:Mizar
+#Tachie2_Character:Mizar #Tachie2_Emotion:Angry
+#emotion:Angry
+妳說什麼...？
+
+#speaker:Viv1DLeader
+（眼神掃過眾人，嘴角露出冰冷的嘲諷）
+#speaker:Viv1DLeader
+這一次，我絕對不會再錯失出道的機會。絕對不會。
+
+#speaker:Kuma
+#Tachie1_Character:Kuma 
+#Tachie1_Emotion:Talk
+#emotion:Talk
+#Tachie1_Behavior:Shake
+什、什麼意思？我們才不會輸呢！
+
+#speaker:Viv1DLeader
+哼。
+#speaker:Viv1DLeader
+（轉身，帶著團員離去了）
+
+
+#speaker:Mizar
+#Tachie2_Character:Mizar #Tachie2_Emotion:Talk
+#emotion:Talk
+態度很差呢…。
+
+#speaker:Aicor
+#Tachie3_Character:Aicor
+#Tachie3_Emotion:Angry
+#emotion: Angry
+搞什麼啊那傢伙！
+#speaker:Aicor
+#Tachie3_Character:Aicor
+#Tachie3_Emotion: Angry
+#emotion: Angry
+凶巴巴的，有病。
+#speaker:Empty #background:DressingRoom
+#Tachie1_Character:Kuma #Tachie1_Emotion:Angry
+#Tachie2_Character:Mizar #Tachie2_Emotion:Angry
+#Tachie3_Character:Aicor #Tachie3_Emotion:Angry
+
+（休息室門被推開，三人走了進來，臉上的表情並不像剛晉級那樣興奮）
+
+#speaker:Manager
+結果發表結束了吧？狀況如何？
+
+#speaker:Kuma
+#Tachie1_Character:Kuma #Tachie1_Emotion:Talk
+#emotion:Talk
+經紀人...我們...
+#speaker:Kuma
+#emotion:Talk
+我們是第四名。卡在最後一個名額...活下來了。
+
+#speaker:Manager
+第四名嗎...雖然驚險，但總算是在生存範圍內。
+#speaker:Manager
+那其他組的排名呢？
+
+#speaker:Mizar
+#Tachie2_Character:Mizar #Tachie2_Emotion:Talk
+#emotion:Talk
+第一名是那家大型娛樂公司的團體，實力跟人氣都沒話說。
+#speaker:Mizar
+#emotion:Talk
+第二名是「Viv1D」，各方面都很平衡的表演，舞台氣氛塑造得很好。
+#speaker:Mizar
+#emotion:Talk
+第三名則是「Mixx」他們唱的太好了，表演分拿了接近滿分。
+
+#speaker:Manager
+果然...前三名的斷層還是很大。
+#speaker:Manager
+不過能從 8 組裡擠進前 4 已經很了不起了。你們表現得很棒。
+
+#speaker:Aicor
+#Tachie3_Character:Aicor #Tachie3_Emotion:Angry
+#emotion:Angry
+啊！！！居然沒贏剛剛那群人！氣死我了！
+#speaker:Manager
+「Viv1D」嗎…，對於他們的作風沒有特殊的傳聞呢，看來是真的在針對我們。
+#speaker:Manager
+大家今天都累了吧，先回去休息吧。
+#speaker:Manager
+排名的事情之後再檢討，重要的是我們還留在這場選秀裡。
+
+#speaker:Aicor
+#Tachie3_Character:Aicor #Tachie3_Emotion:Angry
+#emotion:Angry
+可惡，之後一定要贏過他們！
+
+#speaker:Manager
+（與練習生們無關的惡意...，看來必須查查看公司方面的關係了。）
+->END
+
+->end_part
+
+===team6_sirius_karo_aicor===
+#speaker:Empty #background:Corridor #bgm:TensionTheme
+（舞台結束後的走廊，「Viv1D」剛好迎面而來）
+#Tachie1_Character:Aicor 
+#Tachie2_Character:Sirius 
+#Tachie3_Character:Karo 
+
+#Tachie1_Move:((-500,0),0.5)
+#Tachie2_Move:((500,0),0.5)
+#speaker:Empty
+（對手團體的領隊在三人面前停下了腳步。）
+
+#speaker:Viv1DLeader
+你們...，比想像中的還要像樣一點。
+#speaker:Viv1DLeader
+但別高興得太早，這場選秀最後勝出的絕對會是我們。我會在這裡，親手把你們淘汰掉。
+
+#speaker:Sirius
+#Tachie2_Character:Sirius #Tachie2_Emotion:Angry
+#emotion:Angry
+妳說什麼...？
+
+#speaker:Viv1DLeader
+（眼神轉向一旁的 Karo，嘴角露出冰冷的嘲諷）
+#speaker:Viv1DLeader
+這一次，我絕對不會再錯失出道的機會。絕對不會。
+
+#speaker:Karo
+#Tachie3_Character:Karo
+#Tachie3_Emotion:Angry #font:Shake
+#emotion:Angry
+...！
+（Karo 的臉色瞬間煞白，原本穩定握著麥克風的手劇烈顫抖了一下）
+
+#speaker:Aicor
+#Tachie1_Character:Aicor 
+#Tachie1_Emotion: Angry
+#emotion:Angry
+#Tachie1_Behavior:Shake
+蛤？你們態度很差欸！
+
+#speaker:Viv1DLeader
+哼。
+#speaker:Viv1DLeader
+（轉身，帶著團員離去了）
+
+
+#speaker:Sirius
+#Tachie2_Character:Sirius #Tachie2_Emotion:Talk
+#emotion:Talk
+Karo？妳沒事吧？妳認識剛才那個人？
+
+#speaker:Karo
+#Tachie3_Character:Karo
+#Tachie3_Emotion:Talk
+#emotion:Talk
+...沒事。只是有點累了。
+#speaker:Karo
+#Tachie3_Character:Karo
+#Tachie3_Emotion:Talk
+#emotion:Talk
+我們快回去吧，就快結果發表了。
+
+#speaker:Empty #background:DressingRoom
+#Tachie1_Character:Aicor #Tachie1_Emotion:Angry
+#Tachie2_Character:Sirius #Tachie2_Emotion:Angry
+#Tachie3_Character:Karo #Tachie3_Emotion:Angry
+
+（休息室門被推開，三人走了進來，臉上的表情並不像剛晉級那樣興奮）
+
+#speaker:Manager
+結果發表結束了吧？狀況如何？
+
+#speaker:Aicor
+#Tachie1_Character:Aicor #Tachie1_Emotion:Talk
+#emotion:Talk
+...可惡。
+#speaker:Aicor
+#emotion:Talk
+我們是第四名，是活下來了沒錯，但也是墊底的成績。
+
+#speaker:Manager
+第四名嗎...雖然驚險，但總算是在生存範圍內。
+#speaker:Manager
+那其他組的排名呢？
+
+#speaker:Sirius
+#Tachie2_Character:Sirius #Tachie2_Emotion:Talk
+#emotion:Talk
+第一名是那家大型娛樂公司的團體，實力跟人氣都沒話說。
+#speaker:Sirius
+#emotion:Talk
+第二名是「Viv1D」，各方面都很平衡的表演，舞台氣氛塑造得很好。
+#speaker:Sirius
+#emotion:Talk
+第三名則是「Mixx」他們唱的太好了，表演分拿了接近滿分。
+
+#speaker:Manager
+果然...前三名的斷層還是很大。
+#speaker:Manager
+不過能從 8 組裡擠進前 4 已經很了不起了。你們表現得很棒。
+
+#speaker:Karo
+#Tachie3_Character:Karo #Tachie3_Emotion:Angry
+#emotion:Angry
+明明我的練習時間最長...卻沒有做到像他們一樣...。
+
+#speaker:Manager
+（察覺到 Karo 狀態不對勁，那種焦慮感比平常更強烈）
+#speaker:Manager
+Karo...
+#speaker:Manager
+大家今天都累了吧，先回去休息吧。
+#speaker:Manager
+排名的事情之後再檢討，重要的是我們還留在這場選秀裡。
+
+#speaker:Karo
+#Tachie3_Character:Karo #Tachie3_Emotion:Angry
+#emotion:Angry
+...嗯。那我先去收拾東西了。
+
+#speaker:Manager
+（看來，關於她以前在其他公司待過的那些事...我必須找時間查清楚了。）
+->END
+
+->end_part
+
+===team7_sirius_karo_mizar===
+#speaker:Empty #background:Corridor #bgm:TensionTheme
+（舞台結束後的走廊，「Viv1D」剛好迎面而來）
+#Tachie1_Character:Mizar
+#Tachie2_Character:Sirius 
+#Tachie3_Character:Karo 
+
+#Tachie1_Move:((-500,0),0.5)
+#Tachie2_Move:((500,0),0.5)
+#speaker:Empty
+（對手團體的領隊在三人面前停下了腳步。）
+
+#speaker:Viv1DLeader
+你們...，比想像中的還要像樣一點。
+#speaker:Viv1DLeader
+但別高興得太早，這場選秀最後勝出的絕對會是我們。我會在這裡，親手把你們淘汰掉。
+
+#speaker:Sirius
+#Tachie2_Character:Sirius #Tachie2_Emotion:Angry
+#emotion:Angry
+妳說什麼...？
+
+#speaker:Viv1DLeader
+（眼神轉向一旁的 Karo，嘴角露出冰冷的嘲諷）
+#speaker:Viv1DLeader
+這一次，我絕對不會再錯失出道的機會。絕對不會。
+
+#speaker:Karo
+#Tachie3_Character:Karo
+#Tachie3_Emotion:Angry #font:Shake
+#emotion:Angry
+...！
+（Karo 的臉色瞬間煞白，原本穩定握著麥克風的手劇烈顫抖了一下）
+
+#speaker:Mizar
+#Tachie1_Character:Mizar 
+#Tachie1_Emotion: Talk
+#emotion: Talk
+#Tachie1_Behavior:Shake
+我們也不會就這樣被你們打敗。
+
+#speaker:Viv1DLeader
+哼。
+#speaker:Viv1DLeader
+（轉身，帶著團員離去了）
+
+
+#speaker:Sirius
+#Tachie2_Character:Sirius #Tachie2_Emotion:Talk
+#emotion:Talk
+Karo？妳沒事吧？妳認識剛才那個人？
+
+#speaker:Karo
+#Tachie3_Character:Karo
+#Tachie3_Emotion:Talk
+#emotion:Talk
+...沒事。只是有點累了。
+#speaker:Karo
+#Tachie3_Character:Karo
+#Tachie3_Emotion:Talk
+#emotion:Talk
+我們快回去吧，就快結果發表了。
+
+#speaker:Empty #background:DressingRoom
+#Tachie1_Character:Mizar #Tachie1_Emotion:Angry
+#Tachie2_Character:Sirius #Tachie2_Emotion:Angry
+#Tachie3_Character:Karo #Tachie3_Emotion:Angry
+
+（休息室門被推開，三人走了進來，臉上的表情並不像剛晉級那樣興奮）
+
+#speaker:Manager
+結果發表結束了吧？狀況如何？
+
+#speaker:Mizar
+#Tachie1_Character:Mizar #Tachie1_Emotion:Talk
+#emotion:Talk
+經紀人…。
+#speaker:Mizar
+#emotion:Talk
+我們是第四名…好不甘心。
+
+#speaker:Manager
+第四名嗎...雖然驚險，但總算是在生存範圍內。
+#speaker:Manager
+那其他組的排名呢？
+
+#speaker:Sirius
+#Tachie2_Character:Sirius #Tachie2_Emotion:Talk
+#emotion:Talk
+第一名是那家大型娛樂公司的團體，實力跟人氣都沒話說。
+#speaker:Sirius
+#emotion:Talk
+第二名是「Viv1D」，各方面都很平衡的表演，舞台氣氛塑造得很好。
+#speaker:Sirius
+#emotion:Talk
+第三名則是「Mixx」他們唱的太好了，表演分拿了接近滿分。
+
+#speaker:Manager
+果然...前三名的斷層還是很大。
+#speaker:Manager
+不過能從 8 組裡擠進前 4 已經很了不起了。你們表現得很棒。
+
+#speaker:Karo
+#Tachie3_Character:Karo #Tachie3_Emotion:Angry
+#emotion:Angry
+明明我的練習時間最長...卻沒有做到像他們一樣...。
+
+#speaker:Manager
+（察覺到 Karo 狀態不對勁，那種焦慮感比平常更強烈）
+#speaker:Manager
+Karo...
+#speaker:Manager
+大家今天都累了吧，先回去休息吧。
+#speaker:Manager
+排名的事情之後再檢討，重要的是我們還留在這場選秀裡。
+
+#speaker:Karo
+#Tachie3_Character:Karo #Tachie3_Emotion:Angry
+#emotion:Angry
+...嗯。那我先去收拾東西了。
+
+#speaker:Manager
+（看來，關於她以前在其他公司待過的那些事...我必須找時間查清楚了。）
+->END
+
+->end_part
+
+===team8_sirius_aicor_mizar===
+#speaker:Empty #background:Corridor #bgm:TensionTheme
+（舞台結束後的走廊，「Viv1D」剛好迎面而來）
+#Tachie1_Character:Aicor
+#Tachie2_Character:Sirius 
+#Tachie3_Character:Mizar
+
+#Tachie1_Move:((-500,0),0.5)
+#Tachie2_Move:((500,0),0.5)
+#speaker:Empty
+（對手團體的領隊在三人面前停下了腳步。）
+
+#speaker:Viv1DLeader
+你們...，比想像中的還要像樣一點。
+#speaker:Viv1DLeader
+但別高興得太早，這場選秀最後勝出的絕對會是我們。我會在這裡，親手把你們淘汰掉。
+
+#speaker:Sirius
+#Tachie2_Character:Sirius #Tachie2_Emotion:Angry
+#emotion:Angry
+妳說什麼...？
+
+#speaker:Viv1DLeader
+（眼神掃過眾人，嘴角露出冰冷的嘲諷）
+#speaker:Viv1DLeader
+這一次，我絕對不會再錯失出道的機會。絕對不會。
+
+#speaker:Aicor
+#Tachie1_Character:Aicor 
+#Tachie1_Emotion: Angry
+#emotion:Angry
+#Tachie1_Behavior:Shake
+蛤？你們態度很差欸！
+
+#speaker:Viv1DLeader
+哼。
+#speaker:Viv1DLeader
+（轉身，帶著團員離去了）
+
+
+#speaker:Sirius
+#Tachie2_Character:Sirius #Tachie2_Emotion:Talk
+#emotion:Talk
+莫名其妙的傢伙…。
+
+#speaker:Mizar
+#Tachie3_Character:Mizar
+#Tachie3_Emotion:Angry
+#emotion: Angry
+態度很差呢…。
+#speaker:Mizar
+#Tachie3_Character:Mizar
+#Tachie3_Emotion: Angry
+#emotion: Angry
+感覺是在針對我們嗎…但我們都不認識他們吧…。
+#speaker:Empty #background:DressingRoom
+#Tachie1_Character:Aicor #Tachie1_Emotion:Angry
+#Tachie2_Character:Sirius #Tachie2_Emotion:Angry
+#Tachie3_Character:Mizar #Tachie3_Emotion:Angry
+
+（休息室門被推開，三人走了進來，臉上的表情並不像剛晉級那樣興奮）
+
+#speaker:Manager
+結果發表結束了吧？狀況如何？
+
+#speaker:Aicor
+#Tachie1_Character:Aicor #Tachie1_Emotion:Talk
+#emotion:Talk
+...可惡。
+#speaker:Aicor
+#emotion:Talk
+我們是第四名，是活下來了沒錯，但也是墊底的成績。
+
+#speaker:Manager
+第四名嗎...雖然驚險，但總算是在生存範圍內。
+#speaker:Manager
+那其他組的排名呢？
+
+#speaker:Sirius
+#Tachie2_Character:Sirius #Tachie2_Emotion:Talk
+#emotion:Talk
+第一名是那家大型娛樂公司的團體，實力跟人氣都沒話說。
+#speaker:Sirius
+#emotion:Talk
+第二名是「Viv1D」，各方面都很平衡的表演，舞台氣氛塑造得很好。
+#speaker:Sirius
+#emotion:Talk
+第三名則是「Mixx」他們唱的太好了，表演分拿了接近滿分。
+
+#speaker:Manager
+果然...前三名的斷層還是很大。
+#speaker:Manager
+不過能從 8 組裡擠進前 4 已經很了不起了。你們表現得很棒。
+
+#speaker:Mizar
+#Tachie3_Character:Mizar #Tachie3_Emotion:Angry
+#emotion:Angry
+剛剛那組，排名很高呢。
+#speaker:Manager
+「Viv1D」嗎…，對於他們的作風沒有特殊的傳聞呢，看來是真的在針對我們。
+#speaker:Manager
+大家今天都累了吧，先回去休息吧。
+#speaker:Manager
+排名的事情之後再檢討，重要的是我們還留在這場選秀裡。
+
+#speaker:Mizar
+#Tachie3_Character:Mizar #Tachie3_Emotion:Angry
+#emotion:Angry
+嗯！之後一定要贏過他們！
+
+#speaker:Manager
+（與練習生們無關的惡意...，看來必須查查看公司方面的關係了。）
+->END
+
+->end_part
+
+===team9_karo_aicor_mizar===
+#speaker:Empty #background:Corridor #bgm:TensionTheme
+（舞台結束後的走廊，「Viv1D」剛好迎面而來）
+#Tachie1_Character:Aicor
+#Tachie2_Character:Mizar 
+#Tachie3_Character:Karo 
+
+#Tachie1_Move:((-500,0),0.5)
+#Tachie2_Move:((500,0),0.5)
+#speaker:Empty
+（對手團體的領隊在三人面前停下了腳步。）
+
+#speaker:Viv1DLeader
+你們...，比想像中的還要像樣一點。
+#speaker:Viv1DLeader
+但別高興得太早，這場選秀最後勝出的絕對會是我們。我會在這裡，親手把你們淘汰掉。
+
+#speaker:Mizar
+#Tachie2_Character:Mizar #Tachie2_Emotion:Angry
+#emotion:Angry
+妳說什麼...？
+
+#speaker:Viv1DLeader
+（眼神轉向一旁的 Karo，嘴角露出冰冷的嘲諷）
+#speaker:Viv1DLeader
+這一次，我絕對不會再錯失出道的機會。絕對不會。
+
+#speaker:Karo
+#Tachie3_Character:Karo
+#Tachie3_Emotion:Angry #font:Shake
+#emotion:Angry
+...！
+（Karo 的臉色瞬間煞白，原本穩定握著麥克風的手劇烈顫抖了一下）
+
+#speaker:Aicor
+#Tachie1_Character:Aicor 
+#Tachie1_Emotion: Angry
+#emotion:Angry
+#Tachie1_Behavior:Shake
+蛤？你們態度很差欸！
+
+#speaker:Viv1DLeader
+哼。
+#speaker:Viv1DLeader
+（轉身，帶著團員離去了）
+
+
+#speaker:Mizar
+#Tachie2_Character:Mizar #Tachie2_Emotion:Talk
+#emotion:Talk
+哇…，態度好差，Karo？妳還好嗎？
+
+#speaker:Karo
+#Tachie3_Character:Karo
+#Tachie3_Emotion:Talk
+#emotion:Talk
+...還好，只是有點累了。
+#speaker:Karo
+#Tachie3_Character:Karo
+#Tachie3_Emotion:Talk
+#emotion:Talk
+我們快回去吧，就快結果發表了。
+
+#speaker:Empty #background:DressingRoom
+#Tachie1_Character:Aicor #Tachie1_Emotion:Angry
+#Tachie2_Character:Mizar #Tachie2_Emotion:Angry
+#Tachie3_Character:Karo #Tachie3_Emotion:Angry
+
+（休息室門被推開，三人走了進來，臉上的表情並不像剛晉級那樣興奮）
+
+#speaker:Manager
+結果發表結束了吧？狀況如何？
+
+#speaker:Aicor
+#Tachie1_Character:Aicor #Tachie1_Emotion:Talk
+#emotion:Talk
+...可惡。
+#speaker:Aicor
+#emotion:Talk
+我們是第四名，是活下來了沒錯，但也是墊底的成績。
+
+#speaker:Manager
+第四名嗎...雖然驚險，但總算是在生存範圍內。
+#speaker:Manager
+那其他組的排名呢？
+
+#speaker:Mizar
+#Tachie2_Character:Mizar #Tachie2_Emotion:Talk
+#emotion:Talk
+第一名是那家大型娛樂公司的團體，實力跟人氣都沒話說。
+#speaker:Mizar
+#emotion:Talk
+第二名是「Viv1D」，各方面都很平衡的表演，舞台氣氛塑造得很好。
+#speaker:Mizar
+#emotion:Talk
+第三名則是「Mixx」他們唱的太好了，表演分拿了接近滿分。
+
+#speaker:Manager
+果然...前三名的斷層還是很大。
+#speaker:Manager
+不過能從 8 組裡擠進前 4 已經很了不起了。你們表現得很棒。
+
+#speaker:Karo
+#Tachie3_Character:Karo #Tachie3_Emotion:Angry
+#emotion:Angry
+明明我的練習時間最長...卻沒有做到像他們一樣...。
+
+#speaker:Manager
+（察覺到 Karo 狀態不對勁，那種焦慮感比平常更強烈）
+#speaker:Manager
+Karo...
+#speaker:Manager
+大家今天都累了吧，先回去休息吧。
+#speaker:Manager
+排名的事情之後再檢討，重要的是我們還留在這場選秀裡。
+
+#speaker:Karo
+#Tachie3_Character:Karo #Tachie3_Emotion:Angry
+#emotion:Angry
+...嗯。那我先去收拾東西了。
+
+#speaker:Manager
+（看來，關於她以前在其他公司待過的那些事...我必須找時間查清楚了。）
+
+->end_part
+
+===end_part===
+->END
+
 
