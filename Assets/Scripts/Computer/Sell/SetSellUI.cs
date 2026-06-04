@@ -84,7 +84,7 @@ public class SetSellUI : MonoBehaviour
             var fansList = idolFansDict[idol];
 
             // 檢查該角色的粉絲清單，是否已有此粉絲項目
-            int index = fansList.FindIndex(f => f.item == fansItem);
+            int index = fansList.FindIndex(f => f.item.itemID == fansItem.itemID);
 
             if (index != -1)
             {

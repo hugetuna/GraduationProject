@@ -29,7 +29,8 @@ public class SetTicketUI : MonoBehaviour
         // 設定 UI 顯示
         activityNameText.text = activity.activityName;
         activityInfoText.text = activity.description;
-        activityFeeText.text = $"${activity.fee}";
+        // activityFeeText.text = $"${activity.fee}";
+        activityFeeText.text = ""; // 正式扣款前先不顯示
         
         int dayDiff = activity.day; // 活動日期直接如實呈現即可
         int month = initialMonth;

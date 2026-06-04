@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems; // UI 和物件的拖曳寫法不同
 
@@ -28,6 +29,16 @@ public class DragToSell : Drag
 
         // 粉絲物件的 prefab 都放在 Sell UI 底下
         sellController = GetComponentInParent<SellController>();
+    }
+
+    void Start()
+    {
+        SellController.OnSellConfirmed += ForceReturnToOwnerZone;
+    }
+
+    void OnDestroy()
+    {
+        SellController.OnSellConfirmed -= ForceReturnToOwnerZone;
     }
 
     public override void OnBeginDrag(PointerEventData eventData)
@@ -93,5 +104,13 @@ public class DragToSell : Drag
         // 處理 UI 樣式
         fansNameText.SetActive(!isInSellZone);
         fansOwnerIcon.SetActive(isInSellZone);
+    }
+
+    public void ForceReturnToOwnerZone() // 販賣粉絲後強制回到最原始的位置
+    {
+        rectTransform.anchoredPosition = originalPosition;
+        UpdateSellStatus(false); // 回到擁有者區域＆更新狀態
+        lastDropZone = null;
+        currentDropZone = null;
     }
 }

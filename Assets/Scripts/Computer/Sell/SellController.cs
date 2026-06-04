@@ -1,4 +1,5 @@
-using System.Collections;
+using System;
+using System.Linq;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -7,6 +8,9 @@ using TMPro;
 /* 掛在販賣頁面根部 */
 public class SellController : MonoBehaviour
 {
+    public static event Action<List<ItemStack>> OnSellConfirmedWithFans; // 售出確認事件，傳遞已售出的粉絲資料
+    public static event Action OnSellConfirmed; // 單純的售出確認事件
+    //-----------------------------------------------------------------//
     [Header("UI 元素")]
     [SerializeField] private Button transformButton; // 轉換按鈕
     //-----------------------------------------------------------------//
@@ -232,10 +236,9 @@ public class SellController : MonoBehaviour
         }
 
         // 清空待售清單
-        foreach (var fansUI in fansToSellList)
-        {
-            Destroy(fansUI.gameObject);
-        }
+        var soldFans = fansToSellList.Select(f => f.FansItemStack).ToList();
+        OnSellConfirmedWithFans?.Invoke(soldFans); // 觸發售出確認事件，傳遞已售出的粉絲資料
+        OnSellConfirmed?.Invoke(); // 觸發單純的售出確認事件
         fansToSellList.Clear();
 
         // 更新 UI

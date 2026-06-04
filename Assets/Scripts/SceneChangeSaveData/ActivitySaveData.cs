@@ -16,7 +16,7 @@ public class ActivitySaveData
         activities.RemoveAll(a => a.activity == activity && a.appointDay == appointDay);
     }
 
-    public Activity GetTodayActivity() // 獲取今日預約的商演（不含公演）
+    public Activity GetTodayActivity() // 獲取今日預約的商演（不含公演等劇情）
     {
         Activity todayActivities = null;
         foreach (ActivityAppointment appoint in activities)
@@ -24,7 +24,7 @@ public class ActivitySaveData
             Activity activity = appoint.activity;
             int totalDays = DayManager.Instance.date + DayManager.Instance.chapter * 3; // 僅適用於新手教學＆第一章
 
-            if (activity.day == totalDays && !activity.description.Contains("公演"))
+            if (activity.day == totalDays && activity.activityType == ActivityType.Regular)
             {
                 todayActivities = activity; // 一天最多只會有一個商演
             }
