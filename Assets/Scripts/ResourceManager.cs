@@ -31,6 +31,7 @@ public class ResourceManager : MonoBehaviour
     public List<Item> allItems;//所有道具的參考，主要是為了從存檔讀回道具物件用的
     public List<ItemStack> items = new List<ItemStack>();
     public bool IsItemChanged { get; private set; } = true; // 標記道具是否有變化
+    public List<ItemStack> itemLog = new(); // 每日獲得的道具列表（結算用）
     private void Awake()
     {
         if (Instance == null)
@@ -71,7 +72,7 @@ public class ResourceManager : MonoBehaviour
                 if (saveItemStack.isFansItem)
                 {
                     FansItem fansItemFromSave = findItemByID(saveItemStack.itemID) as FansItem;
-                    FansItem clone= fansItemFromSave.Clone() as FansItem;//必須要複製以迎合不同收割者的資料
+                    FansItem clone = fansItemFromSave.Clone() as FansItem;//必須要複製以迎合不同收割者的資料
                     clone.harvester = saveItemStack.Harvester;
                     Debug.Log("從存檔讀取粉絲道具" + clone.itemName + "，收割者是" + clone.harvester);
                     items.Add(new ItemStack(clone, saveItemStack.quantity));
@@ -92,7 +93,33 @@ public class ResourceManager : MonoBehaviour
         foreach (var itemName in resourceSaveData.allEqupmentNames)
         {
             InventoryManager.ownedEquipments.Add(InventoryManager.FindEquipmentByName(itemName));
-            
+
+        }
+
+        // 結算畫面需要的道具紀錄也要讀回來
+        itemLog.Clear();
+        foreach (var save in resourceSaveData.saveItemLog)
+        {
+            if (findItemByID(save.itemID) != null)
+            {
+                // 如果是粉絲道具還要把收割者的資料讀回來
+                if (save.isFansItem)
+                {
+                    FansItem fansItemFromSave = findItemByID(save.itemID) as FansItem;
+                    FansItem clone = fansItemFromSave.Clone() as FansItem;// 必須要複製以迎合不同收割者的資料
+                    clone.harvester = save.Harvester;
+                    itemLog.Add(new ItemStack(clone, save.quantity));
+                }
+                else
+                {
+                    // Debug.Log("從存檔讀取粉絲道具");
+                    itemLog.Add(new ItemStack(findItemByID(save.itemID), save.quantity));
+                }
+            }
+            // else
+            // {
+            //     Debug.LogWarning("找不到道具ID: " + save.itemID);
+            // }
         }
     }
     public Item findItemByID(string itemID)
@@ -140,7 +167,9 @@ public class ResourceManager : MonoBehaviour
             InventoryManager.ownedEquipments.Add(newItem as EquipmentItem);
             return;
         }
-        
+
+        LogAddedItem(newItem, 1); // 記錄新增的道具（結算用）
+
         bool found = false;
         for (int i = 0; i < items.Count; i++)
         {
@@ -180,6 +209,9 @@ public class ResourceManager : MonoBehaviour
                 InventoryManager.ownedEquipments.Add(newItem as EquipmentItem);
             return;
         }
+
+        LogAddedItem(newItem, amount); // 記錄新增的道具（結算用）
+
         for (int i = 0; i < items.Count; i++)
         {
             if (items[i].item == newItem)
@@ -225,6 +257,9 @@ public class ResourceManager : MonoBehaviour
                 InventoryManager.ownedEquipments.Add(newItem as EquipmentItem);
                 break;
             }
+
+            LogAddedItem(newItem, 1); // 記錄新增的道具（結算用）
+
             bool found = false;
             for (int i = 0; i < items.Count; i++)
             {
@@ -238,7 +273,7 @@ public class ResourceManager : MonoBehaviour
                             continue;
                         }
                     }
-                    
+
                     ItemStack stack = items[i];
                     stack.quantity += 1;
                     items[i] = stack;
@@ -309,6 +344,23 @@ public class ResourceManager : MonoBehaviour
         if (isChanged)
         {
             Debug.Log("背包資料已更新，標記為 Dirty");
+        }
+    }
+
+    private void LogAddedItem(Item newItem, int amount)
+    {
+        if (newItem == null || amount <= 0) return;
+
+        int logIndex = itemLog.FindIndex(x => x.item != null && x.item.itemID == newItem.itemID);
+        if (logIndex != -1) // 有找到就不會回傳 -1
+        {
+            ItemStack logStack = itemLog[logIndex];
+            logStack.quantity += amount;
+            itemLog[logIndex] = logStack;
+        }
+        else // 沒有找到代表還沒有這個道具的紀錄，新增一筆
+        {
+            itemLog.Add(new ItemStack(newItem, amount));
         }
     }
 }
