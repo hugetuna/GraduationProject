@@ -293,8 +293,10 @@ public class ResourceManager : MonoBehaviour
     //查找指定道具的數量
     public int GetItemCount(Item target)
     {
+        Debug.Log($"ClothPrefab: {target.itemID}");
         foreach (var stack in items)
         {
+            Debug.Log($"Backpack Item: {stack.item.itemID}");
             if (stack.item.itemID == target.itemID)
                 return stack.quantity;
         }

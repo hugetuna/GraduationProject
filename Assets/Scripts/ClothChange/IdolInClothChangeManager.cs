@@ -20,7 +20,7 @@ public class IdolInClothChangeManager : MonoBehaviour
         //在更衣界面上，根據隊伍設置介面偶像的身份
         for (int i = 0; i < idolsInClothChange.Count; i++)
         {
-            if(teamManager.teamMembers[i] != null)
+            if(teamManager.teamMembers.Count>i)
             {
                 IdolInstance idolInstance = teamManager.teamMembers[i].GetComponent<IdolInstance>();
                 idolsInClothChange[i].SetIdolWhoInClothChange(idolInstance.idolIndex);
@@ -39,6 +39,7 @@ public class IdolInClothChangeManager : MonoBehaviour
         {
             if (i == 0) continue; //第一個是空的，不用設置
             Item ClothPrefab = ResourceManager.Instance.findItemByID($"CC-{i}");
+
             //如果沒有這件衣服了，就把它隱藏
             if (ResourceManager.Instance.GetItemCount(ClothPrefab)<=0)
             {
