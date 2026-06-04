@@ -143,6 +143,7 @@ public class GameManager : MonoBehaviour
                 vigour = idol.vigour,
                 vigourMax = idol.vigourMax,
                 fans = idol.fans,
+                fansExp = idol.fansExp,
                 bondWithP = idol.bondWithP,
                 currentClothIndex = idol.currentClothIndex,
                 BHaveSetUp = true,
@@ -208,6 +209,25 @@ public class GameManager : MonoBehaviour
         foreach (EquipmentItem equipment in resource.InventoryManager.ownedEquipments)
         {
             ResourceData.allEqupmentNames.Add(equipment.itemName);
+        }
+        
+        // 儲存道具獲得紀錄（用於結算畫面顯示）
+        ResourceData.saveItemLog.Clear();
+        foreach (var itemStack in resource.itemLog)
+        {
+            bool isFansItem = itemStack.item is FansItem;
+            IdolWho owner = IdolWho.none;
+            if (itemStack.item is FansItem fansItem)
+            {
+                owner = fansItem.harvester;
+            }
+            ResourceData.saveItemLog.Add(new ItemSaveStack
+            {
+                itemID = itemStack.item.itemID,
+                quantity = itemStack.quantity,
+                isFansItem = isFansItem,
+                Harvester = owner
+            });
         }
     }
 

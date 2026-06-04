@@ -14,6 +14,6 @@ public class Activity : ScriptableObject
     public int day; // 活動日期（對應 DayManager 的天數，從 1 開始）
     public int vigourCost; // 活動耗體
     public int fee; // 活動費用
-    public int MoneyGain; // 活動的金錢收益
+    public int moneyGain; // 活動的金錢收益
     public StageAttribute stageAttribute; // 活動對應的舞台屬性
 }

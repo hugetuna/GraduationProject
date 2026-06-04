@@ -11,13 +11,15 @@ public class SetSettleUI : MonoBehaviour
     [Header("UI 元素")]
     [SerializeField] private List<GameObject> characters = new(); // 另外呼叫各自底下的函式設定內容
     [SerializeField] private TextMeshProUGUI moneyText;
-    // [SerializeField] private List<Image> itemImages = new(); // 以後會改生成
+    [SerializeField] private List<SetAddedItemUI> itemUis = new();
+    [SerializeField] private TextMeshProUGUI itemEtcText; // 顯示更多道具的文字
     [SerializeField] private Button endDayButton;
     //-----------------------------------------------------------------//
     [Header("顯示資料")]
     // [SerializeField] private ResourceManager resourceManager;
     // [SerializeField] private List<ItemStack> itemsEarned;
     private int moneyEarned = 0;
+    private List<ItemStack> itemsAdded = new();
     private bool isSettleActivityMoney = false; // 是否已結算商演賺的錢（避免全員重複計算）
     [SerializeField] private TeamManager teamManager;
     private List<IdolInstance> idolInstances;
@@ -35,10 +37,8 @@ public class SetSettleUI : MonoBehaviour
             AudioManager.Instance.PlaySFX(settleBGM);
         }
 
-        // 呼叫角色顯示（已排序）＆計算金錢變化（還沒有完全改好）
+        // 呼叫角色顯示（已排序）＆計算金錢變化
         idolInstances = TeamDataUtility.IdolInstanceList;
-        // if (DayManager.Instance.chapter == 0 && DayManager.Instance.date == 1) moneyEarned = 1000;
-
         foreach (var idol in idolInstances)
         {
             AvailableAction action = idol.currentAction;
@@ -52,8 +52,12 @@ public class SetSettleUI : MonoBehaviour
         // 金錢資料顯示
         moneyText.text = $"+{moneyEarned}";
 
-        // 裝備和物品顯示（目前沒東西...但如果商店可以買東西再來改）
+        // 裝備和物品顯示
+        itemsAdded = ResourceManager.Instance.itemLog;
+        ShowAddedItems();
+
         // 正式結算請放到 DayManager 的 EndDay() 之類的地方
+
         endDayButton.onClick.RemoveAllListeners(); // 避免重複綁定
         endDayButton.onClick.AddListener(OnEndDayButtonClicked);
     }
@@ -72,7 +76,7 @@ public class SetSettleUI : MonoBehaviour
             idol.dance, idol.trainRecord.danceExp,
             idol.vocal, idol.trainRecord.vocalExp,
             idol.visual, idol.trainRecord.visualExp,
-            idol.performance, 0 // 目前沒有演技變動
+            idol.fans - idol.fansExp, idol.fansExp // 目前沒有演技變動 => 暫時改為粉絲數，因為都是即時獲得所以要扣掉再顯示
         );
 
         // moneyEarned += 0; // 訓練不會賺錢，也不會拿到道具
@@ -92,11 +96,11 @@ public class SetSettleUI : MonoBehaviour
             idol.dance, 0, // 沒有舞蹈經驗變動
             idol.vocal, 0, // 沒有歌唱經驗變動
             idol.visual, 0, // 沒有表現力經驗變動
-            idol.performance, 0 // 目前沒有演技變動
+            idol.fans - idol.fansExp, idol.fansExp // 目前沒有演技變動 => 暫時改為粉絲數，因為都是即時獲得所以要扣掉再顯示
         );
 
         // 打工會賺錢，但不會拿到道具
-        moneyEarned += (int)(idol.baitoRecord.selectedBaito.MoneyGain * ResourceManager.Instance.MoneyBonus); 
+        moneyEarned += (int)(idol.baitoRecord.selectedBaito.moneyGain * ResourceManager.Instance.MoneyBonus);
     }
 
     private void ShowActivityBenefits(IdolInstance idol)
@@ -114,13 +118,13 @@ public class SetSettleUI : MonoBehaviour
             idol.dance, 0, // 沒有舞蹈經驗變動
             idol.vocal, 0, // 沒有歌唱經驗變動
             idol.visual, 0, // 沒有表現力經驗變動
-            idol.performance, 0 // 目前沒有演技變動
+            idol.fans - idol.fansExp, idol.fansExp // 目前沒有演技變動 => 暫時改為粉絲數，因為都是即時獲得所以要扣掉再顯示
         );
 
         if (!isSettleActivityMoney)
         {
             // 商演會賺錢，但不會拿到道具
-            moneyEarned += (int)(idol.activityRecord.selectedActivity.MoneyGain * ResourceManager.Instance.MoneyBonus); 
+            moneyEarned += (int)(idol.activityRecord.realMoneyGain * ResourceManager.Instance.MoneyBonus);
             isSettleActivityMoney = true; // 確保只結算一次商演賺的錢
         }
     }
@@ -139,7 +143,7 @@ public class SetSettleUI : MonoBehaviour
             idol.dance, 0, // 沒有舞蹈經驗變動
             idol.vocal, 0, // 沒有歌唱經驗變動
             idol.visual, 0, // 沒有表現力經驗變動
-            idol.performance, 0 // 目前沒有演技變動
+            idol.fans - idol.fansExp, idol.fansExp // 目前沒有演技變動 => 暫時改為粉絲數，因為都是即時獲得所以要扣掉再顯示
         );
 
         // 休息不會賺錢或拿到道具 // moneyEarned += 0; 
@@ -158,7 +162,7 @@ public class SetSettleUI : MonoBehaviour
             idol.dance, 0,
             idol.vocal, 0,
             idol.visual, 0,
-            idol.performance, 0 // 目前沒有演技變動
+            idol.fans - idol.fansExp, idol.fansExp // 目前沒有演技變動 => 暫時改為粉絲數，因為都是即時獲得所以要扣掉再顯示
         );
 
         // 不在這裡處理金錢和道具變化
@@ -169,11 +173,70 @@ public class SetSettleUI : MonoBehaviour
         foreach (var idol in idolInstances)
         {
             // 結算角色的訓練、打工和商演紀錄，並重置狀態以準備新的一天
-            idol.SettleRecords(); 
+            idol.SettleRecords();
             idol.isAvailable = true;
             idol.currentAction = AvailableAction.Free;
         }
 
         DayManager.Instance.AfterDayEndEventStart();
+    }
+
+    private void ShowAddedItems()
+    {
+        // 預設先隱藏所有道具 UI
+        foreach(var itemUI in itemUis)
+        {
+            itemUI.root.SetActive(false); 
+        }
+        itemEtcText.text = ""; 
+
+        // 根據今日獲得的道具來顯示 UI
+        for(int i = 0; i < itemsAdded.Count; i++)
+        {
+            if(i < itemUis.Count)
+            {
+                // 還有 UI 位子可以放得下
+                itemUis[i].root.SetActive(true);
+                itemUis[i].Initialize(itemsAdded[i]);
+            }
+            else
+            {
+                // 超過 UI 顯示上限，統一顯示在「更多道具」的文字裡面
+                int extraCount = itemsAdded.Count - itemUis.Count;
+                itemEtcText.text = $"…以及其他 {extraCount} 種";
+                break; // 不需要繼續處理剩下的道具了
+            }
+        }
+    }
+}
+
+[System.Serializable]
+public class SetAddedItemUI
+{
+    public GameObject root; // 整個 UI 的根物件
+    public GameObject numBg; // 顯示道具數量時所需的背景
+    public Image icon; // 道具圖示
+    public TextMeshProUGUI numText; // 道具數量文字
+
+    public void Initialize(ItemStack itemStack)
+    {
+        Item item = itemStack.item;
+        int quantity = itemStack.quantity;
+
+        // 設定圖示
+        icon.sprite = item.icon;
+
+        // 設定數量
+        if (quantity > 1)
+        {
+            numBg.SetActive(true);
+            numText.gameObject.SetActive(true);
+            numText.text = quantity.ToString();
+        }
+        else
+        {
+            numBg.SetActive(false);
+            numText.gameObject.SetActive(false);
+        }
     }
 }

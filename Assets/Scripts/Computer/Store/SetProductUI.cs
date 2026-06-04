@@ -26,6 +26,7 @@ public class SetProductUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     [SerializeField] private GameObject hoverObj; // Hover 時顯示的資訊物件
     [SerializeField] private TextMeshProUGUI hoverNameText; // Hover 時顯示的商品名稱文字
     [SerializeField] private TextMeshProUGUI hoverEffectText; // Hover 時顯示的商品描述文字
+    [SerializeField] private TextMeshProUGUI hoverNumText; // Hover 時顯示的商品持有數量文字
     //-----------------------------------------------------------------//
     private CartController cartController;
 
@@ -55,6 +56,8 @@ public class SetProductUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         // 設定 hover 資訊
         hoverNameText.text = product.item.itemName;
         hoverEffectText.text = product.item.description;
+        int ownedQty = ResourceManager.Instance.GetItemCount(product.item);
+        hoverNumText.text = $"已持有數量: {ownedQty}";
 
         // 初始庫存數量設為最大庫存數 -> 已內建於 ProductRuntime 類別
         UpdateStackText();
@@ -93,6 +96,7 @@ public class SetProductUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         stackText.ForceMeshUpdate();
         hoverNameText.ForceMeshUpdate();
         hoverEffectText.ForceMeshUpdate();
+        hoverNumText.ForceMeshUpdate();
 
         // 為加入購物車的按鈕註冊事件
         cartButton.onClick.RemoveAllListeners(); // 確保不會重複註冊
@@ -109,6 +113,11 @@ public class SetProductUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
         if (productRuntime.currentStack == 0) cartButton.interactable = false;
         else cartButton.interactable = true;
+
+        // 順便更新 Hover 的持有數量資訊
+        int ownedQty = ResourceManager.Instance.GetItemCount(productRuntime.product.item);
+        hoverNumText.text = $"已持有數量: {ownedQty}";
+        hoverNumText.ForceMeshUpdate();
     }
 
     public void OnPointerEnter(PointerEventData eventData)

@@ -262,7 +262,9 @@ public class SellController : MonoBehaviour
         // 根據粉絲道具的擁有者，增加該角色的粉絲數
         foreach (var fans in totalFans)
         {
-            TeamDataUtility.IdolDict[fans.Key].fans += fans.Value;
+            var idol = TeamDataUtility.IdolDict[fans.Key];
+            idol.fans += fans.Value;
+            idol.fansExp += fans.Value;
         }
         totalFans.Clear();
     }

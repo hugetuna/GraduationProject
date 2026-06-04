@@ -60,7 +60,7 @@ public class SetBaitoUI : MonoBehaviour
         baitoText.text = baitoData.baitoName;
         descriptionText.text = baitoData.description;
         VigourCostText.text = $"{baitoData.vigourCost} 體/人";
-        MoneyGainText.text = $"{baitoData.MoneyGain} 錢/人";
+        MoneyGainText.text = $"{baitoData.moneyGain} 錢/人";
 
         UpdateCharacterDisplay(); // （根據打工類型）更新角色顯示
     }

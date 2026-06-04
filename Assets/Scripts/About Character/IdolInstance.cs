@@ -28,6 +28,7 @@ public class IdolInstance : MonoBehaviour
     public int vigourMax;//體力最大值
     //粉絲數
     public int fans;
+    public int fansExp; // 每日獲得的粉絲數量（結算用）
     public int bondWithP;//與玩家的羈絆
     //裝備
     public EquipmentItem equipmentItemNow = null;
@@ -79,6 +80,7 @@ public class IdolInstance : MonoBehaviour
         performance = basicStatus.performance;
         vigour = vigourMax = basicStatus.vigour;
         fans = 0;
+        fansExp = 0;
 
         if (basicTrainRecord == null)
         {
@@ -104,7 +106,7 @@ public class IdolInstance : MonoBehaviour
             BaitoDropZoneType.Member,
             -1
         );
-        activityRecord.SetActivityRecord(null);
+        activityRecord.SetActivityRecord(null, 0);
         restRecord.SetRestRecord(
             Vector2.zero,
             RestDropZoneType.Member,
@@ -149,6 +151,7 @@ public class IdolInstance : MonoBehaviour
         vigourMax = data.vigourMax;//體力最大值
         //粉絲數
         fans = data.fans;
+        fansExp = data.fansExp;
         bondWithP = data.bondWithP;//與玩家的羈絆
         BHaveSetUp = data.BHaveSetUp;
         //裝備
@@ -268,6 +271,7 @@ public class IdolInstance : MonoBehaviour
     public void FansIncrease(int increseAmount)
     {
         fans += increseAmount;
+        fansExp += increseAmount;
         MainCanvasSetter mainCanvasSetter = FindAnyObjectByType<MainCanvasSetter>();
         if (mainCanvasSetter != null)
         {
@@ -326,6 +330,8 @@ public class IdolInstance : MonoBehaviour
             SettleRestRecord(false);
         }
 
+        // 其他每日重置
+        fansExp = 0;
     }
 
     public void SettleActivityRecord(bool isSettling)
@@ -339,11 +345,10 @@ public class IdolInstance : MonoBehaviour
             else vigour -= vigourCost; // 隔天主 UI 會同步此變化
             
             // 商演收益已在舞台獲得
-            // ResourceManager.Instance.Money += (int)(activityRecord.selectedActivity.MoneyGain * ResourceManager.Instance.MoneyBonus);
         }
 
         // 重置必須清空的商演紀錄
-        activityRecord.SetActivityRecord(null);
+        activityRecord.SetActivityRecord(null, 0);
     }
 
     public void SettleTrainRecord(bool isSettling)
@@ -378,7 +383,7 @@ public class IdolInstance : MonoBehaviour
         {
             Debug.Log($"結算 {idolIndex} 的打工");
             vigour -= baitoRecord.selectedBaito.vigourCost; // 隔天主 UI 會同步此變化
-            ResourceManager.Instance.Money += (int)(baitoRecord.selectedBaito.MoneyGain * ResourceManager.Instance.MoneyBonus);
+            ResourceManager.Instance.Money += (int)(baitoRecord.selectedBaito.moneyGain * ResourceManager.Instance.MoneyBonus);
         }
 
         // 重置必須清空的打工紀錄

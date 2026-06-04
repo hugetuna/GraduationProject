@@ -53,7 +53,7 @@ public class SetSettleCharacterUI : MonoBehaviour
         visualText.text = visualCurrent.ToString();
         visualDeltaText.text = (visualDelta > 0) ? $"+{visualDelta}" : "";
 
-        // 演技
+        // 演技 => 暫時改為粉絲數
         performanceText.text = performanceCurrent.ToString();
         performanceDeltaText.text = (performanceDelta > 0) ? $"+{performanceDelta}" : "";
     }

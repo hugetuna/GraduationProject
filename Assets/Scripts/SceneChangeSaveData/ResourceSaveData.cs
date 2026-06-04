@@ -35,5 +35,6 @@ public class ResourceSaveData
     public BondData bondBC;
     public BondData bondCA;
     public List<ItemSaveStack> saveItems = new List<ItemSaveStack>();
+    public List<ItemSaveStack> saveItemLog = new();
     public List<string> allEqupmentNames;
 }

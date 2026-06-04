@@ -24,6 +24,7 @@ public class IdolSaveData
     public int vigourMax;//體力最大值
     //粉絲數
     public int fans;
+    public int fansExp; // 每日獲得的粉絲數量（結算用）
     public int bondWithP;//與玩家的羈絆
     //裝備
     public string equippedItemName;

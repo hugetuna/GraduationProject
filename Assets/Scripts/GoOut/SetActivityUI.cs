@@ -40,7 +40,7 @@ public class SetActivityUI : MonoBehaviour
         activityText.text = todayActivity.activityName;
         descriptionText.text = todayActivity.description;
         VigourCostText.text = $"{todayActivity.vigourCost} 體";
-        MoneyGainText.text = $"{todayActivity.MoneyGain} 錢";
+        MoneyGainText.text = $"{todayActivity.moneyGain} 錢";
 
         UpdateCharacterImagesAndEquipments(); // 設定角色 UI 與裝備欄圖片
         RefreshCharacterStats(); // 刷新體力狀態與角色數值

@@ -369,6 +369,8 @@ public class OnStageManager : MonoBehaviour
                 foreach(IdolInstance idol in onStageIdols)
                 {
                     idol.fans += currentStageData.rewardSets[i].rewardFans;
+                    idol.fansExp += currentStageData.rewardSets[i].rewardFans; // 因為不是用 IdolInstance 的方法增加粉絲，所以要手動處理
+                    idol.activityRecord.realMoneyGain += currentStageData.rewardSets[i].rewardMoney; // 記錄商演實際賺的錢
                 }
                 ResourceManager.Instance.GainMoney(currentStageData.rewardSets[i].rewardMoney);
                 break;
